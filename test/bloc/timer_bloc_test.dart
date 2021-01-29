@@ -1,0 +1,47 @@
+import 'package:flutter_test/flutter_test.dart';
+import 'package:bloc_test/bloc_test.dart';
+import 'package:mockito/mockito.dart';
+import 'package:task_meter/bloc/timer_bloc.dart';
+import 'package:task_meter/repositories/timer_repository.dart';
+
+class TimerRepositoryMock extends Mock implements TimerRepository {}
+
+void main() {
+  TimerRepositoryMock timerMock;
+  TimerBloc timerBloc;
+  setUp(() {
+    timerMock = TimerRepositoryMock();
+    timerBloc = TimerBloc(timerRepo: timerMock);
+  });
+  group('Timer Bloc', () {
+    blocTest('should return an empty state when created ', build: () {
+      return TimerBloc();
+    }, expect: []);
+    test(
+        'should call the timerTicker function on the Timer class when startEvent is created',
+        () async {
+      // arrange
+      when(timerMock.timerTicker(any))
+          .thenAnswer((_) => Stream.fromIterable([Duration(seconds: 1)]));
+      // act
+      timerBloc.add(TimerStartEvent(Duration(seconds: 3)));
+      await untilCalled(timerMock.timerTicker(any));
+      // assert
+      verify(timerMock.timerTicker(Duration(seconds: 3)));
+    });
+    blocTest(
+        'should return [TimerReady,TimerRunning] when TimerStartEvent is called',
+        build: () {
+      return timerBloc;
+    }, act: (bloc) {
+      when(timerMock.timerTicker(any)).thenAnswer((_) => Stream.fromIterable(
+          [Duration(seconds: 2), Duration(seconds: 1), Duration(seconds: 0)]));
+      bloc.add(TimerStartEvent(Duration(seconds: 3)));
+    }, expect: [
+      TimerReady(Duration(seconds: 3)),
+      TimerRunning(Duration(seconds: 2)),
+      TimerRunning(Duration(seconds: 1)),
+      TimerFinished()
+    ]);
+  });
+}
