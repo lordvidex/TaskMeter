@@ -1,56 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:task_meter/screens/error_screen.dart';
 
-void main() {
+import 'core/constants.dart';
+import 'injection_container.dart' as di;
+import 'providers/task_group_provider.dart';
+import 'screens/add_task_group_screen.dart';
+import 'screens/task_timer_screen.dart';
+
+void main() async {
+  await di.init();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: {'/second': (_) => SecondScreen()},
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Home page'),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<TaskGroupProvider>(
+          create: (_) => TaskGroupProvider(),
         ),
-        body: NewWidget(),
-      ),
+      ],
+      child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: Constants.kThemeData,
+          home: TaskTimerScreen(),
+          routes: {
+            ErrorScreen.routeName: (_) => ErrorScreen(),
+            AddTaskGroupScreen.routeName: (_) => AddTaskGroupScreen(),
+          }),
     );
-  }
-}
-
-class NewWidget extends StatelessWidget {
-  const NewWidget({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Center(child: Text('Welcome')),
-          Text('Reqdsbgiaoskdlgf'),
-          GestureDetector(
-            onTap: () {
-              Navigator.of(context).pushNamed('/second');
-            },
-            child: Container(
-                child: Text('See me?'),
-                decoration: BoxDecoration(
-                    gradient:
-                        LinearGradient(colors: [Colors.red, Colors.blue]))),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class SecondScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(), body: Center(child: Text('Second Screen')));
   }
 }

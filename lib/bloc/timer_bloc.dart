@@ -13,6 +13,11 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   TimerBloc({TimerRepository timerRepo})
       : timerRepository = timerRepo,
         super(TimerReady(Duration.zero));
+  @override
+  Future<void> close() {
+    _tickerSubscription?.cancel();
+    return super.close();
+  }
 
   @override
   Stream<TimerState> mapEventToState(
@@ -42,7 +47,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
 
   Stream<TimerState> _mapTimerTickEventToState(TimerTickEvent event) async* {
     yield event.duration == Duration.zero
-        ? TimerFinished() //TODO: add to database
+        ? TimerFinished(Duration.zero) //TODO: add to database
         : TimerRunning(event.duration);
   }
 

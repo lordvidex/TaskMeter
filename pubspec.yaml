@@ -23,11 +23,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  bloc: ^6.1.1
   cupertino_icons: ^1.0.0
   equatable: ^1.2.5
+  flutter_bloc: ^6.1.1
   get_it: ^5.0.6
+  provider: ^4.3.3
   uuid: ^2.2.2
+  wave: ^0.1.0
 
 dev_dependencies:
   flutter_test:
