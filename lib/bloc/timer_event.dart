@@ -22,6 +22,8 @@ class TimerPauseEvent extends TimerEvent {}
 class TimerTickEvent extends TimerEvent {
   final Duration duration;
   TimerTickEvent(this.duration);
+  @override
+  List<Object> get props => [duration];
 }
 
 // called when the user finished before time expended

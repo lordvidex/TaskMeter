@@ -22,6 +22,12 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
       yield* _mapTimerStartEventToState(event);
     } else if (event is TimerTickEvent) {
       yield* _mapTimerTickEventToState(event);
+    } else if (event is TimerPauseEvent) {
+      yield* _mapTimerPauseEventToState(event);
+    } else if (event is TimerResumeEvent) {
+      yield* _mapTimerResumeEventToState();
+    } else if (event is TimerFinishEvent) {
+      yield* _mapTimerFinishEventToState(event);
     }
   }
 
@@ -36,7 +42,32 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
 
   Stream<TimerState> _mapTimerTickEventToState(TimerTickEvent event) async* {
     yield event.duration == Duration.zero
-        ? TimerFinished()
+        ? TimerFinished() //TODO: add to database
         : TimerRunning(event.duration);
+  }
+
+  Stream<TimerState> _mapTimerPauseEventToState(TimerPauseEvent event) async* {
+    //! Pause is only possible if timer is running.. hence `state` has to be `TimerRunning`
+    if (state is TimerRunning) {
+      _tickerSubscription?.pause();
+      yield TimerPaused(state.duration);
+
+      //TODO: save to local Database
+    }
+  }
+
+  Stream<TimerState> _mapTimerResumeEventToState() async* {
+    //! Timer can only resume if it was paused
+    if (state is TimerPaused) {
+      _tickerSubscription?.resume();
+      yield TimerRunning(state.duration);
+    }
+  }
+
+  Stream<TimerState> _mapTimerFinishEventToState(
+      TimerFinishEvent event) async* {
+    _tickerSubscription?.cancel();
+    if (state is TimerRunning) yield TimerFinished(state.duration);
+    //TODO: add residual time to bonus time and save to database
   }
 }

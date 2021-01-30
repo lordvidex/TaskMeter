@@ -43,5 +43,57 @@ void main() {
       TimerRunning(Duration(seconds: 1)),
       TimerFinished()
     ]);
+    blocTest(
+        'should return no state if a PauseEvent is registered and timer is not running',
+        build: () {
+      when(timerMock.timerTicker(any)).thenAnswer((_) => Stream.fromIterable(
+          [Duration(seconds: 2), Duration(seconds: 1), Duration(seconds: 0)]));
+      return timerBloc;
+    }, act: (bloc) {
+      bloc.add(TimerPauseEvent());
+    }, expect: []);
+
+    blocTest(
+        'should return an [] state when TimerResumeEvent is called without a Paused state ',
+        build: () {
+      when(timerMock.timerTicker(any)).thenAnswer((_) => Stream.fromIterable(
+          [Duration(seconds: 2), Duration(seconds: 1), Duration(seconds: 0)]));
+      return timerBloc;
+    }, act: (bloc) {
+      bloc.add(TimerResumeEvent());
+    }, expect: []);
+    //! Mocking timer isn't feasible for the pause test.. we use the real implementation
+    // blocTest(
+    //     'should return a TimerPaused state when a TimerPauseEvent is sent while Timer is running',
+    //     build: () {
+    //   return TimerBloc(timerRepo: TimerRepository());
+    // }, act: (bloc) async {
+    //   bloc.add(TimerStartEvent(Duration(seconds: 3)));
+    //   await Future.delayed(Duration(seconds: 2));
+    //   bloc.add(TimerPauseEvent());
+    // }, expect: [
+    //   TimerReady(Duration(seconds: 3)),
+    //   TimerRunning(Duration(seconds: 2)),
+    //   TimerPaused(Duration(seconds: 2))
+    // ]);
+
+    // blocTest(
+    //     'should return [TimerReady, TimerRunning, TimerPaused, TimerRunning, TimerFinished] to test resume Event ',
+    //     build: () {
+    //   return TimerBloc(timerRepo: TimerRepository())
+    //     ..add(TimerStartEvent(Duration(seconds: 4)));
+    // }, act: (bloc) async {
+    //   await Future.delayed(Duration(seconds: 2));
+    //   bloc.add(TimerPauseEvent());
+    //   await Future.delayed(Duration(seconds: 2));
+    //   bloc.add(TimerResumeEvent());
+    // }, expect: [
+    //   TimerReady(Duration(seconds: 4)),
+    //   TimerRunning(Duration(seconds: 3)),
+    //   TimerPaused(Duration(seconds: 3)),
+    //   TimerRunning(Duration(seconds: 2)),
+    //   //TimerRunning(Duration(seconds: 1)),
+    //   TimerFinished()
+    // ], wait: Duration(seconds: 8));
   });
 }

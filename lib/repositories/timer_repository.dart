@@ -3,7 +3,7 @@ class TimerRepository {
   ///by `1 second`
   Stream<Duration> timerTicker(Duration time) {
     return Stream.periodic(
-            Duration(seconds: 1), (x) => time - Duration(seconds: 1))
+            Duration(seconds: 1), (x) => time - Duration(seconds: 1 + x))
         .take(time.inSeconds);
   }
 }
