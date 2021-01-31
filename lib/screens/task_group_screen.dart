@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:task_meter/providers/task_group_provider.dart';
-import 'package:task_meter/widgets/task_group_widget.dart';
+
+import '../providers/task_group_provider.dart';
+import '../widgets/task_group_widget.dart';
 
 class TaskGroupScreen extends StatelessWidget {
   @override
@@ -38,12 +39,9 @@ class TaskGroupScreen extends StatelessWidget {
                 return SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (ctx, index) => TaskGroupWidget(
-                      title: 'Finish my homework',
-                      subtitle: "I need to do this task in less than 12 hours",
-                      progress: 0.5,
-                      taskGroupColor: Colors.purple,
+                      taskGroup: groups[index],
                     ),
-                    childCount: groups.length,
+                    childCount: 20,
                   ),
                 );
             },

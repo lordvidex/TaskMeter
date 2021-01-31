@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
-import 'package:task_meter/repositories/timer_repository.dart';
 
 import 'bloc/timer_bloc.dart';
+import 'repositories/timer_repository.dart';
 
 final GetIt sl = GetIt.instance;
 

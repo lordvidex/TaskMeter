@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:task_meter/bloc/timer_bloc.dart';
 
+import '../bloc/timer_bloc.dart';
 import '../core/errors.dart';
 import '../models/task.dart';
 import '../widgets/task_timer_widget.dart';
