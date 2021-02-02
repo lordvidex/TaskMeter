@@ -24,6 +24,9 @@ class Task extends Equatable {
   // returns the totalTime calculated by the algorithm
   Duration get totalTime => _totalTime;
 
+  /// returns true if some time has been used in this task
+  bool get hasStarted => _totalTime != timeRemaining;
+
   ///@returns - a double value indicating the progress of the task where
   /// `0` - task not started
   /// `1` - task finished
@@ -34,7 +37,7 @@ class Task extends Equatable {
     return (_totalTime.inMilliseconds - timeRemaining.inMilliseconds) /
         _totalTime.inMilliseconds;
   }
-
+  /// sets [totalTime] and timeRemaining to given `totalTime` 
   void setTotalTime(Duration totalTime) {
     this._totalTime = totalTime;
     this.timeRemaining = totalTime;

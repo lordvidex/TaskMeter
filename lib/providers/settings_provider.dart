@@ -16,9 +16,9 @@ class SettingsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  updateSettings(Settings newSetting) {
+  updateSettings(Settings newSetting) async {
     _settings = newSetting;
     notifyListeners();
-    _settingsRepository.updateSettings(newSetting);
+    await _settingsRepository.updateSettings(newSetting);
   }
 }

@@ -41,7 +41,7 @@ void main() {
       TimerReady(Duration(seconds: 3)),
       TimerRunning(Duration(seconds: 2)),
       TimerRunning(Duration(seconds: 1)),
-      TimerFinished()
+      TimerFinished(Duration.zero)
     ]);
     blocTest(
         'should return no state if a PauseEvent is registered and timer is not running',

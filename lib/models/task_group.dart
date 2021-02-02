@@ -8,28 +8,41 @@ import 'task.dart';
 class TaskGroup extends Equatable {
   final String taskGroupId;
 
-  //name of the group of tasks
-  final String taskGroupName;
+  ///name of the group of tasks
+  String taskGroupName;
 
-  // description of the taskGroup
+  /// description of the taskGroup
   final String taskGroupSubtitle;
 
-  // total time user plans to finish the task
+  /// total time user plans to finish the task
   Duration totalTime;
 
-  // color assigned in TaskGroup
+  /// color assigned in TaskGroup
   final MaterialColor taskGroupColor;
 
-  // list of tasks to complete
+  /// list of tasks to complete
   List<Task> tasks;
-  // is `true` if user wants to repeat the task periodically
-  //is `false` if it is a one-time group of tasks
+
+  /// number of tasks before a long break
+  int longBreakIntervals;
+
+  /// [Duration] short break time
+  Duration longBreakTime;
+
+  /// [Duration] long break time
+  Duration shortBreakTime;
+
+  /// is `true` if user wants to repeat the task periodically\
+  /// is `false` if it is a one-time group of tasks
   final bool isRepetitive;
 
   TaskGroup(
     this.taskGroupName, {
     this.taskGroupSubtitle = '',
     this.isRepetitive = false,
+    this.longBreakTime,
+    this.shortBreakTime,
+    this.longBreakIntervals,
   })  : taskGroupId = Uuid().v1(),
         tasks = <Task>[],
         taskGroupColor = ColorUtils.randomColor();

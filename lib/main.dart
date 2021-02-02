@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task_meter/screens/task_group_screen.dart';
 
 import 'core/constants.dart';
 import 'injection_container.dart' as di;
+import 'providers/settings_provider.dart';
 import 'providers/task_group_provider.dart';
-import 'screens/add_task_group_screen.dart';
+import 'screens/create_task_group_screen.dart';
 import 'screens/error_screen.dart';
 import 'screens/task_group_description_screen.dart';
+import 'screens/task_timer_screen.dart';
 
 void main() async {
+  //TODO: splash screen here
   await di.init();
   runApp(MyApp());
 }
@@ -21,16 +25,20 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<TaskGroupProvider>(
           create: (_) => TaskGroupProvider(),
         ),
+        ChangeNotifierProvider<SettingsProvider>(
+          create: (_) => di.sl<SettingsProvider>(),
+        ),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: Constants.kThemeData,
-          home: TaskGroupDescriptionScreen(),
+          home: TaskGroupScreen(),
           routes: {
+            TaskTimerScreen.routeName: (_) => TaskTimerScreen(),
             TaskGroupDescriptionScreen.routeName: (_) =>
                 TaskGroupDescriptionScreen(),
             ErrorScreen.routeName: (_) => ErrorScreen(),
-            AddTaskGroupScreen.routeName: (_) => AddTaskGroupScreen(),
+            CreateTaskGroupScreen.routeName: (_) => CreateTaskGroupScreen(),
           }),
     );
   }
