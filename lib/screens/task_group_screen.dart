@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task_meter/screens/create_task_group_screen.dart';
 
 import '../providers/task_group_provider.dart';
 import '../widgets/task_group_widget.dart';
@@ -11,7 +12,8 @@ class TaskGroupScreen extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.white,
           child: Icon(Icons.add, color: Colors.black),
-          onPressed: () {},
+          onPressed: () =>
+              Navigator.of(context).pushNamed(CreateTaskGroupScreen.routeName),
         ),
         body: CustomScrollView(slivers: <Widget>[
           SliverAppBar(
@@ -41,12 +43,11 @@ class TaskGroupScreen extends StatelessWidget {
                     (ctx, index) => TaskGroupWidget(
                       taskGroup: groups[index],
                     ),
-                    childCount: 20,
+                    childCount: groups.length,
                   ),
                 );
             },
-            child:
-                SliverToBoxAdapter(child: Container(child: Text('Empty List'))),
+            child: SliverToBoxAdapter(child: Center(child: Text('Empty List'))),
           )
         ]));
   }

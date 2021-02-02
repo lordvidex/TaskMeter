@@ -13,25 +13,28 @@ class TaskGroupDescriptionScreen extends StatelessWidget {
     if (taskGroup == null) {
       taskGroup = new TaskGroup('Finish Homework');
     }
-    return SafeArea(
-      child: Scaffold(
-          body: Column(
-        children: [
-          Flexible(
-            flex: 3,
-            child: HeaderContainerWidget(taskGroup: taskGroup),
-          ),
-          Flexible(
-              flex: 7,
-              child: ListView.builder(
-                itemBuilder: (ctx, index) {
-                  return TaskCard(
-                      taskGroup: taskGroup, task: taskGroup.tasks[index]);
-                },
-                itemCount: taskGroup.tasks.length,
-              ))
-        ],
-      )),
-    );
+    return Scaffold(
+        body: Container(
+      color: taskGroup.taskGroupColor[800],
+      child: SafeArea(
+        child: Column(
+          children: [
+            Flexible(
+              flex: 3,
+              child: HeaderContainerWidget(taskGroup: taskGroup),
+            ),
+            Flexible(
+                flex: 7,
+                child: ListView.builder(
+                  itemBuilder: (ctx, index) {
+                    return TaskCard(
+                        taskGroup: taskGroup, task: taskGroup.tasks[index]);
+                  },
+                  itemCount: taskGroup.tasks.length,
+                ))
+          ],
+        ),
+      ),
+    ));
   }
 }

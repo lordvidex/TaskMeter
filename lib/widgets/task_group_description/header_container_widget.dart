@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/constants.dart';
@@ -17,6 +18,13 @@ class HeaderContainerWidget extends StatelessWidget {
     return Container(
       width: double.infinity,
       child: Stack(children: [
+        Positioned(
+            top: 15,
+            left: 0,
+            child: IconButton(
+                onPressed: () => Navigator.of(context).pop(),
+                icon:
+                    Icon(CupertinoIcons.back, color: Colors.white, size: 32))),
         Positioned(
             top: -10,
             right: -10,
