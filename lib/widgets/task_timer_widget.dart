@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+import 'package:task_meter/core/utils/duration_utils.dart';
+import 'package:task_meter/providers/task_group_provider.dart';
 
 import '../bloc/timer_bloc.dart';
 import '../models/task.dart';
@@ -12,10 +15,6 @@ class TaskTimerWidget extends StatefulWidget {
 }
 
 class _TaskTimerWidgetState extends State<TaskTimerWidget> {
-  double getProgress(Duration current) {
-    assert(current != null && widget.task != null);
-    return current.inMilliseconds / widget.task.totalTime.inMilliseconds;
-  }
 
   @override
   void initState() {
@@ -26,13 +25,31 @@ class _TaskTimerWidgetState extends State<TaskTimerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    return BlocBuilder<TimerBloc, TimerState>(builder: (ctx, state) {
+    return BlocConsumer<TimerBloc, TimerState>(listener: (ctx, state) {
+      if (state is! TimerRunning) {
+        Provider.of<TaskGroupProvider>(context, listen: false)
+            .updateTaskTime(widget.task, state.duration);
+        if (state is TimerFinished) {
+          final taskGroup =
+              Provider.of<TaskGroupProvider>(context, listen: false)
+                  .currentTaskGroup;
+          if (taskGroup.taskGroupProgress == 1) {
+            // all tasks are finished
+            Navigator.of(context).pop();
+          }
+          //! if it is a task that was just finished
+          //! 1. start a break (short/long) depending on tasks done
+          //! 2. start the next task
+          //! else if it is a break -> start the next task 
+        }
+      }
+    }, builder: (ctx, state) {
       return Stack(
         alignment: AlignmentDirectional.center,
         children: [
           Center(
-              child: Text('${state.duration.inSeconds}',
+              child: Text(
+                  '${DurationUtils.durationToClockString(state.duration)}',
                   style: Theme.of(context).textTheme.headline2)),
           Positioned(
               bottom: 20,

@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:task_meter/providers/task_group_provider.dart';
 
 import 'bloc/timer_bloc.dart';
 import 'data/local_storage.dart';
@@ -13,7 +14,7 @@ Future<void> init() async {
   //! Blocs
   sl.registerFactory(() => TimerBloc(timerRepo: sl()));
   //! Providers
-  sl.registerFactory(() => SettingsProvider(settingsRepo: sl()));
+  sl.registerLazySingleton(() => SettingsProvider(settingsRepo: sl()));
 
   //! repositories
   sl.registerLazySingleton(() => TimerRepository());
@@ -25,5 +26,11 @@ Future<void> init() async {
 
   //! external
   final sharedPrefs = await SharedPreferences.getInstance();
-  sl.registerLazySingleton(() => sharedPrefs);
+  sl.registerLazySingleton<SharedPreferences>(() => sharedPrefs);
+
+  await initSettings();
+}
+
+Future<void> initSettings() async {
+  await sl.get<SettingsProvider>().loadSettings();
 }

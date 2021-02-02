@@ -47,10 +47,10 @@ class TaskGroup extends Equatable {
         tasks = <Task>[],
         taskGroupColor = ColorUtils.randomColor();
 
+  int get completedCount => tasks.fold<int>(
+      0, (prev, element) => prev + (element.isCompleted ? 1 : 0));
   double get taskGroupProgress =>
-      tasks.fold<int>(
-          0, (prev, element) => prev + (element.isCompleted ? 1 : 0)) /
-      (tasks.isEmpty ? 1 : tasks.length);
+      completedCount / (tasks.isEmpty ? 1 : tasks.length);
   @override
   List<Object> get props => [taskGroupId];
 }

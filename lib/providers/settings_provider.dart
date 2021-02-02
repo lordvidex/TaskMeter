@@ -7,9 +7,7 @@ class SettingsProvider extends ChangeNotifier {
   Settings _settings;
   SettingsRepository _settingsRepository;
   SettingsProvider({SettingsRepository settingsRepo})
-      : _settingsRepository = settingsRepo {
-    loadSettings();
-  }
+      : _settingsRepository = settingsRepo;
   Settings get settings => _settings;
   Future<void> loadSettings() async {
     _settings = await _settingsRepository.getSettings();

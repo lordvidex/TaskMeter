@@ -62,7 +62,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
               child: IconButton(
                 onPressed: () => Navigator.of(context).pop(),
                 icon: Icon(Icons.cancel,
-                    size: 25, color: widget.taskGroup.taskGroupColor[200]),
+                    size: 25, color: widget.taskGroup.taskGroupColor[600]),
               )),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,7 +77,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                       border: InputBorder.none,
                       labelText: 'Type task name...',
                       labelStyle: Constants.coloredLabelTextStyle(
-                          widget.taskGroup.taskGroupColor[200]))),
+                          widget.taskGroup.taskGroupColor[600]))),
               Text('Difficulty', style: Theme.of(context).textTheme.headline4),
               RatingBar.builder(
                 initialRating: _rating,
@@ -105,7 +105,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                         child: Text('Add',
                             style: TextStyle(fontWeight: FontWeight.bold)),
                         onPressed: addTask,
-                        color: widget.taskGroup.taskGroupColor[200])),
+                        color: widget.taskGroup.taskGroupColor[600])),
               )
             ],
           )

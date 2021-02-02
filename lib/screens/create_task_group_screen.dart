@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:task_meter/core/algorithms/time_divider.dart';
 import 'package:task_meter/core/errors.dart';
+import 'package:task_meter/injection_container.dart';
 import 'package:task_meter/models/settings.dart';
 import 'package:task_meter/providers/settings_provider.dart';
 
@@ -38,7 +39,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
   void initState() {
     super.initState();
     _formKey = GlobalKey();
-    settings = Provider.of<SettingsProvider>(context).settings;
+    settings = Provider.of<SettingsProvider>(context, listen: false).settings;
     newTaskGroup = TaskGroup('',
         longBreakIntervals: settings.longBreakIntervals,
         shortBreakTime: settings.shortBreak,
@@ -83,6 +84,16 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
     });
   }
 
+  void _onReorder(int oldIndex, int newIndex) {
+    setState(() {
+      if (newIndex == newTaskGroup.tasks.length) {
+        newIndex = newTaskGroup.tasks.length - 1;
+      }
+      var item = newTaskGroup.tasks.removeAt(oldIndex);
+      newTaskGroup.tasks.insert(newIndex, item);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,12 +117,18 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                             minutesController: durationMinutesController)),
                     Flexible(
                         flex: 5,
-                        child: ListView.builder(
-                            itemBuilder: (ctx, index) => TaskCard(
-                                taskGroup: newTaskGroup,
-                                isClickable: false,
-                                task: newTaskGroup.tasks[index]),
-                            itemCount: newTaskGroup.tasks.length)),
+                        child: ReorderableListView(
+                          children: newTaskGroup.tasks
+                              .map((t) => TaskCard(
+                                    key: ObjectKey(t.taskId),
+                                    task: t,
+                                    taskGroup: newTaskGroup,
+                                    isClickable: false,
+                                  ))
+                              .toList(),
+                          onReorder: _onReorder,
+                        )
+                        ),
                   ]),
             ),
           )),

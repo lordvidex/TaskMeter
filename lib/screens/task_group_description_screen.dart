@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:task_meter/providers/task_group_provider.dart';
 
-import '../models/task_group.dart';
 import '../widgets/task_group_description/header_container_widget.dart';
 import '../widgets/task_group_description/task_card.dart';
 
@@ -8,11 +9,7 @@ class TaskGroupDescriptionScreen extends StatelessWidget {
   static const routeName = '/task-group-description';
   @override
   Widget build(BuildContext context) {
-    var taskGroup = ModalRoute.of(context).settings.arguments as TaskGroup;
-    //! Debug
-    if (taskGroup == null) {
-      taskGroup = new TaskGroup('Finish Homework');
-    }
+    var taskGroup = Provider.of<TaskGroupProvider>(context).currentTaskGroup;
     return Scaffold(
         body: Container(
       color: taskGroup.taskGroupColor[800],

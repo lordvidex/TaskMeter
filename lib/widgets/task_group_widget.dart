@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+import 'package:task_meter/providers/task_group_provider.dart';
 import 'package:task_meter/screens/task_group_description_screen.dart';
 
 import '../models/task_group.dart';
@@ -11,9 +13,12 @@ class TaskGroupWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.of(context).pushNamed(
-          TaskGroupDescriptionScreen.routeName,
-          arguments: taskGroup),
+      onTap: () {
+        Provider.of<TaskGroupProvider>(context, listen: false)
+            .setCurrentTaskGroup(taskGroup);
+        Navigator.of(context).pushNamed(TaskGroupDescriptionScreen.routeName,
+            arguments: taskGroup);
+      },
       child: Container(
           padding: const EdgeInsets.only(bottom: 3),
           margin: const EdgeInsets.all(15),
@@ -51,8 +56,11 @@ class TaskGroupWidget extends StatelessWidget {
                             color: taskGroup.taskGroupColor[100],
                           )),
                       SizedBox(height: 3),
-                      TaskProgressIndicator(taskGroup.taskGroupColor[100],
-                          taskGroup.taskGroupProgress)
+                      TaskProgressIndicator(
+                        taskGroup.taskGroupColor[100],
+                        taskGroup.taskGroupProgress,
+                        showPercentage: true,
+                      )
                     ],
                   ),
                 ),

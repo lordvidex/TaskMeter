@@ -13,6 +13,7 @@ import 'screens/task_timer_screen.dart';
 
 void main() async {
   //TODO: splash screen here
+  WidgetsFlutterBinding.ensureInitialized();
   await di.init();
   runApp(MyApp());
 }
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
           theme: Constants.kThemeData,
           home: TaskGroupScreen(),
           routes: {
+            TaskGroupScreen.routeName: (_) => TaskGroupScreen(),
             TaskTimerScreen.routeName: (_) => TaskTimerScreen(),
             TaskGroupDescriptionScreen.routeName: (_) =>
                 TaskGroupDescriptionScreen(),

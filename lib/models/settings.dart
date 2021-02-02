@@ -11,7 +11,7 @@ class Settings {
   });
 
   ///shortBreak and longBreaks are stored in seconds [int] in shared_preferences
-  factory Settings.fromMap(Map<String, dynamic> json) {
+  factory Settings.fromJson(Map<String, dynamic> json) {
     return Settings(
       longBreakIntervals: json['long_break_intervals'],
       shortBreak: Duration(seconds: json['short_break']),
@@ -25,7 +25,7 @@ class Settings {
       longBreak: Duration(minutes: 5),
     );
   }
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'long_break_intervals': longBreakIntervals,
       'short_break': shortBreak.inSeconds,

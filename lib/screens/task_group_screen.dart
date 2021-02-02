@@ -6,6 +6,7 @@ import '../providers/task_group_provider.dart';
 import '../widgets/task_group_widget.dart';
 
 class TaskGroupScreen extends StatelessWidget {
+  static const routeName = '/task-group';
   @override
   Widget build(BuildContext context) {
     return Scaffold(

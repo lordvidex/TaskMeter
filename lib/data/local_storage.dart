@@ -7,6 +7,7 @@ import '../models/settings.dart';
 const String SETTINGS = 'settings';
 
 abstract class LocalStorage {
+  //! Settings section
   /// Fetches the saved settings from the Database
   /// Returns `default` values for settings if user does not have saved data
   Future<Settings> fetchSettings();
@@ -23,7 +24,7 @@ class LocalStorageImpl extends LocalStorage {
   Future<Settings> fetchSettings() async {
     if (sharedPreferences.containsKey(SETTINGS)) {
       //return the settings
-      return Settings.fromMap(
+      return Settings.fromJson(
           json.decode(sharedPreferences.getString(SETTINGS)));
     } else {
       // return the default settings and save it to the database
@@ -36,6 +37,6 @@ class LocalStorageImpl extends LocalStorage {
   @override
   Future<void> updateSettings(Settings newSettings) async {
     await sharedPreferences.setString(
-        SETTINGS, json.encode(newSettings.toMap()));
+        SETTINGS, json.encode(newSettings.toJson()));
   }
 }

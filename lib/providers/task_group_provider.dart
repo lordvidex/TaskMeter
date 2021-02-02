@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:task_meter/models/task.dart';
 
 import '../models/task_group.dart';
 
@@ -11,6 +12,10 @@ class TaskGroupProvider extends ChangeNotifier {
   List<TaskGroup> _groups;
 
   List<TaskGroup> get taskGroups => _groups;
+
+  TaskGroup _current;
+
+  TaskGroup get currentTaskGroup => _current;
 
   /// Called when app is opened
   Future<void> _loadTaskGroups() async {
@@ -27,6 +32,16 @@ class TaskGroupProvider extends ChangeNotifier {
   void addTaskGroup(TaskGroup taskGroup) {
     _groups.add(taskGroup);
     //TODO: update database asynchronously
+    notifyListeners();
+  }
+
+  void setCurrentTaskGroup(TaskGroup taskGroup) {
+    _current = taskGroup;
+    notifyListeners();
+  }
+
+  void updateTaskTime(Task task, Duration newTime) {
+    task.timeRemaining = newTime;
     notifyListeners();
   }
 }
