@@ -55,7 +55,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
     super.dispose();
   }
 
-  void createTaskGroup() {
+  void createTaskGroup(BuildContext scaffoldContext) {
     if (!_formKey.currentState.validate()) {
       return;
     }
@@ -68,8 +68,10 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
     try {
       TimeDivider.divideTimeByTask(newTaskGroup);
     } on TaskTimerException catch (e) {
-      //TODO: properly show validation errors
-      print(e.toString());
+      // error occured and should be shown to user in snackbar
+      Scaffold.of(scaffoldContext).removeCurrentSnackBar();
+      Scaffold.of(scaffoldContext)
+          .showSnackBar(SnackBar(content: Text(e.toString())));
       return;
     }
     Provider.of<TaskGroupProvider>(context, listen: false)
@@ -84,48 +86,39 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
     });
   }
 
-  void _onReorder(int oldIndex, int newIndex) {
-    setState(() {
-      if (newIndex == newTaskGroup.tasks.length) {
-        newIndex = newTaskGroup.tasks.length - 1;
-      }
-      var item = newTaskGroup.tasks.removeAt(oldIndex);
-      newTaskGroup.tasks.insert(newIndex, item);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Container(
-              height: MediaQuery.of(context).size.height,
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Flexible(
-                        flex: 7,
-                        child: TaskGroupPanel(
-                            createTaskGroup: createTaskGroup,
-                            addNewTask: addNewTask,
-                            taskGroup: newTaskGroup,
-                            titleController: taskGroupTitleController,
-                            daysController: durationDaysController,
-                            hoursController: durationHoursController,
-                            minutesController: durationMinutesController)),
-                    Flexible(
-                        flex: 5,
+      body: SafeArea(
+        child: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TaskGroupPanel(
+                          createTaskGroup: createTaskGroup,
+                          addNewTask: addNewTask,
+                          taskGroup: newTaskGroup,
+                          titleController: taskGroupTitleController,
+                          daysController: durationDaysController,
+                          hoursController: durationHoursController,
+                          minutesController: durationMinutesController),
+                      Expanded(
                         child: ListView.builder(
-                            itemBuilder: (ctx, index) => TaskCard(
-                                taskGroup: newTaskGroup,
-                                isClickable: false,
-                                task: newTaskGroup.tasks[index]),
-                            itemCount: newTaskGroup.tasks.length)),
-                  ]),
-            ),
-          )),
+                          itemBuilder: (ctx, index) => TaskCard(
+                              taskGroup: newTaskGroup,
+                              isClickable: false,
+                              task: newTaskGroup.tasks[index]),
+                          itemCount: newTaskGroup.tasks.length,
+                        ),
+                      ),
+                    ]),
+              ),
+            )),
+      ),
     );
   }
 }

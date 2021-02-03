@@ -13,6 +13,9 @@ class TimeDivider {
     int difficultyCount = 0;
     // minimum difficulty in the list of tasks
     int minDiff = 3;
+
+    // check if tasks is empty
+    if (taskGroup.tasks.isEmpty) throw TaskTimerException(Error.EmptyTaskGroup);
     //we increment the difficultyCount by the difficulty type of each tasks
     for (var task in taskGroup.tasks) {
       if (task.difficulty == Difficulty.Easy) {
