@@ -117,18 +117,12 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                             minutesController: durationMinutesController)),
                     Flexible(
                         flex: 5,
-                        child: ReorderableListView(
-                          children: newTaskGroup.tasks
-                              .map((t) => TaskCard(
-                                    key: ObjectKey(t.taskId),
-                                    task: t,
-                                    taskGroup: newTaskGroup,
-                                    isClickable: false,
-                                  ))
-                              .toList(),
-                          onReorder: _onReorder,
-                        )
-                        ),
+                        child: ListView.builder(
+                            itemBuilder: (ctx, index) => TaskCard(
+                                taskGroup: newTaskGroup,
+                                isClickable: false,
+                                task: newTaskGroup.tasks[index]),
+                            itemCount: newTaskGroup.tasks.length)),
                   ]),
             ),
           )),

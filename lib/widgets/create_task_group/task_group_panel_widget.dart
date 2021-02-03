@@ -48,74 +48,77 @@ class TaskGroupPanel extends StatelessWidget {
                   color: Colors.green,
                   label: Text('Create',
                       style: Constants.coloredLabelTextStyle(Colors.white)))),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 70,
-              ),
-              Text('Create Task', style: Theme.of(context).textTheme.headline2),
-              Container(
-                  margin: const EdgeInsets.only(top: 20),
-                  decoration:
-                      BoxDecoration(color: taskGroup.taskGroupColor[100]),
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextFormField(
-                          cursorColor: Colors.grey,
-                          controller: titleController,
-                          style: TextStyle(fontSize: 26),
-                          showCursor: true,
-                          validator: (string) => string.isEmpty
-                              ? 'Enter a valid task group name'
-                              : null,
-                          decoration: InputDecoration(
-                            labelStyle: TextStyle(color: Colors.grey),
-                            labelText: 'Task Group Name',
-                            border: InputBorder.none,
-                          )),
-                      Text('Duration',
-                          style: TextStyle(
-                              fontSize: 21, fontWeight: FontWeight.bold)),
-                      SizedBox(height: 10),
-                      Row(children: [
-                        Text('Days '),
-                        TimeTextFormField(controller: daysController),
-                        SizedBox(width: 15),
-                        Text('Hours '),
-                        TimeTextFormField(controller: hoursController),
-                        SizedBox(width: 15),
-                        Text('Minutes '),
-                        TimeTextFormField(controller: minutesController),
-                      ]),
-                      SizedBox(height: 40),
-                      Align(
-                        alignment: Alignment.center,
-                        child: CupertinoButton(
-                          color: taskGroup.taskGroupColor[800],
-                          onPressed: () {
-                            FocusScope.of(context).unfocus();
-                            showDialog(
-                                context: context,
-                                useRootNavigator: true,
-                                builder: (ctx) => AlertDialog(
-                                        content: AddTaskWidget(
-                                      taskGroup: taskGroup,
-                                      addNewTask: addNewTask,
-                                    )),
-                                //,
-                                barrierDismissible: false);
-                          },
-                          child: Text('Add Task',
-                              style: Constants.coloredLabelTextStyle(
-                                  taskGroup.taskGroupColor[100])),
-                        ),
-                      )
-                    ],
-                  )),
-            ],
+          SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 70,
+                ),
+                Text('Create Task',
+                    style: Theme.of(context).textTheme.headline2),
+                Container(
+                    margin: const EdgeInsets.only(top: 20),
+                    decoration:
+                        BoxDecoration(color: taskGroup.taskGroupColor[100]),
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextFormField(
+                            cursorColor: Colors.grey,
+                            controller: titleController,
+                            style: TextStyle(fontSize: 26),
+                            showCursor: true,
+                            validator: (string) => string.isEmpty
+                                ? 'Enter a valid task group name'
+                                : null,
+                            decoration: InputDecoration(
+                              labelStyle: TextStyle(color: Colors.grey),
+                              labelText: 'Task Group Name',
+                              border: InputBorder.none,
+                            )),
+                        Text('Duration',
+                            style: TextStyle(
+                                fontSize: 21, fontWeight: FontWeight.bold)),
+                        SizedBox(height: 10),
+                        Row(children: [
+                          Text('Days '),
+                          TimeTextFormField(controller: daysController),
+                          SizedBox(width: 15),
+                          Text('Hours '),
+                          TimeTextFormField(controller: hoursController),
+                          SizedBox(width: 15),
+                          Text('Minutes '),
+                          TimeTextFormField(controller: minutesController),
+                        ]),
+                        SizedBox(height: 40),
+                        Align(
+                          alignment: Alignment.center,
+                          child: CupertinoButton(
+                            color: taskGroup.taskGroupColor[800],
+                            onPressed: () {
+                              FocusScope.of(context).unfocus();
+                              showDialog(
+                                  context: context,
+                                  useRootNavigator: true,
+                                  builder: (ctx) => AlertDialog(
+                                          content: AddTaskWidget(
+                                        taskGroup: taskGroup,
+                                        addNewTask: addNewTask,
+                                      )),
+                                  //,
+                                  barrierDismissible: false);
+                            },
+                            child: Text('Add Task',
+                                style: Constants.coloredLabelTextStyle(
+                                    taskGroup.taskGroupColor[100])),
+                          ),
+                        )
+                      ],
+                    )),
+              ],
+            ),
           ),
         ],
       ),
