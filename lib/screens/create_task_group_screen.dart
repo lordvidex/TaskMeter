@@ -1,14 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:task_meter/core/algorithms/time_divider.dart';
-import 'package:task_meter/core/errors.dart';
-import 'package:task_meter/injection_container.dart';
-import 'package:task_meter/models/settings.dart';
-import 'package:task_meter/providers/settings_provider.dart';
 
+import '../core/algorithms/time_divider.dart';
+import '../core/errors.dart';
+import '../models/settings.dart';
 import '../models/task.dart';
 import '../models/task_group.dart';
+import '../providers/settings_provider.dart';
 import '../providers/task_group_provider.dart';
 import '../widgets/create_task_group/task_group_panel_widget.dart';
 import '../widgets/task_group_description/task_card.dart';

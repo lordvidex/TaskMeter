@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:task_meter/models/task_group.dart';
 
 import '../models/settings.dart';
+import '../models/task_group.dart';
 
 const String SETTINGS = 'settings';
 const String TASKGROUPS = 'task_groups';

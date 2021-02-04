@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:task_meter/screens/create_task_group_screen.dart';
 
 import '../providers/task_group_provider.dart';
 import '../widgets/task_group_widget.dart';
+import 'create_task_group_screen.dart';
 
 class TaskGroupScreen extends StatelessWidget {
   static const routeName = '/task-group';

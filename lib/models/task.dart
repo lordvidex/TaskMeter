@@ -60,7 +60,6 @@ class Task extends Equatable {
     if (_totalTime == null || timeRemaining == null) {
       return 0;
     }
-    print('taskProgress: ${timeRemaining.inMilliseconds}');
     return (_totalTime.inMilliseconds - timeRemaining.inMilliseconds) /
         _totalTime.inMilliseconds;
   }

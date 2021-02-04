@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:task_meter/providers/task_group_provider.dart';
 
+import '../providers/task_group_provider.dart';
 import '../widgets/task_group_description/header_container_widget.dart';
 import '../widgets/task_group_description/task_card.dart';
 

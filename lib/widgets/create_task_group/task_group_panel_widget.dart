@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duration_picker/flutter_duration_picker.dart';
-import 'package:task_meter/core/utils/duration_utils.dart';
 
 import '../../core/constants.dart';
+import '../../core/utils/duration_utils.dart';
 import '../../models/task.dart';
 import '../../models/task_group.dart';
 import 'add_task_widget.dart';

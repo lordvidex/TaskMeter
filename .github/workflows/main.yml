@@ -5,9 +5,11 @@ name: CI running unit tests
 on:
   # Triggers the workflow on push or pull request events but only for the main branch	
   push:
-    branches: [ sprint1,feature/algorithms ]
+    branches:
+      - '**'
   pull_request:
-    branches: [ sprint1,feature/algorithms ]
+    branches:
+      - '**'
 
   # Allows you to run this workflow manually from the Actions tab	
   workflow_dispatch:

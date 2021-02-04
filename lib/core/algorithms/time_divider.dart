@@ -1,10 +1,9 @@
 import 'dart:math';
 
-import 'package:task_meter/core/utils/task_utils.dart';
-
 import '../../models/task.dart';
 import '../../models/task_group.dart';
 import '../errors.dart';
+import '../utils/task_utils.dart';
 
 class TimeDivider {
   ///This function throws [TaskTimerException] with an error description

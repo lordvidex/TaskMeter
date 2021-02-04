@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:task_meter/core/utils/duration_utils.dart';
-import 'package:task_meter/screens/task_timer_screen.dart';
 
 import '../../core/constants.dart';
+import '../../core/utils/duration_utils.dart';
 import '../../models/task.dart';
 import '../../models/task_group.dart';
+import '../../screens/task_timer_screen.dart';
 
 class TaskCard extends StatelessWidget {
   const TaskCard({

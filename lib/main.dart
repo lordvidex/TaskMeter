@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:task_meter/screens/task_group_screen.dart';
 
 import 'core/constants.dart';
 import 'injection_container.dart' as di;
@@ -9,6 +8,7 @@ import 'providers/task_group_provider.dart';
 import 'screens/create_task_group_screen.dart';
 import 'screens/error_screen.dart';
 import 'screens/task_group_description_screen.dart';
+import 'screens/task_group_screen.dart';
 import 'screens/task_timer_screen.dart';
 
 void main() async {

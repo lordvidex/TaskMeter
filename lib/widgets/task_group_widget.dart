@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:task_meter/providers/task_group_provider.dart';
-import 'package:task_meter/screens/task_group_description_screen.dart';
 
 import '../models/task_group.dart';
+import '../providers/task_group_provider.dart';
+import '../screens/task_group_description_screen.dart';
 import 'task_progress_indicator.dart';
 
 class TaskGroupWidget extends StatelessWidget {

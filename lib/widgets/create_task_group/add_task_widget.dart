@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:task_meter/core/constants.dart';
-import 'package:task_meter/models/task.dart';
+
+import '../../core/constants.dart';
+import '../../models/task.dart';
 import '../../models/task_group.dart';
 
 class AddTaskWidget extends StatefulWidget {

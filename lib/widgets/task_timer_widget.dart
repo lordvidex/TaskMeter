@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:task_meter/core/utils/duration_utils.dart';
-import 'package:task_meter/providers/task_group_provider.dart';
-import 'package:task_meter/screens/task_timer_screen.dart';
 
 import '../bloc/timer_bloc.dart';
+import '../core/utils/duration_utils.dart';
 import '../models/task.dart';
+import '../providers/task_group_provider.dart';
+import '../screens/task_timer_screen.dart';
 
 class TaskTimerWidget extends StatefulWidget {
   Task task;

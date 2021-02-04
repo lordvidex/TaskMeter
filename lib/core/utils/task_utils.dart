@@ -1,5 +1,5 @@
-import 'package:task_meter/core/errors.dart';
-import 'package:task_meter/models/task_group.dart';
+import '../../models/task_group.dart';
+import '../errors.dart';
 
 class TaskUtils {
   static validateUnitTime(double unitTaskTimeInMinutes, TaskGroup taskGroup) {
