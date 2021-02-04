@@ -23,8 +23,10 @@ class TaskCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return isClickable
         ? InkWell(
-            onTap: () => Navigator.of(context)
-                .pushNamed(TaskTimerScreen.routeName, arguments: _task),
+            onTap: () => _task.isCompleted
+                ? null
+                : Navigator.of(context)
+                    .pushNamed(TaskTimerScreen.routeName, arguments: _task),
             child: _TaskCard(taskGroup: taskGroup, task: _task),
           )
         : _TaskCard(taskGroup: taskGroup, task: _task);
@@ -45,6 +47,8 @@ class _TaskCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+        color:
+            _task.isCompleted ? Colors.grey : Theme.of(context).cardTheme.color,
         margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         elevation: 5,
@@ -78,11 +82,13 @@ class _TaskCard extends StatelessWidget {
                       taskGroup.taskGroupColor[800]),
                 ),
               ),
-              Text('${(_task.taskProgress * 100).toInt()}%',
-                  style: TextStyle(
-                      fontSize: 12,
-                      color: taskGroup.taskGroupColor[800],
-                      fontWeight: FontWeight.bold)),
+              _task.isCompleted
+                  ? Icon(Icons.check, color: Colors.green[800], size: 24)
+                  : Text('${(_task.taskProgress * 100).toInt()}%',
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: taskGroup.taskGroupColor[800],
+                          fontWeight: FontWeight.bold)),
             ],
           ),
         ));

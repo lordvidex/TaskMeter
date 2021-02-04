@@ -72,8 +72,8 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
 
   Stream<TimerState> _mapTimerFinishEventToState(
       TimerFinishEvent event) async* {
+    yield TimerFinished(state.duration);
     _tickerSubscription?.cancel();
-    if (state is TimerRunning) yield TimerFinished(state.duration);
     //TODO: add residual time to bonus time and save to database
   }
 }

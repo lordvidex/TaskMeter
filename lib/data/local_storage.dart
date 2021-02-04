@@ -29,7 +29,7 @@ class LocalStorageImpl extends LocalStorage {
     } else {
       // return the default settings and save it to the database
       await sharedPreferences.setString(
-          SETTINGS, json.encode(Settings.defaultSettings()));
+          SETTINGS, json.encode(Settings.defaultSettings().toJson()));
       return Settings.defaultSettings();
     }
   }

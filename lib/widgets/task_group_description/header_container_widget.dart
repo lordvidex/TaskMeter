@@ -19,13 +19,6 @@ class HeaderContainerWidget extends StatelessWidget {
       width: double.infinity,
       child: Stack(children: [
         Positioned(
-            top: 15,
-            left: 0,
-            child: IconButton(
-                onPressed: () => Navigator.of(context).pop(),
-                icon:
-                    Icon(CupertinoIcons.back, color: Colors.white, size: 32))),
-        Positioned(
             top: -10,
             right: -10,
             child: Icon(Icons.alarm,
@@ -36,9 +29,13 @@ class HeaderContainerWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20),
+              SizedBox(height: 10),
+              IconButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon:
+                      Icon(CupertinoIcons.back, color: Colors.white, size: 32)),
               Container(
-                margin: const EdgeInsets.only(bottom: 20, top: 10),
+                margin: const EdgeInsets.only(bottom: 20, top: 0),
                 constraints: BoxConstraints(maxHeight: 150),
                 width: MediaQuery.of(context).size.width - 170,
                 child: Text(taskGroup.taskGroupName,

@@ -26,15 +26,6 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
 
   /// TextEditingController for the TaskGroupTitle
   TextEditingController taskGroupTitleController;
-
-  /// TextEditingController for the days
-  TextEditingController durationDaysController;
-
-  /// TextEditingController for the hours
-  TextEditingController durationHoursController;
-
-  /// TextEditingController for the minutes
-  TextEditingController durationMinutesController;
   @override
   void initState() {
     super.initState();
@@ -43,16 +34,15 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
     newTaskGroup = TaskGroup('',
         longBreakIntervals: settings.longBreakIntervals,
         shortBreakTime: settings.shortBreak,
-        longBreakTime: settings.longBreak);
+        longBreakTime: settings.longBreak,
+        totalTime: settings.totalTime);
     taskGroupTitleController = TextEditingController();
-    durationDaysController = TextEditingController(text: '0');
-    durationHoursController = TextEditingController(text: '0');
-    durationMinutesController = TextEditingController(text: '0');
   }
 
   @override
   void dispose() {
     super.dispose();
+    taskGroupTitleController.dispose();
   }
 
   void createTaskGroup(BuildContext scaffoldContext) {
@@ -60,10 +50,6 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
       return;
     }
     newTaskGroup.taskGroupName = taskGroupTitleController.text;
-    newTaskGroup.totalTime = Duration(
-        days: int.parse(durationDaysController.text),
-        hours: int.parse(durationHoursController.text),
-        minutes: int.parse(durationMinutesController.text));
     //TODO: do validations
     try {
       TimeDivider.divideTimeByTask(newTaskGroup);
@@ -99,13 +85,11 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TaskGroupPanel(
-                          createTaskGroup: createTaskGroup,
-                          addNewTask: addNewTask,
-                          taskGroup: newTaskGroup,
-                          titleController: taskGroupTitleController,
-                          daysController: durationDaysController,
-                          hoursController: durationHoursController,
-                          minutesController: durationMinutesController),
+                        createTaskGroup: createTaskGroup,
+                        addNewTask: addNewTask,
+                        taskGroup: newTaskGroup,
+                        titleController: taskGroupTitleController,
+                      ),
                       Expanded(
                         child: ListView.builder(
                           itemBuilder: (ctx, index) => TaskCard(

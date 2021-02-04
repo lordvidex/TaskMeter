@@ -16,19 +16,16 @@ class TaskGroupDescriptionScreen extends StatelessWidget {
       child: SafeArea(
         child: Column(
           children: [
-            Flexible(
-              flex: 3,
-              child: HeaderContainerWidget(taskGroup: taskGroup),
-            ),
-            Flexible(
-                flex: 7,
-                child: ListView.builder(
-                  itemBuilder: (ctx, index) {
-                    return TaskCard(
-                        taskGroup: taskGroup, task: taskGroup.tasks[index]);
-                  },
-                  itemCount: taskGroup.tasks.length,
-                ))
+            HeaderContainerWidget(taskGroup: taskGroup),
+            Expanded(
+              child: ListView.builder(
+                itemBuilder: (ctx, index) {
+                  return TaskCard(
+                      taskGroup: taskGroup, task: taskGroup.sortedTasks[index]);
+                },
+                itemCount: taskGroup.tasks.length,
+              ),
+            )
           ],
         ),
       ),
