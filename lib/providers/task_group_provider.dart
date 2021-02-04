@@ -1,15 +1,14 @@
 import 'package:flutter/foundation.dart';
-import 'package:task_meter/models/task.dart';
 
+import '../models/task.dart';
 import '../models/task_group.dart';
+import '../repositories/task_group_repository.dart';
 
 class TaskGroupProvider extends ChangeNotifier {
-  // final TaskGroupRepository taskGroupRepo;
-  TaskGroupProvider() {
-    _loadTaskGroups();
+  final TaskGroupRepository taskGroupRepo;
+  TaskGroupProvider({this.taskGroupRepo}) {
     _isBreak = false;
   }
-  //: _localStorage = localStorage;
   List<TaskGroup> _groups;
 
   List<TaskGroup> get taskGroups => _groups;
@@ -36,21 +35,24 @@ class TaskGroupProvider extends ChangeNotifier {
   }
 
   /// Called when app is opened
-  Future<void> _loadTaskGroups() async {
-    //TODO: load taskGroups from local storage / remote storage for web
-    _groups = [];
+  Future<void> loadTaskGroups() async {
+    try {
+      _groups = await taskGroupRepo.fetchTaskGroups();
+    } catch (e) {
+      _groups = [];
+    }
   }
 
   void deleteTaskGroup(String id) {
     _groups.removeWhere((taskGroup) => taskGroup.taskGroupId == id);
     notifyListeners();
-    //TODO: update database asynchronously
+    taskGroupRepo.updateTaskGroups(_groups);
   }
 
   void addTaskGroup(TaskGroup taskGroup) {
     _groups.add(taskGroup);
-    //TODO: update database asynchronously
     notifyListeners();
+    taskGroupRepo.updateTaskGroups(_groups);
   }
 
   void setCurrentTaskGroup(TaskGroup taskGroup) {
@@ -60,6 +62,7 @@ class TaskGroupProvider extends ChangeNotifier {
 
   void updateTaskTime(Task task, Duration newTime) {
     task.timeRemaining = newTime;
+    taskGroupRepo.updateTaskGroups(_groups);
     notifyListeners();
   }
 
@@ -69,5 +72,6 @@ class TaskGroupProvider extends ChangeNotifier {
     else
       _current.bonusTime += duration;
     notifyListeners();
+    taskGroupRepo.updateTaskGroups(_groups);
   }
 }

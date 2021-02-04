@@ -13,28 +13,23 @@ class Settings {
   });
 
   ///shortBreak and longBreaks are stored in seconds [int] in shared_preferences
-  factory Settings.fromJson(Map<String, dynamic> json) {
-    return Settings(
-      totalTime: Duration(seconds: json['total_time']),
-      longBreakIntervals: json['long_break_intervals'],
-      shortBreak: Duration(seconds: json['short_break']),
-      longBreak: Duration(seconds: json['long_break']),
-    );
-  }
-  factory Settings.defaultSettings() {
-    return Settings(
-      longBreakIntervals: 3,
-      totalTime: Duration(minutes: 30),
-      shortBreak: Duration(minutes: 1),
-      longBreak: Duration(minutes: 5),
-    );
-  }
-  Map<String, dynamic> toJson() {
-    return {
-      'total_time': totalTime.inSeconds,
-      'long_break_intervals': longBreakIntervals,
-      'short_break': shortBreak.inSeconds,
-      'long_break': longBreak.inSeconds,
-    };
-  }
+  factory Settings.fromJson(Map<String, dynamic> json) => Settings(
+        totalTime: Duration(seconds: json['total_time']),
+        longBreakIntervals: json['long_break_intervals'],
+        shortBreak: Duration(seconds: json['short_break']),
+        longBreak: Duration(seconds: json['long_break']),
+      );
+
+  factory Settings.defaultSettings() => Settings(
+        longBreakIntervals: 3,
+        totalTime: Duration(minutes: 30),
+        shortBreak: Duration(minutes: 1),
+        longBreak: Duration(minutes: 5),
+      );
+  Map<String, dynamic> toJson() => {
+        'total_time': totalTime.inSeconds,
+        'long_break_intervals': longBreakIntervals,
+        'short_break': shortBreak.inSeconds,
+        'long_break': longBreak.inSeconds,
+      };
 }

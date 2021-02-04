@@ -17,9 +17,35 @@ class Task extends Equatable {
   //TODO: compute timeRemaining when user has started the task
   Duration timeRemaining;
 
-  Task(
-      {this.taskName = 'Default TaskName', this.difficulty = Difficulty.Medium})
-      : this.taskId = Uuid().v1();
+  Task({
+    String taskId,
+    this.taskName = 'Default TaskName',
+    this.difficulty = Difficulty.Medium,
+    Duration totalTime,
+    this.timeRemaining,
+  })  : this._totalTime = totalTime,
+        this.taskId = taskId ?? Uuid().v1();
+
+  factory Task.fromJson(Map<String, dynamic> json) => Task(
+        taskId: json['task_id'],
+        taskName: json['task_name'],
+        timeRemaining: json['time_remaining'] == null
+            ? null
+            : Duration(seconds: json['time_remaining']),
+        totalTime: json['total_time'] == null
+            ? null
+            : Duration(seconds: json['total_time']),
+        difficulty: Difficulty.values[json['difficulty']],
+      );
+  Map<String, dynamic> toJson() {
+    return {
+      'task_id': taskId,
+      'task_name': taskName,
+      'difficulty': difficulty.index,
+      'total_time': _totalTime?.inSeconds,
+      'time_remaining': timeRemaining?.inSeconds,
+    };
+  }
 
   // returns the totalTime calculated by the algorithm
   Duration get totalTime => _totalTime;

@@ -6,7 +6,7 @@ import '../core/utils/color_utils.dart';
 import 'task.dart';
 
 class TaskGroup extends Equatable {
-  final String taskGroupId;
+  String taskGroupId;
 
   ///name of the group of tasks
   String taskGroupName;
@@ -18,7 +18,7 @@ class TaskGroup extends Equatable {
   Duration totalTime;
 
   /// color assigned in TaskGroup
-  final MaterialColor taskGroupColor;
+  MaterialColor taskGroupColor;
 
   /// list of tasks to complete
   List<Task> tasks;
@@ -41,6 +41,9 @@ class TaskGroup extends Equatable {
 
   TaskGroup(
     this.taskGroupName, {
+    String taskGroupId,
+    List<Task> tasks,
+    MaterialColor taskGroupColor,
     this.taskGroupSubtitle = '',
     this.isRepetitive = false,
     this.longBreakTime,
@@ -48,9 +51,52 @@ class TaskGroup extends Equatable {
     this.longBreakIntervals,
     this.totalTime,
     this.bonusTime = Duration.zero,
-  })  : taskGroupId = Uuid().v1(),
-        tasks = <Task>[],
-        taskGroupColor = ColorUtils.randomColor();
+  })  : this.taskGroupId = taskGroupId ?? Uuid().v1(),
+        this.tasks = tasks ?? <Task>[],
+        this.taskGroupColor = taskGroupColor ?? ColorUtils.randomColor();
+
+  factory TaskGroup.fromJson(Map<String, dynamic> json) => TaskGroup(
+        json['task_group_name'],
+        taskGroupId: json['task_group_id'],
+        tasks: json['tasks']
+            .map<Task>((taskJson) => Task.fromJson(taskJson))
+            .toList(),
+        taskGroupColor:
+            ColorUtils.getMaterialColorInPos(json['task_group_color']),
+        taskGroupSubtitle: json['task_group_subtitle'],
+        isRepetitive: json['is_repetitive'],
+        longBreakTime: json['long_break_time'] == null
+            ? null
+            : Duration(seconds: json['long_break_time']),
+        shortBreakTime: json['short_break_time'] == null
+            ? null
+            : Duration(seconds: json['short_break_time']),
+        longBreakIntervals: json['long_break_intervals'],
+        totalTime: json['total_time'] == null
+            ? null
+            : Duration(seconds: json['total_time']),
+        bonusTime: json['bonus_time'] == null
+            ? null
+            : Duration(seconds: json['bonus_time']),
+      );
+
+  /// In the database, the `taskGroupId` is the [key] and the `toJson` is the [value]
+  /// * Durations are stored `inSeconds` in database
+  Map<String, dynamic> toJson() {
+    return {
+      'task_group_id': taskGroupId,
+      'task_group_name': taskGroupName,
+      'tasks': tasks.map((task) => task.toJson()).toList(),
+      'task_group_subtitle': taskGroupSubtitle,
+      'is_repetitive': isRepetitive,
+      'long_break_time': longBreakTime?.inSeconds,
+      'short_break_time': shortBreakTime?.inSeconds,
+      'long_break_intervals': longBreakIntervals,
+      'total_time': totalTime?.inSeconds,
+      'bonus_time': bonusTime?.inSeconds,
+      'task_group_color': ColorUtils.getPositionOfMaterialColor(taskGroupColor)
+    };
+  }
 
   int get completedCount => tasks.fold<int>(
       0, (prev, element) => prev + (element.isCompleted ? 1 : 0));
