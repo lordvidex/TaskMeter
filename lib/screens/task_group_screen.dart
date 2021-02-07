@@ -48,7 +48,22 @@ class TaskGroupScreen extends StatelessWidget {
                   ),
                 );
             },
-            child: SliverToBoxAdapter(child: Center(child: Text('Empty List'))),
+            child: SliverToBoxAdapter(
+                child: Center(
+                    child: Column(
+              children: [
+                Image.asset('assets/images/donkey.png'),
+                Text('Task Group list is empty.'),
+                Flex(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    direction: Axis.horizontal,
+                    children: [
+                      Text('Click on '),
+                      Icon(Icons.add),
+                      Text('to add new Task Group')
+                    ]),
+              ],
+            ))),
           )
         ]));
   }

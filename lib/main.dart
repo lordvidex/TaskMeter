@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: Constants.kThemeData,
+          title: 'Task Meter',
           home: TaskGroupScreen(),
           routes: {
             TaskGroupScreen.routeName: (_) => TaskGroupScreen(),

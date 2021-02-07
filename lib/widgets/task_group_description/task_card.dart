@@ -27,9 +27,11 @@ class TaskCard extends StatelessWidget {
                 ? null
                 : Navigator.of(context)
                     .pushNamed(TaskTimerScreen.routeName, arguments: _task),
-            child: _TaskCard(taskGroup: taskGroup, task: _task),
+            child: _TaskCard(
+                taskGroup: taskGroup, task: _task, isClickable: isClickable),
           )
-        : _TaskCard(taskGroup: taskGroup, task: _task);
+        : _TaskCard(
+            taskGroup: taskGroup, task: _task, isClickable: isClickable);
   }
 }
 
@@ -38,11 +40,44 @@ class _TaskCard extends StatelessWidget {
     Key key,
     @required this.taskGroup,
     @required Task task,
+    @required this.isClickable,
   })  : _task = task,
         super(key: key);
 
   final TaskGroup taskGroup;
   final Task _task;
+  final bool isClickable;
+
+  @override
+  Widget build(BuildContext context) {
+    return isClickable
+        ? MainTaskCard(task: _task, taskGroup: taskGroup)
+        : Dismissible(
+            background: Container(
+                color: Colors.red,
+                margin: const EdgeInsets.symmetric(horizontal: 15),
+                child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Icon(Icons.delete, color: Colors.white))),
+            key: ValueKey(_task.taskId),
+            direction: DismissDirection.endToStart,
+            onDismissed: (direction) =>
+                taskGroup.tasks.removeWhere((t) => t.taskId == _task.taskId),
+            child: MainTaskCard(task: _task, taskGroup: taskGroup),
+          );
+  }
+}
+
+class MainTaskCard extends StatelessWidget {
+  const MainTaskCard({
+    Key key,
+    @required Task task,
+    @required this.taskGroup,
+  })  : _task = task,
+        super(key: key);
+
+  final Task _task;
+  final TaskGroup taskGroup;
 
   @override
   Widget build(BuildContext context) {

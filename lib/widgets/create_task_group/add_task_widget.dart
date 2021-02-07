@@ -28,7 +28,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
     setState(() {
       _hasError = false;
     });
-    if (_taskNameController.text.isEmpty) {
+    if (_taskNameController.text.trim().isEmpty) {
       setState(() {
         _hasError = true;
       });
@@ -45,8 +45,8 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
       default:
         diff = Difficulty.Medium;
     }
-    widget
-        .addNewTask(Task(taskName: _taskNameController.text, difficulty: diff));
+    widget.addNewTask(
+        Task(taskName: _taskNameController.text.trim(), difficulty: diff));
     Navigator.of(context).pop();
   }
 

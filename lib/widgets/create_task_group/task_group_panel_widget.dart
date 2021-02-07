@@ -28,15 +28,9 @@ class TaskGroupPanel extends StatefulWidget {
 
 class _TaskGroupPanelState extends State<TaskGroupPanel> {
   TextEditingController _durationController;
-  Duration _shortBreakDuration;
-  Duration _longBreakDuration;
-  int _longBreakIntervals;
   @override
   void initState() {
     super.initState();
-    _shortBreakDuration = widget.taskGroup.shortBreakTime;
-    _longBreakDuration = widget.taskGroup.longBreakTime;
-    _longBreakIntervals = widget.taskGroup.longBreakIntervals;
     _durationController = TextEditingController(
         text:
             DurationUtils.durationToReadableString(widget.taskGroup.totalTime));
@@ -89,6 +83,7 @@ class _TaskGroupPanelState extends State<TaskGroupPanel> {
           SizedBox(height: 10),
           Text('Create Task', style: Theme.of(context).textTheme.headline2),
           Container(
+              width: MediaQuery.of(context).size.width,
               margin: const EdgeInsets.only(top: 20),
               decoration:
                   BoxDecoration(color: widget.taskGroup.taskGroupColor[100]),
@@ -135,10 +130,10 @@ class _TaskGroupPanelState extends State<TaskGroupPanel> {
                       children: [
                         DropdownButton<Duration>(
                             value: widget.taskGroup.shortBreakTime,
-                            hint: Text('Short Break Duration'),
+                            hint: Text('Short Break'),
                             onChanged: (x) {
                               widget.taskGroup.shortBreakTime = x;
-                              setState(() => _shortBreakDuration = x);
+                              setState(() {});
                             },
                             items: List.generate(
                                 16,
@@ -147,10 +142,10 @@ class _TaskGroupPanelState extends State<TaskGroupPanel> {
                                     child: Text('$x minutes')))),
                         DropdownButton<Duration>(
                             value: widget.taskGroup.longBreakTime,
-                            hint: Text('Long Break Duration'),
+                            hint: Text('Long Break'),
                             onChanged: (x) {
                               widget.taskGroup.longBreakTime = x;
-                              setState(() => _longBreakDuration = x);
+                              setState(() {});
                             },
                             items: List.generate(
                                 7,
