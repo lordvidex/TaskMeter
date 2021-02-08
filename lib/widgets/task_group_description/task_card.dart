@@ -17,6 +17,9 @@ class TaskCard extends StatelessWidget {
 
   final TaskGroup taskGroup;
   final Task _task;
+
+  /// isTrue when user is in the description screen and false
+  /// when user is in the create taskgroup screen
   final bool isClickable;
 
   @override

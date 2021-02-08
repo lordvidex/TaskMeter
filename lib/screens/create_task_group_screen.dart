@@ -83,20 +83,37 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TaskGroupPanel(
-                        createTaskGroup: createTaskGroup,
-                        addNewTask: addNewTask,
-                        taskGroup: newTaskGroup,
-                        titleController: taskGroupTitleController,
+                      Expanded(
+                        flex: 2,
+                        child: TaskGroupPanel(
+                          createTaskGroup: createTaskGroup,
+                          addNewTask: addNewTask,
+                          taskGroup: newTaskGroup,
+                          titleController: taskGroupTitleController,
+                        ),
                       ),
                       Expanded(
-                        child: ListView.builder(
-                          itemBuilder: (ctx, index) => TaskCard(
-                              taskGroup: newTaskGroup,
-                              isClickable: false,
-                              task: newTaskGroup.tasks[index]),
-                          itemCount: newTaskGroup.tasks.length,
-                        ),
+                        child: newTaskGroup.tasks.length == 0
+                            ? Center(
+                                child: Flex(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  direction: Axis.horizontal,
+                                  children: [
+                                    Text('Click '),
+                                    Text('Add Task ',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    Text('to add a new task')
+                                  ],
+                                ),
+                              )
+                            : ListView.builder(
+                                itemBuilder: (ctx, index) => TaskCard(
+                                    taskGroup: newTaskGroup,
+                                    isClickable: false,
+                                    task: newTaskGroup.tasks[index]),
+                                itemCount: newTaskGroup.tasks.length,
+                              ),
                       ),
                     ]),
               ),
