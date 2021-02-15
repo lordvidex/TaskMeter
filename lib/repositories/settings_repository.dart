@@ -1,27 +1,48 @@
-import 'package:task_meter/data/local_storage.dart';
+import 'package:task_meter/core/utils/merge_utils.dart';
 
+import '../data/local_storage.dart';
+import '../data/remote_storage.dart';
 import '../models/settings.dart';
 
 abstract class SettingsRepository {
   /// Fetch settings from database
-  Future<Settings> getSettings();
+  Future<Settings> fetchSettings();
 
   /// update setting in the database
-  Future<void> updateSettings(Settings newSetting);
+  Future<void> updateSettings(Settings newSetting, {DateTime time});
 }
 
 class SettingsRepositoryImpl extends SettingsRepository {
   final LocalStorage _localStorage;
-  SettingsRepositoryImpl({LocalStorage localStorage})
+  final RemoteStorage _remoteStorage;
+  SettingsRepositoryImpl(
+      {LocalStorage localStorage, RemoteStorage remoteStorage})
       : assert(localStorage != null),
-        _localStorage = localStorage;
+        assert(remoteStorage != null),
+        _localStorage = localStorage,
+        _remoteStorage = remoteStorage;
   @override
-  Future<Settings> getSettings() {
-    return _localStorage.fetchSettings();
+  Future<Settings> fetchSettings() async {
+    final remoteSettings = await _remoteStorage.fetchSettings();
+    final localSettings = await _localStorage.fetchSettings();
+    if (remoteSettings == null) {
+      updateSettings(localSettings);
+      return localSettings;
+    }
+    final latestSettings =
+        MergeUtils.mergeSettings(remoteSettings, localSettings);
+    updateSettings(latestSettings, time: latestSettings.timeOfUpload);
+    return latestSettings;
   }
 
   @override
-  Future<void> updateSettings(Settings newSetting) {
-    return _localStorage.updateSettings(newSetting);
+  Future<void> updateSettings(Settings newSetting, {DateTime time}) async {
+    newSetting.setUpdateTime(time ?? DateTime.now());
+    try {
+      await _remoteStorage.updateSettings(newSetting);
+    } catch (e) {
+      print(e);
+    }
+    await _localStorage.updateSettings(newSetting);
   }
 }

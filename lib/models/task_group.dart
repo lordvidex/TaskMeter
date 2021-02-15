@@ -14,6 +14,10 @@ class TaskGroup extends Equatable {
   /// description of the taskGroup
   final String taskGroupSubtitle;
 
+  /// Time of upload to both database and server which is used
+  /// to distinguish a current data from an old data.
+  final DateTime timeOfUpload;
+
   /// total time user plans to finish the task
   Duration totalTime;
 
@@ -41,6 +45,7 @@ class TaskGroup extends Equatable {
 
   TaskGroup(
     this.taskGroupName, {
+    this.timeOfUpload,
     String taskGroupId,
     List<Task> tasks,
     MaterialColor taskGroupColor,
@@ -58,6 +63,7 @@ class TaskGroup extends Equatable {
   factory TaskGroup.fromJson(Map<String, dynamic> json) => TaskGroup(
         json['task_group_name'],
         taskGroupId: json['task_group_id'],
+        timeOfUpload: DateTime.tryParse(json['time_of_upload'] ?? ''),
         tasks: json['tasks']
             .map<Task>((taskJson) => Task.fromJson(taskJson))
             .toList(),
@@ -84,6 +90,7 @@ class TaskGroup extends Equatable {
   /// * Durations are stored `inSeconds` in database
   Map<String, dynamic> toJson() {
     return {
+      'time_of_upload': timeOfUpload?.toIso8601String(),
       'task_group_id': taskGroupId,
       'task_group_name': taskGroupName,
       'tasks': tasks.map((task) => task.toJson()).toList(),

@@ -10,13 +10,23 @@ class SettingsProvider extends ChangeNotifier {
       : _settingsRepository = settingsRepo;
   Settings get settings => _settings;
   Future<void> loadSettings() async {
-    _settings = await _settingsRepository.getSettings();
+    _settings = await _settingsRepository.fetchSettings();
     notifyListeners();
   }
 
-  updateSettings(Settings newSetting) async {
+  void updateSettings(Settings newSetting) async {
     _settings = newSetting;
     notifyListeners();
     await _settingsRepository.updateSettings(newSetting);
+  }
+
+  void toDarkMode() {
+    _settings.isDarkMode = true;
+    updateSettings(_settings);
+  }
+
+  void toLightMode() {
+    _settings.isDarkMode = false;
+    updateSettings(_settings);
   }
 }

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/task_group_provider.dart';
-import '../widgets/task_group_widget.dart';
+import '../widgets/task_group/task_group_widget.dart';
 import 'create_task_group_screen.dart';
+import 'settings_screen.dart';
 
 class TaskGroupScreen extends StatelessWidget {
   static const routeName = '/task-group';
@@ -20,17 +21,19 @@ class TaskGroupScreen extends StatelessWidget {
           SliverAppBar(
             actions: [
               IconButton(
-                icon: Icon(Icons.settings, color: Colors.black),
-                onPressed: () {},
+                icon: Icon(
+                  Icons.settings,
+                ),
+                onPressed: () =>
+                    Navigator.of(context).pushNamed(SettingsScreen.routeName),
               )
             ],
-            backgroundColor: Colors.white,
+            //backgroundColor: Colors.white,
             expandedHeight: 120,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               title: Text('Task Groups',
-                  style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold)),
+                  style: Theme.of(context).textTheme.headline2),
             ),
           ),
           Consumer<TaskGroupProvider>(

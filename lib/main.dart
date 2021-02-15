@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task_meter/screens/settings_screen.dart';
 
 import 'core/constants.dart';
 import 'injection_container.dart' as di;
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: Constants.kThemeData,
+          darkTheme: Constants.kDarkThemeData,
           title: 'Task Meter',
           home: TaskGroupScreen(),
           routes: {
@@ -40,6 +42,7 @@ class MyApp extends StatelessWidget {
             TaskTimerScreen.routeName: (_) => TaskTimerScreen(),
             TaskGroupDescriptionScreen.routeName: (_) =>
                 TaskGroupDescriptionScreen(),
+            SettingsScreen.routeName: (_) => SettingsScreen(),
             ErrorScreen.routeName: (_) => ErrorScreen(),
             CreateTaskGroupScreen.routeName: (_) => CreateTaskGroupScreen(),
           }),

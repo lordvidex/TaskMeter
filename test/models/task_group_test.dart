@@ -56,9 +56,11 @@ void main() {
           totalTime: totalTime);
       final expectedJson = {
         'task_group_name': taskGroupName,
-        'task_group_color': ColorUtils.getPositionOfMaterialColor(color),
+        ''
+            'task_group_color': ColorUtils.getPositionOfMaterialColor(color),
         'bonus_time': 0,
         'is_repetitive': false,
+        'time_of_upload': null,
         'long_break_intervals': 2,
         'long_break_time': longBreak.inSeconds,
         'short_break_time': shortBreak.inSeconds,
@@ -89,6 +91,7 @@ void main() {
         'task_group_name': taskGroupName,
         'task_group_color': ColorUtils.getPositionOfMaterialColor(color),
         'bonus_time': 0,
+        'time_of_upload': null,
         'is_repetitive': false,
         'long_break_intervals': 2,
         'long_break_time': longBreak.inSeconds,

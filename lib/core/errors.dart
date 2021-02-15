@@ -24,3 +24,6 @@ class TaskTimerException implements Exception {
     return super.toString();
   }
 }
+
+/// Thrown when there is no access to Internet
+class NetworkException implements Exception {}

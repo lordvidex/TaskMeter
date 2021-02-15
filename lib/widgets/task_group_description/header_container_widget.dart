@@ -38,13 +38,21 @@ class HeaderContainerWidget extends StatelessWidget {
                 margin: const EdgeInsets.only(bottom: 20, top: 0),
                 constraints: BoxConstraints(maxHeight: 150),
                 width: MediaQuery.of(context).size.width - 170,
-                child: Text(taskGroup.taskGroupName,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.headline1),
+                child: Text(
+                  taskGroup.taskGroupName,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      fontSize: 30,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
               Text('${taskGroup.tasks.length} tasks',
-                  style: Theme.of(context).textTheme.headline3),
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold)),
               SizedBox(height: 10),
               Text('progress',
                   style: Constants.coloredLabelTextStyle(

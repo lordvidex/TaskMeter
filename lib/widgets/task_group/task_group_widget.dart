@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-import '../models/task_group.dart';
-import '../providers/task_group_provider.dart';
-import '../screens/task_group_description_screen.dart';
-import 'task_progress_indicator.dart';
+import '../../models/task_group.dart';
+import '../../providers/task_group_provider.dart';
+import '../../screens/task_group_description_screen.dart';
+import '../task_progress_indicator.dart';
 
 class TaskGroupWidget extends StatelessWidget {
   final TaskGroup taskGroup;
@@ -44,8 +44,13 @@ class TaskGroupWidget extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(taskGroup.taskGroupName,
-                          style: Theme.of(context).textTheme.headline3),
+                      Text(
+                        taskGroup.taskGroupName,
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
                       SizedBox(height: 20),
                       Text(taskGroup.taskGroupSubtitle,
                           style: Theme.of(context).textTheme.bodyText1),

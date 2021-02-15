@@ -102,7 +102,10 @@ class MainTaskCard extends StatelessWidget {
                     fontWeight: FontWeight.bold)),
           ),
           title: Text(_task.taskName,
-              style: Constants.coloredLabelTextStyle(Colors.black)),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              )),
           subtitle: Text(
               DurationUtils.durationToReadableString(
                   _task.timeRemaining ?? Duration.zero),
@@ -113,6 +116,8 @@ class MainTaskCard extends StatelessWidget {
               Container(
                 width: 40,
                 height: 40,
+                decoration:
+                    BoxDecoration(shape: BoxShape.circle, color: Colors.white),
                 child: CircularProgressIndicator(
                   value: _task.taskProgress,
                   backgroundColor: taskGroup.taskGroupColor[100],

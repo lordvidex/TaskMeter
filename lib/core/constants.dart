@@ -19,8 +19,8 @@ class Constants {
   static ThemeData kThemeData = ThemeData(
       iconTheme: IconThemeData(color: Colors.black, size: 40, opacity: 1.0),
       textTheme: TextTheme(
-          bodyText1: TextStyle(color: Colors.white),
-          bodyText2: TextStyle(color: Colors.black),
+          bodyText1: TextStyle(color: Colors.white, fontSize: 16),
+          bodyText2: TextStyle(color: Colors.black, fontSize: 16),
           headline3: TextStyle(
               fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
           headline4: TextStyle(
@@ -29,4 +29,19 @@ class Constants {
               fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
           headline2: TextStyle(
               fontSize: 30, color: Colors.black, fontWeight: FontWeight.bold)));
+  static ThemeData kDarkThemeData = ThemeData(
+      brightness: Brightness.dark,
+      iconTheme: IconThemeData(color: Colors.white, size: 40, opacity: 1.0),
+      textTheme: TextTheme(
+          subtitle1: TextStyle(color: Colors.black),
+          bodyText1: TextStyle(color: Colors.black, fontSize: 16),
+          bodyText2: TextStyle(color: Colors.white, fontSize: 16),
+          headline3: TextStyle(
+              fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
+          headline4: TextStyle(
+              fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+          headline1: TextStyle(
+              fontSize: 30, color: Colors.black, fontWeight: FontWeight.bold),
+          headline2: TextStyle(
+              fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold)));
 }

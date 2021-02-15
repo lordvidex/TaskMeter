@@ -71,6 +71,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
               Text('Task Name', style: Theme.of(context).textTheme.headline4),
               TextField(
                   controller: _taskNameController,
+                  style: Theme.of(context).textTheme.bodyText2,
                   cursorColor: widget.taskGroup.taskGroupColor[200],
                   decoration: InputDecoration(
                       errorText: _hasError ? 'Enter task name' : null,

@@ -94,17 +94,21 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                       ),
                       Expanded(
                         child: newTaskGroup.tasks.length == 0
-                            ? Center(
-                                child: Flex(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  direction: Axis.horizontal,
-                                  children: [
-                                    Text('Click '),
-                                    Text('Add Task ',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold)),
-                                    Text('to add a new task')
-                                  ],
+                            ? Align(
+                                alignment: Alignment.topCenter,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 10.0),
+                                  child: Flex(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    direction: Axis.horizontal,
+                                    children: [
+                                      Text('Click '),
+                                      Text('Add Task ',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      Text('to add a new task')
+                                    ],
+                                  ),
                                 ),
                               )
                             : ListView.builder(
