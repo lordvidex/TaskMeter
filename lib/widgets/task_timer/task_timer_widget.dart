@@ -145,7 +145,7 @@ class _TaskTimerWidgetState extends State<TaskTimerWidget> {
           Center(
               child: Text(
                   '${DurationUtils.durationToClockString(state.duration)}',
-                  style: Theme.of(context).textTheme.headline2)),
+                  style: Theme.of(context).textTheme.headline1)),
           Positioned(
               bottom: 20,
               child: Row(children: [

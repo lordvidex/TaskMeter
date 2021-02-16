@@ -67,13 +67,13 @@ class TaskLabelWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 12.0),
             child: IconButton(
-                icon: Icon(CupertinoIcons.back, size: 44, color: Colors.black),
+                icon: Icon(CupertinoIcons.back, size: 44),
                 onPressed: () => _back(context)),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 50, left: 10),
             child: Text(task.taskName,
-                style: Theme.of(context).textTheme.headline2),
+                style: Theme.of(context).textTheme.headline1),
           ),
         ],
       ),

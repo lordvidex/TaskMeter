@@ -52,65 +52,67 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 250,
-      child: Stack(
-        children: [
-          Positioned(
-              top: -10,
-              right: -10,
-              child: IconButton(
-                onPressed: () => Navigator.of(context).pop(),
-                icon: Icon(Icons.cancel,
-                    size: 25, color: widget.taskGroup.taskGroupColor[600]),
-              )),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 30),
-              Text('Task Name', style: Theme.of(context).textTheme.headline4),
-              TextField(
-                  controller: _taskNameController,
-                  style: Theme.of(context).textTheme.bodyText2,
-                  cursorColor: widget.taskGroup.taskGroupColor[200],
-                  decoration: InputDecoration(
-                      errorText: _hasError ? 'Enter task name' : null,
-                      border: InputBorder.none,
-                      labelText: 'Type task name...',
-                      labelStyle: Constants.coloredLabelTextStyle(
-                          widget.taskGroup.taskGroupColor[600]))),
-              Text('Difficulty', style: Theme.of(context).textTheme.headline4),
-              RatingBar.builder(
-                initialRating: _rating,
-                minRating: 1,
-                maxRating: 3,
-                itemBuilder: (ctx, index) => Icon(Icons.star,
-                    color: widget.taskGroup.taskGroupColor[500]),
-                itemCount: 3,
-                onRatingUpdate: (x) => setState(() {
-                  _rating = x;
-                }),
-                glow: true,
-                glowColor: Colors.red,
-              ),
-              SizedBox(height: 20),
-              Align(
-                alignment: Alignment.center,
-                child: SizedBox(
-                    //width: 150,
-                    height: 33,
-                    child: CupertinoButton(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 40,
-                        ),
-                        child: Text('Add',
-                            style: TextStyle(fontWeight: FontWeight.bold)),
-                        onPressed: addTask,
-                        color: widget.taskGroup.taskGroupColor[600])),
-              )
-            ],
-          )
-        ],
+    return SingleChildScrollView(
+      child: Container(
+        height: 250,
+        child: Stack(
+          children: [
+            Positioned(
+                top: -10,
+                right: -10,
+                child: IconButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: Icon(Icons.cancel,
+                      size: 25, color: widget.taskGroup.taskGroupColor[600]),
+                )),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 30),
+                Text('Task Name', style: Theme.of(context).textTheme.headline3),
+                TextField(
+                    controller: _taskNameController,
+                    cursorColor: widget.taskGroup.taskGroupColor[200],
+                    decoration: InputDecoration(
+                        errorText: _hasError ? 'Enter task name' : null,
+                        border: InputBorder.none,
+                        labelText: 'Type task name...',
+                        labelStyle: Constants.coloredLabelTextStyle(
+                            widget.taskGroup.taskGroupColor[600]))),
+                Text('Difficulty',
+                    style: Theme.of(context).textTheme.headline3),
+                RatingBar.builder(
+                  initialRating: _rating,
+                  minRating: 1,
+                  maxRating: 3,
+                  itemBuilder: (ctx, index) => Icon(Icons.star,
+                      color: widget.taskGroup.taskGroupColor[500]),
+                  itemCount: 3,
+                  onRatingUpdate: (x) => setState(() {
+                    _rating = x;
+                  }),
+                  glow: true,
+                  glowColor: Colors.red,
+                ),
+                SizedBox(height: 20),
+                Align(
+                  alignment: Alignment.center,
+                  child: SizedBox(
+                      //width: 150,
+                      height: 33,
+                      child: CupertinoButton(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 40,
+                          ),
+                          child: Text('Add',
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          onPressed: addTask,
+                          color: widget.taskGroup.taskGroupColor[600])),
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

@@ -33,7 +33,7 @@ class TaskGroupScreen extends StatelessWidget {
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               title: Text('Task Groups',
-                  style: Theme.of(context).textTheme.headline2),
+                  style: Theme.of(context).textTheme.headline3),
             ),
           ),
           Consumer<TaskGroupProvider>(

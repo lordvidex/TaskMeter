@@ -31,10 +31,25 @@ class MyApp extends StatelessWidget {
           create: (_) => di.sl<TaskGroupProvider>(),
         ),
       ],
-      child: MaterialApp(
+      child: NewWidget(),
+    );
+  }
+}
+
+class NewWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<SettingsProvider>(
+      builder: (ctx, provider, _) => MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: Constants.kThemeData,
-          darkTheme: Constants.kDarkThemeData,
+          theme: (provider.settings.isDarkMode == null ||
+                  !provider.settings.isDarkMode)
+              ? Constants.kThemeData
+              : Constants.kDarkThemeData,
+          darkTheme: (provider.settings.isDarkMode == null ||
+                  provider.settings.isDarkMode)
+              ? Constants.kDarkThemeData
+              : Constants.kThemeData,
           title: 'Task Meter',
           home: TaskGroupScreen(),
           routes: {

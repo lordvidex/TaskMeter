@@ -195,13 +195,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.1.1"
-  flutter_duration_picker:
-    dependency: "direct main"
-    description:
-      name: flutter_duration_picker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.4"
   flutter_rating_bar:
     dependency: "direct main"
     description:

@@ -101,11 +101,10 @@ class MainTaskCard extends StatelessWidget {
                     fontSize: 24,
                     fontWeight: FontWeight.bold)),
           ),
-          title: Text(_task.taskName,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              )),
+          title: Text(
+            _task.taskName,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           subtitle: Text(
               DurationUtils.durationToReadableString(
                   _task.timeRemaining ?? Duration.zero),

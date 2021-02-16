@@ -9,10 +9,9 @@ class SettingsItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: leadingWidget ?? Container(height: 50, width: 50),
+      leading: leadingWidget ?? Container(height: 40, width: 40),
       title: Text(
         settingsText,
-        style: Theme.of(context).textTheme.bodyText2,
       ),
       trailing: trailingWidget,
     );
