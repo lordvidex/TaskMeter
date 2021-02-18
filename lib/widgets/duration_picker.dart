@@ -99,7 +99,7 @@ class _DialPainter extends CustomPainter {
             text: '${hours}${minutes}',
             style: Theme.of(context)
                 .textTheme
-                .display3
+                .headline1
                 .copyWith(fontSize: size.shortestSide * 0.15)),
         textDirection: TextDirection.ltr)
       ..layout();

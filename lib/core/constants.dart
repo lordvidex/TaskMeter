@@ -26,7 +26,7 @@ class Constants {
       ),
       bodyText2: TextStyle(
         fontSize: 16,
-        color: Colors.white,
+        color: Colors.black,
       ),
       headline6: TextStyle(
         color: Colors.black,
@@ -59,7 +59,7 @@ class Constants {
             fontSize: 16,
           ),
           bodyText2: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 16,
           ),
           headline3: TextStyle(

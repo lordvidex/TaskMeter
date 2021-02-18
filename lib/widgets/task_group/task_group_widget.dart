@@ -12,10 +12,11 @@ class TaskGroupWidget extends StatelessWidget {
   const TaskGroupWidget({@required this.taskGroup});
   @override
   Widget build(BuildContext context) {
+    final taskGroupProvider =
+        Provider.of<TaskGroupProvider>(context, listen: false);
     return InkWell(
       onTap: () {
-        Provider.of<TaskGroupProvider>(context, listen: false)
-            .setCurrentTaskGroup(taskGroup);
+        taskGroupProvider.setCurrentTaskGroup(taskGroup);
         Navigator.of(context).pushNamed(TaskGroupDescriptionScreen.routeName,
             arguments: taskGroup);
       },
@@ -31,6 +32,20 @@ class TaskGroupWidget extends StatelessWidget {
             ),
           ),
           child: Stack(children: [
+            Positioned(
+                top: 0,
+                right: 0,
+                child: DropdownButton(
+                  onChanged: (_) {},
+                  items: [
+                    DropdownMenuItem(
+                        value: 'delete',
+                        child: Text('Delete'),
+                        onTap: () => taskGroupProvider
+                            .deleteTaskGroup(taskGroup.taskGroupId))
+                  ],
+                  icon: Icon(Icons.more_vert, color: Colors.white),
+                )),
             Positioned(
                 right: -10,
                 bottom: -30,
