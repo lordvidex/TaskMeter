@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:wakelock/wakelock.dart';
 import 'package:provider/provider.dart';
 
 import '../bloc/timer_bloc.dart';
@@ -18,6 +19,19 @@ class TaskTimerScreen extends StatefulWidget {
 
 class _TaskTimerScreenState extends State<TaskTimerScreen> {
   Task task;
+
+  @override
+  void initState() {
+    super.initState();
+    Wakelock.enable();
+  }
+
+  @override
+  void dispose() {
+    Wakelock.disable();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     if (task == null) task = ModalRoute.of(context).settings.arguments as Task;
