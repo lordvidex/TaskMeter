@@ -31,7 +31,7 @@ class _TaskTimerWidgetState extends State<TaskTimerWidget> {
     _isPaused = false;
     _isFinished = false;
     _playAnimationController = SimpleAnimation('falling');
-    _idleController = SimpleAnimation('idle');
+    //_idleController = SimpleAnimation('idle');
     _sandClocks = GetIt.I<TimerRepository>().sandClocks;
     timerStateOverTen = (widget.task.taskProgress * 10).round();
     setBoardAndRive();
@@ -42,12 +42,14 @@ class _TaskTimerWidgetState extends State<TaskTimerWidget> {
 
   @override
   void dispose() {
-    _playAnimationController.dispose();
-    _idleController.dispose();
+    _artboard.removeController(_playAnimationController);
+    _playAnimationController?.dispose();
+    _idleController?.dispose();
     super.dispose();
   }
 
   void setBoardAndRive() {
+    _artboard?.removeController(_playAnimationController);
     _artboard = _sandClocks[timerStateOverTen].mainArtboard
       ..addController(_playAnimationController);
     _rive = Rive(
@@ -84,19 +86,27 @@ class _TaskTimerWidgetState extends State<TaskTimerWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Spacer(flex: 3),
-        Container(
-          height: 300,
-          width: 300,
-          child: _rive,
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Spacer(flex: 3),
+              Container(
+                height: 300,
+                width: 300,
+                child: _rive,
+              ),
+              TaskTimerText(
+                  widget.parentContext, widget.task, timerStateOverTen,
+                  updateBoardImageWithNumber: updateBoardImageWithNumber,
+                  onTimerFinished: onTimerFinished),
+              Spacer(flex: 2),
+            ],
+          ),
         ),
-        TaskTimerText(widget.parentContext, widget.task, timerStateOverTen,
-            updateBoardImageWithNumber: updateBoardImageWithNumber,
-            onTimerFinished: onTimerFinished),
-        Spacer(flex: 2),
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           if (!_isFinished)
             FlatButton(
@@ -121,8 +131,7 @@ class _TaskTimerWidgetState extends State<TaskTimerWidget> {
               color: Colors.green,
               height: 70,
               shape: CircleBorder()),
-        ]),
-        Spacer(flex: 1),
+        ])
       ],
     );
   }

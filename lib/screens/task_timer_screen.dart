@@ -22,14 +22,14 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
 
   @override
   void initState() {
-    super.initState();
     Wakelock.enable();
+    super.initState();
   }
 
   @override
   void dispose() {
-    Wakelock.disable();
     super.dispose();
+    Wakelock.disable();
   }
 
   @override
