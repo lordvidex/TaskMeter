@@ -14,7 +14,6 @@ class Task extends Equatable {
   //! Must call `setTotalTime` to properly instantiate time
   Duration _totalTime;
 
-  //TODO: compute timeRemaining when user has started the task
   Duration timeRemaining;
 
   Task({

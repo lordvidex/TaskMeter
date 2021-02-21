@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:task_meter/repositories/timer_repository.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   TimerRepository timerRepo;
   setUp(() {
     timerRepo = TimerRepository();
@@ -19,4 +20,14 @@ void main() {
         emitsInOrder(
             List<Duration>.generate(60, (x) => Duration(seconds: 60 - x - 1))));
   }, timeout: Timeout(Duration(seconds: 61)));
+  test('should return all the rive files when loadRiveFiles is called',
+      () async {
+    // arrange
+
+    // act
+    await timerRepo.loadRiveFiles();
+    // assert
+    expect(timerRepo.sandClocks.length, 11);
+    expect(timerRepo.sandClocks[0].artboards.length, 1);
+  });
 }

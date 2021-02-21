@@ -57,8 +57,6 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     if (state is TimerRunning) {
       _tickerSubscription?.pause();
       yield TimerPaused(state.duration);
-
-      //TODO: save to local Database
     }
   }
 

@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
 import 'package:task_meter/core/utils/merge_utils.dart';
 import 'package:task_meter/models/settings.dart';
 
@@ -13,7 +12,7 @@ void main() {
       timeOfUpload: DateTime.now());
 
   test(
-      'should return remote settings when localsettings is either default settings with no time of upload and ',
+      'should return remote settings when localsettings is either default settings with no time of upload',
       () {
     // arrange
     assert(localSettings != null);

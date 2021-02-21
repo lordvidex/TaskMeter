@@ -44,4 +44,5 @@ Future<void> _registerComponents() async {
 Future<void> _loadData() async {
   await sl.get<SettingsProvider>().loadSettings();
   await sl.get<TaskGroupProvider>().loadTaskGroups();
+  await sl.get<TimerRepository>().loadRiveFiles();
 }

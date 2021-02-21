@@ -13,7 +13,7 @@ import 'screens/task_group_screen.dart';
 import 'screens/task_timer_screen.dart';
 
 void main() async {
-  //TODO: splash screen here
+  //TODO: loading splash screen HERE - (a brief loading animation to be precise)
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
   runApp(MyApp());

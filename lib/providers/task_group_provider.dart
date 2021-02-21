@@ -25,7 +25,15 @@ class TaskGroupProvider extends ChangeNotifier {
 
   bool _isBreak;
 
+  /// is `true` when a Break task is running and
+  /// `false` when a user task is running
   bool get isBreak => _isBreak;
+
+  /// [isBreak] must be checked first before using this function
+  /// is `true` if a long break is next
+  /// is `false` if a short break is next
+  bool get isLongBreak =>
+      (_current.completedCount % _current.longBreakIntervals) == 0;
 
   /// changes the [isBreak] value to either true or false and must be called
   /// whenever a task is finished and a break timer is to be created
@@ -66,6 +74,10 @@ class TaskGroupProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// adds [bonusTime] from tasks finished earlier than the calculated
+  /// deadline.\
+  /// reset => true when we want to use the bonus for a task to create a clean
+  /// slate.
   void updateBonusTime({Duration duration, bool reset = false}) {
     if (reset)
       _current.bonusTime = Duration.zero;
