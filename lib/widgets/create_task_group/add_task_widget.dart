@@ -7,9 +7,16 @@ import '../../models/task.dart';
 import '../../models/task_group.dart';
 
 class AddTaskWidget extends StatefulWidget {
-  final Function(Task) addNewTask;
+  final Function(Task, {bool isEditMode}) addNewTask;
   final TaskGroup taskGroup;
-  AddTaskWidget({@required this.taskGroup, @required this.addNewTask});
+  final Task taskToBeEdited;
+  final bool isEditMode;
+  AddTaskWidget({
+    @required this.taskGroup,
+    @required this.addNewTask,
+    @required this.isEditMode,
+    @required this.taskToBeEdited,
+  });
   @override
   _AddTaskWidgetState createState() => _AddTaskWidgetState();
 }
@@ -20,7 +27,11 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
   TextEditingController _taskNameController;
   @override
   void initState() {
-    _taskNameController = TextEditingController();
+    _taskNameController = TextEditingController(
+        text: widget.isEditMode ? widget.taskToBeEdited.taskName : null);
+    if (widget.isEditMode) {
+      _rating = (widget.taskToBeEdited.difficulty.index + 1).toDouble();
+    }
     super.initState();
   }
 
@@ -45,8 +56,17 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
       default:
         diff = Difficulty.Medium;
     }
-    widget.addNewTask(
-        Task(taskName: _taskNameController.text.trim(), difficulty: diff));
+    if (widget.isEditMode) {
+      Task task = widget.taskToBeEdited;
+      task
+        ..difficulty = diff
+        ..taskName = _taskNameController.text.trim();
+      //! we need to call this to reset the state
+      widget.addNewTask(null, isEditMode: true);
+    } else {
+      widget.addNewTask(
+          Task(taskName: _taskNameController.text.trim(), difficulty: diff));
+    }
     Navigator.of(context).pop();
   }
 
@@ -63,7 +83,11 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                 child: IconButton(
                   onPressed: () => Navigator.of(context).pop(),
                   icon: Icon(Icons.cancel,
-                      size: 25, color: widget.taskGroup.taskGroupColor[600]),
+                      size: 25,
+                      color: widget.taskGroup.taskGroupColor[
+                          Theme.of(context).brightness == Brightness.dark
+                              ? 200
+                              : 600]),
                 )),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,7 +102,10 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                         border: InputBorder.none,
                         labelText: 'Type task name...',
                         labelStyle: Constants.coloredLabelTextStyle(
-                            widget.taskGroup.taskGroupColor[600]))),
+                            widget.taskGroup.taskGroupColor[
+                                Theme.of(context).brightness == Brightness.dark
+                                    ? 200
+                                    : 600]))),
                 Text('Difficulty',
                     style: Theme.of(context).textTheme.headline3),
                 RatingBar.builder(
@@ -104,7 +131,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                           padding: const EdgeInsets.symmetric(
                             horizontal: 40,
                           ),
-                          child: Text('Add',
+                          child: Text(widget.isEditMode ? 'Edit' : 'Add',
                               style: TextStyle(fontWeight: FontWeight.bold)),
                           onPressed: addTask,
                           color: widget.taskGroup.taskGroupColor[600])),

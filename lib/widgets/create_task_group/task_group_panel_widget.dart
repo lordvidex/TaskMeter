@@ -1,25 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../duration_picker.dart';
 
 import '../../core/constants.dart';
 import '../../core/utils/duration_utils.dart';
-import '../../models/task.dart';
 import '../../models/task_group.dart';
-import 'add_task_widget.dart';
+import '../duration_picker.dart';
 
 class TaskGroupPanel extends StatefulWidget {
-  final Function(BuildContext) createTaskGroup;
   final TextEditingController titleController;
   final TaskGroup taskGroup;
-  final int taskDays;
-  final Function(Task) addNewTask;
+  final Function showAddNewTaskDialog;
   const TaskGroupPanel({
     this.titleController,
-    @required this.createTaskGroup,
     @required this.taskGroup,
-    this.taskDays,
-    @required this.addNewTask,
+    @required this.showAddNewTaskDialog,
   });
 
   @override
@@ -165,23 +159,6 @@ class _TaskGroupPanelState extends State<TaskGroupPanel> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: Icon(CupertinoIcons.back, size: 32)),
-                RaisedButton.icon(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    icon: Icon(Icons.check, color: Colors.white, size: 30),
-                    onPressed: () => widget.createTaskGroup(context),
-                    color: Colors.green,
-                    label: Text('Create',
-                        style: Constants.coloredLabelTextStyle(Colors.white)))
-              ],
-            ),
-            SizedBox(height: 10),
             Text('Create Task', style: Theme.of(context).textTheme.headline1),
             Container(
                 width: MediaQuery.of(context).size.width,
@@ -240,16 +217,7 @@ class _TaskGroupPanelState extends State<TaskGroupPanel> {
                         color: widget.taskGroup.taskGroupColor[800],
                         onPressed: () {
                           FocusScope.of(context).unfocus();
-                          showDialog(
-                              context: context,
-                              useRootNavigator: true,
-                              builder: (ctx) => AlertDialog(
-                                      content: AddTaskWidget(
-                                    taskGroup: widget.taskGroup,
-                                    addNewTask: widget.addNewTask,
-                                  )),
-                              //,
-                              barrierDismissible: false);
+                          widget.showAddNewTaskDialog();
                         },
                         child: Text('Add Task',
                             style: Constants.coloredLabelTextStyle(

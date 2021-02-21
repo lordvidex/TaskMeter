@@ -7,9 +7,9 @@ class Task extends Equatable {
   // auto generated taskId
   final String taskId;
   // name of task
-  final String taskName;
+  String taskName;
   // difficulty of task [Easy, Medium, Hard]
-  final Difficulty difficulty;
+  Difficulty difficulty;
   // calculated duration of task
   //! Must call `setTotalTime` to properly instantiate time
   Duration _totalTime;

@@ -8,33 +8,42 @@ import '../../screens/task_timer_screen.dart';
 
 class TaskCard extends StatelessWidget {
   const TaskCard({
-    Key key,
+    this.key,
     @required this.taskGroup,
     @required Task task,
-    this.isClickable = true,
+    this.deleteTask,
+    this.editTask,
+    this.isEditMode = false,
   })  : _task = task,
+        assert((isEditMode && deleteTask != null && editTask != null) ||
+            (!isEditMode && deleteTask == null && editTask == null)),
         super(key: key);
-
+  final ValueKey key;
   final TaskGroup taskGroup;
+  final Function(Task) deleteTask;
   final Task _task;
+  final Function({Task taskToBeEdited, bool isEditMode}) editTask;
 
   /// isTrue when user is in the description screen and false
   /// when user is in the create taskgroup screen
-  final bool isClickable;
+  final bool isEditMode;
 
   @override
   Widget build(BuildContext context) {
-    return isClickable
-        ? InkWell(
-            onTap: () => _task.isCompleted
-                ? null
-                : Navigator.of(context)
-                    .pushNamed(TaskTimerScreen.routeName, arguments: _task),
-            child: _TaskCard(
-                taskGroup: taskGroup, task: _task, isClickable: isClickable),
-          )
-        : _TaskCard(
-            taskGroup: taskGroup, task: _task, isClickable: isClickable);
+    return InkWell(
+      onTap: () => isEditMode
+          ? editTask(taskToBeEdited: _task, isEditMode: true)
+          : _task.isCompleted
+              ? null
+              : Navigator.of(context)
+                  .pushNamed(TaskTimerScreen.routeName, arguments: _task),
+      child: _TaskCard(
+        taskGroup: taskGroup,
+        task: _task,
+        isEditMode: isEditMode,
+        deleteTask: deleteTask,
+      ),
+    );
   }
 }
 
@@ -43,19 +52,19 @@ class _TaskCard extends StatelessWidget {
     Key key,
     @required this.taskGroup,
     @required Task task,
-    @required this.isClickable,
+    @required this.isEditMode,
+    @required this.deleteTask,
   })  : _task = task,
         super(key: key);
-
+  final Function(Task) deleteTask;
   final TaskGroup taskGroup;
   final Task _task;
-  final bool isClickable;
+  final bool isEditMode;
 
   @override
   Widget build(BuildContext context) {
-    return isClickable
-        ? MainTaskCard(task: _task, taskGroup: taskGroup)
-        : Dismissible(
+    return isEditMode
+        ? Dismissible(
             background: Container(
                 color: Colors.red,
                 margin: const EdgeInsets.symmetric(horizontal: 15),
@@ -64,9 +73,17 @@ class _TaskCard extends StatelessWidget {
                     child: Icon(Icons.delete, color: Colors.white))),
             key: ValueKey(_task.taskId),
             direction: DismissDirection.endToStart,
-            onDismissed: (direction) =>
-                taskGroup.tasks.removeWhere((t) => t.taskId == _task.taskId),
-            child: MainTaskCard(task: _task, taskGroup: taskGroup),
+            onDismissed: (_) => deleteTask(_task),
+            child: MainTaskCard(
+              task: _task,
+              taskGroup: taskGroup,
+              isEditMode: isEditMode,
+            ),
+          )
+        : MainTaskCard(
+            task: _task,
+            taskGroup: taskGroup,
+            isEditMode: isEditMode,
           );
   }
 }
@@ -76,10 +93,12 @@ class MainTaskCard extends StatelessWidget {
     Key key,
     @required Task task,
     @required this.taskGroup,
+    @required this.isEditMode,
   })  : _task = task,
         super(key: key);
 
   final Task _task;
+  final bool isEditMode;
   final TaskGroup taskGroup;
 
   @override
@@ -106,8 +125,10 @@ class MainTaskCard extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           subtitle: Text(
-              DurationUtils.durationToReadableString(
-                  _task.timeRemaining ?? Duration.zero),
+              isEditMode
+                  ? 'Difficulty: ${_task.difficulty.index + 1}/3'
+                  : DurationUtils.durationToReadableString(
+                      _task.timeRemaining ?? Duration.zero),
               style: Constants.coloredLabelTextStyle(Colors.grey)),
           trailing: Stack(
             alignment: AlignmentDirectional.center,

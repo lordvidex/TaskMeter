@@ -22,7 +22,7 @@ class _TaskTimerWidgetState extends State<TaskTimerWidget> {
   Artboard _artboard;
   List<RiveFile> _sandClocks;
   SimpleAnimation _playAnimationController;
-  SimpleAnimation _idleController;
+  //SimpleAnimation _idleController;
   Rive _rive;
   bool _isPaused;
   bool _isFinished;
@@ -44,7 +44,7 @@ class _TaskTimerWidgetState extends State<TaskTimerWidget> {
   void dispose() {
     _artboard.removeController(_playAnimationController);
     _playAnimationController?.dispose();
-    _idleController?.dispose();
+    //_idleController?.dispose();
     super.dispose();
   }
 
@@ -85,26 +85,40 @@ class _TaskTimerWidgetState extends State<TaskTimerWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final List<Widget> clockAndTime = [
+      Container(
+        height: 300,
+        width: 300,
+        child: _rive,
+      ),
+      TaskTimerText(widget.parentContext, widget.task, timerStateOverTen,
+          updateBoardImageWithNumber: updateBoardImageWithNumber,
+          onTimerFinished: onTimerFinished),
+    ];
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        if (size.height > size.width) SizedBox(height: 10),
         Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Spacer(flex: 3),
-              Container(
-                height: 300,
-                width: 300,
-                child: _rive,
-              ),
-              TaskTimerText(
-                  widget.parentContext, widget.task, timerStateOverTen,
-                  updateBoardImageWithNumber: updateBoardImageWithNumber,
-                  onTimerFinished: onTimerFinished),
-              Spacer(flex: 2),
-            ],
+          child: SingleChildScrollView(
+            child: Container(
+              height: 350,
+              child: size.width > size.height
+                  ? SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: clockAndTime,
+                      ),
+                    )
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: clockAndTime,
+                    ),
+            ),
           ),
         ),
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -125,13 +139,13 @@ class _TaskTimerWidgetState extends State<TaskTimerWidget> {
               child: Icon(Icons.check),
               onPressed: () {
                 _artboard.removeController(_playAnimationController);
-                _artboard.addController(_idleController);
                 BlocProvider.of<TimerBloc>(context).add(TimerFinishEvent());
               },
               color: Colors.green,
               height: 70,
               shape: CircleBorder()),
-        ])
+        ]),
+        SizedBox(height: 5),
       ],
     );
   }
