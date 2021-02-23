@@ -5,6 +5,7 @@ import 'package:task_meter/models/settings.dart';
 import 'package:task_meter/widgets/settings/settings_item.dart';
 
 import '../providers/settings_provider.dart';
+import 'select_theme_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   static const routeName = '/settings';
@@ -34,6 +35,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 content: RichText(
                   text: TextSpan(
                     text: 'You have some unsaved data, go back and click ',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1
+                        .copyWith(fontSize: 14),
                     children: <TextSpan>[
                       TextSpan(
                         text: String.fromCharCode(0xe64c), //<-- charCode
@@ -111,18 +116,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           DropdownMenuItem(child: Text('Русский'), value: "ru-RU")
         ]);
-    final darkModeWidget = Switch.adaptive(
-      value: _settings.isDarkMode ??
-          (Theme.of(context).brightness == Brightness.light ? false : true),
-      onChanged: (val) => setState(() {
-        _settings.isDarkMode = val;
-        val ? _provider.toDarkMode() : _provider.toLightMode();
-      }),
-    );
+    final themeWidget =
+        Text('${_provider.settings.appTheme.toString().split(".")[1]} Theme');
     return WillPopScope(
       onWillPop: () => _back(context),
       child: Scaffold(
-        appBar: AppBar(title: Text('General Settings'), actions: [
+        appBar: AppBar(
+          title: Text('General Settings'), actions: [
           IconButton(
               icon: Icon(Icons.check),
               onPressed: () async {
@@ -155,14 +155,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
               languageWidget,
               leadingWidget: Icon(Icons.translate_outlined, color: Colors.blue),
             ),
-            SettingsItem(
-              'Dark Mode',
-              darkModeWidget,
-              leadingWidget: Icon(
-                Icons.brightness_6_rounded,
-                color: Colors.black,
-              ),
-            ),
+            GestureDetector(
+                onTap: () => Navigator.of(context)
+                    .pushNamed(SelectThemeScreen.routeName),
+                child: SettingsItem(
+                  'App Theme',
+                  themeWidget,
+                  leadingWidget: Icon(Icons.brightness_6_outlined),
+                ))
           ],
         ),
       ),

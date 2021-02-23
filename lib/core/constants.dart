@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Constants {
@@ -28,23 +29,21 @@ class Constants {
         fontSize: 16,
         color: Colors.black,
       ),
-      headline6: TextStyle(
-        color: Colors.black,
-        fontSize: 20,
-      ),
+      headline6: TextStyle(color: Colors.black, fontSize: 20),
       headline3: TextStyle(
           fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
       headline4: TextStyle(
-          fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+          fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
       headline1: TextStyle(
           fontSize: 30, color: Colors.black, fontWeight: FontWeight.bold),
       headline2: TextStyle(
-          fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold));
+          fontSize: 30, color: Colors.black, fontWeight: FontWeight.bold));
 
   static ThemeData kThemeData = ThemeData(
       iconTheme: _lightIconTheme,
       appBarTheme: AppBarTheme(
         color: Colors.white,
+        brightness: Brightness.light,
         iconTheme: _lightIconTheme,
       ),
       primaryTextTheme: _lightTextTheme,
