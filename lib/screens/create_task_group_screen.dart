@@ -105,7 +105,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
         shadowColor: Colors.transparent,
         actions: [
           Padding(
-            padding: const EdgeInsets.all(4),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
             child: RaisedButton.icon(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15)),
@@ -122,6 +122,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
             key: _formKey,
             child: SingleChildScrollView(
               child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
                 height: mediaQuery.size.height -
                     mediaQuery.padding.top -
                     mediaQuery.padding.bottom,

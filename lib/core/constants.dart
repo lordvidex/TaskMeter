@@ -22,11 +22,11 @@ class Constants {
   ///[headline4] - white text with mid title font
   static TextTheme _lightTextTheme = TextTheme(
       bodyText1: TextStyle(
-        fontSize: 16,
+        fontSize: 14,
         color: Colors.black,
       ),
       bodyText2: TextStyle(
-        fontSize: 16,
+        fontSize: 14,
         color: Colors.black,
       ),
       headline6: TextStyle(color: Colors.black, fontSize: 20),
@@ -55,11 +55,11 @@ class Constants {
           subtitle1: TextStyle(color: Colors.white),
           bodyText1: TextStyle(
             color: Colors.white,
-            fontSize: 16,
+            fontSize: 14,
           ),
           bodyText2: TextStyle(
             color: Colors.white,
-            fontSize: 16,
+            fontSize: 14,
           ),
           headline3: TextStyle(
               fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
