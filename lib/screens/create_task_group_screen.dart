@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../core/algorithms/time_divider.dart';
 import '../core/constants.dart';
 import '../core/errors.dart';
+import '../locale/locales.dart';
 import '../models/settings.dart';
 import '../models/task.dart';
 import '../models/task_group.dart';
@@ -99,6 +100,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
+    final appLocale = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -112,7 +114,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                 icon: Icon(Icons.check, color: Colors.white, size: 30),
                 onPressed: () => createTaskGroup(context),
                 color: Colors.green,
-                label: Text('Create',
+                label: Text(appLocale.create,
                     style: Constants.coloredLabelTextStyle(Colors.white))),
           )
         ],
@@ -140,16 +142,19 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                       Expanded(
                         child: newTaskGroup.tasks.length == 0
                             ? Center(
-                                child: Flex(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  direction: Axis.horizontal,
-                                  children: [
-                                    Text('Click '),
-                                    Text('Add Task ',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold)),
-                                    Text('to add a new task')
-                                  ],
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Flex(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    direction: Axis.horizontal,
+                                    children: [
+                                      Text(appLocale.click),
+                                      Text(appLocale.addTask,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      Text(appLocale.toAddNewTask)
+                                    ],
+                                  ),
                                 ),
                               )
                             : ReorderableListView(

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import '../locale/locales.dart';
 
 const Duration _kDialAnimateDuration = const Duration(milliseconds: 200);
 
@@ -111,7 +112,7 @@ class _DialPainter extends CustomPainter {
     TextPainter textMinPainter = new TextPainter(
         textAlign: TextAlign.center,
         text: new TextSpan(
-            text: 'min.', //th: ${theta}',
+            text: AppLocalizations.of(context).min, //th: ${theta}',
             style: Theme.of(context).textTheme.body1),
         textDirection: TextDirection.ltr)
       ..layout();

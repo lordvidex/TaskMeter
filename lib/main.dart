@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'core/constants.dart';
 import 'injection_container.dart' as di;
+import 'locale/locales.dart';
 import 'models/app_theme.dart';
 import 'providers/settings_provider.dart';
 import 'providers/task_group_provider.dart';
@@ -52,6 +54,19 @@ class NewWidget extends StatelessWidget {
                   ? ThemeMode.light
                   : ThemeMode.dark,
           title: 'Task Meter',
+          locale: provider.settings.language == null
+              ? null
+              : Locale(provider.settings.language),
+          localizationsDelegates: [
+            AppLocalizationsDelegate(),
+            GlobalMaterialLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          supportedLocales: [
+            const Locale('en', ''), // English, no country code
+            const Locale('ru', ''), // Russian, no country code
+          ],
           home: TaskGroupScreen(),
           routes: {
             TaskGroupScreen.routeName: (_) => TaskGroupScreen(),

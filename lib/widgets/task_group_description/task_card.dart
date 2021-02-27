@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/constants.dart';
 import '../../core/utils/duration_utils.dart';
+import '../../locale/locales.dart';
 import '../../models/task.dart';
 import '../../models/task_group.dart';
 import '../../screens/task_timer_screen.dart';
@@ -103,6 +104,7 @@ class MainTaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appLocale = AppLocalizations.of(context);
     return Card(
         color:
             _task.isCompleted ? Colors.grey : Theme.of(context).cardTheme.color,
@@ -128,7 +130,7 @@ class MainTaskCard extends StatelessWidget {
               isEditMode
                   ? 'Difficulty: ${_task.difficulty.index + 1}/3'
                   : DurationUtils.durationToReadableString(
-                      _task.timeRemaining ?? Duration.zero),
+                      _task.timeRemaining ?? Duration.zero, appLocale),
               style: Constants.coloredLabelTextStyle(Colors.grey)),
           trailing: Stack(
             alignment: AlignmentDirectional.center,

@@ -1,0 +1,275 @@
+{
+  "@@last_modified": "2021-02-28T00:54:31.228042",
+  "taskGroups": "Группы Задач",
+  "@taskGroups": {
+    "description": "The text Task Groups on the taskGroupScreen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "progress": "прогресс",
+  "@progress": {
+    "description": "text \"progress\" used to label the linear progress indicator on this screen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "emptyTaskGroupText": "список групп задач пуст",
+  "@emptyTaskGroupText": {
+    "description": "Text displayed to user when taskgroup list is empty",
+    "type": "text",
+    "placeholders": {}
+  },
+  "clickOn": "Нажми на ",
+  "@clickOn": {
+    "description": "Partial word displayed in the taskGroup screen telling the userhow to add a new task Group",
+    "type": "text",
+    "placeholders": {}
+  },
+  "toAddNewTaskGroup": "чтобы добавить новую группу задач",
+  "@toAddNewTaskGroup": {
+    "description": "Partial word displayed in the taskGroup screentelling the user how to add a new task Group",
+    "type": "text",
+    "placeholders": {}
+  },
+  "delete": "Удалить",
+  "@delete": {
+    "description": "Text with the word delete",
+    "type": "text",
+    "placeholders": {}
+  },
+  "generalSettings": "Общие Настройки",
+  "@generalSettings": {
+    "description": "App bar text for setting screen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "shortBreakDuration": "Срок Короткого Перерыва",
+  "@shortBreakDuration": {
+    "description": "label for short break duration",
+    "type": "text",
+    "placeholders": {}
+  },
+  "longBreakDuration": "Срок Длинного Перерыва",
+  "@longBreakDuration": {
+    "description": "label for long break duration",
+    "type": "text",
+    "placeholders": {}
+  },
+  "longBreakAfter": "Длинный Перерыв после",
+  "@longBreakAfter": {
+    "description": "text for long break after or long break intervals",
+    "type": "text",
+    "placeholders": {}
+  },
+  "language": "Язык",
+  "@language": {
+    "description": "label for language",
+    "type": "text",
+    "placeholders": {}
+  },
+  "appTheme": "Тема Приложения",
+  "@appTheme": {
+    "description": "label for appTheme",
+    "type": "text",
+    "placeholders": {}
+  },
+  "system": "Системы",
+  "@system": {
+    "description": "label text for system theme in settings",
+    "type": "text",
+    "placeholders": {}
+  },
+  "theme": "Тема",
+  "@theme": {
+    "description": "label text for the word \"theme\"",
+    "type": "text",
+    "placeholders": {}
+  },
+  "selectTheme": "Выбрайте Тема",
+  "@selectTheme": {
+    "description": "Appbar text for the selectThemeScreen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "dataNotSaved": "Данные не сохранены!",
+  "@dataNotSaved": {
+    "description": "title text displayed in CupertinoAlertDialog when user clicks back button without saving settings data",
+    "type": "text",
+    "placeholders": {}
+  },
+  "dataNotSavedDesc1": "У вас есть некоторые несохраненные данные, вернитесь назад и нажмите ",
+  "@dataNotSavedDesc1": {
+    "description": "First part of description text shown in cupertinoAlertDialog when user clicks back button without saving settings data",
+    "type": "text",
+    "placeholders": {}
+  },
+  "dataNotSavedDesc2": " в правом верхнем углу сохранить!",
+  "@dataNotSavedDesc2": {
+    "description": "Second part of description text shown in cupertinoAlertDialog when user clicks back button without saving settings data",
+    "type": "text",
+    "placeholders": {}
+  },
+  "discard": "Отбросить",
+  "@discard": {
+    "description": "cupertino action button text to discard data in settings screen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "cancel": "Отменить",
+  "@cancel": {
+    "description": "cupertino action button to go back and save changes in settings screen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "intervals": "{x,plural, =1{{x} интервал}few{{x} интервала}other{{x} интервалы}}",
+  "@intervals": {
+    "description": "long break after x shortbreaks",
+    "type": "text",
+    "placeholders": {
+      "x": {}
+    }
+  },
+  "themeType": "{theme,select, Dark{Тёмная}Light{Светлая}System{Системная}}",
+  "@themeType": {
+    "description": "returns the text based on themetypes [System,Dark,Light]",
+    "type": "text",
+    "placeholders": {
+      "theme": {}
+    }
+  },
+  "taskCount": "{x,plural, =0{{x} задач}=1{{x} задача}few{{x} задачи}other{{x} задачи}}",
+  "@taskCount": {
+    "description": "label text displaying number of tasks in the taskgroup",
+    "type": "text",
+    "placeholders": {
+      "x": {
+        "example": 3
+      }
+    }
+  },
+  "createTaskGroup": "Создайте группа задачи",
+  "@createTaskGroup": {
+    "description": "Header text in create task group screen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "duration": "Срок",
+  "@duration": {
+    "description": "hint text for duration picker widget",
+    "type": "text",
+    "placeholders": {}
+  },
+  "addTask": "Добавьте Задач",
+  "@addTask": {
+    "description": "button Label text to add new task in a task group",
+    "type": "text",
+    "placeholders": {}
+  },
+  "create": "Создайте",
+  "@create": {
+    "description": "buttonLabel for create button <for creating a new task group>",
+    "type": "text",
+    "placeholders": {}
+  },
+  "click": "Нажмите ",
+  "@click": {
+    "description": "first part of the empty textview displayed when there is an empty list of tasks",
+    "type": "text",
+    "placeholders": {}
+  },
+  "shortBreak": "Маленький Перерыв",
+  "@shortBreak": {
+    "description": "label for short break",
+    "type": "text",
+    "placeholders": {}
+  },
+  "longBreak": "Большой Перерыв",
+  "@longBreak": {
+    "description": "label for long break",
+    "type": "text",
+    "placeholders": {}
+  },
+  "toAddNewTask": " чтобы добавить новую задачу",
+  "@toAddNewTask": {
+    "description": "second part of the displayed emptyview for tasklists",
+    "type": "text",
+    "placeholders": {}
+  },
+  "taskGroupName": "Название Группы Задач",
+  "@taskGroupName": {
+    "description": "label text for task group name",
+    "type": "text",
+    "placeholders": {}
+  },
+  "taskGroupNameErrorText": "Введите правильное название задачи",
+  "@taskGroupNameErrorText": {
+    "description": "error text shown when task group name is empty",
+    "type": "text",
+    "placeholders": {}
+  },
+  "hours": "{hours,plural, =0{}=1{{hours} Час }few{{hours} Часа }other{{hours} Часов }}",
+  "@hours": {
+    "description": "string for displaying how many hours are in the duration object",
+    "type": "text",
+    "placeholders": {
+      "hours": {}
+    }
+  },
+  "minutes": "{minutes,plural, =0{{minutes} Минут }=1{{minutes} Минута }few{{minutes} Минуты }other{{minutes} Минут }}",
+  "@minutes": {
+    "description": "string for displaying how many minutes are in the duration object",
+    "type": "text",
+    "placeholders": {
+      "minutes": {}
+    }
+  },
+  "seconds": "{seconds,plural, =0{}=1{{seconds} Секунда}few{{seconds} Секунды}other{{seconds} Секунд}}",
+  "@seconds": {
+    "description": "string for displaying how many seconds are in the duration object",
+    "type": "text",
+    "placeholders": {
+      "seconds": {}
+    }
+  },
+  "taskName": "Название Задачи",
+  "@taskName": {
+    "description": "AlertDialog textField title for inputting taskName",
+    "type": "text",
+    "placeholders": {}
+  },
+  "difficulty": "Cложность",
+  "@difficulty": {
+    "description": "difficulty header for picking difficulty when creating/editing task",
+    "type": "text",
+    "placeholders": {}
+  },
+  "typeTaskName": "Введите задачу...",
+  "@typeTaskName": {
+    "description": "label text for inputting task name",
+    "type": "text",
+    "placeholders": {}
+  },
+  "add": "Добавьте",
+  "@add": {
+    "description": "button text label to add task",
+    "type": "text",
+    "placeholders": {}
+  },
+  "edit": "Изменить",
+  "@edit": {
+    "description": "label text for finishing task edit",
+    "type": "text",
+    "placeholders": {}
+  },
+  "enterTaskName": "Введите название задачи",
+  "@enterTaskName": {
+    "description": "error text if task name has errors",
+    "type": "text",
+    "placeholders": {}
+  },
+  "min": "мин.",
+  "@min": {
+    "description": "Short text for min in duration picker",
+    "type": "text",
+    "placeholders": {}
+  }
+}

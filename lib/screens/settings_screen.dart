@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:task_meter/models/settings.dart';
-import 'package:task_meter/widgets/settings/settings_item.dart';
 
+import '../locale/locales.dart';
+import '../models/settings.dart';
 import '../providers/settings_provider.dart';
+import '../widgets/settings/settings_item.dart';
 import 'select_theme_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -17,6 +18,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   SettingsProvider _provider;
   Settings _settings;
+  AppLocalizations appLocale;
   @override
   void initState() {
     super.initState();
@@ -31,10 +33,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
       return showDialog<bool>(
           context: context,
           builder: (ctx) => CupertinoAlertDialog(
-                title: Text('Data not saved!'),
+                title: Text(appLocale.dataNotSaved),
                 content: RichText(
                   text: TextSpan(
-                    text: 'You have some unsaved data, go back and click ',
+                    text: appLocale.dataNotSavedDesc1,
                     style: Theme.of(context)
                         .textTheme
                         .bodyText1
@@ -47,31 +49,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           fontSize: 24.0,
                         ),
                       ),
-                      TextSpan(text: ' at the top-right to save!')
+                      TextSpan(text: appLocale.dataNotSavedDesc2)
                     ],
                   ),
                 ),
                 actions: [
                   CupertinoDialogAction(
-                    child: Text('Discard'),
+                    child: Text(appLocale.discard),
                     isDestructiveAction: true,
                     onPressed: () => Navigator.of(ctx).pop<bool>(true),
                   ),
                   CupertinoDialogAction(
-                    child: Text('Cancel'),
+                    child: Text(appLocale.cancel),
                     isDefaultAction: true,
                     onPressed: () => Navigator.of(ctx).pop<bool>(false),
                   ),
                 ],
-                // Text(
-                //   'You have some unsaved data, go back and click ${String.fromCharCode(0xe64c)} to save.',
-                // ),
               ));
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    appLocale = AppLocalizations.of(context);
     final shortBreakWidget = DropdownButton<Duration>(
         value: _settings.shortBreak,
         onChanged: (x) {
@@ -81,7 +81,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         items: List.generate(
             16,
             (x) => DropdownMenuItem<Duration>(
-                value: Duration(minutes: x), child: Text('$x minutes'))));
+                value: Duration(minutes: x),
+                child: Text(appLocale.minutes(x)))));
 
     final longBreakWidget = DropdownButton<Duration>(
         value: _settings.longBreak,
@@ -93,7 +94,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             7,
             (x) => DropdownMenuItem<Duration>(
                 value: Duration(minutes: x * 5),
-                child: Text('${x * 5} minutes'))));
+                child: Text(appLocale.minutes(x * 5)))));
     final longBreakIntervalWidget = DropdownButton<int>(
         value: _settings.longBreakIntervals,
         onChanged: (x) {
@@ -103,26 +104,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
         items: List.generate(
             9,
             (x) => DropdownMenuItem<int>(
-                value: x + 2, child: Text('${x + 2} intervals'))));
+                value: x + 2, child: Text(appLocale.intervals(x + 2)))));
     final languageWidget = DropdownButton<String>(
         value: _settings.language,
         onChanged: (str) {
-          //TODO: add localization logic here
+          _provider.updateLanguage(str);
+          setState(() {
+            _settings.language = str;
+          });
         },
         items: [
           DropdownMenuItem(
             child: Text('English'),
-            value: "en-US",
+            value: 'en',
           ),
-          DropdownMenuItem(child: Text('Русский'), value: "ru-RU")
+          DropdownMenuItem(
+            child: Text('Русский'),
+            value: 'ru',
+          )
         ]);
-    final themeWidget =
-        Text('${_provider.settings.appTheme.toString().split(".")[1]} Theme');
+    final themeWidget = Text(
+        '${appLocale.themeType(_provider.settings.appTheme)} ${appLocale.theme}');
+
     return WillPopScope(
       onWillPop: () => _back(context),
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('General Settings'), actions: [
+        appBar: AppBar(title: Text(appLocale.generalSettings), actions: [
           IconButton(
               icon: Icon(Icons.check),
               onPressed: () async {
@@ -137,21 +144,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
           padding: const EdgeInsets.all(8),
           children: [
             SettingsItem(
-              'Short Break Duration',
+              appLocale.shortBreakDuration,
               shortBreakWidget,
               leadingWidget: Icon(Icons.timer_3),
             ),
             SettingsItem(
-              'Long Break Duration',
+              appLocale.longBreakDuration,
               longBreakWidget,
               leadingWidget: Icon(Icons.timer_10),
             ),
             SettingsItem(
-              'Long Break after',
+              appLocale.longBreakAfter,
               longBreakIntervalWidget,
             ),
             SettingsItem(
-              'Language',
+              appLocale.language,
               languageWidget,
               leadingWidget: Icon(Icons.translate_outlined, color: Colors.blue),
             ),
@@ -159,7 +166,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 onTap: () => Navigator.of(context)
                     .pushNamed(SelectThemeScreen.routeName),
                 child: SettingsItem(
-                  'App Theme',
+                  appLocale.appTheme,
                   themeWidget,
                   leadingWidget: Icon(Icons.brightness_6_outlined),
                 ))

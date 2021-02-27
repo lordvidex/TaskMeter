@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:task_meter/locale/locales.dart';
 
 import '../../core/constants.dart';
 import '../../models/task.dart';
@@ -72,6 +73,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations appLocale = AppLocalizations.of(context);
     return SingleChildScrollView(
       child: Container(
         height: 250,
@@ -93,20 +95,20 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 30),
-                Text('Task Name', style: Theme.of(context).textTheme.headline3),
+                Text(appLocale.taskName, style: Theme.of(context).textTheme.headline3),
                 TextField(
                     controller: _taskNameController,
                     cursorColor: widget.taskGroup.taskGroupColor[200],
                     decoration: InputDecoration(
-                        errorText: _hasError ? 'Enter task name' : null,
+                        errorText: _hasError ? appLocale.enterTaskName : null,
                         border: InputBorder.none,
-                        labelText: 'Type task name...',
+                        labelText: appLocale.typeTaskName,
                         labelStyle: Constants.coloredLabelTextStyle(
                             widget.taskGroup.taskGroupColor[
                                 Theme.of(context).brightness == Brightness.dark
                                     ? 200
                                     : 600]))),
-                Text('Difficulty',
+                Text(appLocale.difficulty,
                     style: Theme.of(context).textTheme.headline3),
                 RatingBar.builder(
                   initialRating: _rating,
@@ -131,7 +133,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                           padding: const EdgeInsets.symmetric(
                             horizontal: 40,
                           ),
-                          child: Text(widget.isEditMode ? 'Edit' : 'Add',
+                          child: Text(widget.isEditMode ? appLocale.edit : appLocale.add,
                               style: TextStyle(fontWeight: FontWeight.bold)),
                           onPressed: addTask,
                           color: widget.taskGroup.taskGroupColor[600])),

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/constants.dart';
+import '../../locale/locales.dart';
 import '../../models/task_group.dart';
 import '../task_progress_indicator.dart';
 
@@ -15,6 +16,7 @@ class HeaderContainerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appLocale = AppLocalizations.of(context);
     return Container(
       width: double.infinity,
       child: Stack(children: [
@@ -48,13 +50,15 @@ class HeaderContainerWidget extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                 ),
               ),
-              Text('${taskGroup.tasks.length} tasks',
+              Text(
+                  appLocale
+                      .taskCount(taskGroup.tasks.length),
                   style: TextStyle(
                       fontSize: 18,
                       color: Colors.white,
                       fontWeight: FontWeight.bold)),
               SizedBox(height: 10),
-              Text('progress',
+              Text(appLocale.progress,
                   style: Constants.coloredLabelTextStyle(
                       taskGroup.taskGroupColor[100])),
               SizedBox(height: 10),

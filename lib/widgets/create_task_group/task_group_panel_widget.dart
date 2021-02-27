@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:task_meter/locale/locales.dart';
 
 import '../../core/constants.dart';
 import '../../core/utils/duration_utils.dart';
@@ -22,12 +23,10 @@ class TaskGroupPanel extends StatefulWidget {
 
 class _TaskGroupPanelState extends State<TaskGroupPanel> {
   TextEditingController _durationController;
+  AppLocalizations appLocale;
   @override
   void initState() {
     super.initState();
-    _durationController = TextEditingController(
-        text:
-            DurationUtils.durationToReadableString(widget.taskGroup.totalTime));
   }
 
   @override
@@ -46,12 +45,16 @@ class _TaskGroupPanelState extends State<TaskGroupPanel> {
     setState(() {
       widget.taskGroup.totalTime = pickedDuration;
       _durationController.text =
-          DurationUtils.durationToReadableString(pickedDuration);
+          DurationUtils.durationToReadableString(pickedDuration, appLocale);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    appLocale = AppLocalizations.of(context);
+    _durationController = TextEditingController(
+        text: DurationUtils.durationToReadableString(
+            widget.taskGroup.totalTime, appLocale));
     final shortBreakPicker = Container(
         margin: const EdgeInsets.symmetric(
           horizontal: 5,
@@ -60,7 +63,7 @@ class _TaskGroupPanelState extends State<TaskGroupPanel> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Short Break',
+              Text(appLocale.shortBreak,
                   style: Constants.coloredLabelTextStyle(
                       widget.taskGroup.taskGroupColor[800])),
               DropdownButton<Duration>(
@@ -73,7 +76,7 @@ class _TaskGroupPanelState extends State<TaskGroupPanel> {
                 isDense: true,
                 selectedItemBuilder: (ctx) => List.generate(
                     16,
-                    (x) => Text('$x minutes',
+                    (x) => Text(appLocale.minutes(x),
                         style: TextStyle(
                           color: Colors.black,
                         ))),
@@ -82,7 +85,7 @@ class _TaskGroupPanelState extends State<TaskGroupPanel> {
                     (x) => DropdownMenuItem<Duration>(
                         value: Duration(minutes: x),
                         child: Text(
-                          '$x minutes',
+                          appLocale.minutes(x),
                         ))),
               )
             ]));
@@ -95,7 +98,7 @@ class _TaskGroupPanelState extends State<TaskGroupPanel> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Long Break After',
+              Text(appLocale.longBreakAfter,
                   style: Constants.coloredLabelTextStyle(
                       widget.taskGroup.taskGroupColor[800])),
               DropdownButton<int>(
@@ -108,14 +111,14 @@ class _TaskGroupPanelState extends State<TaskGroupPanel> {
                   isDense: true,
                   selectedItemBuilder: (ctx) => List.generate(
                       9,
-                      (x) => Text('${x + 2} intervals',
+                      (x) => Text(appLocale.intervals(x + 2),
                           style: TextStyle(color: Colors.black))),
                   items: List.generate(
                       9,
                       (x) => DropdownMenuItem<int>(
                           value: x + 2,
                           child: Text(
-                            '${x + 2} intervals',
+                            appLocale.intervals(x + 2),
                             //style: Theme.of(context).textTheme.bodyText1
                           )))),
             ]));
@@ -128,7 +131,7 @@ class _TaskGroupPanelState extends State<TaskGroupPanel> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Long Break',
+              Text(appLocale.longBreak,
                   style: Constants.coloredLabelTextStyle(
                       widget.taskGroup.taskGroupColor[800])),
               DropdownButton<Duration>(
@@ -141,14 +144,14 @@ class _TaskGroupPanelState extends State<TaskGroupPanel> {
                   isDense: true,
                   selectedItemBuilder: (ctx) => List.generate(
                       7,
-                      (x) => Text('${x * 5} minutes',
+                      (x) => Text(appLocale.minutes(x * 5),
                           style: TextStyle(color: Colors.black))),
                   items: List.generate(
                       7,
                       (x) => DropdownMenuItem<Duration>(
                           value: Duration(minutes: x * 5),
                           child: Text(
-                            '${x * 5} minutes',
+                            appLocale.minutes(x * 5),
                             // style: Theme.of(context).textTheme.bodyText1
                           )))),
             ]));
@@ -159,7 +162,8 @@ class _TaskGroupPanelState extends State<TaskGroupPanel> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Create Task', style: Theme.of(context).textTheme.headline1),
+            Text(appLocale.createTaskGroup,
+                style: Theme.of(context).textTheme.headline1),
             Container(
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.only(top: 20),
@@ -175,11 +179,11 @@ class _TaskGroupPanelState extends State<TaskGroupPanel> {
                         style: TextStyle(fontSize: 26, color: Colors.black),
                         showCursor: true,
                         validator: (string) => string.isEmpty
-                            ? 'Enter a valid task group name'
+                            ? appLocale.taskGroupNameErrorText
                             : null,
                         decoration: InputDecoration(
                           labelStyle: TextStyle(color: Colors.grey),
-                          labelText: 'Task Group Name',
+                          labelText: appLocale.taskGroupName,
                           border: InputBorder.none,
                         )),
                     SizedBox(height: 10),
@@ -189,7 +193,7 @@ class _TaskGroupPanelState extends State<TaskGroupPanel> {
                         controller: _durationController,
                         onTap: () => _pickDuration(context),
                         decoration: InputDecoration(
-                            labelText: 'Duration',
+                            labelText: appLocale.duration,
                             labelStyle: TextStyle(color: Colors.black54),
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -214,12 +218,14 @@ class _TaskGroupPanelState extends State<TaskGroupPanel> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: CupertinoButton(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 2),
                         color: widget.taskGroup.taskGroupColor[800],
                         onPressed: () {
                           FocusScope.of(context).unfocus();
                           widget.showAddNewTaskDialog();
                         },
-                        child: Text('Add Task',
+                        child: Text(appLocale.addTask,
                             style: Constants.coloredLabelTextStyle(
                                 widget.taskGroup.taskGroupColor[100])),
                       ),

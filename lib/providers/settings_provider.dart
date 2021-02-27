@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:task_meter/models/app_theme.dart';
 
+import '../models/app_theme.dart';
 import '../models/settings.dart';
 import '../repositories/settings_repository.dart';
 
@@ -23,6 +23,11 @@ class SettingsProvider extends ChangeNotifier {
 
   void updateTheme(AppTheme newTheme) {
     _settings.appTheme = newTheme;
+    updateSettings(_settings);
+  }
+
+  void updateLanguage(String languageCode) {
+    _settings.language = languageCode;
     updateSettings(_settings);
   }
 }

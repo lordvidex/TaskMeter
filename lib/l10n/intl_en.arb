@@ -1,0 +1,275 @@
+{
+  "@@last_modified": "2021-02-28T00:54:31.228042",
+  "taskGroups": "Task Groups",
+  "@taskGroups": {
+    "description": "The text Task Groups on the taskGroupScreen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "progress": "progress",
+  "@progress": {
+    "description": "text \"progress\" used to label the linear progress indicator on this screen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "emptyTaskGroupText": "Task Group list is empty",
+  "@emptyTaskGroupText": {
+    "description": "Text displayed to user when taskgroup list is empty",
+    "type": "text",
+    "placeholders": {}
+  },
+  "clickOn": "Click on ",
+  "@clickOn": {
+    "description": "Partial word displayed in the taskGroup screen telling the userhow to add a new task Group",
+    "type": "text",
+    "placeholders": {}
+  },
+  "toAddNewTaskGroup": "to add new Task Group",
+  "@toAddNewTaskGroup": {
+    "description": "Partial word displayed in the taskGroup screentelling the user how to add a new task Group",
+    "type": "text",
+    "placeholders": {}
+  },
+  "delete": "Delete",
+  "@delete": {
+    "description": "Text with the word delete",
+    "type": "text",
+    "placeholders": {}
+  },
+  "generalSettings": "General Settings",
+  "@generalSettings": {
+    "description": "App bar text for setting screen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "shortBreakDuration": "Short Break Duration",
+  "@shortBreakDuration": {
+    "description": "label for short break duration",
+    "type": "text",
+    "placeholders": {}
+  },
+  "longBreakDuration": "Long Break Duration",
+  "@longBreakDuration": {
+    "description": "label for long break duration",
+    "type": "text",
+    "placeholders": {}
+  },
+  "longBreakAfter": "Long Break after",
+  "@longBreakAfter": {
+    "description": "text for long break after or long break intervals",
+    "type": "text",
+    "placeholders": {}
+  },
+  "language": "Language",
+  "@language": {
+    "description": "label for language",
+    "type": "text",
+    "placeholders": {}
+  },
+  "appTheme": "App Theme",
+  "@appTheme": {
+    "description": "label for appTheme",
+    "type": "text",
+    "placeholders": {}
+  },
+  "system": "System",
+  "@system": {
+    "description": "label text for system theme in settings",
+    "type": "text",
+    "placeholders": {}
+  },
+  "theme": "Theme",
+  "@theme": {
+    "description": "label text for the word \"theme\"",
+    "type": "text",
+    "placeholders": {}
+  },
+  "selectTheme": "Select Theme",
+  "@selectTheme": {
+    "description": "Appbar text for the selectThemeScreen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "dataNotSaved": "Data not saved!",
+  "@dataNotSaved": {
+    "description": "title text displayed in CupertinoAlertDialog when user clicks back button without saving settings data",
+    "type": "text",
+    "placeholders": {}
+  },
+  "dataNotSavedDesc1": "You have some unsaved data, go back and click ",
+  "@dataNotSavedDesc1": {
+    "description": "First part of description text shown in cupertinoAlertDialog when user clicks back button without saving settings data",
+    "type": "text",
+    "placeholders": {}
+  },
+  "dataNotSavedDesc2": " at the top-right to save!",
+  "@dataNotSavedDesc2": {
+    "description": "Second part of description text shown in cupertinoAlertDialog when user clicks back button without saving settings data",
+    "type": "text",
+    "placeholders": {}
+  },
+  "discard": "Discard",
+  "@discard": {
+    "description": "cupertino action button text to discard data in settings screen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "cupertino action button to go back and save changes in settings screen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "intervals": "{x,plural, =1{{x} interval}few{{x} intervals}other{{x} intervals}}",
+  "@intervals": {
+    "description": "long break after x shortbreaks",
+    "type": "text",
+    "placeholders": {
+      "x": {}
+    }
+  },
+  "themeType": "{theme,select, Dark{Dark}Light{Light}System{System}}",
+  "@themeType": {
+    "description": "returns the text based on themetypes [System,Dark,Light]",
+    "type": "text",
+    "placeholders": {
+      "theme": {}
+    }
+  },
+  "taskCount": "{x,plural, =0{{x} tasks}=1{{x} task}few{{x} tasks}other{{x} tasks}}",
+  "@taskCount": {
+    "description": "label text displaying number of tasks in the taskgroup",
+    "type": "text",
+    "placeholders": {
+      "x": {
+        "example": 3
+      }
+    }
+  },
+  "createTaskGroup": "Create Task Group",
+  "@createTaskGroup": {
+    "description": "Header text in create task group screen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "duration": "Duration",
+  "@duration": {
+    "description": "hint text for duration picker widget",
+    "type": "text",
+    "placeholders": {}
+  },
+  "addTask": "Add Task",
+  "@addTask": {
+    "description": "button Label text to add new task in a task group",
+    "type": "text",
+    "placeholders": {}
+  },
+  "create": "Create",
+  "@create": {
+    "description": "buttonLabel for create button <for creating a new task group>",
+    "type": "text",
+    "placeholders": {}
+  },
+  "click": "Click ",
+  "@click": {
+    "description": "first part of the empty textview displayed when there is an empty list of tasks",
+    "type": "text",
+    "placeholders": {}
+  },
+  "shortBreak": "Short Break",
+  "@shortBreak": {
+    "description": "label for short break",
+    "type": "text",
+    "placeholders": {}
+  },
+  "longBreak": "Long Break",
+  "@longBreak": {
+    "description": "label for long break",
+    "type": "text",
+    "placeholders": {}
+  },
+  "toAddNewTask": " to add a new task",
+  "@toAddNewTask": {
+    "description": "second part of the displayed emptyview for tasklists",
+    "type": "text",
+    "placeholders": {}
+  },
+  "taskGroupName": "Task Group Name",
+  "@taskGroupName": {
+    "description": "label text for task group name",
+    "type": "text",
+    "placeholders": {}
+  },
+  "taskGroupNameErrorText": "Enter a valid task group name",
+  "@taskGroupNameErrorText": {
+    "description": "error text shown when task group name is empty",
+    "type": "text",
+    "placeholders": {}
+  },
+  "hours": "{hours,plural, =0{}=1{{hours} Hour }other{{hours} Hours }}",
+  "@hours": {
+    "description": "string for displaying how many hours are in the duration object",
+    "type": "text",
+    "placeholders": {
+      "hours": {}
+    }
+  },
+  "minutes": "{minutes,plural, =0{{minutes} minutes }=1{{minutes} Minute }other{{minutes} Minutes }}",
+  "@minutes": {
+    "description": "string for displaying how many minutes are in the duration object",
+    "type": "text",
+    "placeholders": {
+      "minutes": {}
+    }
+  },
+  "seconds": "{seconds,plural, =0{}=1{{seconds} Second}other{{seconds} Seconds}}",
+  "@seconds": {
+    "description": "string for displaying how many seconds are in the duration object",
+    "type": "text",
+    "placeholders": {
+      "seconds": {}
+    }
+  },
+  "taskName": "Task Name",
+  "@taskName": {
+    "description": "AlertDialog textField title for inputting taskName",
+    "type": "text",
+    "placeholders": {}
+  },
+  "difficulty": "Difficulty",
+  "@difficulty": {
+    "description": "difficulty header for picking difficulty when creating/editing task",
+    "type": "text",
+    "placeholders": {}
+  },
+  "typeTaskName": "Type task name...",
+  "@typeTaskName": {
+    "description": "label text for inputting task name",
+    "type": "text",
+    "placeholders": {}
+  },
+  "add": "Add",
+  "@add": {
+    "description": "button text label to add task",
+    "type": "text",
+    "placeholders": {}
+  },
+  "edit": "Edit",
+  "@edit": {
+    "description": "label text for finishing task edit",
+    "type": "text",
+    "placeholders": {}
+  },
+  "enterTaskName": "Enter task name",
+  "@enterTaskName": {
+    "description": "error text if task name has errors",
+    "type": "text",
+    "placeholders": {}
+  },
+  "min": "min.",
+  "@min": {
+    "description": "Short text for min in duration picker",
+    "type": "text",
+    "placeholders": {}
+  }
+}

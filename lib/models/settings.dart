@@ -30,7 +30,7 @@ class Settings extends Equatable {
     @required this.shortBreak,
     @required this.longBreak,
     //TODO: add localization
-    this.language = "en-US",
+    this.language,
     this.appTheme,
     this.timeOfUpload,
   });
@@ -51,8 +51,7 @@ class Settings extends Equatable {
       totalTime: Duration(minutes: 30),
       shortBreak: Duration(minutes: 1),
       longBreak: Duration(minutes: 5),
-      appTheme: AppTheme.System,
-      language: "en-US");
+      appTheme: AppTheme.System);
   Map<String, dynamic> toJson() => {
         TOTAL_TIME: totalTime.inSeconds,
         LONG_BREAK_INTERVALS: longBreakIntervals,

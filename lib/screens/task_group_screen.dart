@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../locale/locales.dart';
 import '../providers/task_group_provider.dart';
 import '../widgets/task_group/task_group_widget.dart';
 import 'create_task_group_screen.dart';
@@ -10,6 +11,7 @@ class TaskGroupScreen extends StatelessWidget {
   static const routeName = '/task-group';
   @override
   Widget build(BuildContext context) {
+    final appLocale = AppLocalizations.of(context);
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.white,
@@ -32,7 +34,7 @@ class TaskGroupScreen extends StatelessWidget {
             expandedHeight: 120,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text('Task Groups',
+              title: Text(AppLocalizations.of(context).taskGroups,
                   style: Theme.of(context).textTheme.headline3),
             ),
           ),
@@ -56,14 +58,14 @@ class TaskGroupScreen extends StatelessWidget {
                     child: Column(
               children: [
                 Image.asset('assets/images/donkey.png'),
-                Text('Task Group list is empty.'),
+                Text(appLocale.emptyTaskGroupText),
                 Flex(
                     mainAxisAlignment: MainAxisAlignment.center,
                     direction: Axis.horizontal,
                     children: [
-                      Text('Click on '),
+                      Text(appLocale.clickOn),
                       Icon(Icons.add),
-                      Text('to add new Task Group')
+                      Text(appLocale.toAddNewTaskGroup)
                     ]),
               ],
             ))),

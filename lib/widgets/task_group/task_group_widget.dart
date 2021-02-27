@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
+import '../../locale/locales.dart';
 import '../../models/task_group.dart';
 import '../../providers/task_group_provider.dart';
 import '../../screens/task_group_description_screen.dart';
@@ -40,7 +41,7 @@ class TaskGroupWidget extends StatelessWidget {
                   items: [
                     DropdownMenuItem(
                         value: 'delete',
-                        child: Text('Delete'),
+                        child: Text(AppLocalizations.of(context).delete),
                         onTap: () => taskGroupProvider
                             .deleteTaskGroup(taskGroup.taskGroupId))
                   ],
@@ -70,7 +71,7 @@ class TaskGroupWidget extends StatelessWidget {
                       Text(taskGroup.taskGroupSubtitle,
                           style: Theme.of(context).textTheme.bodyText1),
                       SizedBox(height: 5),
-                      Text('progress',
+                      Text(AppLocalizations.of(context).progress,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: taskGroup.taskGroupColor[100],
