@@ -36,6 +36,12 @@
     "type": "text",
     "placeholders": {}
   },
+  "and": "и",
+  "@and": {
+    "description": "the word \"and\"",
+    "type": "text",
+    "placeholders": {}
+  },
   "generalSettings": "Общие Настройки",
   "@generalSettings": {
     "description": "App bar text for setting screen",
@@ -120,7 +126,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "intervals": "{x,plural, =1{{x} интервал}few{{x} интервала}other{{x} интервалы}}",
+  "intervals": "{x,plural, =1{{x} интервал}few{{x} интервала}other{{x} интервалов}}",
   "@intervals": {
     "description": "long break after x shortbreaks",
     "type": "text",
@@ -164,7 +170,7 @@
       }
     }
   },
-  "createTaskGroup": "Создайте группа задачи",
+  "createTaskGroup": "Создайте группа задач",
   "@createTaskGroup": {
     "description": "Header text in create task group screen",
     "type": "text",

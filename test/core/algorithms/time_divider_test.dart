@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:task_meter/core/errors.dart';
-import 'package:task_meter/models/task.dart';
-import 'package:task_meter/models/task_group.dart';
+import 'package:task_meter/domain/models/task.dart';
+import 'package:task_meter/domain/models/task_group.dart';
 import 'package:task_meter/core/algorithms/time_divider.dart';
 
 void main() {

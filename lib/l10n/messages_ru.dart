@@ -21,7 +21,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m0(hours) => "${Intl.plural(hours, zero: '', one: '${hours} Час ', few: '${hours} Часа ', other: '${hours} Часов ')}";
 
-  static m1(x) => "${Intl.plural(x, one: '${x} интервал', few: '${x} интервала', other: '${x} интервалы')}";
+  static m1(x) => "${Intl.plural(x, one: '${x} интервал', few: '${x} интервала', other: '${x} интервалов')}";
 
   static m2(minutes) => "${Intl.plural(minutes, zero: '${minutes} минут ', one: '${minutes} минута ', few: '${minutes} минуты ', other: '${minutes} минут ')}";
 
@@ -36,12 +36,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "about" : MessageLookupByLibrary.simpleMessage("О нас"),
     "add" : MessageLookupByLibrary.simpleMessage("Добавьте"),
     "addTask" : MessageLookupByLibrary.simpleMessage("Добавьте задачу"),
+    "and" : MessageLookupByLibrary.simpleMessage("и"),
     "appTheme" : MessageLookupByLibrary.simpleMessage("Тема приложения"),
     "cancel" : MessageLookupByLibrary.simpleMessage("Отменить"),
     "click" : MessageLookupByLibrary.simpleMessage("Нажмите "),
     "clickOn" : MessageLookupByLibrary.simpleMessage("Нажми на "),
     "create" : MessageLookupByLibrary.simpleMessage("Создать"),
-    "createTaskGroup" : MessageLookupByLibrary.simpleMessage("Создайте группа задачи"),
+    "createTaskGroup" : MessageLookupByLibrary.simpleMessage("Создайте группа задач"),
     "dataNotSaved" : MessageLookupByLibrary.simpleMessage("Данные не сохранены!"),
     "dataNotSavedDesc1" : MessageLookupByLibrary.simpleMessage("У вас есть некоторые несохраненные данные, вернитесь назад и нажмите "),
     "dataNotSavedDesc2" : MessageLookupByLibrary.simpleMessage(" в правом верхнем углу сохранить!"),

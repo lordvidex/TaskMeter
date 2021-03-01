@@ -1,4 +1,4 @@
-import 'package:task_meter/models/settings.dart';
+import '../../domain/models/settings.dart';
 
 class MergeUtils {
   static Settings mergeSettings(

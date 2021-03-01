@@ -36,6 +36,12 @@
     "type": "text",
     "placeholders": {}
   },
+  "and": "and",
+  "@and": {
+    "description": "the word \"and\"",
+    "type": "text",
+    "placeholders": {}
+  },
   "generalSettings": "General Settings",
   "@generalSettings": {
     "description": "App bar text for setting screen",

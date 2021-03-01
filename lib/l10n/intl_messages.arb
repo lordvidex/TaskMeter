@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2021-03-01T10:32:24.038107",
+  "@@last_modified": "2021-03-01T14:56:21.390661",
   "taskGroups": "Task groups",
   "@taskGroups": {
     "description": "The text Task Groups on the taskGroupScreen",
@@ -33,6 +33,12 @@
   "delete": "Delete",
   "@delete": {
     "description": "Text with the word delete",
+    "type": "text",
+    "placeholders": {}
+  },
+  "and": "and",
+  "@and": {
+    "description": "the word \"and\"",
     "type": "text",
     "placeholders": {}
   },

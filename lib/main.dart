@@ -3,18 +3,18 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'core/constants.dart';
+import 'domain/models/app_theme.dart';
 import 'injection_container.dart' as di;
 import 'locale/locales.dart';
-import 'models/app_theme.dart';
-import 'providers/settings_provider.dart';
-import 'providers/task_group_provider.dart';
-import 'screens/create_task_group_screen.dart';
-import 'screens/error_screen.dart';
-import 'screens/select_theme_screen.dart';
-import 'screens/settings_screen.dart';
-import 'screens/task_group_description_screen.dart';
-import 'screens/task_group_screen.dart';
-import 'screens/task_timer_screen.dart';
+import 'presentation/providers/settings_provider.dart';
+import 'presentation/providers/task_group_provider.dart';
+import 'presentation/screens/create_task_group_screen.dart';
+import 'presentation/screens/error_screen.dart';
+import 'presentation/screens/select_theme_screen.dart';
+import 'presentation/screens/settings_screen.dart';
+import 'presentation/screens/task_group_description_screen.dart';
+import 'presentation/screens/task_group_screen.dart';
+import 'presentation/screens/task_timer_screen.dart';
 
 void main() async {
   //TODO: loading splash screen HERE - (a brief loading animation to be precise)

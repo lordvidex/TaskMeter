@@ -1,14 +1,14 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:task_meter/data/remote_storage.dart';
 
-import 'bloc/timer_bloc.dart';
-import 'data/local_storage.dart';
-import 'providers/settings_provider.dart';
-import 'providers/task_group_provider.dart';
-import 'repositories/settings_repository.dart';
-import 'repositories/task_group_repository.dart';
-import 'repositories/timer_repository.dart';
+import 'data/datasources/local_storage.dart';
+import 'data/datasources/remote_storage.dart';
+import 'data/repositories/settings_repository.dart';
+import 'data/repositories/task_group_repository.dart';
+import 'data/repositories/timer_repository.dart';
+import 'presentation/bloc/timer_bloc.dart';
+import 'presentation/providers/settings_provider.dart';
+import 'presentation/providers/task_group_provider.dart';
 
 final GetIt sl = GetIt.instance;
 

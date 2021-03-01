@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:task_meter/data/local_storage.dart';
-import 'package:task_meter/data/remote_storage.dart';
-import 'package:task_meter/models/settings.dart';
-import 'package:task_meter/repositories/settings_repository.dart';
+import 'package:task_meter/data/datasources/local_storage.dart';
+import 'package:task_meter/data/datasources/remote_storage.dart';
+import 'package:task_meter/domain/models/settings.dart';
+import 'package:task_meter/data/repositories/settings_repository.dart';
 
 class LocalStorageMock extends Mock implements LocalStorage {}
 

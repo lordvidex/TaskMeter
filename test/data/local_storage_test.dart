@@ -1,12 +1,12 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_meter/core/utils/color_utils.dart';
-import 'package:task_meter/data/local_storage.dart';
-import 'package:task_meter/models/task.dart';
-import 'dart:convert';
-import 'package:task_meter/models/task_group.dart';
+import 'package:task_meter/data/datasources/local_storage.dart';
+import 'package:task_meter/domain/models/task.dart';
+import 'package:task_meter/domain/models/task_group.dart';
 import 'package:uuid/uuid.dart';
 
 class SharedPreferencesMock extends Mock implements SharedPreferences {}

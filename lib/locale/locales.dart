@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
 import '../l10n/messages_all.dart';
-import '../models/app_theme.dart';
+import '../domain/models/app_theme.dart';
 
 class AppLocalizations {
   static Future<AppLocalizations> load(Locale locale) {
@@ -48,6 +48,7 @@ class AppLocalizations {
       Intl.message('Delete', name: 'delete', desc: 'Text with the word delete');
 
   //! Settings Screen
+  String get and => Intl.message('and', name: 'and', desc: 'the word "and"');
   String get generalSettings => Intl.message('General Settings',
       name: 'generalSettings', desc: 'App bar text for setting screen');
 

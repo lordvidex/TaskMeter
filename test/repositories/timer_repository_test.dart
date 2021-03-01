@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:task_meter/repositories/timer_repository.dart';
+import 'package:task_meter/data/repositories/timer_repository.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

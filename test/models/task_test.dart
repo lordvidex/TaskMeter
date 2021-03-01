@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:task_meter/models/task.dart';
+import 'package:task_meter/domain/models/task.dart';
 import 'package:uuid/uuid.dart';
 
 void main() {

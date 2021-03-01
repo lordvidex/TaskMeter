@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:task_meter/bloc/timer_bloc.dart';
-import 'package:task_meter/repositories/timer_repository.dart';
+import 'package:task_meter/presentation/bloc/timer_bloc.dart';
+import 'package:task_meter/data/repositories/timer_repository.dart';
 
 class TimerRepositoryMock extends Mock implements TimerRepository {}
 

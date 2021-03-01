@@ -1,4 +1,4 @@
-import '../../models/task_group.dart';
+import '../../domain/models/task_group.dart';
 import '../errors.dart';
 
 class TaskUtils {

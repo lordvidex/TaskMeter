@@ -1,7 +1,7 @@
 import 'dart:math';
 
-import '../../models/task.dart';
-import '../../models/task_group.dart';
+import '../../domain/models/task.dart';
+import '../../domain/models/task_group.dart';
 import '../errors.dart';
 import '../utils/task_utils.dart';
 

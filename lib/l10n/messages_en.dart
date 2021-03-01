@@ -36,6 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "about" : MessageLookupByLibrary.simpleMessage("About"),
     "add" : MessageLookupByLibrary.simpleMessage("Add"),
     "addTask" : MessageLookupByLibrary.simpleMessage("Add task"),
+    "and" : MessageLookupByLibrary.simpleMessage("and"),
     "appTheme" : MessageLookupByLibrary.simpleMessage("App Theme"),
     "breakLabel" : MessageLookupByLibrary.simpleMessage("Break"),
     "cancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
