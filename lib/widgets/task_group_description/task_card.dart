@@ -106,8 +106,9 @@ class MainTaskCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final appLocale = AppLocalizations.of(context);
     return Card(
-        color:
-            _task.isCompleted ? Colors.grey : Theme.of(context).cardTheme.color,
+        color: _task.isCompleted
+            ? taskGroup.taskGroupColor[100]
+            : Theme.of(context).cardTheme.color,
         margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         elevation: 5,

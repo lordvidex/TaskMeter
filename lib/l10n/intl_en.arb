@@ -1,6 +1,6 @@
 {
-  "@@last_modified": "2021-02-28T00:54:31.228042",
-  "taskGroups": "Task Groups",
+  "@@last_modified": "2021-03-01T03:22:24.402007",
+  "taskGroups": "Task groups",
   "@taskGroups": {
     "description": "The text Task Groups on the taskGroupScreen",
     "type": "text",
@@ -12,7 +12,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "emptyTaskGroupText": "Task Group list is empty",
+  "emptyTaskGroupText": "Task group list is empty",
   "@emptyTaskGroupText": {
     "description": "Text displayed to user when taskgroup list is empty",
     "type": "text",
@@ -24,7 +24,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "toAddNewTaskGroup": "to add new Task Group",
+  "toAddNewTaskGroup": "to add new Task group",
   "@toAddNewTaskGroup": {
     "description": "Partial word displayed in the taskGroup screentelling the user how to add a new task Group",
     "type": "text",
@@ -42,19 +42,19 @@
     "type": "text",
     "placeholders": {}
   },
-  "shortBreakDuration": "Short Break Duration",
+  "shortBreakDuration": "Short break duration",
   "@shortBreakDuration": {
     "description": "label for short break duration",
     "type": "text",
     "placeholders": {}
   },
-  "longBreakDuration": "Long Break Duration",
+  "longBreakDuration": "Long break duration",
   "@longBreakDuration": {
     "description": "label for long break duration",
     "type": "text",
     "placeholders": {}
   },
-  "longBreakAfter": "Long Break after",
+  "longBreakAfter": "Long break after",
   "@longBreakAfter": {
     "description": "text for long break after or long break intervals",
     "type": "text",
@@ -146,7 +146,7 @@
       }
     }
   },
-  "createTaskGroup": "Create Task Group",
+  "createTaskGroup": "Create task group",
   "@createTaskGroup": {
     "description": "Header text in create task group screen",
     "type": "text",
@@ -158,7 +158,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "addTask": "Add Task",
+  "addTask": "Add task",
   "@addTask": {
     "description": "button Label text to add new task in a task group",
     "type": "text",
@@ -176,13 +176,13 @@
     "type": "text",
     "placeholders": {}
   },
-  "shortBreak": "Short Break",
+  "shortBreak": "Short break",
   "@shortBreak": {
     "description": "label for short break",
     "type": "text",
     "placeholders": {}
   },
-  "longBreak": "Long Break",
+  "longBreak": "Long break",
   "@longBreak": {
     "description": "label for long break",
     "type": "text",
@@ -194,7 +194,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "taskGroupName": "Task Group Name",
+  "taskGroupName": "Task group name",
   "@taskGroupName": {
     "description": "label text for task group name",
     "type": "text",
@@ -206,7 +206,25 @@
     "type": "text",
     "placeholders": {}
   },
-  "hours": "{hours,plural, =0{}=1{{hours} Hour }other{{hours} Hours }}",
+  "youHaveFinished": "You have finished",
+  "@youHaveFinished": {
+    "description": "first part of text shown to user after timer has finished",
+    "type": "text",
+    "placeholders": {}
+  },
+  "breakLabel": "Break",
+  "@breakLabel": {
+    "description": "text \"Break\"",
+    "type": "text",
+    "placeholders": {}
+  },
+  "task": "Task",
+  "@task": {
+    "description": "text \"Task\"",
+    "type": "text",
+    "placeholders": {}
+  },
+  "hours": "{hours,plural, =0{}=1{{hours} Hour }few{{hours} Hours }other{{hours} Hours }}",
   "@hours": {
     "description": "string for displaying how many hours are in the duration object",
     "type": "text",
@@ -214,7 +232,7 @@
       "hours": {}
     }
   },
-  "minutes": "{minutes,plural, =0{{minutes} minutes }=1{{minutes} Minute }other{{minutes} Minutes }}",
+  "minutes": "{minutes,plural, =0{{minutes} minutes }=1{{minutes} minute }few{{minutes} minutes }other{{minutes} minutes }}",
   "@minutes": {
     "description": "string for displaying how many minutes are in the duration object",
     "type": "text",
@@ -222,7 +240,7 @@
       "minutes": {}
     }
   },
-  "seconds": "{seconds,plural, =0{}=1{{seconds} Second}other{{seconds} Seconds}}",
+  "seconds": "{seconds,plural, =0{}=1{{seconds} second}few{{seconds} seconds}other{{seconds} seconds}}",
   "@seconds": {
     "description": "string for displaying how many seconds are in the duration object",
     "type": "text",
@@ -230,7 +248,7 @@
       "seconds": {}
     }
   },
-  "taskName": "Task Name",
+  "taskName": "Task name",
   "@taskName": {
     "description": "AlertDialog textField title for inputting taskName",
     "type": "text",

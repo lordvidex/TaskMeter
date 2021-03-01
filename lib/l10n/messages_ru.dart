@@ -23,7 +23,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m1(x) => "${Intl.plural(x, one: '${x} интервал', few: '${x} интервала', other: '${x} интервалы')}";
 
-  static m2(minutes) => "${Intl.plural(minutes, zero: '${minutes} Минут ', one: '${minutes} Минута ', few: '${minutes} Минуты ', other: '${minutes} Минут ')}";
+  static m2(minutes) => "${Intl.plural(minutes, zero: '${minutes} минут ', one: '${minutes} минута ', few: '${minutes} минуты ', other: '${minutes} минут ')}";
 
   static m3(seconds) => "${Intl.plural(seconds, zero: '', one: '${seconds} Секунда', few: '${seconds} Секунды', other: '${seconds} Секунд')}";
 
@@ -34,12 +34,12 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "add" : MessageLookupByLibrary.simpleMessage("Добавьте"),
-    "addTask" : MessageLookupByLibrary.simpleMessage("Добавьте Задач"),
-    "appTheme" : MessageLookupByLibrary.simpleMessage("Тема Приложения"),
+    "addTask" : MessageLookupByLibrary.simpleMessage("Добавьте задачу"),
+    "appTheme" : MessageLookupByLibrary.simpleMessage("Тема приложения"),
     "cancel" : MessageLookupByLibrary.simpleMessage("Отменить"),
     "click" : MessageLookupByLibrary.simpleMessage("Нажмите "),
     "clickOn" : MessageLookupByLibrary.simpleMessage("Нажми на "),
-    "create" : MessageLookupByLibrary.simpleMessage("Создайте"),
+    "create" : MessageLookupByLibrary.simpleMessage("Создать"),
     "createTaskGroup" : MessageLookupByLibrary.simpleMessage("Создайте группа задачи"),
     "dataNotSaved" : MessageLookupByLibrary.simpleMessage("Данные не сохранены!"),
     "dataNotSavedDesc1" : MessageLookupByLibrary.simpleMessage("У вас есть некоторые несохраненные данные, вернитесь назад и нажмите "),
@@ -47,7 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "delete" : MessageLookupByLibrary.simpleMessage("Удалить"),
     "difficulty" : MessageLookupByLibrary.simpleMessage("Cложность"),
     "discard" : MessageLookupByLibrary.simpleMessage("Отбросить"),
-    "duration" : MessageLookupByLibrary.simpleMessage("Срок"),
+    "duration" : MessageLookupByLibrary.simpleMessage("Время"),
     "edit" : MessageLookupByLibrary.simpleMessage("Изменить"),
     "emptyTaskGroupText" : MessageLookupByLibrary.simpleMessage("список групп задач пуст"),
     "enterTaskName" : MessageLookupByLibrary.simpleMessage("Введите название задачи"),
@@ -55,22 +55,22 @@ class MessageLookup extends MessageLookupByLibrary {
     "hours" : m0,
     "intervals" : m1,
     "language" : MessageLookupByLibrary.simpleMessage("Язык"),
-    "longBreak" : MessageLookupByLibrary.simpleMessage("Большой Перерыв"),
-    "longBreakAfter" : MessageLookupByLibrary.simpleMessage("Длинный Перерыв после"),
-    "longBreakDuration" : MessageLookupByLibrary.simpleMessage("Срок Длинного Перерыва"),
+    "longBreak" : MessageLookupByLibrary.simpleMessage("Большой перерыв"),
+    "longBreakAfter" : MessageLookupByLibrary.simpleMessage("Длинный перерыв после"),
+    "longBreakDuration" : MessageLookupByLibrary.simpleMessage("Время длинного перерыва"),
     "min" : MessageLookupByLibrary.simpleMessage("мин."),
     "minutes" : m2,
     "progress" : MessageLookupByLibrary.simpleMessage("прогресс"),
     "seconds" : m3,
     "selectTheme" : MessageLookupByLibrary.simpleMessage("Выбрайте Тема"),
-    "shortBreak" : MessageLookupByLibrary.simpleMessage("Маленький Перерыв"),
-    "shortBreakDuration" : MessageLookupByLibrary.simpleMessage("Срок Короткого Перерыва"),
+    "shortBreak" : MessageLookupByLibrary.simpleMessage("Маленький перерыв"),
+    "shortBreakDuration" : MessageLookupByLibrary.simpleMessage("Время короткого перерыва"),
     "system" : MessageLookupByLibrary.simpleMessage("Системы"),
     "taskCount" : m4,
-    "taskGroupName" : MessageLookupByLibrary.simpleMessage("Название Группы Задач"),
+    "taskGroupName" : MessageLookupByLibrary.simpleMessage("Название группы задач"),
     "taskGroupNameErrorText" : MessageLookupByLibrary.simpleMessage("Введите правильное название задачи"),
-    "taskGroups" : MessageLookupByLibrary.simpleMessage("Группы Задач"),
-    "taskName" : MessageLookupByLibrary.simpleMessage("Название Задачи"),
+    "taskGroups" : MessageLookupByLibrary.simpleMessage("Группы задач"),
+    "taskName" : MessageLookupByLibrary.simpleMessage("Название задачи"),
     "theme" : MessageLookupByLibrary.simpleMessage("Тема"),
     "themeType" : m5,
     "toAddNewTask" : MessageLookupByLibrary.simpleMessage(" чтобы добавить новую задачу"),

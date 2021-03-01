@@ -176,7 +176,7 @@ class _TaskGroupPanelState extends State<TaskGroupPanel> {
                     TextFormField(
                         cursorColor: Colors.grey,
                         controller: widget.titleController,
-                        style: TextStyle(fontSize: 26, color: Colors.black),
+                        style: TextStyle(fontSize: 22, color: Colors.black),
                         showCursor: true,
                         validator: (string) => string.isEmpty
                             ? appLocale.taskGroupNameErrorText
@@ -206,14 +206,11 @@ class _TaskGroupPanelState extends State<TaskGroupPanel> {
                             suffixIcon: Icon(Icons.alarm_rounded,
                                 color: Colors.black))),
                     SizedBox(height: 10),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(children: [
-                        shortBreakPicker,
-                        longBreakIntervalPicker,
-                        longBreakDurationPicker,
-                      ]),
-                    ),
+                    Wrap(direction: Axis.horizontal, children: [
+                      shortBreakPicker,
+                      longBreakIntervalPicker,
+                      longBreakDurationPicker,
+                    ]),
                     SizedBox(height: 10),
                     Align(
                       alignment: Alignment.centerRight,

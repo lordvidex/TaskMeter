@@ -12,7 +12,7 @@ class TaskGroupDescriptionScreen extends StatelessWidget {
     var taskGroup = Provider.of<TaskGroupProvider>(context).currentTaskGroup;
     return Scaffold(
         body: Container(
-      color: taskGroup.taskGroupColor[800],
+      //color: taskGroup.taskGroupColor[800],
       child: SafeArea(
         child: Column(
           children: [

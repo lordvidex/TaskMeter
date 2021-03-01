@@ -1,6 +1,6 @@
 {
   "@@last_modified": "2021-02-28T00:54:31.228042",
-  "taskGroups": "Группы Задач",
+  "taskGroups": "Группы задач",
   "@taskGroups": {
     "description": "The text Task Groups on the taskGroupScreen",
     "type": "text",
@@ -42,19 +42,19 @@
     "type": "text",
     "placeholders": {}
   },
-  "shortBreakDuration": "Срок Короткого Перерыва",
+  "shortBreakDuration": "Время короткого перерыва",
   "@shortBreakDuration": {
     "description": "label for short break duration",
     "type": "text",
     "placeholders": {}
   },
-  "longBreakDuration": "Срок Длинного Перерыва",
+  "longBreakDuration": "Время длинного перерыва",
   "@longBreakDuration": {
     "description": "label for long break duration",
     "type": "text",
     "placeholders": {}
   },
-  "longBreakAfter": "Длинный Перерыв после",
+  "longBreakAfter": "Длинный перерыв после",
   "@longBreakAfter": {
     "description": "text for long break after or long break intervals",
     "type": "text",
@@ -66,7 +66,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "appTheme": "Тема Приложения",
+  "appTheme": "Тема приложения",
   "@appTheme": {
     "description": "label for appTheme",
     "type": "text",
@@ -152,19 +152,19 @@
     "type": "text",
     "placeholders": {}
   },
-  "duration": "Срок",
+  "duration": "Время",
   "@duration": {
     "description": "hint text for duration picker widget",
     "type": "text",
     "placeholders": {}
   },
-  "addTask": "Добавьте Задач",
+  "addTask": "Добавьте задачу",
   "@addTask": {
     "description": "button Label text to add new task in a task group",
     "type": "text",
     "placeholders": {}
   },
-  "create": "Создайте",
+  "create": "Создать",
   "@create": {
     "description": "buttonLabel for create button <for creating a new task group>",
     "type": "text",
@@ -176,13 +176,13 @@
     "type": "text",
     "placeholders": {}
   },
-  "shortBreak": "Маленький Перерыв",
+  "shortBreak": "Маленький перерыв",
   "@shortBreak": {
     "description": "label for short break",
     "type": "text",
     "placeholders": {}
   },
-  "longBreak": "Большой Перерыв",
+  "longBreak": "Большой перерыв",
   "@longBreak": {
     "description": "label for long break",
     "type": "text",
@@ -194,7 +194,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "taskGroupName": "Название Группы Задач",
+  "taskGroupName": "Название группы задач",
   "@taskGroupName": {
     "description": "label text for task group name",
     "type": "text",
@@ -214,7 +214,7 @@
       "hours": {}
     }
   },
-  "minutes": "{minutes,plural, =0{{minutes} Минут }=1{{minutes} Минута }few{{minutes} Минуты }other{{minutes} Минут }}",
+  "minutes": "{minutes,plural, =0{{minutes} минут }=1{{minutes} минута }few{{minutes} минуты }other{{minutes} минут }}",
   "@minutes": {
     "description": "string for displaying how many minutes are in the duration object",
     "type": "text",
@@ -230,7 +230,7 @@
       "seconds": {}
     }
   },
-  "taskName": "Название Задачи",
+  "taskName": "Название задачи",
   "@taskName": {
     "description": "AlertDialog textField title for inputting taskName",
     "type": "text",

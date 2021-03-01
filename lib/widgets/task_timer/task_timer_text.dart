@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:task_meter/locale/locales.dart';
 
 import '../../bloc/timer_bloc.dart';
 import '../../core/utils/duration_utils.dart';
@@ -44,11 +45,13 @@ class TaskTimerText extends StatelessWidget {
   void onBreakPressed(
       TaskGroupProvider provider, TimerBloc bloc, BuildContext dialogContext) {
     if (!provider.isBreak) provider.toggleBreak();
-    Task breakTask =
-        Task(taskName: '${provider.isLongBreak ? 'Long' : 'Short'} Break')
-          ..setTotalTime(provider.isLongBreak
-              ? provider.currentTaskGroup.longBreakTime
-              : provider.currentTaskGroup.shortBreakTime);
+    Task breakTask = Task(
+        taskName: provider.isLongBreak
+            ? AppLocalizations.of(dialogContext).longBreak
+            : AppLocalizations.of(dialogContext).shortBreak)
+      ..setTotalTime(provider.isLongBreak
+          ? provider.currentTaskGroup.longBreakTime
+          : provider.currentTaskGroup.shortBreakTime);
     Navigator.of(dialogContext).pop();
     Navigator.of(parentContext)
         .pushReplacementNamed(TaskTimerScreen.routeName, arguments: breakTask);
@@ -65,6 +68,7 @@ class TaskTimerText extends StatelessWidget {
 
   Future showTaskFinishedDialog(
       BuildContext context, TaskGroupProvider provider, TimerBloc bloc) {
+    final appLocale = AppLocalizations.of(context);
     return showCupertinoDialog(
         context: context,
         //barrierColor: Colors.transparent,
@@ -72,8 +76,8 @@ class TaskTimerText extends StatelessWidget {
         builder: (ctx) {
           Duration bonusDuration = provider.currentTaskGroup.bonusTime;
           return CupertinoAlertDialog(
-              title: Text(
-                  'You have finished ${provider.isBreak ? 'Break' : 'Task "${task.taskName}"'}'),
+              title: Text('${appLocale.youHaveFinished}'
+                  ' ${provider.isBreak ? appLocale.breakLabel : (appLocale.task + " ${task.taskName}")}'),
               content: Text('Where to next?'),
               actions: [
                 CupertinoDialogAction(

@@ -19,23 +19,28 @@ class HeaderContainerWidget extends StatelessWidget {
     final appLocale = AppLocalizations.of(context);
     return Container(
       width: double.infinity,
+      margin: const EdgeInsets.only(bottom: 10),
       child: Stack(children: [
         Positioned(
             top: -10,
             right: -10,
             child: Icon(Icons.alarm,
-                size: 200, color: taskGroup.taskGroupColor[600])),
+                size: 160, color: taskGroup.taskGroupColor[600])),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 10),
-              IconButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  icon:
-                      Icon(CupertinoIcons.back, color: Colors.white, size: 32)),
+              GestureDetector(
+                onTap: () => Navigator.of(context).pop(),
+                child: Icon(
+                  CupertinoIcons.back,
+                  color: Colors.white,
+                  size: 32,
+                ),
+              ),
               Container(
                 margin: const EdgeInsets.only(bottom: 20, top: 0),
                 constraints: BoxConstraints(maxHeight: 150),
@@ -50,9 +55,7 @@ class HeaderContainerWidget extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                 ),
               ),
-              Text(
-                  appLocale
-                      .taskCount(taskGroup.tasks.length),
+              Text(appLocale.taskCount(taskGroup.tasks.length),
                   style: TextStyle(
                       fontSize: 18,
                       color: Colors.white,
@@ -61,7 +64,7 @@ class HeaderContainerWidget extends StatelessWidget {
               Text(appLocale.progress,
                   style: Constants.coloredLabelTextStyle(
                       taskGroup.taskGroupColor[100])),
-              SizedBox(height: 10),
+              SizedBox(height: 5),
               SizedBox(
                   width: MediaQuery.of(context).size.width * 0.7,
                   child: TaskProgressIndicator(
@@ -69,7 +72,7 @@ class HeaderContainerWidget extends StatelessWidget {
                     taskGroup.taskGroupProgress,
                     showPercentage: true,
                   )),
-              SizedBox(height: 10),
+              SizedBox(height: 20),
             ],
           ),
         )

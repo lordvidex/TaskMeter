@@ -23,9 +23,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m1(x) => "${Intl.plural(x, one: '${x} interval', few: '${x} intervals', other: '${x} intervals')}";
 
-  static m2(minutes) => "${Intl.plural(minutes, zero: '${minutes} minutes ', one: '${minutes} Minute ', few: '${minutes} Minutes ', other: '${minutes} Minutes ')}";
+  static m2(minutes) => "${Intl.plural(minutes, zero: '${minutes} minutes ', one: '${minutes} minute ', few: '${minutes} minutes ', other: '${minutes} minutes ')}";
 
-  static m3(seconds) => "${Intl.plural(seconds, zero: '', one: '${seconds} Second', few: '${seconds} Seconds', other: '${seconds} Seconds')}";
+  static m3(seconds) => "${Intl.plural(seconds, zero: '', one: '${seconds} second', few: '${seconds} seconds', other: '${seconds} seconds')}";
 
   static m4(x) => "${Intl.plural(x, zero: '${x} tasks', one: '${x} task', few: '${x} tasks', other: '${x} tasks')}";
 
@@ -34,13 +34,14 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "add" : MessageLookupByLibrary.simpleMessage("Add"),
-    "addTask" : MessageLookupByLibrary.simpleMessage("Add Task"),
+    "addTask" : MessageLookupByLibrary.simpleMessage("Add task"),
     "appTheme" : MessageLookupByLibrary.simpleMessage("App Theme"),
+    "breakLabel" : MessageLookupByLibrary.simpleMessage("Break"),
     "cancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
     "click" : MessageLookupByLibrary.simpleMessage("Click "),
     "clickOn" : MessageLookupByLibrary.simpleMessage("Click on "),
     "create" : MessageLookupByLibrary.simpleMessage("Create"),
-    "createTaskGroup" : MessageLookupByLibrary.simpleMessage("Create Task Group"),
+    "createTaskGroup" : MessageLookupByLibrary.simpleMessage("Create task group"),
     "dataNotSaved" : MessageLookupByLibrary.simpleMessage("Data not saved!"),
     "dataNotSavedDesc1" : MessageLookupByLibrary.simpleMessage("You have some unsaved data, go back and click "),
     "dataNotSavedDesc2" : MessageLookupByLibrary.simpleMessage(" at the top-right to save!"),
@@ -49,32 +50,34 @@ class MessageLookup extends MessageLookupByLibrary {
     "discard" : MessageLookupByLibrary.simpleMessage("Discard"),
     "duration" : MessageLookupByLibrary.simpleMessage("Duration"),
     "edit" : MessageLookupByLibrary.simpleMessage("Edit"),
-    "emptyTaskGroupText" : MessageLookupByLibrary.simpleMessage("Task Group list is empty"),
+    "emptyTaskGroupText" : MessageLookupByLibrary.simpleMessage("Task group list is empty"),
     "enterTaskName" : MessageLookupByLibrary.simpleMessage("Enter task name"),
     "generalSettings" : MessageLookupByLibrary.simpleMessage("General Settings"),
     "hours" : m0,
     "intervals" : m1,
     "language" : MessageLookupByLibrary.simpleMessage("Language"),
-    "longBreak" : MessageLookupByLibrary.simpleMessage("Long Break"),
-    "longBreakAfter" : MessageLookupByLibrary.simpleMessage("Long Break after"),
-    "longBreakDuration" : MessageLookupByLibrary.simpleMessage("Long Break Duration"),
+    "longBreak" : MessageLookupByLibrary.simpleMessage("Long break"),
+    "longBreakAfter" : MessageLookupByLibrary.simpleMessage("Long break after"),
+    "longBreakDuration" : MessageLookupByLibrary.simpleMessage("Long break duration"),
     "min" : MessageLookupByLibrary.simpleMessage("min."),
     "minutes" : m2,
     "progress" : MessageLookupByLibrary.simpleMessage("progress"),
     "seconds" : m3,
     "selectTheme" : MessageLookupByLibrary.simpleMessage("Select Theme"),
-    "shortBreak" : MessageLookupByLibrary.simpleMessage("Short Break"),
-    "shortBreakDuration" : MessageLookupByLibrary.simpleMessage("Short Break Duration"),
+    "shortBreak" : MessageLookupByLibrary.simpleMessage("Short break"),
+    "shortBreakDuration" : MessageLookupByLibrary.simpleMessage("Short break duration"),
     "system" : MessageLookupByLibrary.simpleMessage("System"),
+    "task" : MessageLookupByLibrary.simpleMessage("Task"),
     "taskCount" : m4,
-    "taskGroupName" : MessageLookupByLibrary.simpleMessage("Task Group Name"),
+    "taskGroupName" : MessageLookupByLibrary.simpleMessage("Task group name"),
     "taskGroupNameErrorText" : MessageLookupByLibrary.simpleMessage("Enter a valid task group name"),
-    "taskGroups" : MessageLookupByLibrary.simpleMessage("Task Groups"),
-    "taskName" : MessageLookupByLibrary.simpleMessage("Task Name"),
+    "taskGroups" : MessageLookupByLibrary.simpleMessage("Task groups"),
+    "taskName" : MessageLookupByLibrary.simpleMessage("Task name"),
     "theme" : MessageLookupByLibrary.simpleMessage("Theme"),
     "themeType" : m5,
     "toAddNewTask" : MessageLookupByLibrary.simpleMessage(" to add a new task"),
-    "toAddNewTaskGroup" : MessageLookupByLibrary.simpleMessage("to add new Task Group"),
-    "typeTaskName" : MessageLookupByLibrary.simpleMessage("Type task name...")
+    "toAddNewTaskGroup" : MessageLookupByLibrary.simpleMessage("to add new Task group"),
+    "typeTaskName" : MessageLookupByLibrary.simpleMessage("Type task name..."),
+    "youHaveFinished" : MessageLookupByLibrary.simpleMessage("You have finished")
   };
 }

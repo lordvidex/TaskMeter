@@ -16,8 +16,8 @@ import 'package:intl/message_lookup_by_library.dart';
 import 'package:intl/src/intl_helpers.dart';
 
 import 'messages_en.dart' as messages_en;
-import 'messages_messages.dart' as messages_messages;
 import 'messages_ru.dart' as messages_ru;
+import 'messages_messages.dart' as messages_messages;
 
 typedef Future<dynamic> LibraryLoader();
 Map<String, LibraryLoader> _deferredLibraries = {

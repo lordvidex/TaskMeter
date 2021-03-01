@@ -132,7 +132,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
-                        //flex: 2,
+                        flex: 58,
                         child: TaskGroupPanel(
                           showAddNewTaskDialog: showAddNewTaskDialog,
                           taskGroup: newTaskGroup,
@@ -140,21 +140,20 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                         ),
                       ),
                       Expanded(
+                        flex: 45,
                         child: newTaskGroup.tasks.length == 0
                             ? Center(
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Flex(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    direction: Axis.horizontal,
-                                    children: [
-                                      Text(appLocale.click),
-                                      Text(appLocale.addTask,
+                                child: RichText(
+                                  text: TextSpan(
+                                      text: appLocale.click,
+                                      children: [
+                                        TextSpan(
+                                          text: appLocale.addTask,
                                           style: TextStyle(
-                                              fontWeight: FontWeight.bold)),
-                                      Text(appLocale.toAddNewTask)
-                                    ],
-                                  ),
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        TextSpan(text: appLocale.toAddNewTask)
+                                      ]),
                                 ),
                               )
                             : ReorderableListView(

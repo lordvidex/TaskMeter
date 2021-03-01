@@ -35,9 +35,9 @@ class Constants {
       headline4: TextStyle(
           fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
       headline1: TextStyle(
-          fontSize: 30, color: Colors.black, fontWeight: FontWeight.bold),
+          fontSize: 26, color: Colors.black, fontWeight: FontWeight.bold),
       headline2: TextStyle(
-          fontSize: 30, color: Colors.black, fontWeight: FontWeight.bold));
+          fontSize: 26, color: Colors.black, fontWeight: FontWeight.bold));
 
   static ThemeData kThemeData = ThemeData(
       iconTheme: _lightIconTheme,
@@ -66,7 +66,7 @@ class Constants {
           headline4: TextStyle(
               fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
           headline1: TextStyle(
-              fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
+              fontSize: 26, color: Colors.white, fontWeight: FontWeight.bold),
           headline2: TextStyle(
-              fontSize: 30, color: Colors.black, fontWeight: FontWeight.bold)));
+              fontSize: 26, color: Colors.black, fontWeight: FontWeight.bold)));
 }

@@ -22,7 +22,7 @@ class AppLocalizations {
   //! Strings
 
   //! Task Group Screen
-  String get taskGroups => Intl.message('Task Groups',
+  String get taskGroups => Intl.message('Task groups',
       name: 'taskGroups', desc: 'The text Task Groups on the taskGroupScreen');
 
   String get progress => Intl.message('progress',
@@ -30,7 +30,7 @@ class AppLocalizations {
       desc: 'text "progress" used to label'
           ' the linear progress indicator on this screen');
 
-  String get emptyTaskGroupText => Intl.message('Task Group list is empty',
+  String get emptyTaskGroupText => Intl.message('Task group list is empty',
       name: 'emptyTaskGroupText',
       desc: 'Text displayed to user when taskgroup list is empty');
 
@@ -39,7 +39,7 @@ class AppLocalizations {
       desc: 'Partial word displayed in the taskGroup screen telling the user'
           'how to add a new task Group');
 
-  String get toAddNewTaskGroup => Intl.message('to add new Task Group',
+  String get toAddNewTaskGroup => Intl.message('to add new Task group',
       name: 'toAddNewTaskGroup',
       desc: 'Partial word displayed in the taskGroup screen'
           'telling the user how to add a new task Group');
@@ -51,17 +51,17 @@ class AppLocalizations {
   String get generalSettings => Intl.message('General Settings',
       name: 'generalSettings', desc: 'App bar text for setting screen');
 
-  String get shortBreakDuration => Intl.message('Short Break Duration',
+  String get shortBreakDuration => Intl.message('Short break duration',
       name: 'shortBreakDuration', desc: 'label for short break duration');
 
   String get longBreakDuration => Intl.message(
-        'Long Break Duration',
+        'Long break duration',
         name: 'longBreakDuration',
         desc: 'label for long break duration',
       );
 
   String get longBreakAfter => Intl.message(
-        'Long Break after',
+        'Long break after',
         name: 'longBreakAfter',
         desc: 'text for long break after or long break intervals',
       );
@@ -148,11 +148,11 @@ class AppLocalizations {
       examples: const {'x': 3});
 
   //! Create Task Group screen
-  String get createTaskGroup => Intl.message('Create Task Group',
+  String get createTaskGroup => Intl.message('Create task group',
       name: 'createTaskGroup', desc: 'Header text in create task group screen');
   String get duration => Intl.message('Duration',
       name: 'duration', desc: 'hint text for duration picker widget');
-  String get addTask => Intl.message('Add Task',
+  String get addTask => Intl.message('Add task',
       name: 'addTask',
       desc: 'button Label text to add new task in a task group');
   String get create => Intl.message('Create',
@@ -163,20 +163,30 @@ class AppLocalizations {
       name: 'click',
       desc: 'first part of the empty textview displayed'
           ' when there is an empty list of tasks');
-  String get shortBreak => Intl.message('Short Break',
+  String get shortBreak => Intl.message('Short break',
       name: 'shortBreak', desc: 'label for short break');
-  String get longBreak => Intl.message('Long Break',
+  String get longBreak => Intl.message('Long break',
       name: 'longBreak', desc: 'label for long break');
   String get toAddNewTask => Intl.message(' to add a new task',
       name: 'toAddNewTask',
       desc: 'second part of the displayed emptyview for tasklists');
-  String get taskGroupName => Intl.message('Task Group Name',
+  String get taskGroupName => Intl.message('Task group name',
       name: 'taskGroupName', desc: 'label text for task group name');
   String get taskGroupNameErrorText =>
       Intl.message('Enter a valid task group name',
           name: 'taskGroupNameErrorText',
           desc: 'error text shown when task group name is empty');
 
+//! Task Timer Screen
+String get youHaveFinished => Intl.message('You have finished',
+name: 'youHaveFinished',
+desc: 'first part of text shown to user after timer has finished');
+String get breakLabel => Intl.message('Break',
+name: 'breakLabel',
+desc: 'text "Break"');
+String get task => Intl.message('Task',
+name: 'task',
+desc: 'text "Task"');
 //! Duration Utils
 //TODO: fix padezh 2 for <few>
   String hours(int hours) => Intl.plural(
@@ -193,11 +203,11 @@ class AppLocalizations {
   String minutes(int minutes) => Intl.plural(
         minutes,
         zero: '$minutes minutes ',
-        one: '$minutes Minute ',
-        few: '$minutes Minutes ',
-        other: '$minutes Minutes ',
+        one: '$minutes minute ',
+        few: '$minutes minutes ',
+        other: '$minutes minutes ',
         args: [minutes],
-        examples: const {'1': '1 Minute ', '2': '2 Minutes '},
+        examples: const {'1': '1 minute ', '2': '2 minutes '},
         desc:
             'string for displaying how many minutes are in the duration object',
         name: 'minutes',
@@ -205,16 +215,16 @@ class AppLocalizations {
   String seconds(int seconds) => Intl.plural(
         seconds,
         zero: '',
-        one: '$seconds Second',
-        few: '$seconds Seconds',
-        other: '$seconds Seconds',
+        one: '$seconds second',
+        few: '$seconds seconds',
+        other: '$seconds seconds',
         args: [seconds],
-        examples: const {'1': '1 Second', '2': '2 Seconds'},
+        examples: const {'1': '1 second', '2': '2 seconds'},
         desc:
             'string for displaying how many seconds are in the duration object',
         name: 'seconds',
       );
-  String get taskName => Intl.message('Task Name',
+  String get taskName => Intl.message('Task name',
       name: 'taskName',
       desc: 'AlertDialog textField title for inputting taskName');
   String get difficulty => Intl.message(
