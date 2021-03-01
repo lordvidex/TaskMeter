@@ -11,24 +11,27 @@ class TaskGroupDescriptionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var taskGroup = Provider.of<TaskGroupProvider>(context).currentTaskGroup;
     return Scaffold(
-        body: Container(
-      //color: taskGroup.taskGroupColor[800],
-      child: SafeArea(
-        child: Column(
-          children: [
-            HeaderContainerWidget(taskGroup: taskGroup),
-            Expanded(
-              child: ListView.builder(
-                itemBuilder: (ctx, index) {
-                  return TaskCard(
-                      taskGroup: taskGroup, task: taskGroup.sortedTasks[index]);
-                },
-                itemCount: taskGroup.tasks.length,
-              ),
-            )
-          ],
+        appBar: AppBar(
+          shadowColor: Colors.transparent,
+          backgroundColor: taskGroup.taskGroupColor[800],
         ),
-      ),
-    ));
+        body: Container(
+          //color: taskGroup.taskGroupColor[800],
+          child: Column(
+            children: [
+              HeaderContainerWidget(taskGroup: taskGroup),
+              Expanded(
+                child: ListView.builder(
+                  itemBuilder: (ctx, index) {
+                    return TaskCard(
+                        taskGroup: taskGroup,
+                        task: taskGroup.sortedTasks[index]);
+                  },
+                  itemCount: taskGroup.tasks.length,
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }

@@ -15,6 +15,7 @@ class TaskGroupWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final taskGroupProvider =
         Provider.of<TaskGroupProvider>(context, listen: false);
+    final theme = Theme.of(context);
     return InkWell(
       onTap: () {
         taskGroupProvider.setCurrentTaskGroup(taskGroup);
@@ -41,7 +42,15 @@ class TaskGroupWidget extends StatelessWidget {
                   items: [
                     DropdownMenuItem(
                         value: 'delete',
-                        child: Text(AppLocalizations.of(context).delete),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.delete_forever,
+                                color: Colors.red, size: 24),
+                            SizedBox(width: 10),
+                            Text(AppLocalizations.of(context).delete),
+                          ],
+                        ),
                         onTap: () => taskGroupProvider
                             .deleteTaskGroup(taskGroup.taskGroupId))
                   ],

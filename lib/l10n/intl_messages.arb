@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2021-03-01T03:22:24.402007",
+  "@@last_modified": "2021-03-01T10:32:24.038107",
   "taskGroups": "Task groups",
   "@taskGroups": {
     "description": "The text Task Groups on the taskGroupScreen",
@@ -135,6 +135,24 @@
     "placeholders": {
       "theme": {}
     }
+  },
+  "about": "About",
+  "@about": {
+    "description": "label for the text about, leading to the about page of the app",
+    "type": "text",
+    "placeholders": {}
+  },
+  "rate": "Rate in the app store",
+  "@rate": {
+    "description": "rate in the app store",
+    "type": "text",
+    "placeholders": {}
+  },
+  "feedback": "Feedback",
+  "@feedback": {
+    "description": "Feedback",
+    "type": "text",
+    "placeholders": {}
   },
   "taskCount": "{x,plural, =0{{x} tasks}=1{{x} task}few{{x} tasks}other{{x} tasks}}",
   "@taskCount": {

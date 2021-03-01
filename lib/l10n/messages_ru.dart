@@ -33,6 +33,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "about" : MessageLookupByLibrary.simpleMessage("О нас"),
     "add" : MessageLookupByLibrary.simpleMessage("Добавьте"),
     "addTask" : MessageLookupByLibrary.simpleMessage("Добавьте задачу"),
     "appTheme" : MessageLookupByLibrary.simpleMessage("Тема приложения"),
@@ -51,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "edit" : MessageLookupByLibrary.simpleMessage("Изменить"),
     "emptyTaskGroupText" : MessageLookupByLibrary.simpleMessage("список групп задач пуст"),
     "enterTaskName" : MessageLookupByLibrary.simpleMessage("Введите название задачи"),
+    "feedback" : MessageLookupByLibrary.simpleMessage("Отзыв"),
     "generalSettings" : MessageLookupByLibrary.simpleMessage("Общие Настройки"),
     "hours" : m0,
     "intervals" : m1,
@@ -61,6 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "min" : MessageLookupByLibrary.simpleMessage("мин."),
     "minutes" : m2,
     "progress" : MessageLookupByLibrary.simpleMessage("прогресс"),
+    "rate" : MessageLookupByLibrary.simpleMessage("Оценить в app store"),
     "seconds" : m3,
     "selectTheme" : MessageLookupByLibrary.simpleMessage("Выбрайте Тема"),
     "shortBreak" : MessageLookupByLibrary.simpleMessage("Маленький перерыв"),

@@ -31,11 +31,11 @@ class TaskGroupScreen extends StatelessWidget {
               )
             ],
             //backgroundColor: Colors.white,
-            expandedHeight: 120,
-            pinned: true,
+            //expandedHeight: 120,
+            floating: true,
             flexibleSpace: FlexibleSpaceBar(
               title: Text(AppLocalizations.of(context).taskGroups,
-                  style: Theme.of(context).textTheme.headline3),
+                  style: Theme.of(context).textTheme.headline1),
             ),
           ),
           Consumer<TaskGroupProvider>(

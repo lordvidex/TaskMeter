@@ -119,10 +119,12 @@ class AppLocalizations {
           'back and save changes in settings screen');
 
   String intervals(int x) => Intl.plural(x,
-  one:'$x interval',
-  few: '$x intervals',
-  other:'$x intervals',
-      name: 'intervals', desc: 'long break after x shortbreaks', args: [x]);
+      one: '$x interval',
+      few: '$x intervals',
+      other: '$x intervals',
+      name: 'intervals',
+      desc: 'long break after x shortbreaks',
+      args: [x]);
 
   String themeType(AppTheme theme) => Intl.select(
       theme,
@@ -134,6 +136,14 @@ class AppLocalizations {
       name: 'themeType',
       args: [theme],
       desc: 'returns the text based on themetypes [System,Dark,Light]');
+  String get about => Intl.message('About',
+      name: 'about',
+      desc: 'label for the text about, leading to the about page of the app');
+  String get rate => Intl.message('Rate in the app store',
+      name: 'rate', desc: 'rate in the app store');
+
+  String get feedback =>
+      Intl.message('Feedback', name: 'feedback', desc: 'Feedback');
 
   //! Task Group Description screen
 
@@ -178,17 +188,14 @@ class AppLocalizations {
           desc: 'error text shown when task group name is empty');
 
 //! Task Timer Screen
-String get youHaveFinished => Intl.message('You have finished',
-name: 'youHaveFinished',
-desc: 'first part of text shown to user after timer has finished');
-String get breakLabel => Intl.message('Break',
-name: 'breakLabel',
-desc: 'text "Break"');
-String get task => Intl.message('Task',
-name: 'task',
-desc: 'text "Task"');
+  String get youHaveFinished => Intl.message('You have finished',
+      name: 'youHaveFinished',
+      desc: 'first part of text shown to user after timer has finished');
+  String get breakLabel =>
+      Intl.message('Break', name: 'breakLabel', desc: 'text "Break"');
+  String get task => Intl.message('Task', name: 'task', desc: 'text "Task"');
+
 //! Duration Utils
-//TODO: fix padezh 2 for <few>
   String hours(int hours) => Intl.plural(
         hours,
         zero: '',
@@ -246,10 +253,9 @@ desc: 'text "Task"');
   String get enterTaskName => Intl.message('Enter task name',
       name: 'enterTaskName', desc: 'error text if task name has errors');
 
-      //! Duration Picker
-      String get min => Intl.message('min.',
-      name: 'min',
-      desc: 'Short text for min in duration picker');
+  //! Duration Picker
+  String get min => Intl.message('min.',
+      name: 'min', desc: 'Short text for min in duration picker');
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

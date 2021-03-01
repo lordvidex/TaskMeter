@@ -35,6 +35,8 @@ dependencies:
   get_it: ^5.0.6
   provider: ^4.3.3
   intl: ^0.16.1
+  dependencies:
+  settings_ui: ^0.6.0
   shared_preferences: ^0.5.12+4
   uuid: ^2.2.2
   rive: ^0.6.2

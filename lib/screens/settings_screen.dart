@@ -71,7 +71,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // AppLocalizations singleton
     appLocale = AppLocalizations.of(context);
+    // changes all leadingIcons to the same size
+    Icon resizedIcon(IconData icon) => Icon(icon, size: 30);
+
     final shortBreakWidget = DropdownButton<Duration>(
         value: _settings.shortBreak,
         onChanged: (x) {
@@ -128,49 +132,66 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     return WillPopScope(
       onWillPop: () => _back(context),
-      child: Scaffold(
-        appBar: AppBar(title: Text(appLocale.generalSettings), actions: [
-          IconButton(
-              icon: Icon(Icons.check),
-              onPressed: () async {
-                _provider.updateSettings(_settings);
-                if (await _back(context)) {
-                  Navigator.of(context).pop();
-                }
-              })
-        ]),
-        body: ListView(
-          shrinkWrap: true,
-          padding: const EdgeInsets.all(8),
-          children: [
-            SettingsItem(
-              appLocale.shortBreakDuration,
-              shortBreakWidget,
-              leadingWidget: Icon(Icons.timer_3),
-            ),
-            SettingsItem(
-              appLocale.longBreakDuration,
-              longBreakWidget,
-              leadingWidget: Icon(Icons.timer_10),
-            ),
-            SettingsItem(
-              appLocale.longBreakAfter,
-              longBreakIntervalWidget,
-            ),
-            SettingsItem(
-              appLocale.language,
-              languageWidget,
-              leadingWidget: Icon(Icons.translate_outlined, color: Colors.blue),
-            ),
-            GestureDetector(
+      child: ListTileTheme(
+        iconColor: Colors.blue,
+        child: Scaffold(
+          appBar: AppBar(title: Text(appLocale.generalSettings), actions: [
+            IconButton(
+                icon: Icon(Icons.check),
+                onPressed: () async {
+                  _provider.updateSettings(_settings);
+                  if (await _back(context)) {
+                    Navigator.of(context).pop();
+                  }
+                })
+          ]),
+          body: ListView(
+            shrinkWrap: true,
+            padding: const EdgeInsets.all(8),
+            children: [
+              SettingsItem(
+                appLocale.shortBreakDuration,
+                shortBreakWidget,
+                leadingWidget: resizedIcon(Icons.timer_3),
+              ),
+              SettingsItem(
+                appLocale.longBreakDuration,
+                longBreakWidget,
+                leadingWidget: resizedIcon(Icons.timer_10),
+              ),
+              SettingsItem(
+                appLocale.longBreakAfter,
+                longBreakIntervalWidget,
+              ),
+              Divider(thickness: 1),
+              SettingsItem(
+                appLocale.language,
+                languageWidget,
+                leadingWidget: resizedIcon(Icons.translate_outlined),
+              ),
+              SettingsItem(
+                appLocale.appTheme,
+                themeWidget,
+                leadingWidget: resizedIcon(Icons.brightness_6_outlined),
                 onTap: () => Navigator.of(context)
                     .pushNamed(SelectThemeScreen.routeName),
-                child: SettingsItem(
-                  appLocale.appTheme,
-                  themeWidget,
-                  leadingWidget: Icon(Icons.brightness_6_outlined),
-                ))
-          ],
+              ),
+              Divider(thickness: 1),
+              SettingsItem(
+                appLocale.about,
+                Icon(Icons.arrow_forward_ios, size: 20, color: Colors.grey),
+                leadingWidget: resizedIcon(Icons.info_outline),
+              ),
+              SettingsItem(appLocale.feedback,
+                  Icon(Icons.arrow_forward_ios, size: 20, color: Colors.grey),
+                  leadingWidget: resizedIcon(Icons.feedback)),
+              SettingsItem(
+                appLocale.rate,
+                Icon(Icons.arrow_forward_ios, size: 20, color: Colors.grey),
+                leadingWidget: resizedIcon(Icons.rate_review),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -22,8 +22,8 @@ class HeaderContainerWidget extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 10),
       child: Stack(children: [
         Positioned(
-            top: -10,
-            right: -10,
+            top: -25,
+            right: -25,
             child: Icon(Icons.alarm,
                 size: 160, color: taskGroup.taskGroupColor[600])),
         Padding(
@@ -33,16 +33,16 @@ class HeaderContainerWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 10),
-              GestureDetector(
-                onTap: () => Navigator.of(context).pop(),
-                child: Icon(
-                  CupertinoIcons.back,
-                  color: Colors.white,
-                  size: 32,
-                ),
-              ),
+              // GestureDetector(
+              //   onTap: () => Navigator.of(context).pop(),
+              //   child: Icon(
+              //     CupertinoIcons.back,
+              //     color: Colors.white,
+              //     size: 32,
+              //   ),
+              // ),
               Container(
-                margin: const EdgeInsets.only(bottom: 20, top: 0),
+                margin: const EdgeInsets.only(bottom: 25, top: 0),
                 constraints: BoxConstraints(maxHeight: 150),
                 width: MediaQuery.of(context).size.width - 170,
                 child: Text(
@@ -72,7 +72,7 @@ class HeaderContainerWidget extends StatelessWidget {
                     taskGroup.taskGroupProgress,
                     showPercentage: true,
                   )),
-              SizedBox(height: 20),
+              SizedBox(height: 25),
             ],
           ),
         )

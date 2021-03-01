@@ -33,6 +33,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "about" : MessageLookupByLibrary.simpleMessage("About"),
     "add" : MessageLookupByLibrary.simpleMessage("Add"),
     "addTask" : MessageLookupByLibrary.simpleMessage("Add task"),
     "appTheme" : MessageLookupByLibrary.simpleMessage("App Theme"),
@@ -52,6 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "edit" : MessageLookupByLibrary.simpleMessage("Edit"),
     "emptyTaskGroupText" : MessageLookupByLibrary.simpleMessage("Task group list is empty"),
     "enterTaskName" : MessageLookupByLibrary.simpleMessage("Enter task name"),
+    "feedback" : MessageLookupByLibrary.simpleMessage("Feedback"),
     "generalSettings" : MessageLookupByLibrary.simpleMessage("General Settings"),
     "hours" : m0,
     "intervals" : m1,
@@ -62,6 +64,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "min" : MessageLookupByLibrary.simpleMessage("min."),
     "minutes" : m2,
     "progress" : MessageLookupByLibrary.simpleMessage("progress"),
+    "rate" : MessageLookupByLibrary.simpleMessage("Rate in the app store"),
     "seconds" : m3,
     "selectTheme" : MessageLookupByLibrary.simpleMessage("Select Theme"),
     "shortBreak" : MessageLookupByLibrary.simpleMessage("Short break"),

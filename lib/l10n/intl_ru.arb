@@ -136,6 +136,24 @@
       "theme": {}
     }
   },
+  "about": "О нас",
+  "@about": {
+    "description": "label for the text about, leading to the about page of the app",
+    "type": "text",
+    "placeholders": {}
+  },
+  "rate": "Оценить в app store",
+  "@rate": {
+    "description": "rate in the app store",
+    "type": "text",
+    "placeholders": {}
+  },
+  "feedback": "Отзыв",
+  "@feedback": {
+    "description": "Feedback",
+    "type": "text",
+    "placeholders": {}
+  },
   "taskCount": "{x,plural, =0{{x} задач}=1{{x} задача}few{{x} задачи}other{{x} задачи}}",
   "@taskCount": {
     "description": "label text displaying number of tasks in the taskgroup",
