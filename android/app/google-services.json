@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "313332945097",
+    "project_id": "task-meter",
+    "storage_bucket": "task-meter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:313332945097:android:90053e238cd08a463dfd18",
+        "android_client_info": {
+          "package_name": "dev.lordvidex.task_meter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "313332945097-p7ekkklvik3u17cvqdi7e3dg58jmpe7n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiJM4rK1djpmi7Vq_kLYOTjirF8FS153I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "313332945097-p7ekkklvik3u17cvqdi7e3dg58jmpe7n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

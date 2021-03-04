@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../domain/models/settings.dart';
@@ -9,6 +10,11 @@ const String SETTINGS = 'settings';
 const String TASKGROUPS = 'task_groups';
 
 abstract class LocalStorage {
+  //! Authentication section
+  // returns the user if it exists
+  // or null otherwise
+  Future<User> autoSigninUser();
+  
   //! Settings section
   /// Fetches the saved settings from the Database
   /// Returns `default` values for settings if user does not have saved data
@@ -26,7 +32,8 @@ abstract class LocalStorage {
 
 class LocalStorageImpl extends LocalStorage {
   final SharedPreferences sharedPreferences;
-  LocalStorageImpl(this.sharedPreferences);
+  final FirebaseAuth firebaseAuth;
+  LocalStorageImpl({this.sharedPreferences, this.firebaseAuth});
 
   @override
   Future<Settings> fetchSettings() async {
@@ -65,5 +72,10 @@ class LocalStorageImpl extends LocalStorage {
   Future<void> updateTaskGroups(List<TaskGroup> taskGroups) async {
     return await sharedPreferences.setStringList(
         TASKGROUPS, taskGroups.map((tg) => json.encode(tg.toJson())).toList());
+  }
+
+  @override
+  Future<User> autoSigninUser() async {
+    return firebaseAuth.currentUser;
   }
 }
