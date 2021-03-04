@@ -97,7 +97,7 @@ class _DialPainter extends CustomPainter {
         textAlign: TextAlign.center,
         text: new TextSpan(
 //            text: '${hours}${minutes > 0 ? minutes : ""}',
-            text: '${hours}${minutes}',
+            text: '$hours$minutes',
             style: Theme.of(context)
                 .textTheme
                 .headline1
@@ -573,7 +573,7 @@ class _DurationPickerDialogState extends State<_DurationPickerDialog> {
               snapToMins: widget.snapToMins,
             )));
 
-    final Widget actions = new ButtonTheme.bar(
+    final Widget actions = new ButtonTheme(
         child: new ButtonBar(children: <Widget>[
       new FlatButton(
           child: new Text(localizations.cancelButtonLabel),

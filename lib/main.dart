@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,7 @@ import 'presentation/screens/task_timer_screen.dart';
 void main() async {
   //TODO: loading splash screen HERE - (a brief loading animation to be precise)
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   await di.init();
   runApp(MyApp());
 }
