@@ -57,8 +57,8 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
       TimeDivider.divideTimeByTask(newTaskGroup);
     } on TaskTimerException catch (e) {
       // error occured and should be shown to user in snackbar
-      Scaffold.of(scaffoldContext).removeCurrentSnackBar();
-      Scaffold.of(scaffoldContext)
+      ScaffoldMessenger.of(scaffoldContext).removeCurrentSnackBar();
+      ScaffoldMessenger.of(scaffoldContext)
           .showSnackBar(SnackBar(content: Text(e.toString())));
       return;
     }

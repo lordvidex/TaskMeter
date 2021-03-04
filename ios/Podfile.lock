@@ -4,11 +4,11 @@ PODS:
     - FirebaseAuth (~> 7.3.0)
   - Firebase/CoreOnly (7.3.0):
     - FirebaseCore (= 7.3.0)
-  - firebase_auth (0.20.1):
+  - firebase_auth (1.0.0):
     - Firebase/Auth (= 7.3.0)
     - firebase_core
     - Flutter
-  - firebase_core (0.7.0):
+  - firebase_core (1.0.0):
     - Firebase/CoreOnly (= 7.3.0)
     - Flutter
   - FirebaseAnalytics (7.7.0):
@@ -117,14 +117,14 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Firebase: 26223c695fe322633274198cb19dca8cb7e54416
-  firebase_auth: 7220e26fc14a501a63093edc10443de6bca0d7e8
-  firebase_core: 91b27774a52f41f8b58484a75edf71197ac01c59
+  firebase_auth: f07f3ee03813d95157ee08ce763c649c656174b5
+  firebase_core: f47224dd6a9b928b4cf0128b0d004ec9e47d4bf2
   FirebaseAnalytics: f3f8f75de34fe04141a69bb1c4bd7e24a80178e1
   FirebaseAuth: c224a0cf1afa0949bd5c7bfcf154b4f5ce8ddef2
   FirebaseCore: 4d3c72622ce0e2106aaa07bb4b2935ba2c370972
   FirebaseCoreDiagnostics: 179bf3831213451c8addd036aca7fcf5492ec154
   FirebaseInstallations: 42c86e7b02ff75b7f27f85833bf5dcb5f38a9774
-  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   GoogleAppMeasurement: 0c3b134b2c0a90c4c24833873894bfe0e42a0384
   GoogleDataTransport: 1024b1a4dfbd7a0e92cb20d7e0a6f1fb66b449a4
   GoogleUtilities: 31c5b01f978a70c6cff2afc6272b3f1921614b43
