@@ -2,6 +2,9 @@ import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:task_meter/domain/usecases/auto_login_usecase.dart';
+import 'package:task_meter/domain/usecases/logout_usecase.dart';
+import 'package:task_meter/presentation/providers/authentication_provider.dart';
 
 import 'core/network/network_info.dart';
 import 'data/datasources/local_storage.dart';
@@ -30,10 +33,18 @@ Future<void> _registerComponents() async {
   //! Providers
   sl.registerLazySingleton(() => SettingsProvider(settingsRepo: sl()));
   sl.registerLazySingleton(() => TaskGroupProvider(taskGroupRepo: sl()));
+  sl.registerLazySingleton(() => AuthenticationProvider(
+        autoLoginUseCase: sl(),
+        emailSignInUseCase: sl(),
+        emailSignUpUseCase: sl(),
+        logoutUseCase: sl(),
+      ));
 
   //! Usecases
   sl.registerLazySingleton(() => EmailSignInUseCase(authRepo: sl()));
   sl.registerLazySingleton(() => EmailSignUpUseCase(authRepo: sl()));
+  sl.registerLazySingleton(() => LogOutUsecase(authRepo: sl()));
+  sl.registerLazySingleton(() => AutoLoginUseCase(authRepo: sl()));
 
   //! repositories
   sl.registerLazySingleton(() => TimerRepository());
@@ -66,6 +77,7 @@ Future<void> _registerComponents() async {
 }
 
 Future<void> _loadData() async {
+  await sl.get<AuthenticationProvider>().autoLogin();
   await sl.get<SettingsProvider>().loadSettings();
   await sl.get<TaskGroupProvider>().loadTaskGroups();
   await sl.get<TimerRepository>().loadRiveFiles();

@@ -196,6 +196,20 @@ class AppLocalizations {
       Intl.message('Break', name: 'breakLabel', desc: 'text "Break"');
   String get task => Intl.message('Task', name: 'task', desc: 'text "Task"');
 
+//! Authentication Screen
+  String get signup =>
+      Intl.message('Sign up', name: 'signup', desc: 'The text sign up');
+  String get signIn =>
+      Intl.message('Sign in', name: 'signIn', desc: 'the text sign in');
+  String get enterEmail => Intl.message('Enter email address',
+      name: 'enterEmail',
+      desc:
+          'Hint text for authentication screen telling user to enter email address');
+  String get enterPassword => Intl.message('Password',
+      name: 'enterPassword', desc: 'Password textField hint text');
+      String get next => Intl.message('Next',
+      name: 'next',
+      desc: 'Button text for the next button toggling between email and password mode in auth screen');
 //! Duration Utils
   String hours(int hours) => Intl.plural(
         hours,

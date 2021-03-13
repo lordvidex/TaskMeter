@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../locale/locales.dart';
 import '../providers/task_group_provider.dart';
 import '../widgets/task_group/task_group_widget.dart';
+import 'authentication_screen.dart';
 import 'create_task_group_screen.dart';
 import 'settings_screen.dart';
 
@@ -21,7 +22,17 @@ class TaskGroupScreen extends StatelessWidget {
         ),
         body: CustomScrollView(slivers: <Widget>[
           SliverAppBar(
-            leading: Icon(Icons.login, size: 30),
+            leading: IconButton(
+                icon: Icon(Icons.login, size: 30),
+                onPressed: () => showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (_) => AlertDialog(
+                          insetPadding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 8),
+                          contentPadding: const EdgeInsets.all(0),
+                          content: AuthenticationScreen(),
+                        ))),
             actions: [
               IconButton(
                 icon: Icon(

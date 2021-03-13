@@ -42,11 +42,11 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   final NetworkInfo _networkInfo;
   final RemoteStorage _remoteStorage;
   final LocalStorage _localStorage;
-  const AuthenticationRepositoryImpl(
-      {NetworkInfo networkInfo,
-      RemoteStorage remoteStorage,
-      LocalStorage localStorage})
-      : _networkInfo = networkInfo,
+  const AuthenticationRepositoryImpl({
+    NetworkInfo networkInfo,
+    RemoteStorage remoteStorage,
+    LocalStorage localStorage,
+  })  : _networkInfo = networkInfo,
         _remoteStorage = remoteStorage,
         _localStorage = localStorage;
 
