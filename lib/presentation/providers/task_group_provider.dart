@@ -49,12 +49,13 @@ class TaskGroupProvider extends ChangeNotifier {
     } catch (e) {
       _groups = [];
     }
+    notifyListeners();
   }
 
   void deleteTaskGroup(String id) {
     _groups.removeWhere((taskGroup) => taskGroup.taskGroupId == id);
     notifyListeners();
-    taskGroupRepo.updateTaskGroups(_groups);
+    taskGroupRepo.updateTaskGroups(_groups, delete: true, id: id);
   }
 
   void addTaskGroup(TaskGroup taskGroup) {

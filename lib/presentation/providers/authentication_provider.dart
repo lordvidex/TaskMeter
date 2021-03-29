@@ -38,10 +38,10 @@ class AuthenticationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<Failure> emailSignIn(String email, String password) async {
+  Future<String> emailSignIn(String email, String password) async {
     final result = await _emailSignInUseCase(email, password);
     return result.fold((failure) {
-      return failure;
+      return _parseFailureResponse(failure);
     }, (user) {
       _user = user;
       notifyListeners();
@@ -49,14 +49,18 @@ class AuthenticationProvider extends ChangeNotifier {
     });
   }
 
-  Future<Failure> emailSignUp(String email, String password) async {
+  Future<String> emailSignUp(String email, String password) async {
     final result = await _emailSignUpUseCase(email, password);
     return result.fold((failure) {
-      return failure;
+      return _parseFailureResponse(failure);
     }, (user) {
       _user = user;
       notifyListeners();
       return null;
     });
+  }
+
+  String _parseFailureResponse(Failure failure) {
+    return failure.toString();
   }
 }

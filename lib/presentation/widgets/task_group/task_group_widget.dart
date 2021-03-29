@@ -13,8 +13,7 @@ class TaskGroupWidget extends StatelessWidget {
   const TaskGroupWidget({@required this.taskGroup});
   @override
   Widget build(BuildContext context) {
-    final taskGroupProvider =
-        Provider.of<TaskGroupProvider>(context, listen: false);
+    final taskGroupProvider = context.read<TaskGroupProvider>();
     return InkWell(
       onTap: () {
         taskGroupProvider.setCurrentTaskGroup(taskGroup);

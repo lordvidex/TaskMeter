@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:task_meter/presentation/providers/authentication_provider.dart';
 
 import 'core/constants.dart';
 import 'domain/models/app_theme.dart';
@@ -30,6 +31,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<AuthenticationProvider>(
+          lazy: true,
+          create: (_) => di.sl<AuthenticationProvider>(),
+        ),
         ChangeNotifierProvider<SettingsProvider>(
           create: (_) => di.sl<SettingsProvider>(),
         ),

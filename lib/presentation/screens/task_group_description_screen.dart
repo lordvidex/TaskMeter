@@ -9,7 +9,7 @@ class TaskGroupDescriptionScreen extends StatelessWidget {
   static const routeName = '/task-group-description';
   @override
   Widget build(BuildContext context) {
-    var taskGroup = Provider.of<TaskGroupProvider>(context).currentTaskGroup;
+    var taskGroup = context.watch<TaskGroupProvider>().currentTaskGroup;
     return Scaffold(
         appBar: AppBar(
           shadowColor: Colors.transparent,

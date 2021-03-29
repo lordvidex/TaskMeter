@@ -1,10 +1,8 @@
-import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:task_meter/domain/usecases/auto_login_usecase.dart';
-import 'package:task_meter/domain/usecases/logout_usecase.dart';
-import 'package:task_meter/presentation/providers/authentication_provider.dart';
 
 import 'core/network/network_info.dart';
 import 'data/datasources/local_storage.dart';
@@ -13,9 +11,12 @@ import 'data/repositories/auth_repository.dart';
 import 'data/repositories/settings_repository.dart';
 import 'data/repositories/task_group_repository.dart';
 import 'data/repositories/timer_repository.dart';
+import 'domain/usecases/auto_login_usecase.dart';
 import 'domain/usecases/email_signin_usecase.dart';
 import 'domain/usecases/email_signup_usecase.dart';
+import 'domain/usecases/logout_usecase.dart';
 import 'presentation/bloc/timer_bloc.dart';
+import 'presentation/providers/authentication_provider.dart';
 import 'presentation/providers/settings_provider.dart';
 import 'presentation/providers/task_group_provider.dart';
 
@@ -51,7 +52,7 @@ Future<void> _registerComponents() async {
   sl.registerLazySingleton<SettingsRepository>(
       () => SettingsRepositoryImpl(localStorage: sl(), remoteStorage: sl()));
   sl.registerLazySingleton<TaskGroupRepository>(
-      () => TaskGroupRepositoryImpl(sl()));
+      () => TaskGroupRepositoryImpl(localStorage: sl(), remoteStorage: sl()));
   sl.registerLazySingleton<AuthenticationRepository>(
       () => AuthenticationRepositoryImpl(
             localStorage: sl(),
@@ -63,7 +64,7 @@ Future<void> _registerComponents() async {
   sl.registerLazySingleton<LocalStorage>(
       () => LocalStorageImpl(sharedPreferences: sl(), firebaseAuth: sl()));
   sl.registerLazySingleton<RemoteStorage>(
-      () => RemoteStorageImpl(firebaseAuth: sl()));
+      () => RemoteStorageImpl(firebaseAuth: sl(), firestore: sl()));
 
   //! Core
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
@@ -71,9 +72,9 @@ Future<void> _registerComponents() async {
   //! external
   final sharedPrefs = await SharedPreferences.getInstance();
   sl.registerLazySingleton<SharedPreferences>(() => sharedPrefs);
-  final firebaseAuth = FirebaseAuth.instance;
-  sl.registerLazySingleton<FirebaseAuth>(() => firebaseAuth);
-  sl.registerLazySingleton(() => DataConnectionChecker());
+  sl.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
+  sl.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
+  sl.registerLazySingleton(() => InternetConnectionChecker());
 }
 
 Future<void> _loadData() async {

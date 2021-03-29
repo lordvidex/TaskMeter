@@ -1,3 +1,5 @@
+import 'package:task_meter/domain/models/task_group.dart';
+
 import '../../domain/models/settings.dart';
 
 class MergeUtils {

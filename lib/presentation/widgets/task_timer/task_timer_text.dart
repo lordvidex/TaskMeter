@@ -115,7 +115,7 @@ class TaskTimerText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<TimerBloc, TimerState>(listener: (ctx, state) {
-      final provider = Provider.of<TaskGroupProvider>(context, listen: false);
+      final provider = context.read<TaskGroupProvider>();
       final bloc = BlocProvider.of<TimerBloc>(context);
       if (state is TimerRunning) {
         // Break time and
