@@ -224,7 +224,7 @@ class AppLocalizations {
       );
   String minutes(int minutes) => Intl.plural(
         minutes,
-        zero: '$minutes minutes ',
+        zero: '',
         one: '$minutes minute ',
         few: '$minutes minutes ',
         other: '$minutes minutes ',

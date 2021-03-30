@@ -15,6 +15,7 @@ abstract class LocalStorage {
   // returns the user if it exists
   // or null otherwise
   Future<User> autoSigninUser();
+  Future<void> logoutUser();
 
   //! Settings section
   /// Fetches the saved settings from the Database
@@ -40,6 +41,11 @@ class LocalStorageImpl extends LocalStorage {
   final FirebaseAuth firebaseAuth;
   LocalStorageImpl({this.sharedPreferences, this.firebaseAuth});
 
+  @override
+  Future<void> logoutUser() async {
+    await firebaseAuth.signOut();
+  }
+  
   @override
   Future<Settings> fetchSettings() async {
     if (sharedPreferences.containsKey(SETTINGS)) {

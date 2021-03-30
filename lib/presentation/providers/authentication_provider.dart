@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:task_meter/core/failures.dart';
-import 'package:task_meter/domain/usecases/auto_login_usecase.dart';
-import 'package:task_meter/domain/usecases/email_signin_usecase.dart';
-import 'package:task_meter/domain/usecases/email_signup_usecase.dart';
-import 'package:task_meter/domain/usecases/logout_usecase.dart';
+
+import '../../core/failures.dart';
+import '../../domain/usecases/auto_login_usecase.dart';
+import '../../domain/usecases/email_signin_usecase.dart';
+import '../../domain/usecases/email_signup_usecase.dart';
+import '../../domain/usecases/logout_usecase.dart';
 
 class AuthenticationProvider extends ChangeNotifier {
   final AutoLoginUseCase _autoLoginUseCase;
@@ -38,6 +39,8 @@ class AuthenticationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// returns null - if successfully signed up
+  /// String - error message in case of any error
   Future<String> emailSignIn(String email, String password) async {
     final result = await _emailSignInUseCase(email, password);
     return result.fold((failure) {
@@ -48,7 +51,8 @@ class AuthenticationProvider extends ChangeNotifier {
       return null;
     });
   }
-
+  /// returns null - if successfully signed up
+  /// String - error message in case of any error
   Future<String> emailSignUp(String email, String password) async {
     final result = await _emailSignUpUseCase(email, password);
     return result.fold((failure) {

@@ -1,11 +1,10 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:task_meter/core/errors.dart';
-import 'package:task_meter/data/datasources/local_storage.dart';
 
+import '../../core/errors.dart';
 import '../../core/failures.dart';
 import '../../core/network/network_info.dart';
+import '../datasources/local_storage.dart';
 import '../datasources/remote_storage.dart';
 
 abstract class AuthenticationRepository {
@@ -36,7 +35,7 @@ abstract class AuthenticationRepository {
       String email, String password);
 
   // logs out user
-  Future<Either<Failure, bool>> logoutUser();
+  Future<void> logoutUser();
 }
 
 class AuthenticationRepositoryImpl implements AuthenticationRepository {
@@ -59,9 +58,8 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
   //! logOut
   @override
-  Future<Either<Failure, bool>> logoutUser() {
-    // TODO: implement logoutUser
-    throw UnimplementedError();
+  Future<void> logoutUser() async {
+    return _localStorage.logoutUser();
   }
 
   //! Google
@@ -101,7 +99,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     // 3. check if the user supplied a wrong password
     // 4. catch anonymous errors
     // 5. return the user when successful
-    if (kIsWeb || await _networkInfo.isConnected) {
+    if (await _networkInfo.isConnected) {
       try {
         final _user = await _remoteStorage.signinUserWithEmail(email, password);
         return Right(_user);
@@ -122,7 +120,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   Future<Either<Failure, User>> signupUserWithEmail(
       String email, String password) async {
     // check for internet connection
-    if (kIsWeb || await _networkInfo.isConnected) {
+    if (await _networkInfo.isConnected) {
       try {
         final signInResult =
             await _remoteStorage.signupUserWithEmail(email, password);

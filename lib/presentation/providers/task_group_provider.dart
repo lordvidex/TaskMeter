@@ -52,16 +52,16 @@ class TaskGroupProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteTaskGroup(String id) {
+  void deleteTaskGroup(String id) async {
     _groups.removeWhere((taskGroup) => taskGroup.taskGroupId == id);
+    await taskGroupRepo.updateTaskGroups(_groups, delete: true, id: id);
     notifyListeners();
-    taskGroupRepo.updateTaskGroups(_groups, delete: true, id: id);
   }
 
-  void addTaskGroup(TaskGroup taskGroup) {
+  void addTaskGroup(TaskGroup taskGroup) async {
     _groups.add(taskGroup);
+    await taskGroupRepo.updateTaskGroups(_groups);
     notifyListeners();
-    taskGroupRepo.updateTaskGroups(_groups);
   }
 
   void setCurrentTaskGroup(TaskGroup taskGroup) {
@@ -69,9 +69,9 @@ class TaskGroupProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateTaskTime(Task task, Duration newTime) {
+  void updateTaskTime(Task task, Duration newTime) async {
     task.timeRemaining = newTime;
-    taskGroupRepo.updateTaskGroups(_groups);
+    await taskGroupRepo.updateTaskGroups(_groups);
     notifyListeners();
   }
 
@@ -79,12 +79,13 @@ class TaskGroupProvider extends ChangeNotifier {
   /// deadline.\
   /// reset => true when we want to use the bonus for a task to create a clean
   /// slate.
-  void updateBonusTime({Duration duration, bool reset = false}) {
+  void updateBonusTime({Duration duration, bool reset = false}) async {
     if (reset)
       _current.bonusTime = Duration.zero;
     else
       _current.bonusTime += duration;
+
+    await taskGroupRepo.updateTaskGroups(_groups);
     notifyListeners();
-    taskGroupRepo.updateTaskGroups(_groups);
   }
 }

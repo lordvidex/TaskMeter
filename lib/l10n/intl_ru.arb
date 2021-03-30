@@ -238,7 +238,7 @@
       "hours": {}
     }
   },
-  "minutes": "{minutes,plural, =0{{minutes} минут }=1{{minutes} минута }few{{minutes} минуты }other{{minutes} минут }}",
+  "minutes": "{minutes,plural, =0{}=1{{minutes} минута }few{{minutes} минуты }other{{minutes} минут }}",
   "@minutes": {
     "description": "string for displaying how many minutes are in the duration object",
     "type": "text",

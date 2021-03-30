@@ -78,8 +78,15 @@ class _SignInOrSignUpState extends State<SignInOrSignUp>
           : Column(children: [
               GestureDetector(
                   onTap: _toggleEmailPasswordMode,
-                  child: Text(_emailController.text,
-                      style: TextStyle(color: Colors.blue))),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.arrow_back, size: 24, color: Colors.blue),
+                      SizedBox(width: 5),
+                      Text(_emailController.text,
+                          style: TextStyle(color: Colors.blue)),
+                    ],
+                  )),
               SizedBox(height: 15),
               Form(
                 key: _passwordFormKey,

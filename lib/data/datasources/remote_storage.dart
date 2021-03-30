@@ -1,9 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart' hide Settings;
+import 'package:firebase_auth/firebase_auth.dart';
+
 import '../../core/errors.dart';
-import 'local_storage.dart';
 import '../../domain/models/settings.dart';
 import '../../domain/models/task_group.dart';
+import 'local_storage.dart';
 
 abstract class RemoteStorage {
   //! Authentication section
@@ -44,7 +45,7 @@ class RemoteStorageImpl implements RemoteStorage {
         _firestore = firestore;
 
   DocumentReference get _userDocument =>
-      _firestore?.collection('users')?.doc(_firebaseAuth.currentUser.uid);
+      _firestore?.collection('users')?.doc(_firebaseAuth.currentUser?.uid);
   DocumentReference get _settingsDocument =>
       _userDocument.collection('Settings').doc(SETTINGS);
   CollectionReference get _taskGroupDocument =>
@@ -89,7 +90,7 @@ class RemoteStorageImpl implements RemoteStorage {
   Future<void> updateTaskGroups(
       List<TaskGroup> taskGroups, DateTime timeOfUpdate) async {
     if (_firebaseAuth.currentUser == null || _userDocument == null) {
-      return null;
+      return;
     }
     taskGroups.forEach(
         (tg) => _taskGroupDocument.doc(tg.taskGroupId).set(tg.toJson()));
@@ -146,8 +147,13 @@ class RemoteStorageImpl implements RemoteStorage {
     await _taskGroupTimeDocument
         .set({TIME_OF_UPLOAD: timeOfUpdate.toIso8601String()});
   }
+
   @override
   Future<void> deleteTaskGroup(String id, DateTime timeOfUpdate) async {
+    if (_firebaseAuth.currentUser == null || _userDocument == null) {
+      return;
+    }
     await _taskGroupDocument.doc(id).delete();
+    await setLastTaskGroupUpdateTime(timeOfUpdate);
   }
 }

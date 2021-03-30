@@ -23,7 +23,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m1(x) => "${Intl.plural(x, one: '${x} interval', few: '${x} intervals', other: '${x} intervals')}";
 
-  static m2(minutes) => "${Intl.plural(minutes, zero: '${minutes} minutes ', one: '${minutes} minute ', few: '${minutes} minutes ', other: '${minutes} minutes ')}";
+  static m2(minutes) => "${Intl.plural(minutes, zero: '', one: '${minutes} minute ', few: '${minutes} minutes ', other: '${minutes} minutes ')}";
 
   static m3(seconds) => "${Intl.plural(seconds, zero: '', one: '${seconds} second', few: '${seconds} seconds', other: '${seconds} seconds')}";
 
