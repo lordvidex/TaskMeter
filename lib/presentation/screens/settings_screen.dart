@@ -22,7 +22,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
-    _provider = Provider.of<SettingsProvider>(context, listen: false);
+    _provider = context.read<SettingsProvider>();
     _settings = Settings.fromJson(_provider.settings.toJson());
   }
 

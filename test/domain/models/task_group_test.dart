@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:task_meter/core/utils/color_utils.dart';
-import 'package:task_meter/domain/models/task.dart';
-import 'package:task_meter/domain/models/task_group.dart';
 import 'package:uuid/uuid.dart';
+
+import '../../../lib/core/utils/color_utils.dart';
+import '../../../lib/domain/models/task.dart';
+import '../../../lib/domain/models/task_group.dart';
 
 void main() {
   TaskGroup taskGroup;

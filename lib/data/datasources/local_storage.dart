@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../domain/models/settings.dart';
@@ -7,8 +8,15 @@ import '../../domain/models/task_group.dart';
 
 const String SETTINGS = 'settings';
 const String TASKGROUPS = 'task_groups';
+const String LAST_TASKGROUP_UPDATE_TIME = 'time';
 
 abstract class LocalStorage {
+  //! Authentication section
+  // returns the user if it exists
+  // or null otherwise
+  Future<User> autoSigninUser();
+  Future<void> logoutUser();
+
   //! Settings section
   /// Fetches the saved settings from the Database
   /// Returns `default` values for settings if user does not have saved data
@@ -20,14 +28,24 @@ abstract class LocalStorage {
   /// fetches the List of taskGroups from the database
   Future<List<TaskGroup>> fetchTaskGroups();
 
-  /// updates taskGroups in the database
-  Future<void> updateTaskGroups(List<TaskGroup> taskGroups);
+  /// fetches the time to the last update to the local database
+  Future<DateTime> getLastTaskGroupUpdateTime();
+
+  /// updates taskGroups in the database with the time they were added
+  Future<void> updateTaskGroups(
+      List<TaskGroup> taskGroups, DateTime timeOfUpdate);
 }
 
 class LocalStorageImpl extends LocalStorage {
   final SharedPreferences sharedPreferences;
-  LocalStorageImpl(this.sharedPreferences);
+  final FirebaseAuth firebaseAuth;
+  LocalStorageImpl({this.sharedPreferences, this.firebaseAuth});
 
+  @override
+  Future<void> logoutUser() async {
+    await firebaseAuth.signOut();
+  }
+  
   @override
   Future<Settings> fetchSettings() async {
     if (sharedPreferences.containsKey(SETTINGS)) {
@@ -62,8 +80,22 @@ class LocalStorageImpl extends LocalStorage {
   }
 
   @override
-  Future<void> updateTaskGroups(List<TaskGroup> taskGroups) async {
-    return await sharedPreferences.setStringList(
+  Future<void> updateTaskGroups(
+      List<TaskGroup> taskGroups, DateTime timeOfUpdate) async {
+    bool updated = await sharedPreferences.setStringList(
         TASKGROUPS, taskGroups.map((tg) => json.encode(tg.toJson())).toList());
+    if (updated) {
+      await sharedPreferences.setString(
+          LAST_TASKGROUP_UPDATE_TIME, timeOfUpdate.toIso8601String());
+    }
   }
+
+  @override
+  Future<User> autoSigninUser() async {
+    return firebaseAuth.currentUser;
+  }
+
+  @override
+  Future<DateTime> getLastTaskGroupUpdateTime() async => DateTime.tryParse(
+      sharedPreferences.getString(LAST_TASKGROUP_UPDATE_TIME));
 }

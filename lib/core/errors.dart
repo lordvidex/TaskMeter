@@ -27,3 +27,18 @@ class TaskTimerException implements Exception {
 
 /// Thrown when there is no access to Internet
 class NetworkException implements Exception {}
+
+/// Thrown when cache can't be read
+class CacheException implements Exception {}
+
+/// Thrown for server related errors {e.g. firebase}
+class ServerException implements Exception {}
+
+/// Thrown when a user tries to signup with an existing user data
+class UserExistsException implements Exception {}
+
+/// Thrown when signing in with wrong credentials
+class UserDoesNotExistException implements Exception {}
+
+/// Thrown when user logs in with wrong password
+class WrongCredentialsException implements Exception {}

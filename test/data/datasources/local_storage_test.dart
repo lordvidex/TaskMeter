@@ -16,7 +16,7 @@ void main() {
   LocalStorageImpl localStorage;
   setUp(() {
     mock = SharedPreferencesMock();
-    localStorage = LocalStorageImpl(mock);
+    localStorage = LocalStorageImpl(sharedPreferences: mock);
   });
   group('Fetching Data from local storage', () {
     final color = Colors.red;

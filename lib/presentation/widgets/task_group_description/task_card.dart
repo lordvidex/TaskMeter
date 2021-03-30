@@ -31,39 +31,6 @@ class TaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => isEditMode
-          ? editTask(taskToBeEdited: _task, isEditMode: true)
-          : _task.isCompleted
-              ? null
-              : Navigator.of(context)
-                  .pushNamed(TaskTimerScreen.routeName, arguments: _task),
-      child: _TaskCard(
-        taskGroup: taskGroup,
-        task: _task,
-        isEditMode: isEditMode,
-        deleteTask: deleteTask,
-      ),
-    );
-  }
-}
-
-class _TaskCard extends StatelessWidget {
-  const _TaskCard({
-    Key key,
-    @required this.taskGroup,
-    @required Task task,
-    @required this.isEditMode,
-    @required this.deleteTask,
-  })  : _task = task,
-        super(key: key);
-  final Function(Task) deleteTask;
-  final TaskGroup taskGroup;
-  final Task _task;
-  final bool isEditMode;
-
-  @override
-  Widget build(BuildContext context) {
     return isEditMode
         ? Dismissible(
             background: Container(
@@ -76,6 +43,7 @@ class _TaskCard extends StatelessWidget {
             direction: DismissDirection.endToStart,
             onDismissed: (_) => deleteTask(_task),
             child: MainTaskCard(
+              editTask: editTask,
               task: _task,
               taskGroup: taskGroup,
               isEditMode: isEditMode,
@@ -85,6 +53,7 @@ class _TaskCard extends StatelessWidget {
             task: _task,
             taskGroup: taskGroup,
             isEditMode: isEditMode,
+            editTask: editTask,
           );
   }
 }
@@ -95,11 +64,13 @@ class MainTaskCard extends StatelessWidget {
     @required Task task,
     @required this.taskGroup,
     @required this.isEditMode,
+    @required this.editTask,
   })  : _task = task,
         super(key: key);
 
   final Task _task;
   final bool isEditMode;
+  final Function({Task taskToBeEdited, bool isEditMode}) editTask;
   final TaskGroup taskGroup;
 
   @override
@@ -107,12 +78,20 @@ class MainTaskCard extends StatelessWidget {
     final appLocale = AppLocalizations.of(context);
     return Card(
         color: _task.isCompleted
-            ? taskGroup.taskGroupColor[100]
+            ? taskGroup.taskGroupColor[200]
             : Theme.of(context).cardTheme.color,
         margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         elevation: 5,
         child: ListTile(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          onTap: _task.isCompleted
+              ? null
+              : () => isEditMode
+                  ? editTask(taskToBeEdited: _task, isEditMode: true)
+                  : Navigator.of(context)
+                      .pushNamed(TaskTimerScreen.routeName, arguments: _task),
           contentPadding:
               const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
           leading: CircleAvatar(

@@ -32,7 +32,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
   void initState() {
     super.initState();
     _formKey = GlobalKey();
-    settings = Provider.of<SettingsProvider>(context, listen: false).settings;
+    settings = context.read<SettingsProvider>().settings;
     newTaskGroup = TaskGroup('',
         longBreakIntervals: settings.longBreakIntervals,
         shortBreakTime: settings.shortBreak,
@@ -57,13 +57,12 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
       TimeDivider.divideTimeByTask(newTaskGroup);
     } on TaskTimerException catch (e) {
       // error occured and should be shown to user in snackbar
-      Scaffold.of(scaffoldContext).removeCurrentSnackBar();
-      Scaffold.of(scaffoldContext)
+      ScaffoldMessenger.of(scaffoldContext).removeCurrentSnackBar();
+      ScaffoldMessenger.of(scaffoldContext)
           .showSnackBar(SnackBar(content: Text(e.toString())));
       return;
     }
-    Provider.of<TaskGroupProvider>(context, listen: false)
-        .addTaskGroup(newTaskGroup);
+    context.read<TaskGroupProvider>().addTaskGroup(newTaskGroup);
     // go to the main page
     Navigator.of(context).pop();
   }

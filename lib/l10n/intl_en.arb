@@ -256,7 +256,7 @@
       "hours": {}
     }
   },
-  "minutes": "{minutes,plural, =0{{minutes} minutes }=1{{minutes} minute }few{{minutes} minutes }other{{minutes} minutes }}",
+  "minutes": "{minutes,plural, =0{}=1{{minutes} minute }few{{minutes} minutes }other{{minutes} minutes }}",
   "@minutes": {
     "description": "string for displaying how many minutes are in the duration object",
     "type": "text",
