@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:task_meter/presentation/providers/task_group_provider.dart';
 
 import '../../../core/utils/string_utils.dart';
 import '../../../locale/locales.dart';
@@ -196,6 +197,7 @@ class _SignInOrSignUpState extends State<SignInOrSignUp>
         _showError(result);
       }
     } else {
+      // sign up
       final result = await provider.emailSignUp(email, password);
       if (result == null) {
         Navigator.of(context).pop();
@@ -205,5 +207,8 @@ class _SignInOrSignUpState extends State<SignInOrSignUp>
       }
     }
     widget.authFunction(false);
+
+    // make sure the list is updated
+    await context.read<TaskGroupProvider>().loadTaskGroups();
   }
 }

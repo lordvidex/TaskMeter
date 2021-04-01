@@ -31,23 +31,26 @@ class TaskGroupDrawer extends StatelessWidget {
           });
           final completedTasks = tasks.fold<int>(
               0, (last, task) => last + (task.isCompleted ? 1 : 0));
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              child,
-              ...headerAndBody(
-                  'Current TaskGroups: ', taskGroups.length.toString()),
-              ...headerAndBody(
-                  'Completed TaskGroups: ', completedTaskGroups.toString()),
-              ...headerAndBody('Current Tasks: ', tasks.length.toString()),
-              ...headerAndBody('Completed Tasks: ', completedTasks.toString()),
-            ],
+          return SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                child,
+                ...headerAndBody(
+                    'Current TaskGroups: ', taskGroups.length.toString()),
+                ...headerAndBody(
+                    'Completed TaskGroups: ', completedTaskGroups.toString()),
+                ...headerAndBody('Current Tasks: ', tasks.length.toString()),
+                ...headerAndBody(
+                    'Completed Tasks: ', completedTasks.toString()),
+              ],
+            ),
           );
         },
       ),
       builder: (ctx, authProvider, child) => Drawer(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 8),
+          padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 8),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
             Align(
@@ -56,7 +59,7 @@ class TaskGroupDrawer extends StatelessWidget {
                   icon: Icon(Icons.close, color: Colors.red),
                   onPressed: () => Navigator.of(context).pop()),
             ),
-            Text('Welcome ${authProvider.user?.displayName}'),
+            Text('Welcome ${authProvider.user?.displayName ?? 'Anonymous'}'),
             child,
             Spacer(),
             TextButton(

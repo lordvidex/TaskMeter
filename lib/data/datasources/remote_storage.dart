@@ -136,6 +136,9 @@ class RemoteStorageImpl implements RemoteStorage {
 
   @override
   Future<DateTime> getLastTaskGroupUpdateTime() async {
+    if (_firebaseAuth.currentUser == null || _userDocument == null) {
+      return null;
+    }
     final doc = await _taskGroupTimeDocument.get();
     if (doc.exists) {
       return DateTime.tryParse(doc.get(TIME_OF_UPLOAD) as String);
@@ -144,6 +147,9 @@ class RemoteStorageImpl implements RemoteStorage {
   }
 
   Future<void> setLastTaskGroupUpdateTime(DateTime timeOfUpdate) async {
+    if (_firebaseAuth.currentUser == null || _userDocument == null) {
+      return;
+    }
     await _taskGroupTimeDocument
         .set({TIME_OF_UPLOAD: timeOfUpdate.toIso8601String()});
   }

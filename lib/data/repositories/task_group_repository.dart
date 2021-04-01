@@ -42,7 +42,7 @@ class TaskGroupRepositoryImpl extends TaskGroupRepository {
     DateTime now = DateTime.now();
     await _localStorage.updateTaskGroups(taskGroups, now);
     if (delete) {
-      _remoteStorage.deleteTaskGroup(id,now);
+      _remoteStorage.deleteTaskGroup(id, now);
     } else {
       _remoteStorage.updateTaskGroups(taskGroups, now);
     }

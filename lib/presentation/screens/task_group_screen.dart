@@ -60,8 +60,7 @@ class TaskGroupScreen extends StatelessWidget {
                 .pushNamed(CreateTaskGroupScreen.routeName),
           ),
           body: RefreshIndicator(
-            onRefresh: () async =>
-                await context.read<TaskGroupProvider>().loadTaskGroups(),
+            onRefresh: context.read<TaskGroupProvider>().loadTaskGroups,
             child: CustomScrollView(slivers: <Widget>[
               SliverAppBar(
                 leading: provider.user == null
