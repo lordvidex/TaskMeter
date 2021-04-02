@@ -25,9 +25,9 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
             padding: const EdgeInsets.all(16),
             child: Column(children: [
               SizedBox(height: 20),
-              Placeholder(
-                fallbackHeight: 60,
-                fallbackWidth: 60,
+              Image.asset(
+                'assets/images/task_app.png',
+                height: 60,
               ),
               SizedBox(height: 10),
               SignInOrSignUp(authFunction: toggleAuthentication),

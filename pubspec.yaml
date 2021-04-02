@@ -66,6 +66,7 @@ flutter:
     - assets/icons/apple.svg
     - assets/icons/google.svg
     - assets/images/donkey.png
+    - assets/images/task_app.png
     - assets/animations/
   # - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see

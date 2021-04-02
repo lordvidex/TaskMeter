@@ -59,7 +59,11 @@ class TaskGroupDrawer extends StatelessWidget {
                   icon: Icon(Icons.close, color: Colors.red),
                   onPressed: () => Navigator.of(context).pop()),
             ),
-            Text('Welcome ${authProvider.user?.displayName ?? 'Anonymous'}'),
+            Image.asset(
+              'assets/images/task_app.png',
+              height: 60,
+            ),
+            //Text('Welcome ${authProvider.user?.displayName ?? 'Anonymous'}'),
             child,
             Spacer(),
             TextButton(
