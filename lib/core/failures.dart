@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:task_meter/core/errors.dart';
 
 abstract class Failure extends Equatable {
   @override
@@ -9,6 +10,17 @@ class ServerFailure extends Failure {
   @override
   String toString() {
     return "Server error! Please try again later";
+  }
+}
+
+class CredentialFailure extends Failure {
+  final Social socialPlatform;
+  CredentialFailure(this.socialPlatform);
+  @override
+  List<Object> get props => [this.socialPlatform];
+  @override
+  String toString() {
+    return 'Failed to get credential from ${socialPlatform.toString()}';
   }
 }
 

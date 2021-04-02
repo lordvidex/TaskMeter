@@ -64,15 +64,26 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
   //! Google
   @override
-  Future<Either<Failure, User>> signUpUserWithGoogle() {
-    // TODO: implement signUpUserWithGoogle
-    throw UnimplementedError();
+  Future<Either<Failure, User>> signUpUserWithGoogle() async {
+    return await signinUserWithGoogle();
   }
 
   @override
-  Future<Either<Failure, User>> signinUserWithGoogle() {
-    // TODO: implement signinUserWithGoogle
-    throw UnimplementedError();
+  Future<Either<Failure, User>> signinUserWithGoogle() async {
+    if (!await _networkInfo.isConnected) {
+      return Left(NetworkFailure());
+    }
+    // Network is good.. fetch the user and catch the errors
+    try {
+      final _user = await _remoteStorage.signinUserWithGoogle();
+      return Right(_user);
+    } on CredentialException catch (c) {
+      return Left(CredentialFailure(c.socialCredential));
+    } on UserExistsException {
+      return Left(UserExistsFailure());
+    } on ServerException {
+      return Left(ServerFailure());
+    }
   }
 
   //! Apple

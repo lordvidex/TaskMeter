@@ -1,5 +1,8 @@
+import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:task_meter/domain/usecases/google_signin_usecase.dart';
+import 'package:task_meter/domain/usecases/google_signup_usecase.dart';
 
 import '../../core/failures.dart';
 import '../../domain/usecases/auto_login_usecase.dart';
@@ -12,16 +15,22 @@ class AuthenticationProvider extends ChangeNotifier {
   final LogOutUsecase _logOutUsecase;
   final EmailSignInUseCase _emailSignInUseCase;
   final EmailSignUpUseCase _emailSignUpUseCase;
+  final GoogleSignInUseCase _googleSignInUseCase;
+  final GoogleSignUpUseCase _googleSignUpUseCase;
 
   AuthenticationProvider({
     AutoLoginUseCase autoLoginUseCase,
     LogOutUsecase logoutUseCase,
     EmailSignInUseCase emailSignInUseCase,
     EmailSignUpUseCase emailSignUpUseCase,
+    GoogleSignInUseCase googleSignInUseCase,
+    GoogleSignUpUseCase googleSignUpUseCase,
   })  : _autoLoginUseCase = autoLoginUseCase,
         _logOutUsecase = logoutUseCase,
         _emailSignInUseCase = emailSignInUseCase,
-        _emailSignUpUseCase = emailSignUpUseCase;
+        _emailSignUpUseCase = emailSignUpUseCase,
+        _googleSignInUseCase = googleSignInUseCase,
+        _googleSignUpUseCase = googleSignUpUseCase;
 
   User _user;
 
@@ -43,28 +52,31 @@ class AuthenticationProvider extends ChangeNotifier {
   /// String - error message in case of any error
   Future<String> emailSignIn(String email, String password) async {
     final result = await _emailSignInUseCase(email, password);
-    return result.fold((failure) {
-      return _parseFailureResponse(failure);
-    }, (user) {
-      _user = user;
-      notifyListeners();
-      return null;
-    });
+    return foldResult(result);
   }
+
   /// returns null - if successfully signed up
   /// String - error message in case of any error
   Future<String> emailSignUp(String email, String password) async {
     final result = await _emailSignUpUseCase(email, password);
-    return result.fold((failure) {
-      return _parseFailureResponse(failure);
-    }, (user) {
+    return foldResult(result);
+  }
+
+  Future<String> googleSignIn() async {
+    final result = await _googleSignInUseCase();
+    return foldResult(result);
+  }
+
+  Future<String> googleSignUp() async {
+    final result = await _googleSignUpUseCase();
+    return foldResult(result);
+  }
+
+  String foldResult(Either<Failure, User> result) {
+    return result.fold((failure) => failure.toString(), (user) {
       _user = user;
       notifyListeners();
       return null;
     });
-  }
-
-  String _parseFailureResponse(Failure failure) {
-    return failure.toString();
   }
 }

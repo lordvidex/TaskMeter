@@ -9,6 +9,8 @@ enum Error {
   EmptyTaskGroup,
 }
 
+enum Social { Google, Apple }
+
 class TaskTimerException implements Exception {
   final Error _error;
   TaskTimerException(this._error);
@@ -42,3 +44,8 @@ class UserDoesNotExistException implements Exception {}
 
 /// Thrown when user logs in with wrong password
 class WrongCredentialsException implements Exception {}
+
+class CredentialException implements Exception {
+  final Social socialCredential;
+  const CredentialException(this.socialCredential);
+}

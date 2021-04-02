@@ -14,9 +14,8 @@ void main() {
     timerBloc = TimerBloc(timerRepo: timerMock);
   });
   group('Timer Bloc', () {
-    blocTest('should return an empty state when created ', build: () {
-      return TimerBloc();
-    }, expect: []);
+    blocTest('should return an empty state when created ',
+        build: () => TimerBloc(), expect: () => []);
     test(
         'should call the timerTicker function on the Timer class when startEvent is created',
         () async {
@@ -32,36 +31,54 @@ void main() {
     blocTest(
         'should return [TimerReady,TimerRunning] when TimerStartEvent is called',
         build: () {
-      return timerBloc;
-    }, act: (bloc) {
-      when(timerMock.timerTicker(any)).thenAnswer((_) => Stream.fromIterable(
-          [Duration(seconds: 2), Duration(seconds: 1), Duration(seconds: 0)]));
-      bloc.add(TimerStartEvent(Duration(seconds: 3)));
-    }, expect: [
-      TimerReady(Duration(seconds: 3)),
-      TimerRunning(Duration(seconds: 2)),
-      TimerRunning(Duration(seconds: 1)),
-      TimerFinished(Duration.zero)
-    ]);
+          return timerBloc;
+        },
+        act: (bloc) {
+          when(timerMock.timerTicker(any)).thenAnswer((_) =>
+              Stream.fromIterable([
+                Duration(seconds: 2),
+                Duration(seconds: 1),
+                Duration(seconds: 0)
+              ]));
+          bloc.add(TimerStartEvent(Duration(seconds: 3)));
+        },
+        expect: () => [
+              TimerReady(Duration(seconds: 3)),
+              TimerRunning(Duration(seconds: 2)),
+              TimerRunning(Duration(seconds: 1)),
+              TimerFinished(Duration.zero)
+            ]);
     blocTest(
         'should return no state if a PauseEvent is registered and timer is not running',
         build: () {
-      when(timerMock.timerTicker(any)).thenAnswer((_) => Stream.fromIterable(
-          [Duration(seconds: 2), Duration(seconds: 1), Duration(seconds: 0)]));
-      return timerBloc;
-    }, act: (bloc) {
-      bloc.add(TimerPauseEvent());
-    }, expect: []);
+          when(timerMock.timerTicker(any)).thenAnswer((_) =>
+              Stream.fromIterable([
+                Duration(seconds: 2),
+                Duration(seconds: 1),
+                Duration(seconds: 0)
+              ]));
+          return timerBloc;
+        },
+        act: (bloc) {
+          bloc.add(TimerPauseEvent());
+        },
+        expect: () => []);
 
     blocTest(
         'should return an [] state when TimerResumeEvent is called without a Paused state ',
         build: () {
-      when(timerMock.timerTicker(any)).thenAnswer((_) => Stream.fromIterable(
-          [Duration(seconds: 2), Duration(seconds: 1), Duration(seconds: 0)]));
-      return timerBloc;
-    }, act: (bloc) {
-      bloc.add(TimerResumeEvent());
-    }, expect: []);
+          when(timerMock.timerTicker(any)).thenAnswer((_) =>
+              Stream.fromIterable([
+                Duration(seconds: 2),
+                Duration(seconds: 1),
+                Duration(seconds: 0)
+              ]));
+          return timerBloc;
+        },
+        act: (bloc) {
+          bloc.add(TimerResumeEvent());
+        },
+        expect: () => []);
     //! Mocking timer isn't feasible for the pause test.. we use the real implementation
     // blocTest(
     //     'should return a TimerPaused state when a TimerPauseEvent is sent while Timer is running',

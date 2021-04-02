@@ -21,6 +21,8 @@ class _SignInOrSignUpState extends State<SignInOrSignUp>
   int _index = 0;
   bool _isEmailMode = true;
 
+  AuthenticationProvider _provider;
+
   TextEditingController _emailController;
   TextEditingController _passwordController;
 
@@ -29,6 +31,8 @@ class _SignInOrSignUpState extends State<SignInOrSignUp>
 
   @override
   void initState() {
+    _provider = context.read<AuthenticationProvider>();
+
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
 
@@ -124,7 +128,7 @@ class _SignInOrSignUpState extends State<SignInOrSignUp>
       SocialButton(
           buttonLabel: (_index == 0 ? appLocale.signIn : appLocale.signup) +
               ' with Google',
-          onPressed: () {},
+          onPressed: () => _googleCallBack(signIn: _index == 0),
           buttonColor: Colors.white,
           textColor: Colors.black,
           icon: SvgPicture.asset(
@@ -186,10 +190,9 @@ class _SignInOrSignUpState extends State<SignInOrSignUp>
   }
 
   void _emailCallBack({bool signIn, String email, String password}) async {
-    final provider = context.read<AuthenticationProvider>();
     widget.authFunction(true);
     if (signIn) {
-      final result = await provider.emailSignIn(email, password);
+      final result = await _provider.emailSignIn(email, password);
       if (result == null) {
         Navigator.of(context).pop();
         print('successfully logged in');
@@ -198,7 +201,7 @@ class _SignInOrSignUpState extends State<SignInOrSignUp>
       }
     } else {
       // sign up
-      final result = await provider.emailSignUp(email, password);
+      final result = await _provider.emailSignUp(email, password);
       if (result == null) {
         Navigator.of(context).pop();
         print('successfully signed up');
@@ -206,9 +209,24 @@ class _SignInOrSignUpState extends State<SignInOrSignUp>
         _showError(result);
       }
     }
-    widget.authFunction(false);
 
     // make sure the list is updated
     await context.read<TaskGroupProvider>().loadTaskGroups();
+    widget.authFunction(false);
+  }
+
+  Future<void> _googleCallBack({bool signIn}) async {
+    widget.authFunction(true);
+    String result = signIn
+        ? await _provider.googleSignIn()
+        : await _provider.googleSignUp();
+    if (result == null) {
+      Navigator.of(context).pop();
+      print('successfully signed ${signIn ? 'in' : 'up'} with google');
+    } else {
+      _showError(result);
+    }
+    await context.read<TaskGroupProvider>().loadTaskGroups();
+    widget.authFunction(false);
   }
 }

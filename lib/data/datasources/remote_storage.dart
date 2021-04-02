@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart' hide Settings;
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../core/errors.dart';
 import '../../domain/models/settings.dart';
@@ -10,6 +12,7 @@ abstract class RemoteStorage {
   //! Authentication section
   Future<User> signinUserWithEmail(String email, String password);
   Future<User> signupUserWithEmail(String email, String password);
+  Future<User> signinUserWithGoogle();
 
   //! Settings section
   /// Fetches the saved settings from Firebase
@@ -38,11 +41,14 @@ abstract class RemoteStorage {
 class RemoteStorageImpl implements RemoteStorage {
   final FirebaseAuth _firebaseAuth;
   final FirebaseFirestore _firestore;
+  final GoogleSignIn _googleSignIn;
 
   const RemoteStorageImpl(
-      {FirebaseAuth firebaseAuth, FirebaseFirestore firestore})
+      {FirebaseAuth firebaseAuth, FirebaseFirestore firestore, GoogleSignIn googleSignIn})
       : _firebaseAuth = firebaseAuth,
-        _firestore = firestore;
+        _firestore = firestore,
+        _googleSignIn = googleSignIn
+        ;
 
   DocumentReference get _userDocument =>
       _firestore?.collection('users')?.doc(_firebaseAuth.currentUser?.uid);
@@ -161,5 +167,57 @@ class RemoteStorageImpl implements RemoteStorage {
     }
     await _taskGroupDocument.doc(id).delete();
     await setLastTaskGroupUpdateTime(timeOfUpdate);
+  }
+
+  @override
+  Future<User> signinUserWithGoogle() async {
+    UserCredential credential;
+    try {
+      if (kIsWeb) {
+        //* WEB IMPLEMENTATION *****
+        //
+        GoogleAuthProvider googleProvider = GoogleAuthProvider()
+          ..addScope('https://www.googleapis.com/auth/contacts.readonly')
+          ..setCustomParameters({'login_hint': 'user@example.com'});
+
+        credential = await _firebaseAuth.signInWithPopup(googleProvider);
+      } else {
+        //* NATIVE IMPLEMENTATION
+        //
+        final socialCredential = await _getGoogleCredentials();
+
+        // credential should be non-null to sign user in
+        if (socialCredential == null) {
+          throw CredentialException(Social.Google);
+        }
+
+        credential = await _firebaseAuth.signInWithCredential(socialCredential);
+      }
+      return credential?.user;
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case 'invalid-credential':
+          throw WrongCredentialsException();
+        case 'account-exists-with-different-credential':
+          throw UserExistsException();
+        case 'operation-not-allowed':
+        default:
+          throw ServerException();
+      }
+    }
+  }
+
+  Future<OAuthCredential> _getGoogleCredentials() async {
+    // Trigger the authentication flow
+    final googleUser = await _googleSignIn?.signIn();
+
+    // obtain the auth details from the request
+    final googleAuth = await googleUser?.authentication;
+
+    // create a credential or null if fetching credential failed
+    return googleAuth == null
+        ? null
+        : GoogleAuthProvider.credential(
+            accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
   }
 }

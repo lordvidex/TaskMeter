@@ -74,9 +74,11 @@ class TaskGroupDrawer extends StatelessWidget {
                 child: Text('Share TaskMeter with Friends',
                     style: TextStyle(color: Colors.blue))),
             TextButton(
-                onPressed: () {
+                onPressed: () async {
                   Navigator.of(context).pop();
-                  authProvider.logOut();
+                  await authProvider.logOut();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Log out successful!')));
                 },
                 child: Text('Log Out', style: TextStyle(color: Colors.red)))
           ]),

@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "313332945097-rv2vupl2fqcok7c5d4fhvnqd920ur619.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.lordvidex.task_meter",
+            "certificate_hash": "24cd9f435bfd697342c8eb743e641e85487df13a"
+          }
+        },
+        {
           "client_id": "313332945097-p7ekkklvik3u17cvqdi7e3dg58jmpe7n.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +37,13 @@
             {
               "client_id": "313332945097-p7ekkklvik3u17cvqdi7e3dg58jmpe7n.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "313332945097-uul6duut928dnpqgvr0ornq1vt5o04bs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "dev.lordvidex.taskMeter"
+              }
             }
           ]
         }

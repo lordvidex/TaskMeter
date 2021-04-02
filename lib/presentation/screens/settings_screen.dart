@@ -145,62 +145,72 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   }
                 })
           ]),
-          body: SettingsList(sections: [
-            SettingsSection(
-              title: appLocale.taskGroups,
-              tiles: [
-                SettingsTile(
-                  iosChevron: null,
-                  titleMaxLines: 2,
-                  title: appLocale.shortBreakDuration,
-                  trailing: shortBreakWidget,
-                  leading: resizedIcon(Icons.timer_3),
-                ),
-                SettingsTile(
-                    titleMaxLines: 2,
-                    iosChevron: null,
-                    title: appLocale.longBreakDuration,
-                    trailing: longBreakWidget,
-                    leading: resizedIcon(Icons.timer_10)),
-                SettingsTile(
-                  titleMaxLines: 2,
-                  title: appLocale.longBreakAfter,
-                  iosChevron: null,
-                  leading: Container(width: 30),
-                  trailing: longBreakIntervalWidget,
-                )
-              ],
-            ),
-            SettingsSection(
-                maxLines: 2,
-                title:
-                    '${appLocale.language} ${appLocale.and} ${appLocale.theme.toLowerCase()}',
+          body: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: SettingsList(sections: [
+              SettingsSection(
+                title: appLocale.taskGroups,
                 tiles: [
                   SettingsTile(
-                    title: appLocale.language,
-                    leading: resizedIcon(Icons.translate_outlined),
-                    trailing: languageWidget,
                     iosChevron: null,
+                    titleMaxLines: 2,
+                    title: appLocale.shortBreakDuration,
+                    trailing: shortBreakWidget,
+                    leading: resizedIcon(Icons.timer_3),
                   ),
                   SettingsTile(
-                    title: appLocale.appTheme,
-                    leading: resizedIcon(Icons.brightness_6_outlined),
-                    trailing: themeWidget,
-                    onPressed: (_) => Navigator.of(context)
-                        .pushNamed(SelectThemeScreen.routeName),
+                      titleMaxLines: 2,
+                      iosChevron: null,
+                      title: appLocale.longBreakDuration,
+                      trailing: longBreakWidget,
+                      leading: resizedIcon(Icons.timer_10)),
+                  SettingsTile(
+                    titleMaxLines: 2,
+                    title: appLocale.longBreakAfter,
+                    iosChevron: null,
+                    leading: Container(width: 30),
+                    trailing: longBreakIntervalWidget,
                   )
-                ]),
-            SettingsSection(tiles: [
-              SettingsTile(
-                  title: appLocale.about,
-                  leading: resizedIcon(Icons.info_outline)),
-              SettingsTile(
-                  title: appLocale.feedback,
-                  leading: resizedIcon(Icons.feedback)),
-              SettingsTile(
-                  title: appLocale.rate, leading: resizedIcon(Icons.star_rate))
-            ])
-          ]),
+                ],
+              ),
+              SettingsSection(
+                  maxLines: 2,
+                  title:
+                      '${appLocale.language} ${appLocale.and} ${appLocale.theme.toLowerCase()}',
+                  tiles: [
+                    SettingsTile(
+                      title: appLocale.language,
+                      leading: resizedIcon(Icons.translate_outlined),
+                      trailing: languageWidget,
+                      iosChevron: null,
+                    ),
+                    SettingsTile(
+                      title: appLocale.appTheme,
+                      leading: resizedIcon(Icons.brightness_6_outlined),
+                      trailing: themeWidget,
+                      onPressed: (_) => Navigator.of(context)
+                          .pushNamed(SelectThemeScreen.routeName),
+                    )
+                  ]),
+              SettingsSection(tiles: [
+                SettingsTile(
+                    title: appLocale.about,
+                    onPressed: (_) => showAboutDialog(
+                        context: context,
+                        applicationIcon: Image.asset(
+                          'assets/images/task_icon.png',
+                          height: 30,
+                        ),),
+                    leading: resizedIcon(Icons.info_outline)),
+                SettingsTile(
+                    title: appLocale.feedback,
+                    leading: resizedIcon(Icons.feedback)),
+                SettingsTile(
+                    title: appLocale.rate,
+                    leading: resizedIcon(Icons.star_rate))
+              ])
+            ]),
+          ),
         ),
       ),
     );
