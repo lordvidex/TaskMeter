@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -131,23 +132,28 @@ class _SignInOrSignUpState extends State<SignInOrSignUp>
           onPressed: () => _googleCallBack(signIn: _index == 0),
           buttonColor: Colors.white,
           textColor: Colors.black,
-          icon: SvgPicture.asset(
-            'assets/icons/google.svg',
-            height: 24,
-            width: 24,
-          )),
+          icon: kIsWeb
+              ? Container()
+              : SvgPicture.asset(
+                  'assets/icons/google.svg',
+                  height: 24,
+                  width: 24,
+                )),
       SizedBox(height: 10),
       SocialButton(
         buttonLabel:
             (_index == 0 ? appLocale.signIn : appLocale.signup) + ' with Apple',
-        onPressed: () {},
-        icon: SvgPicture.asset(
-          'assets/icons/apple.svg',
-          color: Colors.white,
-          height: 22,
-          width: 22,
-        ),
+        onPressed: null,
+        icon: kIsWeb
+            ? Container()
+            : SvgPicture.asset(
+                'assets/icons/apple.svg',
+                color: Colors.white,
+                height: 22,
+                width: 22,
+              ),
         buttonColor: Colors.black,
+        textColor: Colors.white
       ),
       Divider(
         height: 10,

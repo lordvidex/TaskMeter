@@ -26,49 +26,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _settings = Settings.fromJson(_provider.settings.toJson());
   }
 
-  Future<bool> _back(BuildContext context) async {
-    if (_provider.settings == _settings) {
-      return true;
-    } else {
-      return showDialog<bool>(
-          context: context,
-          builder: (ctx) => CupertinoAlertDialog(
-                title: Text(appLocale.dataNotSaved),
-                content: RichText(
-                  text: TextSpan(
-                    text: appLocale.dataNotSavedDesc1,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1
-                        .copyWith(fontSize: 14),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: String.fromCharCode(0xe64c), //<-- charCode
-                        style: TextStyle(
-                          fontFamily: 'MaterialIcons', //<-- fontFamily
-                          fontSize: 24.0,
-                        ),
-                      ),
-                      TextSpan(text: appLocale.dataNotSavedDesc2)
-                    ],
-                  ),
-                ),
-                actions: [
-                  CupertinoDialogAction(
-                    child: Text(appLocale.discard),
-                    isDestructiveAction: true,
-                    onPressed: () => Navigator.of(ctx).pop<bool>(true),
-                  ),
-                  CupertinoDialogAction(
-                    child: Text(appLocale.cancel),
-                    isDefaultAction: true,
-                    onPressed: () => Navigator.of(ctx).pop<bool>(false),
-                  ),
-                ],
-              ));
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     // AppLocalizations singleton
@@ -139,7 +96,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             IconButton(
                 icon: Icon(Icons.check),
                 onPressed: () async {
-                  _provider.updateSettings(_settings);
+                  if(_provider.settings!= _settings) _provider.updateSettings(_settings);
                   if (await _back(context)) {
                     Navigator.of(context).pop();
                   }
@@ -214,5 +171,48 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       ),
     );
+  }
+  
+  Future<bool> _back(BuildContext context) async {
+    if (_provider.settings == _settings) {
+      return true;
+    } else {
+      return showDialog<bool>(
+          context: context,
+          builder: (ctx) => CupertinoAlertDialog(
+                title: Text(appLocale.dataNotSaved),
+                content: RichText(
+                  text: TextSpan(
+                    text: appLocale.dataNotSavedDesc1,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1
+                        .copyWith(fontSize: 14),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: String.fromCharCode(0xe64c), //<-- charCode
+                        style: TextStyle(
+                          fontFamily: 'MaterialIcons', //<-- fontFamily
+                          fontSize: 24.0,
+                        ),
+                      ),
+                      TextSpan(text: appLocale.dataNotSavedDesc2)
+                    ],
+                  ),
+                ),
+                actions: [
+                  CupertinoDialogAction(
+                    child: Text(appLocale.discard),
+                    isDestructiveAction: true,
+                    onPressed: () => Navigator.of(ctx).pop<bool>(true),
+                  ),
+                  CupertinoDialogAction(
+                    child: Text(appLocale.cancel),
+                    isDefaultAction: true,
+                    onPressed: () => Navigator.of(ctx).pop<bool>(false),
+                  ),
+                ],
+              ));
+    }
   }
 }
