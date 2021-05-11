@@ -45,6 +45,17 @@ class Task extends Equatable {
       'time_remaining': timeRemaining?.inSeconds,
     };
   }
+  
+  /// sets [totalTime] and timeRemaining to given `totalTime`
+  void setTotalTime(Duration totalTime) {
+    this._totalTime = totalTime;
+    this.timeRemaining = totalTime;
+  }
+  
+  /// resets the time for a task
+  void resetTask() {
+    this.timeRemaining = totalTime;
+  }
 
   // returns the totalTime calculated by the algorithm
   Duration get totalTime => _totalTime;
@@ -63,13 +74,9 @@ class Task extends Equatable {
         _totalTime.inMilliseconds;
   }
 
-  /// sets [totalTime] and timeRemaining to given `totalTime`
-  void setTotalTime(Duration totalTime) {
-    this._totalTime = totalTime;
-    this.timeRemaining = totalTime;
-  }
-
   bool get isCompleted => timeRemaining == Duration.zero;
+
+  
 
   @override
   List<Object> get props => [taskId];

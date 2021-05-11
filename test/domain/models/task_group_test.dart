@@ -57,8 +57,8 @@ void main() {
           totalTime: totalTime);
       final expectedJson = {
         'task_group_name': taskGroupName,
-        ''
-            'task_group_color': ColorUtils.getPositionOfMaterialColor(color),
+        'is_deleted': false,
+        'task_group_color': ColorUtils.getPositionOfMaterialColor(color),
         'bonus_time': 0,
         'is_repetitive': false,
         'time_of_upload': null,
@@ -98,6 +98,7 @@ void main() {
         'long_break_time': longBreak.inSeconds,
         'short_break_time': shortBreak.inSeconds,
         'task_group_id': id,
+        'is_deleted': false,
         'task_group_subtitle': '',
         'tasks': tasks.map((t) => t.toJson()).toList(),
         'total_time': totalTime.inSeconds,

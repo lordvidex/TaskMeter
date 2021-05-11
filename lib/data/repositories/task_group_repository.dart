@@ -26,12 +26,12 @@ class TaskGroupRepositoryImpl extends TaskGroupRepository {
     if (remoteLastTime == null || localLastTime.isAfter(remoteLastTime)) {
       // work with only local data, return local and update remote
       final _localData = await _localStorage.fetchTaskGroups();
-      _remoteStorage.updateTaskGroups(_localData, localLastTime);
+      await _remoteStorage.updateTaskGroups(_localData, localLastTime);
       return _localData;
     } else {
       // work with remoteData, update local and return remote
       final _remoteData = await _remoteStorage.fetchTaskGroups();
-      _localStorage.updateTaskGroups(_remoteData, remoteLastTime);
+      await _localStorage.updateTaskGroups(_remoteData, remoteLastTime);
       return _remoteData;
     }
   }

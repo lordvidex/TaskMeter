@@ -54,8 +54,18 @@ class TaskGroupProvider extends ChangeNotifier {
   }
 
   void deleteTaskGroup(String id) async {
-    _groups.removeWhere((taskGroup) => taskGroup.taskGroupId == id);
-    await taskGroupRepo.updateTaskGroups(_groups, delete: true, id: id);
+    TaskGroup deletedTg;
+    _groups.firstWhere((taskGroup) {
+      if (id == taskGroup.taskGroupId) {
+        deletedTg = taskGroup;
+        return true;
+      }
+      return false;
+    });
+    if (deletedTg != null) {
+      deletedTg.isDeleted = true;
+      await taskGroupRepo.updateTaskGroups(_groups, delete: true, id: id);
+    }
     notifyListeners();
   }
 

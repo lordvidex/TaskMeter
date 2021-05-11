@@ -44,11 +44,12 @@ class RemoteStorageImpl implements RemoteStorage {
   final GoogleSignIn _googleSignIn;
 
   const RemoteStorageImpl(
-      {FirebaseAuth firebaseAuth, FirebaseFirestore firestore, GoogleSignIn googleSignIn})
+      {FirebaseAuth firebaseAuth,
+      FirebaseFirestore firestore,
+      GoogleSignIn googleSignIn})
       : _firebaseAuth = firebaseAuth,
         _firestore = firestore,
-        _googleSignIn = googleSignIn
-        ;
+        _googleSignIn = googleSignIn;
 
   DocumentReference get _userDocument =>
       _firestore?.collection('users')?.doc(_firebaseAuth.currentUser?.uid);
@@ -81,6 +82,7 @@ class RemoteStorageImpl implements RemoteStorage {
     final snapshot = await _taskGroupDocument.get();
     return snapshot.docs
         .map((data) => TaskGroup.fromJson(data.data()))
+        .skipWhile((tg) => tg.isDeleted ?? false)
         .toList();
   }
 

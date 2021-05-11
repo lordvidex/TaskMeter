@@ -17,39 +17,7 @@ class TaskGroupScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final appLocale = AppLocalizations.of(context);
     return Consumer<AuthenticationProvider>(
-      child: Consumer<TaskGroupProvider>(
-        builder: (ctx, provider, child) {
-          final groups = provider.taskGroups;
-          if (groups.isEmpty)
-            return child;
-          else
-            return SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (ctx, index) => TaskGroupWidget(
-                  taskGroup: groups[index],
-                ),
-                childCount: groups.length,
-              ),
-            );
-        },
-        child: SliverToBoxAdapter(
-            child: Center(
-                child: Column(
-          children: [
-            Image.asset('assets/images/donkey.png'),
-            Text(appLocale.emptyTaskGroupText),
-            Flex(
-                mainAxisAlignment: MainAxisAlignment.center,
-                direction: Axis.horizontal,
-                children: [
-                  Text(appLocale.clickOn),
-                  Icon(Icons.add),
-                  Text(appLocale.toAddNewTaskGroup)
-                ]),
-          ],
-        ))),
-      ),
-      builder: (ctx, provider, child) => Scaffold(
+      builder: (ctx, provider, _) => Scaffold(
           key: _scaffoldKey,
           drawerEnableOpenDragGesture: false,
           drawer: TaskGroupDrawer(),
@@ -95,7 +63,39 @@ class TaskGroupScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline1),
                 ),
               ),
-              child
+              Consumer<TaskGroupProvider>(
+                builder: (ctx, provider, child) {
+                  final groups = provider.taskGroups
+                    ..retainWhere((g) => !g.isDeleted);
+                  if (groups.isEmpty)
+                    return child;
+                  else
+                    return SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (ctx, index) => TaskGroupWidget(
+                          taskGroup: groups[index],
+                        ),
+                        childCount: groups.length,
+                      ),
+                    );
+                },
+                child: SliverToBoxAdapter(
+                    child: Center(
+                        child: Column(
+                  children: [
+                    Image.asset('assets/images/donkey.png'),
+                    Text(appLocale.emptyTaskGroupText),
+                    Flex(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        direction: Axis.horizontal,
+                        children: [
+                          Text(appLocale.clickOn),
+                          Icon(Icons.add),
+                          Text(appLocale.toAddNewTaskGroup)
+                        ]),
+                  ],
+                ))),
+              ),
             ]),
           )),
     );

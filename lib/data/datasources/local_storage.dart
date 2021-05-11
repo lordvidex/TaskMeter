@@ -45,7 +45,7 @@ class LocalStorageImpl extends LocalStorage {
   Future<void> logoutUser() async {
     await firebaseAuth.signOut();
   }
-  
+
   @override
   Future<Settings> fetchSettings() async {
     if (sharedPreferences.containsKey(SETTINGS)) {
@@ -72,6 +72,7 @@ class LocalStorageImpl extends LocalStorage {
       return sharedPreferences
           .getStringList(TASKGROUPS)
           .map((tg) => TaskGroup.fromJson(json.decode(tg)))
+          .skipWhile((tg) => tg.isDeleted ?? false)
           .toList();
     } else {
       //! the local storage is either empty or there was an error

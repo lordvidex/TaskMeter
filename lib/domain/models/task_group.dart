@@ -43,6 +43,9 @@ class TaskGroup extends Equatable {
   /// is `false` if it is a one-time group of tasks
   final bool isRepetitive;
 
+  /// determines if task group has been deleted
+  bool isDeleted;
+
   TaskGroup(
     this.taskGroupName, {
     this.timeOfUpload,
@@ -55,36 +58,38 @@ class TaskGroup extends Equatable {
     this.shortBreakTime,
     this.longBreakIntervals,
     this.totalTime,
+    bool isDeleted,
     this.bonusTime = Duration.zero,
   })  : this.taskGroupId = taskGroupId ?? Uuid().v1(),
+        this.isDeleted = isDeleted ?? false,
         this.tasks = tasks ?? <Task>[],
         this.taskGroupColor = taskGroupColor ?? ColorUtils.randomColor();
 
-  factory TaskGroup.fromJson(Map<String, dynamic> json) => TaskGroup(
-        json['task_group_name'],
-        taskGroupId: json['task_group_id'],
-        timeOfUpload: DateTime.tryParse(json['time_of_upload'] ?? ''),
-        tasks: json['tasks']
-            .map<Task>((taskJson) => Task.fromJson(taskJson))
-            .toList(),
-        taskGroupColor:
-            ColorUtils.getMaterialColorInPos(json['task_group_color']),
-        taskGroupSubtitle: json['task_group_subtitle'],
-        isRepetitive: json['is_repetitive'],
-        longBreakTime: json['long_break_time'] == null
-            ? null
-            : Duration(seconds: json['long_break_time']),
-        shortBreakTime: json['short_break_time'] == null
-            ? null
-            : Duration(seconds: json['short_break_time']),
-        longBreakIntervals: json['long_break_intervals'],
-        totalTime: json['total_time'] == null
-            ? null
-            : Duration(seconds: json['total_time']),
-        bonusTime: json['bonus_time'] == null
-            ? null
-            : Duration(seconds: json['bonus_time']),
-      );
+  factory TaskGroup.fromJson(Map<String, dynamic> json) =>
+      TaskGroup(json['task_group_name'],
+          taskGroupId: json['task_group_id'],
+          timeOfUpload: DateTime.tryParse(json['time_of_upload'] ?? ''),
+          tasks: json['tasks']
+              .map<Task>((taskJson) => Task.fromJson(taskJson))
+              .toList(),
+          taskGroupColor:
+              ColorUtils.getMaterialColorInPos(json['task_group_color']),
+          taskGroupSubtitle: json['task_group_subtitle'],
+          isRepetitive: json['is_repetitive'],
+          longBreakTime: json['long_break_time'] == null
+              ? null
+              : Duration(seconds: json['long_break_time']),
+          shortBreakTime: json['short_break_time'] == null
+              ? null
+              : Duration(seconds: json['short_break_time']),
+          longBreakIntervals: json['long_break_intervals'],
+          totalTime: json['total_time'] == null
+              ? null
+              : Duration(seconds: json['total_time']),
+          bonusTime: json['bonus_time'] == null
+              ? null
+              : Duration(seconds: json['bonus_time']),
+          isDeleted: json['is_deleted']);
 
   /// In the database, the `taskGroupId` is the [key] and the `toJson` is the [value]
   /// * Durations are stored `inSeconds` in database
@@ -92,6 +97,7 @@ class TaskGroup extends Equatable {
     return {
       'time_of_upload': timeOfUpload?.toIso8601String(),
       'task_group_id': taskGroupId,
+      'is_deleted': isDeleted,
       'task_group_name': taskGroupName,
       'tasks': tasks.map((task) => task.toJson()).toList(),
       'task_group_subtitle': taskGroupSubtitle,
@@ -105,6 +111,10 @@ class TaskGroup extends Equatable {
     };
   }
 
+  void resetTasks() {
+    tasks.forEach((t) => t.resetTask());
+  }
+
   int get completedCount => tasks.fold<int>(
       0, (prev, element) => prev + (element.isCompleted ? 1 : 0));
   List<Task> get sortedTasks => List.from(tasks)
@@ -115,6 +125,7 @@ class TaskGroup extends Equatable {
     });
   double get taskGroupProgress =>
       completedCount / (tasks.isEmpty ? 1 : tasks.length);
+
   @override
   List<Object> get props => [taskGroupId];
 }
