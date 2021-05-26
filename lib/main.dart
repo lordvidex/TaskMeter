@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:task_meter/presentation/bloc/size_bloc.dart';
 import 'package:task_meter/presentation/providers/authentication_provider.dart';
 
 import 'core/constants.dart';
@@ -31,6 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        BlocProvider(create: (_) => di.sl<SizeBloc>()),
         ChangeNotifierProvider<AuthenticationProvider>(
           lazy: true,
           create: (_) => di.sl<AuthenticationProvider>(),
@@ -50,41 +53,44 @@ class MyApp extends StatelessWidget {
 class NewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<SettingsProvider>(
-      builder: (ctx, provider, _) => MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: Constants.kThemeData,
-          darkTheme: Constants.kDarkThemeData,
-          themeMode: provider.settings.appTheme == AppTheme.System
-              ? ThemeMode.system
-              : provider.settings.appTheme == AppTheme.Light
-                  ? ThemeMode.light
-                  : ThemeMode.dark,
-          title: 'Task Meter',
-          locale: provider.settings.language == null
-              ? null
-              : Locale(provider.settings.language),
-          localizationsDelegates: [
-            AppLocalizationsDelegate(),
-            GlobalMaterialLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-          ],
-          supportedLocales: [
-            const Locale('en', ''), // English, no country code
-            const Locale('ru', ''), // Russian, no country code
-          ],
-          home: TaskGroupScreen(),
-          routes: {
-            TaskGroupScreen.routeName: (_) => TaskGroupScreen(),
-            TaskTimerScreen.routeName: (_) => TaskTimerScreen(),
-            TaskGroupDescriptionScreen.routeName: (_) =>
-                TaskGroupDescriptionScreen(),
-            SettingsScreen.routeName: (_) => SettingsScreen(),
-            ErrorScreen.routeName: (_) => ErrorScreen(),
-            CreateTaskGroupScreen.routeName: (_) => CreateTaskGroupScreen(),
-            SelectThemeScreen.routeName: (_) => SelectThemeScreen(),
-          }),
-    );
+    return LayoutBuilder(builder: (ctx, constraints) {
+      ctx.read<SizeBloc>().add(WidthEvent(constraints.maxWidth));
+      return Consumer<SettingsProvider>(
+        builder: (ctx, provider, _) => MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: Constants.kThemeData,
+            darkTheme: Constants.kDarkThemeData,
+            themeMode: provider.settings.appTheme == AppTheme.System
+                ? ThemeMode.system
+                : provider.settings.appTheme == AppTheme.Light
+                    ? ThemeMode.light
+                    : ThemeMode.dark,
+            title: 'Task Meter',
+            locale: provider.settings.language == null
+                ? null
+                : Locale(provider.settings.language),
+            localizationsDelegates: [
+              AppLocalizationsDelegate(),
+              GlobalMaterialLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            supportedLocales: [
+              const Locale('en', ''), // English, no country code
+              const Locale('ru', ''), // Russian, no country code
+            ],
+            home: TaskGroupScreen(),
+            routes: {
+              TaskGroupScreen.routeName: (_) => TaskGroupScreen(),
+              TaskTimerScreen.routeName: (_) => TaskTimerScreen(),
+              TaskGroupDescriptionScreen.routeName: (_) =>
+                  TaskGroupDescriptionScreen(),
+              SettingsScreen.routeName: (_) => SettingsScreen(),
+              ErrorScreen.routeName: (_) => ErrorScreen(),
+              CreateTaskGroupScreen.routeName: (_) => CreateTaskGroupScreen(),
+              SelectThemeScreen.routeName: (_) => SelectThemeScreen(),
+            }),
+      );
+    });
   }
 }

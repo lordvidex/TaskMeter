@@ -36,7 +36,7 @@ class _TaskTimerWidgetState extends State<TaskTimerWidget> {
     timerStateOverTen = (widget.task.taskProgress * 10).round();
     setBoardAndRive();
     super.initState();
-    BlocProvider.of<TimerBloc>(context)
+    context.read<TimerBloc>()
         .add(TimerStartEvent(widget.task.timeRemaining));
   }
 
@@ -139,7 +139,7 @@ class _TaskTimerWidgetState extends State<TaskTimerWidget> {
               child: Icon(Icons.check),
               onPressed: () {
                 _artboard.removeController(_playAnimationController);
-                BlocProvider.of<TimerBloc>(context).add(TimerFinishEvent());
+                context.read<TimerBloc>().add(TimerFinishEvent());
               },
               color: Colors.green,
               height: 70,

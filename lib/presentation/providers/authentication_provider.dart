@@ -1,13 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:task_meter/domain/usecases/google_signin_usecase.dart';
-import 'package:task_meter/domain/usecases/google_signup_usecase.dart';
 
 import '../../core/failures.dart';
 import '../../domain/usecases/auto_login_usecase.dart';
 import '../../domain/usecases/email_signin_usecase.dart';
 import '../../domain/usecases/email_signup_usecase.dart';
+import '../../domain/usecases/google_signin_usecase.dart';
+import '../../domain/usecases/google_signup_usecase.dart';
 import '../../domain/usecases/logout_usecase.dart';
 
 class AuthenticationProvider extends ChangeNotifier {

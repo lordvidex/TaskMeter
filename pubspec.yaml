@@ -49,8 +49,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  bloc_test: ^8.0.0
-  mockito: ^4.1.4
+  # bloc_test: ^8.0.0
+  # mockito: ^3.0.1
   # intl_translation: ^0.17.10+1
 
 # For information on the generic Dart part of this file, see the
@@ -67,7 +67,7 @@ flutter:
     - assets/icons/checklists.svg
     - assets/icons/apple.svg
     - assets/icons/google.svg
-    - assets/images/donkey.png
+    - assets/icons/empty.svg
     - assets/images/task_app.png
     - assets/images/task_icon.png
     - assets/animations/

@@ -49,6 +49,8 @@ class AppLocalizations {
 
   //! Settings Screen
   String get and => Intl.message('and', name: 'and', desc: 'the word "and"');
+  String get settings =>
+      Intl.message('Settings', name: 'settings', desc: 'The word settings');
   String get generalSettings => Intl.message('General Settings',
       name: 'generalSettings', desc: 'App bar text for setting screen');
 
@@ -207,9 +209,10 @@ class AppLocalizations {
           'Hint text for authentication screen telling user to enter email address');
   String get enterPassword => Intl.message('Password',
       name: 'enterPassword', desc: 'Password textField hint text');
-      String get next => Intl.message('Next',
+  String get next => Intl.message('Next',
       name: 'next',
-      desc: 'Button text for the next button toggling between email and password mode in auth screen');
+      desc:
+          'Button text for the next button toggling between email and password mode in auth screen');
 //! Duration Utils
   String hours(int hours) => Intl.plural(
         hours,

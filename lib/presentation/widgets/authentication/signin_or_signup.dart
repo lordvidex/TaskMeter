@@ -1,12 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:task_meter/presentation/providers/task_group_provider.dart';
 
 import '../../../core/utils/string_utils.dart';
 import '../../../locale/locales.dart';
+import '../../bloc/size_bloc.dart';
 import '../../providers/authentication_provider.dart';
+import '../../providers/task_group_provider.dart';
 import 'social_button.dart';
 
 class SignInOrSignUp extends StatefulWidget {
@@ -58,6 +60,7 @@ class _SignInOrSignUpState extends State<SignInOrSignUp>
   @override
   Widget build(BuildContext context) {
     final appLocale = AppLocalizations.of(context);
+    final sizeBloc = context.read<SizeBloc>();
     return Column(children: [
       TabBar(
         tabs: [
@@ -115,6 +118,7 @@ class _SignInOrSignUpState extends State<SignInOrSignUp>
         onPressed: () => _isEmailMode
             ? _toggleEmailPasswordMode()
             : _emailCallBack(
+                sizeBloc: sizeBloc,
                 signIn: _index == 0,
                 email: _emailController.text,
                 password: _passwordController.text,
@@ -129,7 +133,8 @@ class _SignInOrSignUpState extends State<SignInOrSignUp>
       SocialButton(
           buttonLabel: (_index == 0 ? appLocale.signIn : appLocale.signup) +
               ' with Google',
-          onPressed: () => _googleCallBack(signIn: _index == 0),
+          onPressed: () =>
+              _googleCallBack(signIn: _index == 0, sizeBloc: sizeBloc),
           buttonColor: Colors.white,
           textColor: Colors.black,
           icon: kIsWeb
@@ -141,30 +146,30 @@ class _SignInOrSignUpState extends State<SignInOrSignUp>
                 )),
       SizedBox(height: 10),
       SocialButton(
-        buttonLabel:
-            (_index == 0 ? appLocale.signIn : appLocale.signup) + ' with Apple',
-        onPressed: null,
-        icon: kIsWeb
-            ? Container()
-            : SvgPicture.asset(
-                'assets/icons/apple.svg',
-                color: Colors.white,
-                height: 22,
-                width: 22,
-              ),
-        buttonColor: Colors.black,
-        textColor: Colors.white
-      ),
+          buttonLabel: (_index == 0 ? appLocale.signIn : appLocale.signup) +
+              ' with Apple',
+          onPressed: null,
+          icon: kIsWeb
+              ? Container()
+              : SvgPicture.asset(
+                  'assets/icons/apple.svg',
+                  color: Colors.white,
+                  height: 22,
+                  width: 22,
+                ),
+          buttonColor: Colors.black,
+          textColor: Colors.white),
       Divider(
         height: 10,
         thickness: 2,
       ),
-      SocialButton(
-        buttonLabel: 'Close',
-        onPressed: () => Navigator.of(context).pop(),
-        buttonColor: Colors.red,
-        icon: Container(),
-      )
+      if (sizeBloc.isMobileScreen)
+        SocialButton(
+          buttonLabel: 'Close',
+          onPressed: () => Navigator.of(context).pop(),
+          buttonColor: Colors.red,
+          icon: Container(),
+        )
     ]);
   }
 
@@ -195,25 +200,20 @@ class _SignInOrSignUpState extends State<SignInOrSignUp>
             ));
   }
 
-  void _emailCallBack({bool signIn, String email, String password}) async {
+  void _emailCallBack(
+      {SizeBloc sizeBloc, bool signIn, String email, String password}) async {
     widget.authFunction(true);
+    var result;
     if (signIn) {
-      final result = await _provider.emailSignIn(email, password);
-      if (result == null) {
-        Navigator.of(context).pop();
-        print('successfully logged in');
-      } else {
-        _showError(result);
-      }
+      result = await _provider.emailSignIn(email, password);
     } else {
       // sign up
-      final result = await _provider.emailSignUp(email, password);
-      if (result == null) {
-        Navigator.of(context).pop();
-        print('successfully signed up');
-      } else {
-        _showError(result);
-      }
+      result = await _provider.emailSignUp(email, password);
+    }
+    if (result == null) {
+      if (sizeBloc.isMobileScreen) Navigator.of(context).pop();
+    } else {
+      _showError(result);
     }
 
     // make sure the list is updated
@@ -221,13 +221,14 @@ class _SignInOrSignUpState extends State<SignInOrSignUp>
     widget.authFunction(false);
   }
 
-  Future<void> _googleCallBack({bool signIn}) async {
+  Future<void> _googleCallBack(
+      {bool signIn, @required SizeBloc sizeBloc}) async {
     widget.authFunction(true);
     String result = signIn
         ? await _provider.googleSignIn()
         : await _provider.googleSignUp();
     if (result == null) {
-      Navigator.of(context).pop();
+      if (sizeBloc.isMobileScreen) Navigator.of(context).pop();
       print('successfully signed ${signIn ? 'in' : 'up'} with google');
     } else {
       _showError(result);

@@ -14,54 +14,55 @@ class TaskGroupWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final taskGroupProvider = context.read<TaskGroupProvider>();
-    return InkWell(
-      onTap: () {
-        taskGroupProvider.setCurrentTaskGroup(taskGroup);
-        Navigator.of(context).pushNamed(TaskGroupDescriptionScreen.routeName,
-            arguments: taskGroup);
-      },
-      child: Container(
-          padding: const EdgeInsets.only(bottom: 3),
-          margin: const EdgeInsets.all(15),
-          //height: 300,
-          decoration: BoxDecoration(
-            color: taskGroup.taskGroupColor[800],
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              bottomRight: Radius.circular(20),
-            ),
+    return Container(
+        padding: const EdgeInsets.only(bottom: 3),
+        margin: const EdgeInsets.all(15),
+        //height: 300,
+        decoration: BoxDecoration(
+          color: taskGroup.taskGroupColor[800],
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            bottomRight: Radius.circular(20),
           ),
-          child: Stack(children: [
-            Positioned(
-                top: 0,
-                right: 0,
-                child: DropdownButton(
-                  onChanged: (_) {},
-                  items: [
-                    DropdownMenuItem(
-                        value: 'delete',
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.delete_forever,
-                                color: Colors.red, size: 24),
-                            SizedBox(width: 10),
-                            Text(AppLocalizations.of(context).delete),
-                          ],
-                        ),
-                        onTap: () => taskGroupProvider
-                            .deleteTaskGroup(taskGroup.taskGroupId))
-                  ],
-                  icon: Icon(Icons.more_vert, color: Colors.white),
-                )),
-            Positioned(
-                right: -10,
-                bottom: -30,
-                child: SvgPicture.asset('assets/icons/checklists.svg',
-                    color: taskGroup.taskGroupColor[500])),
-            Row(children: [
-              Flexible(
-                flex: 7,
+        ),
+        child: Stack(children: [
+          Positioned(
+              top: 0,
+              right: 0,
+              child: DropdownButton(
+                onChanged: (_) {},
+                items: [
+                  DropdownMenuItem(
+                      value: 'delete',
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.delete_forever,
+                              color: Colors.red, size: 24),
+                          SizedBox(width: 10),
+                          Text(AppLocalizations.of(context).delete),
+                        ],
+                      ),
+                      onTap: () => taskGroupProvider
+                          .deleteTaskGroup(taskGroup.taskGroupId))
+                ],
+                icon: Icon(Icons.more_vert, color: Colors.white),
+              )),
+          Positioned(
+              right: -10,
+              bottom: -30,
+              child: SvgPicture.asset('assets/icons/checklists.svg',
+                  color: taskGroup.taskGroupColor[500])),
+          Row(children: [
+            Flexible(
+              flex: 7,
+              child: InkWell(
+                onTap: () {
+                  taskGroupProvider.setCurrentTaskGroup(taskGroup);
+                  Navigator.of(context).pushNamed(
+                      TaskGroupDescriptionScreen.routeName,
+                      arguments: taskGroup);
+                },
                 child: Container(
                   padding: const EdgeInsets.only(left: 20, top: 20, bottom: 20),
                   child: Column(
@@ -93,9 +94,9 @@ class TaskGroupWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              Flexible(flex: 3, child: Container())
-            ]),
-          ])),
-    );
+            ),
+            Flexible(flex: 3, child: Container())
+          ]),
+        ]));
   }
 }

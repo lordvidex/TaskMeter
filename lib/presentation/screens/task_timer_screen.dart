@@ -66,8 +66,8 @@ class TaskLabelWidget extends StatelessWidget {
 
   const TaskLabelWidget(this.task, this.parentContext);
   void _back(BuildContext context) {
-    final duration = BlocProvider.of<TimerBloc>(context).state.duration;
-    Provider.of<TaskGroupProvider>(context, listen: false)
+    final duration = context.read<TimerBloc>().state.duration;
+    context.read<TaskGroupProvider>()
         .updateTaskTime(task, duration);
     Navigator.of(context).pop();
   }
