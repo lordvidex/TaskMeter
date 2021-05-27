@@ -132,7 +132,7 @@ class _SignInOrSignUpState extends State<SignInOrSignUp>
       ),
       SocialButton(
           buttonLabel: (_index == 0 ? appLocale.signIn : appLocale.signup) +
-              ' with Google',
+              ' ${appLocale.withLabel} Google',
           onPressed: () =>
               _googleCallBack(signIn: _index == 0, sizeBloc: sizeBloc),
           buttonColor: Colors.white,
@@ -147,7 +147,7 @@ class _SignInOrSignUpState extends State<SignInOrSignUp>
       SizedBox(height: 10),
       SocialButton(
           buttonLabel: (_index == 0 ? appLocale.signIn : appLocale.signup) +
-              ' with Apple',
+              ' ${appLocale.withLabel} Apple',
           onPressed: null,
           icon: kIsWeb
               ? Container()

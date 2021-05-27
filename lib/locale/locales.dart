@@ -203,6 +203,8 @@ class AppLocalizations {
       Intl.message('Sign up', name: 'signup', desc: 'The text sign up');
   String get signIn =>
       Intl.message('Sign in', name: 'signIn', desc: 'the text sign in');
+  String get withLabel =>
+      Intl.message('with', name: 'withLabel', desc: 'the word with');
   String get enterEmail => Intl.message('Enter email address',
       name: 'enterEmail',
       desc:

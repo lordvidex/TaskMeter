@@ -42,6 +42,12 @@
     "type": "text",
     "placeholders": {}
   },
+  "settings": "Настройки",
+  "@settings": {
+    "description": "The word settings",
+    "type": "text",
+    "placeholders": {}
+  },
   "generalSettings": "Общие Настройки",
   "@generalSettings": {
     "description": "App bar text for setting screen",
@@ -227,6 +233,60 @@
   "taskGroupNameErrorText": "Введите правильное название задачи",
   "@taskGroupNameErrorText": {
     "description": "error text shown when task group name is empty",
+    "type": "text",
+    "placeholders": {}
+  },
+  "youHaveFinished": "Закончил!",
+  "@youHaveFinished": {
+    "description": "first part of text shown to user after timer has finished",
+    "type": "text",
+    "placeholders": {}
+  },
+  "breakLabel": "Перерыв",
+  "@breakLabel": {
+    "description": "text \"Break\"",
+    "type": "text",
+    "placeholders": {}
+  },
+  "task": "Задача",
+  "@task": {
+    "description": "text \"Task\"",
+    "type": "text",
+    "placeholders": {}
+  },
+  "signup": "Зарегистрируйтесь",
+  "@signup": {
+    "description": "The text sign up",
+    "type": "text",
+    "placeholders": {}
+  },
+  "signIn": "Войдите",
+  "@signIn": {
+    "description": "the text sign in",
+    "type": "text",
+    "placeholders": {}
+  },
+  "withLabel": "с",
+  "@withLabel": {
+    "description": "the word with",
+    "type": "text",
+    "placeholders": {}
+  },
+  "enterEmail": "Введите адрес электронной почты",
+  "@enterEmail": {
+    "description": "Hint text for authentication screen telling user to enter email address",
+    "type": "text",
+    "placeholders": {}
+  },
+  "enterPassword": "Пароль",
+  "@enterPassword": {
+    "description": "Password textField hint text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "next": "Дальше",
+  "@next": {
+    "description": "Button text for the next button toggling between email and password mode in auth screen",
     "type": "text",
     "placeholders": {}
   },

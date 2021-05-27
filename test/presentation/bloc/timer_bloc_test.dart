@@ -1,14 +1,18 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:bloc_test/bloc_test.dart';
-import 'package:mockito/mockito.dart';
 import 'package:task_meter/presentation/bloc/timer_bloc.dart';
 import 'package:task_meter/data/repositories/timer_repository.dart';
 
 class TimerRepositoryMock extends Mock implements TimerRepository {}
 
+class FakeDuration extends Fake implements Duration {}
+
 void main() {
   TimerRepositoryMock timerMock;
   TimerBloc timerBloc;
+  setUpAll(() {
+    registerFallbackValue<Duration>(FakeDuration());
+  });
   setUp(() {
     timerMock = TimerRepositoryMock();
     timerBloc = TimerBloc(timerRepo: timerMock);
@@ -20,13 +24,13 @@ void main() {
         'should call the timerTicker function on the Timer class when startEvent is created',
         () async {
       // arrange
-      when(timerMock.timerTicker(any))
+      when(() => timerMock.timerTicker(any()))
           .thenAnswer((_) => Stream.fromIterable([Duration(seconds: 1)]));
       // act
       timerBloc.add(TimerStartEvent(Duration(seconds: 3)));
-      await untilCalled(timerMock.timerTicker(any));
+      await untilCalled(() => timerMock.timerTicker(any()));
       // assert
-      verify(timerMock.timerTicker(Duration(seconds: 3)));
+      verify(() => timerMock.timerTicker(Duration(seconds: 3)));
     });
     blocTest(
         'should return [TimerReady,TimerRunning] when TimerStartEvent is called',
@@ -34,7 +38,7 @@ void main() {
           return timerBloc;
         },
         act: (bloc) {
-          when(timerMock.timerTicker(any)).thenAnswer((_) =>
+          when(() => timerMock.timerTicker(any())).thenAnswer((_) =>
               Stream.fromIterable([
                 Duration(seconds: 2),
                 Duration(seconds: 1),
@@ -51,7 +55,7 @@ void main() {
     blocTest(
         'should return no state if a PauseEvent is registered and timer is not running',
         build: () {
-          when(timerMock.timerTicker(any)).thenAnswer((_) =>
+          when(() => timerMock.timerTicker(any())).thenAnswer((_) =>
               Stream.fromIterable([
                 Duration(seconds: 2),
                 Duration(seconds: 1),
@@ -67,7 +71,7 @@ void main() {
     blocTest(
         'should return an [] state when TimerResumeEvent is called without a Paused state ',
         build: () {
-          when(timerMock.timerTicker(any)).thenAnswer((_) =>
+          when(() => timerMock.timerTicker(any())).thenAnswer((_) =>
               Stream.fromIterable([
                 Duration(seconds: 2),
                 Duration(seconds: 1),

@@ -53,6 +53,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "duration" : MessageLookupByLibrary.simpleMessage("Duration"),
     "edit" : MessageLookupByLibrary.simpleMessage("Edit"),
     "emptyTaskGroupText" : MessageLookupByLibrary.simpleMessage("Task group list is empty"),
+    "enterEmail" : MessageLookupByLibrary.simpleMessage("Enter email address"),
+    "enterPassword" : MessageLookupByLibrary.simpleMessage("Password"),
     "enterTaskName" : MessageLookupByLibrary.simpleMessage("Enter task name"),
     "feedback" : MessageLookupByLibrary.simpleMessage("Feedback"),
     "generalSettings" : MessageLookupByLibrary.simpleMessage("General Settings"),
@@ -64,12 +66,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "longBreakDuration" : MessageLookupByLibrary.simpleMessage("Long break duration"),
     "min" : MessageLookupByLibrary.simpleMessage("min."),
     "minutes" : m2,
+    "next" : MessageLookupByLibrary.simpleMessage("Next"),
     "progress" : MessageLookupByLibrary.simpleMessage("progress"),
     "rate" : MessageLookupByLibrary.simpleMessage("Rate in the app store"),
     "seconds" : m3,
     "selectTheme" : MessageLookupByLibrary.simpleMessage("Select Theme"),
+    "settings" : MessageLookupByLibrary.simpleMessage("Settings"),
     "shortBreak" : MessageLookupByLibrary.simpleMessage("Short break"),
     "shortBreakDuration" : MessageLookupByLibrary.simpleMessage("Short break duration"),
+    "signIn" : MessageLookupByLibrary.simpleMessage("Sign in"),
+    "signup" : MessageLookupByLibrary.simpleMessage("Sign up"),
     "system" : MessageLookupByLibrary.simpleMessage("System"),
     "task" : MessageLookupByLibrary.simpleMessage("Task"),
     "taskCount" : m4,
@@ -82,6 +88,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "toAddNewTask" : MessageLookupByLibrary.simpleMessage(" to add a new task"),
     "toAddNewTaskGroup" : MessageLookupByLibrary.simpleMessage("to add new Task group"),
     "typeTaskName" : MessageLookupByLibrary.simpleMessage("Type task name..."),
+    "withLabel" : MessageLookupByLibrary.simpleMessage("with"),
     "youHaveFinished" : MessageLookupByLibrary.simpleMessage("You have finished")
   };
 }

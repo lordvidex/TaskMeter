@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2021-03-01T03:22:24.402007",
+  "@@last_modified": "2021-05-27T14:23:25.509074",
   "taskGroups": "Task groups",
   "@taskGroups": {
     "description": "The text Task Groups on the taskGroupScreen",
@@ -39,6 +39,12 @@
   "and": "and",
   "@and": {
     "description": "the word \"and\"",
+    "type": "text",
+    "placeholders": {}
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "The word settings",
     "type": "text",
     "placeholders": {}
   },
@@ -245,6 +251,42 @@
   "task": "Task",
   "@task": {
     "description": "text \"Task\"",
+    "type": "text",
+    "placeholders": {}
+  },
+  "signup": "Sign up",
+  "@signup": {
+    "description": "The text sign up",
+    "type": "text",
+    "placeholders": {}
+  },
+  "signIn": "Sign in",
+  "@signIn": {
+    "description": "the text sign in",
+    "type": "text",
+    "placeholders": {}
+  },
+  "withLabel": "with",
+  "@withLabel": {
+    "description": "the word with",
+    "type": "text",
+    "placeholders": {}
+  },
+  "enterEmail": "Enter email address",
+  "@enterEmail": {
+    "description": "Hint text for authentication screen telling user to enter email address",
+    "type": "text",
+    "placeholders": {}
+  },
+  "enterPassword": "Password",
+  "@enterPassword": {
+    "description": "Password textField hint text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "next": "Next",
+  "@next": {
+    "description": "Button text for the next button toggling between email and password mode in auth screen",
     "type": "text",
     "placeholders": {}
   },
