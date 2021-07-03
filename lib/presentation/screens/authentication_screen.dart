@@ -11,7 +11,17 @@ class AuthenticationScreen extends StatefulWidget {
 class _AuthenticationScreenState extends State<AuthenticationScreen> {
   bool _authenticating = false;
   void toggleAuthentication(bool value) {
-    setState(() => _authenticating = value);
+    if (_authenticating != null) {
+      setState(() {
+        _authenticating = value;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _authenticating = null;
+    super.dispose();
   }
 
   @override

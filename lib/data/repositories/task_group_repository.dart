@@ -8,7 +8,7 @@ abstract class TaskGroupRepository {
 
   /// updates taskGroups value to local and remote storage
   Future<void> updateTaskGroups(List<TaskGroup> taskGroups,
-      {bool delete, String id});
+      {bool delete, bool add, String id});
 }
 
 class TaskGroupRepositoryImpl extends TaskGroupRepository {
@@ -22,8 +22,7 @@ class TaskGroupRepositoryImpl extends TaskGroupRepository {
   Future<List<TaskGroup>> fetchTaskGroups() async {
     final remoteLastTime = await _remoteStorage.getLastTaskGroupUpdateTime();
     final localLastTime = await _localStorage.getLastTaskGroupUpdateTime();
-
-    if (remoteLastTime == null || localLastTime.isAfter(remoteLastTime)) {
+    if (remoteLastTime == null || localLastTime.compareTo(remoteLastTime) >= 0) {
       // work with only local data, return local and update remote
       final _localData = await _localStorage.fetchTaskGroups();
       await _remoteStorage.updateTaskGroups(_localData, localLastTime);
@@ -38,11 +37,14 @@ class TaskGroupRepositoryImpl extends TaskGroupRepository {
 
   @override
   Future<void> updateTaskGroups(List<TaskGroup> taskGroups,
-      {bool delete = false, String id}) async {
+      {bool delete = false, bool add = false, String id}) async {
     DateTime now = DateTime.now();
     await _localStorage.updateTaskGroups(taskGroups, now);
     if (delete) {
       _remoteStorage.deleteTaskGroup(id, now);
+    } else if (add) {
+      _remoteStorage.addTaskGroup(
+          taskGroups.firstWhere((t) => t.taskGroupId == id), now);
     } else {
       _remoteStorage.updateTaskGroups(taskGroups, now);
     }

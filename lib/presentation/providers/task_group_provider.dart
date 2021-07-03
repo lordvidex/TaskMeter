@@ -11,7 +11,7 @@ class TaskGroupProvider extends ChangeNotifier {
   }
   List<TaskGroup> _groups;
 
-  List<TaskGroup> get taskGroups => _groups;
+  List<TaskGroup> get taskGroups => _groups..removeWhere((t) => t.isDeleted);
 
   /// the current taskgroup the user has clicked or selected
   TaskGroup _current;
@@ -54,13 +54,8 @@ class TaskGroupProvider extends ChangeNotifier {
   }
 
   void deleteTaskGroup(String id) async {
-    TaskGroup deletedTg;
-    _groups.firstWhere((taskGroup) {
-      if (id == taskGroup.taskGroupId) {
-        deletedTg = taskGroup;
-        return true;
-      }
-      return false;
+    TaskGroup deletedTg = _groups.firstWhere((taskGroup) {
+      return taskGroup.taskGroupId == id;
     });
     if (deletedTg != null) {
       deletedTg.isDeleted = true;
@@ -71,7 +66,7 @@ class TaskGroupProvider extends ChangeNotifier {
 
   void addTaskGroup(TaskGroup taskGroup) async {
     _groups.add(taskGroup);
-    await taskGroupRepo.updateTaskGroups(_groups);
+    await taskGroupRepo.updateTaskGroups(_groups, add: true,id: taskGroup.taskGroupId);
     notifyListeners();
   }
 

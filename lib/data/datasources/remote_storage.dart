@@ -36,6 +36,7 @@ abstract class RemoteStorage {
   /// updates taskGroups in the database
   Future<void> updateTaskGroups(
       List<TaskGroup> taskGroups, DateTime timeOfUpdate);
+  Future<void> addTaskGroup(TaskGroup tg, DateTime timeOfUpdate);
 }
 
 class RemoteStorageImpl implements RemoteStorage {
@@ -167,7 +168,7 @@ class RemoteStorageImpl implements RemoteStorage {
     if (_firebaseAuth.currentUser == null || _userDocument == null) {
       return;
     }
-    await _taskGroupDocument.doc(id).delete();
+    await _taskGroupDocument.doc(id).set({'is_deleted': true});
     await setLastTaskGroupUpdateTime(timeOfUpdate);
   }
 
@@ -221,5 +222,11 @@ class RemoteStorageImpl implements RemoteStorage {
         ? null
         : GoogleAuthProvider.credential(
             accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+  }
+
+  @override
+  Future<void> addTaskGroup(TaskGroup tg, DateTime timeOfUpdate) async {
+    await _taskGroupDocument.doc(tg.taskGroupId).set(tg.toJson());
+    await setLastTaskGroupUpdateTime(timeOfUpdate);
   }
 }
