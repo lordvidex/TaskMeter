@@ -49,7 +49,7 @@ class TaskGroupProvider extends ChangeNotifier {
     } catch (e) {
       _groups = [];
     }
-    print(_groups);
+    
     notifyListeners();
   }
 
