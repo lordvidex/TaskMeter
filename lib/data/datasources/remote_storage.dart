@@ -226,6 +226,9 @@ class RemoteStorageImpl implements RemoteStorage {
 
   @override
   Future<void> addTaskGroup(TaskGroup tg, DateTime timeOfUpdate) async {
+    if (_firebaseAuth.currentUser == null || _userDocument == null) {
+      return;
+    }
     await _taskGroupDocument.doc(tg.taskGroupId).set(tg.toJson());
     await setLastTaskGroupUpdateTime(timeOfUpdate);
   }

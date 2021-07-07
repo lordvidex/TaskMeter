@@ -77,6 +77,9 @@ flutter:
     - assets/icons/google.svg
     - assets/icons/empty.svg
     - assets/icons/pause.svg
+    - assets/icons/play.svg
+    - assets/icons/check.svg
+    - assets/icons/back.svg
     - assets/images/task_app.png
     - assets/images/task_icon.png
     - assets/animations/

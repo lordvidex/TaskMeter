@@ -10,6 +10,7 @@ import 'core/constants.dart';
 import 'domain/models/app_theme.dart';
 import 'injection_container.dart' as di;
 import 'locale/locales.dart';
+import 'presentation/bloc/timer_bloc.dart';
 import 'presentation/providers/settings_provider.dart';
 import 'presentation/providers/task_group_provider.dart';
 import 'presentation/screens/create_task_group_screen.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<TaskGroupProvider>(
           create: (_) => di.sl<TaskGroupProvider>(),
         ),
+        BlocProvider(create: (_) => di.sl<TimerBloc>())
       ],
       child: NewWidget(),
     );

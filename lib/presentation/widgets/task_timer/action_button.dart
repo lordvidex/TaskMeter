@@ -6,10 +6,12 @@ class ActionButton extends StatelessWidget {
   final Widget icon;
   final Color color;
   final bool filled;
+  final bool wide;
 
   const ActionButton(
       {@required this.onPressed,
       this.filled = true,
+      this.wide = false,
       @required this.color,
       @required this.text,
       this.icon});
@@ -30,7 +32,7 @@ class ActionButton extends StatelessWidget {
             if (icon != null) ...[SizedBox(width: 8), icon]
           ],
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 18),
+        padding: EdgeInsets.symmetric(horizontal: wide ? 72 : 36, vertical: 18),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(60),
             color: filled ? color : Colors.transparent,
