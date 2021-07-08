@@ -55,6 +55,7 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
   @override
   Widget build(BuildContext context) {
     final taskGroupProvider = context.read<TaskGroupProvider>();
+    final appLocale = AppLocalizations.of(context);
     final size = MediaQuery.of(context).size;
     if (task == null) {
       task = ModalRoute.of(context).settings.arguments as Task;
@@ -217,8 +218,8 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
                       !_isFinished
                           ? task.taskName
                           : taskGroupProvider.isBreak
-                              ? 'Break Complete'
-                              : 'Task Complete',
+                              ? appLocale.breakComplete
+                              : appLocale.taskComplete,
                       style: TextStyle(
                           fontFamily: 'Circular-Std',
                           fontSize: 24,
@@ -237,7 +238,7 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
                               },
                               filled: !_isPaused,
                               color: Color.fromRGBO(195, 98, 98, 1),
-                              text: _isPaused ? 'Resume' : 'Pause',
+                              text: _isPaused ? appLocale.resume : appLocale.pause,
                               icon: SvgPicture.asset(
                                 'assets/icons/${_isPaused ? 'play' : 'pause'}.svg',
                                 height: _isPaused ? 18 : 14,
@@ -251,7 +252,7 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
                                     .add(TimerFinishEvent());
                               },
                               color: Color(0xff62C370),
-                              text: 'Complete',
+                              text: appLocale.complete,
                             )
                           ],
                         )
@@ -265,9 +266,9 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
                                     taskGroupProvider.toggleBreak();
                                   task = Task(
                                       taskName: taskGroupProvider.isLongBreak
-                                          ? AppLocalizations.of(context)
+                                          ? appLocale
                                               .longBreak
-                                          : AppLocalizations.of(context)
+                                          : appLocale
                                               .shortBreak)
                                     ..setTotalTime(taskGroupProvider.isLongBreak
                                         ? taskGroupProvider
@@ -281,7 +282,7 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
                                   });
                                 },
                                 color: Color.fromRGBO(195, 98, 98, 1),
-                                text: 'Take Break',
+                                text: appLocale.takeBreak,
                               ),
                             ActionButton(
                               wide: taskGroupProvider.isBreak,
@@ -298,7 +299,7 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
                                     .add(TimerStartEvent(task.timeRemaining));
                               },
                               color: Color(0xff62C370),
-                              text: 'Next Task',
+                              text: appLocale.nextTask,
                             )
                           ],
                         )
@@ -307,15 +308,19 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
             ),
           ),
           Positioned(
-              top: 36,
+              top: 48,
               left: 0,
               child: TextButton(
                   onPressed: () {
                     saveTaskStatus(context);
                     Navigator.of(context).pop();
                   },
-                  child: SvgPicture.asset('assets/icons/back.svg',
-                      width: 29, height: 24))),
+                  child: SvgPicture.asset(
+                    'assets/icons/back.svg',
+                    width: 29,
+                    height: 24,
+                    color: isDarkMode ? Colors.white : null,
+                  ))),
         ],
       )),
     );

@@ -38,10 +38,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "addTask" : MessageLookupByLibrary.simpleMessage("Add task"),
     "and" : MessageLookupByLibrary.simpleMessage("and"),
     "appTheme" : MessageLookupByLibrary.simpleMessage("App Theme"),
-    "breakLabel" : MessageLookupByLibrary.simpleMessage("Break"),
+    "breakComplete" : MessageLookupByLibrary.simpleMessage("Break Complete"),
     "cancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
     "click" : MessageLookupByLibrary.simpleMessage("Click "),
     "clickOn" : MessageLookupByLibrary.simpleMessage("Click on "),
+    "complete" : MessageLookupByLibrary.simpleMessage("Complete"),
     "create" : MessageLookupByLibrary.simpleMessage("Create"),
     "createTaskGroup" : MessageLookupByLibrary.simpleMessage("Create task group"),
     "dataNotSaved" : MessageLookupByLibrary.simpleMessage("Data not saved!"),
@@ -67,8 +68,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "min" : MessageLookupByLibrary.simpleMessage("min."),
     "minutes" : m2,
     "next" : MessageLookupByLibrary.simpleMessage("Next"),
+    "nextTask" : MessageLookupByLibrary.simpleMessage("Next Task"),
+    "pause" : MessageLookupByLibrary.simpleMessage("Pause"),
     "progress" : MessageLookupByLibrary.simpleMessage("progress"),
     "rate" : MessageLookupByLibrary.simpleMessage("Rate in the app store"),
+    "resume" : MessageLookupByLibrary.simpleMessage("Resume"),
     "seconds" : m3,
     "selectTheme" : MessageLookupByLibrary.simpleMessage("Select Theme"),
     "settings" : MessageLookupByLibrary.simpleMessage("Settings"),
@@ -77,7 +81,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "signIn" : MessageLookupByLibrary.simpleMessage("Sign in"),
     "signup" : MessageLookupByLibrary.simpleMessage("Sign up"),
     "system" : MessageLookupByLibrary.simpleMessage("System"),
-    "task" : MessageLookupByLibrary.simpleMessage("Task"),
+    "takeBreak" : MessageLookupByLibrary.simpleMessage("Take Break"),
+    "taskComplete" : MessageLookupByLibrary.simpleMessage("Task Complete"),
     "taskCount" : m4,
     "taskGroupName" : MessageLookupByLibrary.simpleMessage("Task group name"),
     "taskGroupNameErrorText" : MessageLookupByLibrary.simpleMessage("Enter a valid task group name"),
@@ -88,7 +93,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "toAddNewTask" : MessageLookupByLibrary.simpleMessage(" to add a new task"),
     "toAddNewTaskGroup" : MessageLookupByLibrary.simpleMessage("to add new Task group"),
     "typeTaskName" : MessageLookupByLibrary.simpleMessage("Type task name..."),
-    "withLabel" : MessageLookupByLibrary.simpleMessage("with"),
-    "youHaveFinished" : MessageLookupByLibrary.simpleMessage("You have finished")
+    "withLabel" : MessageLookupByLibrary.simpleMessage("with")
   };
 }

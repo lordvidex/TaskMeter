@@ -191,13 +191,24 @@ class AppLocalizations {
           desc: 'error text shown when task group name is empty');
 
 //! Task Timer Screen
-  String get youHaveFinished => Intl.message('You have finished',
-      name: 'youHaveFinished',
-      desc: 'first part of text shown to user after timer has finished');
-  String get breakLabel =>
-      Intl.message('Break', name: 'breakLabel', desc: 'text "Break"');
-  String get task => Intl.message('Task', name: 'task', desc: 'text "Task"');
-
+  String get complete =>
+      Intl.message('Complete', name: 'complete', desc: 'The word complete');
+  String get breakComplete =>
+      Intl.message('Break Complete', name: 'breakComplete', desc: '');
+  String get taskComplete =>
+      Intl.message('Task Complete', name: 'taskComplete', desc: '');
+      String get resume => Intl.message('Resume',
+      name: 'resume',
+      desc: '');
+      String get pause => Intl.message('Pause',
+      name: 'pause',
+      desc: '');
+      String get takeBreak => Intl.message('Take Break',
+      name: 'takeBreak',
+      desc: 'Button option for when user should take break when a task just finished');
+      String get nextTask => Intl.message('Next Task',
+      name: 'nextTask',
+      desc: 'Button option for when user should jump to next task when a task just finished');
 //! Authentication Screen
   String get signup =>
       Intl.message('Sign up', name: 'signup', desc: 'The text sign up');

@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2021-05-27T14:23:25.509074",
+  "@@last_modified": "2021-07-08T06:53:18.752937",
   "taskGroups": "Task groups",
   "@taskGroups": {
     "description": "The text Task Groups on the taskGroupScreen",
@@ -236,21 +236,45 @@
     "type": "text",
     "placeholders": {}
   },
-  "youHaveFinished": "You have finished",
-  "@youHaveFinished": {
-    "description": "first part of text shown to user after timer has finished",
+  "complete": "Complete",
+  "@complete": {
+    "description": "The word complete",
     "type": "text",
     "placeholders": {}
   },
-  "breakLabel": "Break",
-  "@breakLabel": {
-    "description": "text \"Break\"",
+  "breakComplete": "Break Complete",
+  "@breakComplete": {
+    "description": "",
     "type": "text",
     "placeholders": {}
   },
-  "task": "Task",
-  "@task": {
-    "description": "text \"Task\"",
+  "taskComplete": "Task Complete",
+  "@taskComplete": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "resume": "Resume",
+  "@resume": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "pause": "Pause",
+  "@pause": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "takeBreak": "Take Break",
+  "@takeBreak": {
+    "description": "Button option for when user should take break when a task just finished",
+    "type": "text",
+    "placeholders": {}
+  },
+  "nextTask": "Next Task",
+  "@nextTask": {
+    "description": "Button option for when user should jump to next task when a task just finished",
     "type": "text",
     "placeholders": {}
   },

@@ -236,21 +236,45 @@
     "type": "text",
     "placeholders": {}
   },
-  "youHaveFinished": "Закончил!",
-  "@youHaveFinished": {
-    "description": "first part of text shown to user after timer has finished",
+  "complete": "завершите",
+  "@complete": {
+    "description": "The word complete",
     "type": "text",
     "placeholders": {}
   },
-  "breakLabel": "Перерыв",
-  "@breakLabel": {
-    "description": "text \"Break\"",
+  "breakComplete": "Перерыв завершен",
+  "@breakComplete": {
+    "description": "",
     "type": "text",
     "placeholders": {}
   },
-  "task": "Задача",
-  "@task": {
-    "description": "text \"Task\"",
+  "taskComplete": "Задача завершена",
+  "@taskComplete": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "resume": "Продолжайте",
+  "@resume": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "pause": "Пауза",
+  "@pause": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "takeBreak": "отдохнуть",
+  "@takeBreak": {
+    "description": "Button option for when user should take break when a task just finished",
+    "type": "text",
+    "placeholders": {}
+  },
+  "nextTask": "К след. задаче",
+  "@nextTask": {
+    "description": "Button option for when user should jump to next task when a task just finished",
     "type": "text",
     "placeholders": {}
   },

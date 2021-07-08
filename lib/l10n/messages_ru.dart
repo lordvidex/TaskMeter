@@ -38,10 +38,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "addTask" : MessageLookupByLibrary.simpleMessage("Добавьте задачу"),
     "and" : MessageLookupByLibrary.simpleMessage("и"),
     "appTheme" : MessageLookupByLibrary.simpleMessage("Тема приложения"),
-    "breakLabel" : MessageLookupByLibrary.simpleMessage("Перерыв"),
+    "breakComplete" : MessageLookupByLibrary.simpleMessage("Перерыв завершен"),
     "cancel" : MessageLookupByLibrary.simpleMessage("Отменить"),
     "click" : MessageLookupByLibrary.simpleMessage("Нажмите "),
     "clickOn" : MessageLookupByLibrary.simpleMessage("Нажми на "),
+    "complete" : MessageLookupByLibrary.simpleMessage("завершите"),
     "create" : MessageLookupByLibrary.simpleMessage("Создать"),
     "createTaskGroup" : MessageLookupByLibrary.simpleMessage("Создайте группа задач"),
     "dataNotSaved" : MessageLookupByLibrary.simpleMessage("Данные не сохранены!"),
@@ -67,8 +68,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "min" : MessageLookupByLibrary.simpleMessage("мин."),
     "minutes" : m2,
     "next" : MessageLookupByLibrary.simpleMessage("Дальше"),
+    "nextTask" : MessageLookupByLibrary.simpleMessage("К след. задаче"),
+    "pause" : MessageLookupByLibrary.simpleMessage("Пауза"),
     "progress" : MessageLookupByLibrary.simpleMessage("прогресс"),
     "rate" : MessageLookupByLibrary.simpleMessage("Оценить в app store"),
+    "resume" : MessageLookupByLibrary.simpleMessage("Продолжайте"),
     "seconds" : m3,
     "selectTheme" : MessageLookupByLibrary.simpleMessage("Выбрайте Тема"),
     "settings" : MessageLookupByLibrary.simpleMessage("Настройки"),
@@ -77,7 +81,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "signIn" : MessageLookupByLibrary.simpleMessage("Войдите"),
     "signup" : MessageLookupByLibrary.simpleMessage("Зарегистрируйтесь"),
     "system" : MessageLookupByLibrary.simpleMessage("Системы"),
-    "task" : MessageLookupByLibrary.simpleMessage("Задача"),
+    "takeBreak" : MessageLookupByLibrary.simpleMessage("отдохнуть"),
+    "taskComplete" : MessageLookupByLibrary.simpleMessage("Задача завершена"),
     "taskCount" : m4,
     "taskGroupName" : MessageLookupByLibrary.simpleMessage("Название группы задач"),
     "taskGroupNameErrorText" : MessageLookupByLibrary.simpleMessage("Введите правильное название задачи"),
@@ -88,7 +93,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "toAddNewTask" : MessageLookupByLibrary.simpleMessage(" чтобы добавить новую задачу"),
     "toAddNewTaskGroup" : MessageLookupByLibrary.simpleMessage("чтобы добавить новую группу задач"),
     "typeTaskName" : MessageLookupByLibrary.simpleMessage("Введите задачу..."),
-    "withLabel" : MessageLookupByLibrary.simpleMessage("с"),
-    "youHaveFinished" : MessageLookupByLibrary.simpleMessage("Закончил!")
+    "withLabel" : MessageLookupByLibrary.simpleMessage("с")
   };
 }
