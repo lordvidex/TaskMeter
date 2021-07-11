@@ -1,21 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:task_meter/locale/locales.dart';
 
 import '../../../core/constants.dart';
 import '../../../domain/models/task.dart';
 import '../../../domain/models/task_group.dart';
+import '../../../locale/locales.dart';
+import '../task_timer/action_button.dart';
+import 'custom_text_form_field.dart';
 
 class AddTaskWidget extends StatefulWidget {
   final Function(Task, {bool isEditMode}) addNewTask;
   final TaskGroup taskGroup;
   final Task taskToBeEdited;
   final bool isEditMode;
+  final Function(BuildContext) createTaskGroup;
   AddTaskWidget({
     @required this.taskGroup,
     @required this.addNewTask,
     @required this.isEditMode,
+    @required this.createTaskGroup,
     @required this.taskToBeEdited,
   });
   @override
@@ -23,128 +26,178 @@ class AddTaskWidget extends StatefulWidget {
 }
 
 class _AddTaskWidgetState extends State<AddTaskWidget> {
-  double _rating = 2.0;
-  bool _hasError = false;
+  Difficulty _difficulty;
+  bool _isEditMode;
+
   TextEditingController _taskNameController;
+  GlobalKey<FormState> _formKey;
+
+  @override
+  void dispose() {
+    _taskNameController.dispose();
+
+    super.dispose();
+  }
+
   @override
   void initState() {
+    _isEditMode = widget.isEditMode;
+    _formKey = GlobalKey();
     _taskNameController = TextEditingController(
-        text: widget.isEditMode ? widget.taskToBeEdited.taskName : null);
-    if (widget.isEditMode) {
-      _rating = (widget.taskToBeEdited.difficulty.index + 1).toDouble();
-    }
+        text: _isEditMode ? widget.taskToBeEdited.taskName : null);
+
+    _difficulty =
+        _isEditMode ? widget.taskToBeEdited.difficulty : Difficulty.Medium;
+
     super.initState();
   }
 
   void addTask() {
-    setState(() {
-      _hasError = false;
-    });
-    if (_taskNameController.text.trim().isEmpty) {
-      setState(() {
-        _hasError = true;
-      });
+    if (!_formKey.currentState.validate()) {
       return;
     }
-    Difficulty diff;
-    switch (_rating.toInt()) {
-      case 1:
-        diff = Difficulty.Easy;
-        break;
-      case 3:
-        diff = Difficulty.Hard;
-        break;
-      default:
-        diff = Difficulty.Medium;
-    }
-    if (widget.isEditMode) {
+    if (_isEditMode) {
       Task task = widget.taskToBeEdited;
       task
-        ..difficulty = diff
+        ..difficulty = _difficulty
         ..taskName = _taskNameController.text.trim();
       //! we need to call this to reset the state
       widget.addNewTask(null, isEditMode: true);
+      Navigator.of(context).pop();
     } else {
-      widget.addNewTask(
-          Task(taskName: _taskNameController.text.trim(), difficulty: diff));
+      widget.addNewTask(Task(
+          taskName: _taskNameController.text.trim(), difficulty: _difficulty));
     }
-    Navigator.of(context).pop();
+    resetInputElements();
+  }
+
+  void resetInputElements() {
+    _taskNameController.clear();
+    FocusScope.of(context).unfocus();
+    _difficulty = Difficulty.Medium;
+    setState(() {
+      _isEditMode = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final AppLocalizations appLocale = AppLocalizations.of(context);
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return SingleChildScrollView(
-      child: Container(
-        height: 250,
-        child: Stack(
-          children: [
-            Positioned(
-                top: -10,
-                right: -10,
-                child: IconButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  icon: Icon(Icons.cancel,
-                      size: 25,
-                      color: widget.taskGroup.taskGroupColor[
-                          Theme.of(context).brightness == Brightness.dark
-                              ? 200
-                              : 600]),
-                )),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 30),
-                Text(appLocale.taskName,
-                    style: Theme.of(context).textTheme.headline3),
-                TextField(
-                    controller: _taskNameController,
-                    cursorColor: widget.taskGroup.taskGroupColor[200],
-                    decoration: InputDecoration(
-                        errorText: _hasError ? appLocale.enterTaskName : null,
-                        border: InputBorder.none,
-                        labelText: appLocale.typeTaskName,
-                        labelStyle: Constants.coloredLabelTextStyle(
-                            widget.taskGroup.taskGroupColor[
-                                Theme.of(context).brightness == Brightness.dark
-                                    ? 200
-                                    : 600]))),
-                Text(appLocale.difficulty,
-                    style: Theme.of(context).textTheme.headline3),
-                RatingBar.builder(
-                  initialRating: _rating,
-                  minRating: 1,
-                  maxRating: 3,
-                  itemBuilder: (ctx, index) => Icon(Icons.star,
-                      color: widget.taskGroup.taskGroupColor[500]),
-                  itemCount: 3,
-                  onRatingUpdate: (x) => setState(() {
-                    _rating = x;
-                  }),
-                  glow: true,
-                  glowColor: Colors.red,
-                ),
-                SizedBox(height: 20),
-                Align(
-                  alignment: Alignment.center,
-                  child: SizedBox(
-                      //width: 150,
-                      height: 33,
-                      child: CupertinoButton(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 40,
+      child: Padding(
+        padding: MediaQuery.of(context).viewInsets,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25),
+          child: SafeArea(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 18.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Add Sub-Task',
+                          style: TextStyle(fontSize: 24),
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.cancel,
+                            size: 30,
+                            color: isDarkMode
+                                ? Colors.white
+                                : Constants.appLightBlue,
                           ),
-                          child: Text(
-                              widget.isEditMode
-                                  ? appLocale.edit
-                                  : appLocale.add,
-                              style: TextStyle(fontWeight: FontWeight.bold)),
-                          onPressed: addTask,
-                          color: widget.taskGroup.taskGroupColor[600])),
-                )
-              ],
-            )
-          ],
+                          onPressed: () => Navigator.of(context).pop(),
+                        )
+                      ],
+                    ),
+                  ),
+                  CustomTextFormField(
+                    isDarkMode: isDarkMode,
+                    controller: _taskNameController,
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                    labelText: appLocale.enterTaskName,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12.0),
+                    child: Text(
+                      appLocale.difficulty,
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ActionButton(
+                        borderColor: Constants.appGreen,
+                        onPressed: () =>
+                            setState(() => _difficulty = Difficulty.Easy),
+                        filled: _difficulty == Difficulty.Easy,
+                        fillColor: Constants.appLightGreen,
+                        padding:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                        text: 'Easy',
+                        textColor: Constants.appGreen,
+                      ),
+                      ActionButton(
+                          borderColor: Constants.appBlue,
+                          onPressed: () =>
+                              setState(() => _difficulty = Difficulty.Medium),
+                          filled: _difficulty == Difficulty.Medium,
+                          fillColor: Constants.appLightBlue,
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          textColor: Constants.appBlue,
+                          text: 'Medium'),
+                      ActionButton(
+                          onPressed: () =>
+                              setState(() => _difficulty = Difficulty.Hard),
+                          filled: _difficulty == Difficulty.Hard,
+                          fillColor: Constants.appLightRed,
+                          borderColor: Constants.appRed,
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          textColor: Constants.appRed,
+                          text: 'Hard')
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 40.0, bottom: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ActionButton(
+                          onPressed: () => addTask(),
+                          fillColor: Constants.appBlue,
+                          text: _isEditMode ? appLocale.edit : appLocale.add,
+                          icon: Icon(Icons.add, color: Colors.white, size: 24),
+                        ),
+                        ActionButton(
+                            onPressed: () {
+                              widget.createTaskGroup(context);
+                              Navigator.of(context).pop();
+                            },
+                            fillColor: Constants.appGreen,
+                            text: appLocale.complete)
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );

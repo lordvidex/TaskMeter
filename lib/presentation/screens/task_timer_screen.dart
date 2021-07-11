@@ -4,17 +4,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:task_meter/core/utils/duration_utils.dart';
-import 'package:task_meter/locale/locales.dart';
-import 'package:task_meter/presentation/widgets/task_timer/action_button.dart';
-import 'package:task_meter/presentation/widgets/task_timer/mosquito_widget.dart';
+import 'package:provider/provider.dart';
 import 'package:wakelock/wakelock.dart';
 
-import '../bloc/timer_bloc.dart';
+import '../../core/constants.dart';
+import '../../core/utils/duration_utils.dart';
 import '../../domain/models/task.dart';
+import '../../locale/locales.dart';
+import '../bloc/timer_bloc.dart';
 import '../providers/task_group_provider.dart';
+import '../widgets/task_timer/action_button.dart';
+import '../widgets/task_timer/mosquito_widget.dart';
 
 class TaskTimerScreen extends StatefulWidget {
   static const routeName = '/task-timer';
@@ -180,7 +181,7 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
                               radius: 234,
                               percent: 1,
                               animation: false,
-                              progressColor: Color(0xff62C370),
+                              progressColor: Constants.appGreen,
                               center: SvgPicture.asset(
                                 'assets/icons/check.svg',
                                 width: 117,
@@ -239,7 +240,7 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
                                   setState(() {});
                                 },
                                 filled: !_isPaused,
-                                color: Color.fromRGBO(195, 98, 98, 1),
+                                fillColor: Color.fromRGBO(195, 98, 98, 1),
                                 text: _isPaused ? appLocale.resume : appLocale.pause,
                                 icon: SvgPicture.asset(
                                   'assets/icons/${_isPaused ? 'play' : 'pause'}.svg',
@@ -253,7 +254,7 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
                                       .read<TimerBloc>()
                                       .add(TimerFinishEvent());
                                 },
-                                color: Color(0xff62C370),
+                                fillColor: Constants.appGreen,
                                 text: appLocale.complete,
                               )
                             ],
@@ -283,7 +284,7 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
                                           TimerStartEvent(task.timeRemaining));
                                     });
                                   },
-                                  color: Color.fromRGBO(195, 98, 98, 1),
+                                  fillColor: Color.fromRGBO(195, 98, 98, 1),
                                   text: appLocale.takeBreak,
                                 ),
                               ActionButton(
@@ -300,7 +301,7 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
                                       .read<TimerBloc>()
                                       .add(TimerStartEvent(task.timeRemaining));
                                 },
-                                color: Color(0xff62C370),
+                                fillColor: Constants.appGreen,
                                 text: appLocale.nextTask,
                               )
                             ],

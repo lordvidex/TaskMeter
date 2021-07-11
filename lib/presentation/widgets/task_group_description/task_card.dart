@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/utils/duration_utils.dart';
-import '../../../locale/locales.dart';
 import '../../../domain/models/task.dart';
 import '../../../domain/models/task_group.dart';
+import '../../../locale/locales.dart';
 import '../../screens/task_timer_screen.dart';
 
+/// The function called to raise buttom sheet in editmode instead
+/// of create mode
+typedef EditTask(BuildContext sheetContext, bool isDarkMode, {Task taskToBeEdited, bool isEditMode});
 class TaskCard extends StatelessWidget {
   const TaskCard({
     this.key,
@@ -23,7 +26,7 @@ class TaskCard extends StatelessWidget {
   final TaskGroup taskGroup;
   final Function(Task) deleteTask;
   final Task _task;
-  final Function({Task taskToBeEdited, bool isEditMode}) editTask;
+  final EditTask editTask;
 
   /// isTrue when user is in the description screen and false
   /// when user is in the create taskgroup screen
@@ -70,59 +73,78 @@ class MainTaskCard extends StatelessWidget {
 
   final Task _task;
   final bool isEditMode;
-  final Function({Task taskToBeEdited, bool isEditMode}) editTask;
+  final EditTask editTask;
   final TaskGroup taskGroup;
 
   @override
   Widget build(BuildContext context) {
     final appLocale = AppLocalizations.of(context);
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    String _difficultyText() {
+      switch (_task.difficulty) {
+        case Difficulty.Easy:
+          return "Easy";
+        case Difficulty.Hard:
+          return "Hard";
+        default:
+          return "Medium";
+      }
+    }
+
+    Color _difficultyColor() {
+      switch (_task.difficulty) {
+        case Difficulty.Easy:
+          return Constants.appGreen;
+        case Difficulty.Hard:
+          return Constants.appRed;
+        default:
+          return Constants.appBlue;
+      }
+    }
+
     return Card(
         color: _task.isCompleted
             ? taskGroup.taskGroupColor[200]
             : Theme.of(context).cardTheme.color,
-        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        elevation: 5,
         child: ListTile(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           onTap: _task.isCompleted
               ? null
               : () => isEditMode
-                  ? editTask(taskToBeEdited: _task, isEditMode: true)
+                  ? editTask(context,isDarkMode,taskToBeEdited: _task, isEditMode: true)
                   : Navigator.of(context)
                       .pushNamed(TaskTimerScreen.routeName, arguments: _task),
           contentPadding:
-              const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-          leading: CircleAvatar(
-            backgroundColor: taskGroup.taskGroupColor[800],
-            child: Text(_task.taskName[0],
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold)),
-          ),
+              const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
           title: Text(
             _task.taskName,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 16),
           ),
           subtitle: Text(
               isEditMode
-                  ? 'Difficulty: ${_task.difficulty.index + 1}/3'
+                  ? _difficultyText()
                   : DurationUtils.durationToReadableString(
                       _task.timeRemaining ?? Duration.zero, appLocale),
-              style: Constants.coloredLabelTextStyle(Colors.grey)),
+              style: isEditMode
+                  ? Constants.coloredLabelTextStyle(_difficultyColor(),
+                      fontSize: 12)
+                  : Constants.coloredLabelTextStyle(Colors.grey)),
           trailing: Stack(
             alignment: AlignmentDirectional.center,
             children: [
               Container(
                 width: 40,
                 height: 40,
-                decoration:
-                    BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: isDarkMode ? Constants.appDarkBlue : Colors.white),
                 child: CircularProgressIndicator(
                   value: _task.taskProgress,
-                  backgroundColor: taskGroup.taskGroupColor[100],
+                  backgroundColor: isEditMode
+                      ? Constants.appLightBlue
+                      : taskGroup.taskGroupColor[100],
                   valueColor: AlwaysStoppedAnimation<Color>(
                       taskGroup.taskGroupColor[800]),
                 ),
@@ -132,7 +154,9 @@ class MainTaskCard extends StatelessWidget {
                   : Text('${(_task.taskProgress * 100).toInt()}%',
                       style: TextStyle(
                           fontSize: 12,
-                          color: taskGroup.taskGroupColor[800],
+                          color: isEditMode
+                              ? Constants.appBlue
+                              : taskGroup.taskGroupColor[800],
                           fontWeight: FontWeight.bold)),
             ],
           ),

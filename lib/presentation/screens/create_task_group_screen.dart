@@ -1,19 +1,25 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/algorithms/time_divider.dart';
 import '../../core/constants.dart';
 import '../../core/errors.dart';
-import '../../locale/locales.dart';
+import '../../core/utils/duration_utils.dart';
 import '../../domain/models/settings.dart';
 import '../../domain/models/task.dart';
 import '../../domain/models/task_group.dart';
+import '../../locale/locales.dart';
 import '../providers/settings_provider.dart';
 import '../providers/task_group_provider.dart';
 import '../widgets/create_task_group/add_task_widget.dart';
-import '../widgets/create_task_group/task_group_panel_widget.dart';
+import '../widgets/create_task_group/custom_text_form_field.dart';
 import '../widgets/task_group_description/task_card.dart';
+import '../widgets/task_timer/action_button.dart';
 
 class CreateTaskGroupScreen extends StatefulWidget {
   static const routeName = '/new-task-group';
@@ -26,33 +32,94 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
   TaskGroup newTaskGroup;
   Settings settings;
 
-  /// TextEditingController for the TaskGroupTitle
-  TextEditingController taskGroupTitleController;
+  int _durationInMinutes;
+  int _shortBreakInMinutes;
+  int _longBreakInMinutes;
+
+  // TextEditingController for the TaskGroupTitle
+  TextEditingController _tgTitleController;
+  // TextEditingController for the duration
+  TextEditingController _durationController;
+  FocusNode _durationFocusNode;
+  // TextEditingController for the shortbreak
+  TextEditingController _shortBreakController;
+  FocusNode _shortBreakFocusNode;
+  // TextEditingController for the longBreak
+  TextEditingController _longBreakController;
+  FocusNode _longBreakFocusNode;
+  // Scroll controller for the screen
+  ScrollController _scrollController;
+  // ScrollController for the list of tasks in the taskgroup
+  ScrollController _taskScrollController;
+
+  // true when user is adding new task
+  bool modalIsActive;
+
   @override
   void initState() {
     super.initState();
     _formKey = GlobalKey();
+    _scrollController = ScrollController();
+    _taskScrollController = ScrollController();
+    _shortBreakFocusNode = FocusNode();
+    _longBreakFocusNode = FocusNode();
+    _durationFocusNode = FocusNode();
+    modalIsActive = false;
+
     settings = context.read<SettingsProvider>().settings;
+    _durationInMinutes = settings.totalTime.inMinutes;
+    _shortBreakInMinutes = settings.shortBreak.inMinutes;
+    _longBreakInMinutes = settings.longBreak.inMinutes;
+
     newTaskGroup = TaskGroup('',
         longBreakIntervals: settings.longBreakIntervals,
         shortBreakTime: settings.shortBreak,
         longBreakTime: settings.longBreak,
         totalTime: settings.totalTime);
-    taskGroupTitleController = TextEditingController();
+
+    _tgTitleController = TextEditingController();
+  }
+
+  @override
+  void didChangeDependencies() {
+    final appLocale = AppLocalizations.of(context);
+    _durationController ??= TextEditingController(
+        text: DurationUtils.durationToReadableString(
+            Duration(minutes: _durationInMinutes), appLocale));
+    _shortBreakController ??= TextEditingController(
+        text: DurationUtils.durationToReadableString(
+            Duration(minutes: _shortBreakInMinutes), appLocale));
+    _longBreakController ??= TextEditingController(
+        text: DurationUtils.durationToReadableString(
+            Duration(minutes: _longBreakInMinutes), appLocale));
+    super.didChangeDependencies();
   }
 
   @override
   void dispose() {
     super.dispose();
-    taskGroupTitleController.dispose();
+    _scrollController.dispose();
+    _taskScrollController.dispose();
+
+    _tgTitleController.dispose();
+    _durationController.dispose();
+    _durationFocusNode.dispose();
+    _shortBreakController.dispose();
+    _shortBreakFocusNode.dispose();
+    _longBreakController.dispose();
+    _longBreakFocusNode.dispose();
   }
 
   void createTaskGroup(BuildContext scaffoldContext) {
     if (!_formKey.currentState.validate()) {
       return;
     }
-    newTaskGroup.taskGroupName = taskGroupTitleController.text;
-    //TODO: do validations
+    newTaskGroup.taskGroupName = _tgTitleController.text;
+    newTaskGroup.shortBreakTime = Duration(minutes: _shortBreakInMinutes);
+    newTaskGroup.longBreakTime = Duration(minutes: _longBreakInMinutes);
+    // TODO: add widget for this
+    newTaskGroup.longBreakIntervals = settings.longBreakIntervals;
+
     try {
       TimeDivider.divideTimeByTask(newTaskGroup);
     } on TaskTimerException catch (e) {
@@ -71,6 +138,13 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
     setState(() {
       if (!isEditMode) newTaskGroup.tasks.add(newTask);
     });
+    Timer(Duration(milliseconds: 100), () {
+      _scrollController.jumpTo(
+        _scrollController.position.maxScrollExtent,
+      );
+      _taskScrollController
+          .jumpTo(_taskScrollController.position.maxScrollExtent);
+    });
   }
 
   void deleteTask(Task task) {
@@ -79,116 +153,293 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
     });
   }
 
-  void showAddNewTaskDialog({Task taskToBeEdited, bool isEditMode = false}) {
-    assert((isEditMode && taskToBeEdited != null) ||
-        !isEditMode && taskToBeEdited == null);
-    showDialog(
-        context: context,
-        useRootNavigator: true,
-        builder: (ctx) => AlertDialog(
-                content: AddTaskWidget(
-              taskGroup: newTaskGroup,
+  void showAddNewTaskBottomSheet(BuildContext sheetContext, bool isDarkMode,
+      {bool isEditMode = false, Task taskToBeEdited}) {
+    showModalBottomSheet(
+        enableDrag: false,
+        isDismissible: false,
+        isScrollControlled: true,
+        backgroundColor: isDarkMode ? Color(0xff111424) : Colors.white,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
+        context: sheetContext,
+        builder: (ctx2) => AddTaskWidget(
+              createTaskGroup: createTaskGroup,
               addNewTask: addNewTask,
               isEditMode: isEditMode,
+              taskGroup: newTaskGroup,
               taskToBeEdited: taskToBeEdited,
-            )),
-        //,
-        barrierDismissible: false);
+            )).then((_) {
+      setState(() => modalIsActive = false);
+    });
+  }
+
+  TextStyle getDefaultTextStyle(
+      ThemeData theme, bool isDarkMode, BuildContext context) {
+    theme.textTheme.apply(fontFamily: 'Circular-Std');
+    return theme.textTheme.bodyText2.copyWith(
+        color: isDarkMode ? Colors.white : Constants.appNavyBlue,
+        fontFamily: 'Circular-Std',
+        fontWeight: FontWeight.w500);
+  }
+
+  List<Widget> subTaskViews(ScrollController _taskScrollController) {
+    return [
+      Padding(
+        padding: const EdgeInsets.only(top: 12.0, bottom: 20),
+        child: Text(
+          'Sub-Task',
+          style: TextStyle(fontSize: 18),
+        ),
+      ),
+      Container(
+        height: modalIsActive ? 125 : 250,
+        child: Scrollbar(
+          isAlwaysShown: true,
+          controller: _taskScrollController,
+          child: ReorderableListView(
+              scrollController: _taskScrollController,
+              children: newTaskGroup.tasks
+                  .map((t) => Builder(
+                        key: ValueKey(t.taskId),
+                        builder: (ctx) => TaskCard(
+                            taskGroup: newTaskGroup,
+                            deleteTask: deleteTask,
+                            isEditMode: true,
+                            editTask: showAddNewTaskBottomSheet,
+                            task: t),
+                      ))
+                  .toList(),
+              onReorder: (oldIndex, newIndex) {
+                if (newIndex < 0) {
+                  newIndex = 0;
+                }
+                if (newIndex >= newTaskGroup.tasks.length) {
+                  newIndex = newTaskGroup.tasks.length - 1;
+                }
+                Task temp = newTaskGroup.tasks[oldIndex];
+                newTaskGroup.tasks[oldIndex] = newTaskGroup.tasks[newIndex];
+                newTaskGroup.tasks[newIndex] = temp;
+                setState(() {});
+              }),
+        ),
+      )
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
     final appLocale = AppLocalizations.of(context);
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        shadowColor: Colors.transparent,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-            child: RaisedButton.icon(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)),
-                icon: Icon(Icons.check, color: Colors.white, size: 30),
-                onPressed: () => createTaskGroup(context),
-                color: Colors.green,
-                label: Text(appLocale.create,
-                    style: Constants.coloredLabelTextStyle(Colors.white))),
-          )
-        ],
-      ),
-      body: SafeArea(
-        child: Form(
-            key: _formKey,
-            child: SingleChildScrollView(
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                height: mediaQuery.size.height -
-                    mediaQuery.padding.top -
-                    mediaQuery.padding.bottom,
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        flex: 58,
-                        child: TaskGroupPanel(
-                          showAddNewTaskDialog: showAddNewTaskDialog,
-                          taskGroup: newTaskGroup,
-                          titleController: taskGroupTitleController,
-                        ),
-                      ),
-                      Expanded(
-                        flex: 45,
-                        child: newTaskGroup.tasks.length == 0
-                            ? Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16.0),
-                                  child: RichText(
-                                    text: TextSpan(
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1,
-                                        text: appLocale.click,
-                                        children: [
-                                          TextSpan(
-                                            text: appLocale.addTask,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          TextSpan(text: appLocale.toAddNewTask)
-                                        ]),
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
+
+    //* widget helpers
+    return Theme(
+      data: theme.copyWith(
+          textTheme: theme.textTheme.copyWith(
+              subtitle1: theme.textTheme.subtitle1.copyWith(
+                  fontFamily: 'Circular-Std', fontWeight: FontWeight.w500),
+              bodyText2: getDefaultTextStyle(theme, isDarkMode, context))),
+      child: Scaffold(
+        backgroundColor: isDarkMode ? Colors.black : Color(0xffE8F1FC),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            controller: _scrollController,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: SvgPicture.asset(
+                      'assets/icons/back.svg',
+                      width: 29,
+                      height: 24,
+                      color: isDarkMode ? Colors.white : null,
+                    )),
+                Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Text(
+                    'Create Task',
+                    style: TextStyle(fontSize: 24),
+                  ),
+                ),
+                SingleChildScrollView(
+                  child: Form(
+                    key: _formKey,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomTextFormField(
+                              labelText: 'Enter task name',
+                              isDarkMode: isDarkMode,
+                              controller: _tgTitleController,
+                              onSubmitted: (_) {
+                                _durationController.clear();
+                                _durationFocusNode.requestFocus();
+                              },
+                              validator: (value) {
+                                if (value == null || value.trim().isEmpty) {
+                                  return appLocale.taskGroupNameErrorText;
+                                }
+                                return null;
+                              }),
+                          Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 20, bottom: 12),
+                              child: Text('Duration (in minutes)',
+                                  style: TextStyle(fontSize: 18))),
+                          CustomTextFormField.numbersOnly(
+                            context: context,
+                            focusNode: _durationFocusNode,
+                            onChanged: (x) => _durationInMinutes =
+                                int.tryParse(x.trim()) ?? _durationInMinutes,
+                            onSubmitted: (_) {
+                              _durationController.text =
+                                  DurationUtils.durationToReadableString(
+                                      Duration(minutes: _durationInMinutes),
+                                      appLocale);
+                              _shortBreakController.clear();
+                              _shortBreakFocusNode.requestFocus();
+                            },
+                            controller: _durationController,
+                            hintText: '30 Minutes',
+                            isDarkMode: isDarkMode,
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.only(top: 20),
+                              child: Row(
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(appLocale.shortBreak,
+                                          style: TextStyle(fontSize: 18)),
+                                      Container(
+                                          margin:
+                                              const EdgeInsets.only(top: 10),
+                                          width: 125,
+                                          child:
+                                              CustomTextFormField.numbersOnly(
+                                            focusNode: _shortBreakFocusNode,
+                                            onChanged: (x) =>
+                                                _shortBreakInMinutes =
+                                                    int.tryParse(x.trim()) ??
+                                                        _shortBreakInMinutes,
+                                            onSubmitted: (_) {
+                                              _shortBreakController.text =
+                                                  DurationUtils
+                                                      .durationToReadableString(
+                                                          Duration(
+                                                              minutes:
+                                                                  _shortBreakInMinutes),
+                                                          appLocale);
+                                              _longBreakController.clear();
+                                              _longBreakFocusNode
+                                                  .requestFocus();
+                                            },
+                                            context: context,
+                                            controller: _shortBreakController,
+                                            hintText: '5 minutes',
+                                            isDarkMode: isDarkMode,
+                                          )),
+                                    ],
+                                  ),
+                                  Spacer(),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(appLocale.longBreak,
+                                          style: TextStyle(fontSize: 18)),
+                                      Container(
+                                          margin:
+                                              const EdgeInsets.only(top: 10),
+                                          width: 125,
+                                          child:
+                                              CustomTextFormField.numbersOnly(
+                                            focusNode: _longBreakFocusNode,
+                                            context: context,
+                                            onChanged: (x) =>
+                                                _longBreakInMinutes =
+                                                    int.tryParse(x.trim()) ??
+                                                        _longBreakInMinutes,
+                                            onSubmitted: (_) {
+                                              _longBreakController.text =
+                                                  DurationUtils
+                                                      .durationToReadableString(
+                                                          Duration(
+                                                              minutes:
+                                                                  _longBreakInMinutes),
+                                                          appLocale);
+                                            },
+                                            hintText: '10 minutes',
+                                            controller: _longBreakController,
+                                            isDarkMode: isDarkMode,
+                                          )),
+                                    ],
+                                  )
+                                ],
+                              )),
+                          if (newTaskGroup.tasks.isNotEmpty)
+                            ...subTaskViews(_taskScrollController),
+                          if (modalIsActive)
+                            SizedBox(
+                              height: 80,
+                            ),
+                          if (!modalIsActive)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 36),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Builder(
+                                  builder: (ctx) => Container(
+                                    width: 229,
+                                    child: ActionButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          modalIsActive = true;
+                                        });
+                                        Timer(
+                                            Duration(milliseconds: 100),
+                                            () => _scrollController.jumpTo(
+                                                  _scrollController
+                                                      .position.maxScrollExtent,
+                                                ));
+                                        showAddNewTaskBottomSheet(
+                                            ctx, isDarkMode);
+                                      },
+                                      fillColor: Constants.appBlue,
+                                      text: 'Create task',
+                                      // padding: EdgeInsets.symmetric(
+                                      //     horizontal: , vertical: 14),
+                                    ),
                                   ),
                                 ),
-                              )
-                            : ReorderableListView(
-                                children: newTaskGroup.tasks
-                                    .map((t) => TaskCard(
-                                        key: ValueKey(t.taskId),
-                                        taskGroup: newTaskGroup,
-                                        deleteTask: deleteTask,
-                                        isEditMode: true,
-                                        editTask: showAddNewTaskDialog,
-                                        task: t))
-                                    .toList(),
-                                onReorder: (oldIndex, newIndex) {
-                                  if (newIndex < 0) {
-                                    newIndex = 0;
-                                  }
-                                  if (newIndex >= newTaskGroup.tasks.length) {
-                                    newIndex = newTaskGroup.tasks.length - 1;
-                                  }
-                                  Task temp = newTaskGroup.tasks[oldIndex];
-                                  newTaskGroup.tasks[oldIndex] =
-                                      newTaskGroup.tasks[newIndex];
-                                  newTaskGroup.tasks[newIndex] = temp;
-                                  setState(() {});
-                                }),
+                              ),
+                            )
+                          else
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: isDarkMode
+                                      ? Constants.appDarkBlue
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(30))),
+                              height: 400,
+                              width: MediaQuery.of(context).size.width * 0.9,
+                            )
+                        ],
                       ),
-                    ]),
-              ),
-            )),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
