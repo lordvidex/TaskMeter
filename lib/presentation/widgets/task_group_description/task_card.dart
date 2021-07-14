@@ -105,6 +105,7 @@ class MainTaskCard extends StatelessWidget {
     }
 
     return Container(
+        margin: const EdgeInsets.only(bottom: 8),
         decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
