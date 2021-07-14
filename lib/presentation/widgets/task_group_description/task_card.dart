@@ -9,7 +9,9 @@ import '../../screens/task_timer_screen.dart';
 
 /// The function called to raise buttom sheet in editmode instead
 /// of create mode
-typedef EditTask(BuildContext sheetContext, bool isDarkMode, {Task taskToBeEdited, bool isEditMode});
+typedef EditTask(BuildContext sheetContext, bool isDarkMode,
+    {Task taskToBeEdited, bool isEditMode});
+
 class TaskCard extends StatelessWidget {
   const TaskCard({
     this.key,
@@ -102,18 +104,26 @@ class MainTaskCard extends StatelessWidget {
       }
     }
 
-    return Card(
-        color: _task.isCompleted
-            ? taskGroup.taskGroupColor[200]
-            : Theme.of(context).cardTheme.color,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    return Container(
+        decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                  blurRadius: 10,
+                  color: Color(0xff0067FF).withOpacity(0.12),
+                  offset: Offset(0, 1))
+            ],
+            color: _task.isCompleted
+                ? taskGroup.taskGroupColor[200]
+                : Theme.of(context).cardTheme.color,
+            borderRadius: BorderRadius.circular(20)),
         child: ListTile(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           onTap: _task.isCompleted
               ? null
               : () => isEditMode
-                  ? editTask(context,isDarkMode,taskToBeEdited: _task, isEditMode: true)
+                  ? editTask(context, isDarkMode,
+                      taskToBeEdited: _task, isEditMode: true)
                   : Navigator.of(context)
                       .pushNamed(TaskTimerScreen.routeName, arguments: _task),
           contentPadding:

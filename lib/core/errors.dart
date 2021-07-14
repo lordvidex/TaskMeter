@@ -6,7 +6,6 @@ class ErrorStrings {
 enum Error {
   LongBreakLessThanShortBreak,
   TaskUnitTimeLessThanBreak,
-  EmptyTaskGroup,
 }
 
 enum Social { Google, Apple }
@@ -20,8 +19,6 @@ class TaskTimerException implements Exception {
       return "Long Break Time must be greater than short break time";
     } else if (_error == Error.TaskUnitTimeLessThanBreak) {
       return "Smallest time must be greater than break times";
-    } else if (_error == Error.EmptyTaskGroup) {
-      return "Task Group must contain at least one task";
     }
     return super.toString();
   }
