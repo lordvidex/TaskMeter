@@ -259,7 +259,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                 Padding(
                   padding: const EdgeInsets.all(24),
                   child: Text(
-                    'Create Task',
+                    appLocale.createTask,
                     style: TextStyle(fontSize: 24),
                   ),
                 ),
@@ -272,7 +272,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           CustomTextFormField(
-                              labelText: 'Enter task name',
+                              labelText: appLocale.enterTaskName,
                               isDarkMode: isDarkMode,
                               controller: _tgTitleController,
                               onSubmitted: (_) {
@@ -288,7 +288,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                           Padding(
                               padding:
                                   const EdgeInsets.only(top: 20, bottom: 12),
-                              child: Text('Duration (in minutes)',
+                              child: Text(appLocale.durationInMinutes,
                                   style: TextStyle(fontSize: 18))),
                           CustomTextFormField.numbersOnly(
                             context: context,
@@ -304,7 +304,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                               _shortBreakFocusNode.requestFocus();
                             },
                             controller: _durationController,
-                            hintText: '30 Minutes',
+                            hintText: appLocale.minutes(30),
                             isDarkMode: isDarkMode,
                           ),
                           Padding(
@@ -342,7 +342,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                                             },
                                             context: context,
                                             controller: _shortBreakController,
-                                            hintText: '5 minutes',
+                                            hintText: appLocale.minutes(5),
                                             isDarkMode: isDarkMode,
                                           )),
                                     ],
@@ -375,7 +375,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                                                                   _longBreakInMinutes),
                                                           appLocale);
                                             },
-                                            hintText: '10 minutes',
+                                            hintText: appLocale.minutes(10),
                                             controller: _longBreakController,
                                             isDarkMode: isDarkMode,
                                           )),
@@ -391,7 +391,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                             ),
                           if (!modalIsActive)
                             Padding(
-                              padding: const EdgeInsets.only(top: 36),
+                              padding: const EdgeInsets.only(top: 20),
                               child: Align(
                                 alignment: Alignment.center,
                                 child: Builder(
@@ -412,7 +412,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                                             ctx, isDarkMode);
                                       },
                                       fillColor: Constants.appBlue,
-                                      text: 'Create task',
+                                      text: appLocale.createTask,
                                       // padding: EdgeInsets.symmetric(
                                       //     horizontal: , vertical: 14),
                                     ),
@@ -428,7 +428,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                                       : Colors.white,
                                   borderRadius: BorderRadius.vertical(
                                       top: Radius.circular(30))),
-                              height: 400,
+                              height: 394,
                               width: MediaQuery.of(context).size.width * 0.9,
                             )
                         ],

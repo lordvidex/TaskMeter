@@ -103,7 +103,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Add Sub-Task',
+                          '${appLocale.add} ${appLocale.subTask}',
                           style: TextStyle(fontSize: 24),
                         ),
                         IconButton(
@@ -124,7 +124,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                     controller: _taskNameController,
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return 'Please enter some text';
+                        return appLocale.emptyErrorMessage;
                       }
                       return null;
                     },

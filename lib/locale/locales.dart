@@ -161,30 +161,20 @@ class AppLocalizations {
       examples: const {'x': 3});
 
   //! Create Task Group screen
-  String get createTaskGroup => Intl.message('Create task group',
-      name: 'createTaskGroup', desc: 'Header text in create task group screen');
-  String get duration => Intl.message('Duration',
-      name: 'duration', desc: 'hint text for duration picker widget');
-  String get addTask => Intl.message('Add task',
-      name: 'addTask',
-      desc: 'button Label text to add new task in a task group');
-  String get create => Intl.message('Create',
-      name: 'create',
-      desc: 'buttonLabel for create button '
-          '<for creating a new task group>');
-  String get click => Intl.message('Click ',
-      name: 'click',
-      desc: 'first part of the empty textview displayed'
-          ' when there is an empty list of tasks');
+  String get createTask => Intl.message('Create Task',
+      name: 'createTask', desc: 'Header text in create task group screen');
   String get shortBreak => Intl.message('Short break',
       name: 'shortBreak', desc: 'label for short break');
   String get longBreak => Intl.message('Long break',
       name: 'longBreak', desc: 'label for long break');
-  String get toAddNewTask => Intl.message(' to add a new task',
-      name: 'toAddNewTask',
-      desc: 'second part of the displayed emptyview for tasklists');
-  String get taskGroupName => Intl.message('Task group name',
-      name: 'taskGroupName', desc: 'label text for task group name');
+  String get durationInMinutes => Intl.message('Duration (in minutes)',
+      name: 'durationInMinutes',
+      desc: 'Label for total duration picker in create task group screen');
+  String get subTask => Intl.message('Sub-Task',
+      name: 'subTask', desc: 'label text for subtasks');
+  String get emptyErrorMessage => Intl.message('Please enter some text',
+      desc: 'error text shown when user leaves textfield empty',
+      name: 'emptyErrorMessage');
   String get taskGroupNameErrorText =>
       Intl.message('Enter a valid task group name',
           name: 'taskGroupNameErrorText',
@@ -197,18 +187,16 @@ class AppLocalizations {
       Intl.message('Break Complete', name: 'breakComplete', desc: '');
   String get taskComplete =>
       Intl.message('Task Complete', name: 'taskComplete', desc: '');
-      String get resume => Intl.message('Resume',
-      name: 'resume',
-      desc: '');
-      String get pause => Intl.message('Pause',
-      name: 'pause',
-      desc: '');
-      String get takeBreak => Intl.message('Take Break',
+  String get resume => Intl.message('Resume', name: 'resume', desc: '');
+  String get pause => Intl.message('Pause', name: 'pause', desc: '');
+  String get takeBreak => Intl.message('Take Break',
       name: 'takeBreak',
-      desc: 'Button option for when user should take break when a task just finished');
-      String get nextTask => Intl.message('Next Task',
+      desc:
+          'Button option for when user should take break when a task just finished');
+  String get nextTask => Intl.message('Next Task',
       name: 'nextTask',
-      desc: 'Button option for when user should jump to next task when a task just finished');
+      desc:
+          'Button option for when user should jump to next task when a task just finished');
 //! Authentication Screen
   String get signup =>
       Intl.message('Sign up', name: 'signup', desc: 'The text sign up');
