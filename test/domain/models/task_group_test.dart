@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../../lib/core/utils/color_utils.dart';
 import '../../../lib/domain/models/task.dart';
 import '../../../lib/domain/models/task_group.dart';
 
@@ -11,7 +10,6 @@ void main() {
 
   //* values used in fromJson() and toJson() tests
   final taskGroupName = 'My Task Group';
-  final color = Colors.red;
   final longBreak = Duration(minutes: 1);
   final shortBreak = Duration.zero;
   final id = Uuid().v1();
@@ -34,7 +32,6 @@ void main() {
   });
   group('Conversion toJson', () {
     final taskGroupName = 'My Task Group';
-    final color = Colors.red;
     final longBreak = Duration(minutes: 1);
     final shortBreak = Duration.zero;
     final id = Uuid().v1();
@@ -57,7 +54,6 @@ void main() {
       final expectedJson = {
         'task_group_name': taskGroupName,
         'is_deleted': false,
-        'task_group_color': ColorUtils.getPositionOfMaterialColor(color),
         'bonus_time': 0,
         'is_repetitive': false,
         'time_of_upload': null,
@@ -88,7 +84,6 @@ void main() {
           totalTime: totalTime);
       final expectedJson = {
         'task_group_name': taskGroupName,
-        'task_group_color': ColorUtils.getPositionOfMaterialColor(color),
         'bonus_time': 0,
         'time_of_upload': null,
         'is_repetitive': false,
@@ -111,7 +106,6 @@ void main() {
     test('should properly return TaskGroup when converted from json', () {
       final json = {
         'task_group_name': taskGroupName,
-        'task_group_color': ColorUtils.getPositionOfMaterialColor(color),
         'bonus_time': 0,
         'is_repetitive': false,
         'long_break_intervals': 2,

@@ -13,7 +13,7 @@ void main() {
     });
     test("Time test in seconds", () {
       expect(DurationUtils.durationToClockString(new Duration(seconds: 400)),
-          "00:06:40");
+          "06:40");
     });
     test("Time test in hours and minutes", () {
       expect(

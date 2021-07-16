@@ -49,6 +49,7 @@ void main() {
         longBreakIntervals: 2);
     // act
     taskGroup1.totalTime = Duration(hours: 1);
+    taskGroup1.tasks.add(Task());
 
     // assert
     expect(() => TimeDivider.divideTimeByTask(taskGroup1),

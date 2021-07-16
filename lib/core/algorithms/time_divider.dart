@@ -52,7 +52,9 @@ class TimeDivider {
                   (taskGroup.shortBreakTime.inMinutes * shortBreakCount))) /
           difficultyCount;
       //! must be caught to display error **VALIDATING PART OF THE FUNCTION**
+      print('check1');
       TaskUtils.validateUnitTime(unitTimeInMinutes * minDiff, taskGroup);
+      print('check2');
 
       for (Task task in taskGroup.tasks) {
         _setTimeForTask(task, unitTimeInMinutes);
