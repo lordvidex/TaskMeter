@@ -73,7 +73,10 @@ class TaskGroupDescriptionScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Image.asset('assets/images/bell.png')
+                  Image.asset(
+                    'assets/images/bell.png',
+                    height: 175.44,
+                  )
                 ],
               )),
               Expanded(

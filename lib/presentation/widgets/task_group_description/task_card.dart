@@ -165,6 +165,7 @@ class MainTaskCard extends StatelessWidget {
                             isDarkMode ? Constants.appDarkBlue : Colors.white),
                     child: CircularProgressIndicator(
                       value: _task.taskProgress,
+                      strokeWidth: 2.5,
                       backgroundColor: Constants.appLightBlue,
                       valueColor:
                           AlwaysStoppedAnimation<Color>(Constants.appBlue),
