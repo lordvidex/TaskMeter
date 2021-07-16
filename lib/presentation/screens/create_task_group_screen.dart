@@ -315,8 +315,12 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(appLocale.shortBreak,
-                                          style: TextStyle(fontSize: 18)),
+                                      ConstrainedBox(
+                                        constraints:
+                                            BoxConstraints(maxWidth: 125),
+                                        child: Text(appLocale.shortBreak,
+                                            style: TextStyle(fontSize: 18)),
+                                      ),
                                       Container(
                                           margin:
                                               const EdgeInsets.only(top: 10),
@@ -347,13 +351,19 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                                           )),
                                     ],
                                   ),
-                                  Spacer(),
+                                  SizedBox(
+                                    width: 14,
+                                  ),
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(appLocale.longBreak,
-                                          style: TextStyle(fontSize: 18)),
+                                      ConstrainedBox(
+                                        constraints:
+                                            BoxConstraints(maxWidth: 125),
+                                        child: Text(appLocale.longBreak,
+                                            style: TextStyle(fontSize: 18)),
+                                      ),
                                       Container(
                                           margin:
                                               const EdgeInsets.only(top: 10),
@@ -419,17 +429,6 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                                   ),
                                 ),
                               ),
-                            )
-                          else
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: isDarkMode
-                                      ? Constants.appDarkBlue
-                                      : Colors.white,
-                                  borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(30))),
-                              height: 394,
-                              width: MediaQuery.of(context).size.width * 0.9,
                             )
                         ],
                       ),

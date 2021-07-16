@@ -49,7 +49,7 @@ class TaskGroupProvider extends ChangeNotifier {
     } catch (e) {
       _groups = [];
     }
-    
+
     notifyListeners();
   }
 
@@ -66,7 +66,8 @@ class TaskGroupProvider extends ChangeNotifier {
 
   void addTaskGroup(TaskGroup taskGroup) async {
     _groups.add(taskGroup);
-    await taskGroupRepo.updateTaskGroups(_groups, add: true,id: taskGroup.taskGroupId);
+    await taskGroupRepo.updateTaskGroups(_groups,
+        add: true, id: taskGroup.taskGroupId);
     notifyListeners();
   }
 
@@ -94,4 +95,14 @@ class TaskGroupProvider extends ChangeNotifier {
     await taskGroupRepo.updateTaskGroups(_groups);
     notifyListeners();
   }
+
+  /// total tasks completed including deleted items
+  int get tasksCompleted => _groups.fold<int>(
+      0, (previous, element) => previous + element.completedCount);
+
+  /// total tracked hours by this user
+  double get trackedHours =>
+      _groups.fold<double>(
+          0.0, (previous, element) => previous + element.timeElapsed) /
+      60;
 }

@@ -45,7 +45,6 @@ void main() {
       // arrange
 
       final taskGroup = TaskGroup(taskGroupName,
-          taskGroupColor: color,
           bonusTime: Duration.zero,
           isRepetitive: false,
           longBreakIntervals: 2,
@@ -81,7 +80,6 @@ void main() {
       // arrange
 
       final taskGroup = TaskGroup(taskGroupName,
-          taskGroupColor: color,
           longBreakIntervals: 2,
           longBreakTime: longBreak,
           shortBreakTime: shortBreak,
@@ -135,7 +133,6 @@ void main() {
       expect(taskGroup.longBreakIntervals, 2);
       expect(taskGroup.tasks, tasks);
       expect(taskGroup.totalTime, totalTime);
-      expect(taskGroup.taskGroupColor, color);
       expect(taskGroup.bonusTime, Duration.zero);
       expect(taskGroup.isRepetitive, isFalse);
     });

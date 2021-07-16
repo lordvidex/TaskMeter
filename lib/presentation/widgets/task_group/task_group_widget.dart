@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:task_meter/core/constants.dart';
+import 'package:task_meter/presentation/widgets/task_group/gradient_icon.dart';
 
 import '../../../locale/locales.dart';
 import '../../../domain/models/task_group.dart';
@@ -10,93 +12,100 @@ import '../task_progress_indicator.dart';
 
 class TaskGroupWidget extends StatelessWidget {
   final TaskGroup taskGroup;
-  const TaskGroupWidget({@required this.taskGroup});
+  final bool isDarkMode;
+  const TaskGroupWidget({@required this.taskGroup, @required this.isDarkMode});
   @override
   Widget build(BuildContext context) {
     final taskGroupProvider = context.read<TaskGroupProvider>();
     return Container(
-        padding: const EdgeInsets.only(bottom: 3),
-        margin: const EdgeInsets.all(15),
-        //height: 300,
+        padding: const EdgeInsets.all(14),
+        margin: const EdgeInsets.only(bottom: 16),
         decoration: BoxDecoration(
-          color: taskGroup.taskGroupColor[800],
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            bottomRight: Radius.circular(20),
-          ),
+          color: isDarkMode ? Constants.appDarkBlue : Constants.appSkyBlue,
+          borderRadius: BorderRadius.circular(8),
         ),
-        child: Stack(children: [
-          Positioned(
-              top: 0,
-              right: 0,
-              child: DropdownButton(
-                onChanged: (_) {},
-                items: [
-                  DropdownMenuItem(
-                      value: 'delete',
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.delete_forever,
-                              color: Colors.red, size: 24),
-                          SizedBox(width: 10),
-                          Text(AppLocalizations.of(context).delete),
-                        ],
-                      ),
-                      onTap: () => taskGroupProvider
-                          .deleteTaskGroup(taskGroup.taskGroupId))
-                ],
-                icon: Icon(Icons.more_vert, color: Colors.white),
-              )),
-          Positioned(
-              right: -10,
-              bottom: -30,
-              child: SvgPicture.asset('assets/icons/checklists.svg',
-                  color: taskGroup.taskGroupColor[500])),
-          Row(children: [
-            Flexible(
-              flex: 7,
-              child: InkWell(
-                onTap: () {
-                  taskGroupProvider.setCurrentTaskGroup(taskGroup);
-                  Navigator.of(context).pushNamed(
-                      TaskGroupDescriptionScreen.routeName,
-                      arguments: taskGroup);
-                },
-                child: Container(
-                  padding: const EdgeInsets.only(left: 20, top: 20, bottom: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        taskGroup.taskGroupName,
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height: 20),
-                      Text(taskGroup.taskGroupSubtitle,
-                          style: Theme.of(context).textTheme.bodyText1),
-                      SizedBox(height: 5),
-                      Text(AppLocalizations.of(context).progress,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: taskGroup.taskGroupColor[100],
-                          )),
-                      SizedBox(height: 3),
-                      TaskProgressIndicator(
-                        taskGroup.taskGroupColor[100],
-                        taskGroup.taskGroupProgress,
-                        showPercentage: true,
-                      )
-                    ],
+        child: Row(children: [
+          Expanded(
+            child: InkWell(
+              onTap: () {
+                taskGroupProvider.setCurrentTaskGroup(taskGroup);
+                Navigator.of(context).pushNamed(
+                    TaskGroupDescriptionScreen.routeName,
+                    arguments: taskGroup);
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    taskGroup.taskGroupName,
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 6.0),
+                    child: Text(
+                      '${taskGroup.completedCount} of ${taskGroup.tasks.length} tasks completed',
+                      style: TextStyle(
+                          color: isDarkMode
+                              ? Constants.appLightGrey
+                              : Constants.appDarkGrey,
+                          fontSize: 12),
+                    ),
+                  ),
+                  TaskProgressIndicator(
+                    taskGroup.taskGroupProgress,
+                    isDarkMode: isDarkMode,
+                  )
+                ],
               ),
             ),
-            Flexible(flex: 3, child: Container())
-          ]),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 52.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                PopupMenuButton<String>(
+                  child: Icon(Icons.more_horiz, size: 24),
+                  onSelected: (value) {
+                    switch (value) {
+                      case 'delete':
+                        taskGroupProvider
+                            .deleteTaskGroup(taskGroup.taskGroupId);
+                    }
+                  },
+                  itemBuilder: (ctx) => [
+                    PopupMenuItem(
+                      value: 'delete',
+                      child: Row(mainAxisSize: MainAxisSize.min, children: [
+                        Icon(Icons.delete_forever, color: Colors.red, size: 24),
+                        SizedBox(width: 10),
+                        Text(AppLocalizations.of(context).delete),
+                      ]),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                GradientIcon(
+                    size: 41.42,
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: isDarkMode
+                            ? [
+                                Constants.appLightGrey,
+                                Colors.white.withOpacity(0.33)
+                              ]
+                            : [
+                                Constants.appLightBlue,
+                                Constants.appLightBlue,
+                              ]),
+                    child: SvgPicture.asset('assets/icons/clock.svg'))
+              ],
+            ),
+          ),
         ]));
   }
 }

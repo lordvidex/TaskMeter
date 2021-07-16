@@ -61,7 +61,6 @@ void main() {
       ];
       final expectedTaskGroups = [
         TaskGroup('First',
-            taskGroupColor: color,
             bonusTime: Duration.zero,
             isRepetitive: false,
             longBreakIntervals: 2,
@@ -72,7 +71,6 @@ void main() {
             tasks: tasks,
             totalTime: totalTime),
         TaskGroup('Second',
-            taskGroupColor: color,
             bonusTime: Duration.zero,
             isRepetitive: false,
             longBreakIntervals: 2,

@@ -49,8 +49,9 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
   }
 
   void saveTaskStatus(BuildContext context) {
-    final duration = context.read<TimerBloc>().state.duration;
-    context.read<TaskGroupProvider>().updateTaskTime(task, duration);
+    final state = context.read<TimerBloc>().state;
+    context.read<TaskGroupProvider>().updateTaskTime(
+        task, state is TimerFinished ? Duration.zero : state.duration);
   }
 
   @override
@@ -147,11 +148,13 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
                   children: [
                     BlocConsumer<TimerBloc, TimerState>(
                       listenWhen: (fromState, toState) =>
-                          fromState is! TimerRunning || toState is! TimerRunning,
+                          fromState is! TimerRunning ||
+                          toState is! TimerRunning,
                       listener: (ctx, state) {
                         final taskGroup = taskGroupProvider.currentTaskGroup;
                         if (!taskGroupProvider.isBreak)
-                          taskGroupProvider.updateTaskTime(task, state.duration);
+                          taskGroupProvider.updateTaskTime(
+                              task, state.duration);
                         if (state is TimerFinished) {
                           controller.pause();
                           setState(() {
@@ -169,7 +172,8 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
                             // all tasks are finished
                             Navigator.of(context).pop();
                           }
-                        } else if (state is TimerPaused || state is TimerReady) {
+                        } else if (state is TimerPaused ||
+                            state is TimerReady) {
                           controller.pause();
                         } else {
                           controller.resume();
@@ -241,7 +245,9 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
                                 },
                                 filled: !_isPaused,
                                 fillColor: Color.fromRGBO(195, 98, 98, 1),
-                                text: _isPaused ? appLocale.resume : appLocale.pause,
+                                text: _isPaused
+                                    ? appLocale.resume
+                                    : appLocale.pause,
                                 icon: SvgPicture.asset(
                                   'assets/icons/${_isPaused ? 'play' : 'pause'}.svg',
                                   height: _isPaused ? 18 : 14,
@@ -269,15 +275,16 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
                                       taskGroupProvider.toggleBreak();
                                     task = Task(
                                         taskName: taskGroupProvider.isLongBreak
-                                            ? appLocale
-                                                .longBreak
-                                            : appLocale
-                                                .shortBreak)
-                                      ..setTotalTime(taskGroupProvider.isLongBreak
-                                          ? taskGroupProvider
-                                              .currentTaskGroup.longBreakTime
-                                          : taskGroupProvider
-                                              .currentTaskGroup.shortBreakTime);
+                                            ? appLocale.longBreak
+                                            : appLocale.shortBreak)
+                                      ..setTotalTime(
+                                          taskGroupProvider.isLongBreak
+                                              ? taskGroupProvider
+                                                  .currentTaskGroup
+                                                  .longBreakTime
+                                              : taskGroupProvider
+                                                  .currentTaskGroup
+                                                  .shortBreakTime);
                                     setState(() {
                                       _isFinished = false;
                                       context.read<TimerBloc>().add(

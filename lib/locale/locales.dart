@@ -33,17 +33,6 @@ class AppLocalizations {
   String get emptyTaskGroupText => Intl.message('Task group list is empty',
       name: 'emptyTaskGroupText',
       desc: 'Text displayed to user when taskgroup list is empty');
-
-  String get clickOn => Intl.message('Click on ',
-      name: 'clickOn',
-      desc: 'Partial word displayed in the taskGroup screen telling the user'
-          'how to add a new task Group');
-
-  String get toAddNewTaskGroup => Intl.message('to add new Task group',
-      name: 'toAddNewTaskGroup',
-      desc: 'Partial word displayed in the taskGroup screen'
-          'telling the user how to add a new task Group');
-
   String get delete =>
       Intl.message('Delete', name: 'delete', desc: 'Text with the word delete');
 

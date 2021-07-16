@@ -104,73 +104,85 @@ class MainTaskCard extends StatelessWidget {
       }
     }
 
-    return Container(
-        margin: const EdgeInsets.only(bottom: 8),
-        decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                  blurRadius: 10,
-                  color: Color(0xff0067FF).withOpacity(0.12),
-                  offset: Offset(0, 1))
-            ],
-            color: _task.isCompleted
-                ? taskGroup.taskGroupColor[200]
-                : Theme.of(context).cardTheme.color,
-            borderRadius: BorderRadius.circular(20)),
-        child: ListTile(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          onTap: _task.isCompleted
-              ? null
-              : () => isEditMode
-                  ? editTask(context, isDarkMode,
-                      taskToBeEdited: _task, isEditMode: true)
-                  : Navigator.of(context)
-                      .pushNamed(TaskTimerScreen.routeName, arguments: _task),
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
-          title: Text(
-            _task.taskName,
-            style: TextStyle(fontSize: 16),
-          ),
-          subtitle: Text(
-              isEditMode
-                  ? _difficultyText()
-                  : DurationUtils.durationToReadableString(
-                      _task.timeRemaining ?? Duration.zero, appLocale),
-              style: isEditMode
-                  ? Constants.coloredLabelTextStyle(_difficultyColor(),
-                      fontSize: 12)
-                  : Constants.coloredLabelTextStyle(Colors.grey)),
-          trailing: Stack(
-            alignment: AlignmentDirectional.center,
+    return GestureDetector(
+      onTap: _task.isCompleted
+          ? null
+          : () => isEditMode
+              ? editTask(context, isDarkMode,
+                  taskToBeEdited: _task, isEditMode: true)
+              : Navigator.of(context)
+                  .pushNamed(TaskTimerScreen.routeName, arguments: _task),
+      child: Container(
+          margin: const EdgeInsets.only(bottom: 8),
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                    blurRadius: 10,
+                    color: Color(0xff0067FF).withOpacity(0.12),
+                    offset: Offset(0, 1))
+              ],
+              color: Theme.of(context).cardTheme.color,
+              borderRadius: BorderRadius.circular(10)),
+          child: Row(
             children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: isDarkMode ? Constants.appDarkBlue : Colors.white),
-                child: CircularProgressIndicator(
-                  value: _task.taskProgress,
-                  backgroundColor: isEditMode
-                      ? Constants.appLightBlue
-                      : taskGroup.taskGroupColor[100],
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                      taskGroup.taskGroupColor[800]),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      _task.taskName,
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                    ),
+                    if (!isEditMode)
+                      Text(
+                          DurationUtils.durationToReadableString(
+                              _task.timeRemaining ?? Duration.zero, appLocale),
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2
+                                  .color
+                                  .withOpacity(0.72))),
+                    Text(_difficultyText(),
+                        style:
+                            TextStyle(color: _difficultyColor(), fontSize: 12)),
+                  ],
                 ),
               ),
-              _task.isCompleted
-                  ? Icon(Icons.check, color: Colors.green[800], size: 24)
-                  : Text('${(_task.taskProgress * 100).toInt()}%',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: isEditMode
-                              ? Constants.appBlue
-                              : taskGroup.taskGroupColor[800],
-                          fontWeight: FontWeight.bold)),
+              Stack(
+                alignment: AlignmentDirectional.center,
+                children: [
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color:
+                            isDarkMode ? Constants.appDarkBlue : Colors.white),
+                    child: CircularProgressIndicator(
+                      value: _task.taskProgress,
+                      backgroundColor: Constants.appLightBlue,
+                      valueColor:
+                          AlwaysStoppedAnimation<Color>(Constants.appBlue),
+                    ),
+                  ),
+                  _task.isCompleted
+                      ? Icon(Icons.check, color: Colors.green[800], size: 24)
+                      : Text('${(_task.taskProgress * 100).toInt()}%',
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: isDarkMode
+                                  ? Constants.appLightBlue
+                                  : Constants.appBlue,
+                              fontWeight: FontWeight.bold)),
+                ],
+              )
             ],
-          ),
-        ));
+          )),
+    );
   }
 }

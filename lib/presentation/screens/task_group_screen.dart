@@ -10,7 +10,6 @@ import 'authentication_screen.dart';
 import 'create_task_group_screen.dart';
 
 class TaskGroupScreen extends StatelessWidget {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   static const routeName = '/task-group';
   @override
   Widget build(BuildContext context) {
@@ -19,12 +18,10 @@ class TaskGroupScreen extends StatelessWidget {
         builder: (ctx, provider, _) => context.watch<SizeBloc>().isMobileScreen
             ? MobileView(
                 provider: provider,
-                scaffoldKey: _scaffoldKey,
                 appLocale: appLocale,
               )
             : LandScapeView(
                 appLocale: appLocale,
-                scaffoldKey: _scaffoldKey,
                 authProvider: provider,
               ));
   }
@@ -33,52 +30,33 @@ class TaskGroupScreen extends StatelessWidget {
 class MobileView extends StatelessWidget {
   const MobileView({
     Key key,
-    @required GlobalKey<ScaffoldState> scaffoldKey,
     @required this.appLocale,
     @required this.provider,
-  })  : _scaffoldKey = scaffoldKey,
+  })  : 
         super(key: key);
-
-  final GlobalKey<ScaffoldState> _scaffoldKey;
   final AppLocalizations appLocale;
   final AuthenticationProvider provider;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: _scaffoldKey,
-        drawerEnableOpenDragGesture: false,
-        drawer: Drawer(child: TaskGroupAnalytics()),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.white,
-          child: Icon(Icons.add, color: Colors.black),
-          onPressed: () =>
-              Navigator.of(context).pushNamed(CreateTaskGroupScreen.routeName),
-        ),
-        body: TaskGroupListWidget(
-            provider: provider,
-            scaffoldKey: _scaffoldKey,
-            appLocale: appLocale));
+        body: TaskGroupListWidget(provider: provider, appLocale: appLocale));
   }
 }
 
 class LandScapeView extends StatelessWidget {
   const LandScapeView({
     Key key,
-    @required GlobalKey<ScaffoldState> scaffoldKey,
     @required this.appLocale,
     @required this.authProvider,
-  })  : _scaffoldKey = scaffoldKey,
-        super(key: key);
-
-  final GlobalKey<ScaffoldState> _scaffoldKey;
+  })  : 
+        super(key: key);  
   final AppLocalizations appLocale;
   final AuthenticationProvider authProvider;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: _scaffoldKey,
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.white,
           child: Icon(Icons.add, color: Colors.black),
@@ -100,9 +78,7 @@ class LandScapeView extends StatelessWidget {
             ),
             Expanded(
                 child: TaskGroupListWidget(
-                    appLocale: appLocale,
-                    provider: authProvider,
-                    scaffoldKey: _scaffoldKey)),
+                    appLocale: appLocale, provider: authProvider)),
           ],
         ));
   }

@@ -1,111 +1,143 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:task_meter/core/constants.dart';
+import 'package:task_meter/presentation/screens/create_task_group_screen.dart';
+import 'package:task_meter/presentation/screens/settings_screen.dart';
+import 'package:task_meter/presentation/widgets/task_timer/action_button.dart';
 
 import '../../../locale/locales.dart';
-import '../../bloc/size_bloc.dart';
 import '../../providers/authentication_provider.dart';
 import '../../providers/task_group_provider.dart';
-import '../../screens/authentication_screen.dart';
-import '../../screens/settings_screen.dart';
+import 'data_container.dart';
 import 'task_group_widget.dart';
 
 class TaskGroupListWidget extends StatelessWidget {
   const TaskGroupListWidget({
     Key key,
     @required this.provider,
-    @required GlobalKey<ScaffoldState> scaffoldKey,
     @required this.appLocale,
-  })  : _scaffoldKey = scaffoldKey,
-        super(key: key);
+  }) : super(key: key);
 
   final AuthenticationProvider provider;
-  final GlobalKey<ScaffoldState> _scaffoldKey;
   final AppLocalizations appLocale;
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return RefreshIndicator(
       onRefresh: context.read<TaskGroupProvider>().loadTaskGroups,
-      child: CustomScrollView(slivers: <Widget>[
-        SliverAppBar(
-          leading: !context.read<SizeBloc>().isMobileScreen
-              ? null
-              : provider.user == null
-                  ? IconButton(
-                      icon: Icon(Icons.login, size: 30),
-                      onPressed: () => showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (_) => AlertDialog(
-                                insetPadding: const EdgeInsets.symmetric(
-                                    horizontal: 12, vertical: 8),
-                                contentPadding: const EdgeInsets.all(0),
-                                content: AuthenticationScreen(),
-                              )))
-                  : IconButton(
-                      icon: Icon(Icons.menu),
-                      onPressed: () => _scaffoldKey.currentState.openDrawer()),
-          actions: [
-            IconButton(
-              icon: Icon(
-                Icons.settings,
-              ),
-              onPressed: () =>
-                  Navigator.of(context).pushNamed(SettingsScreen.routeName),
-            )
-          ],
-          //expandedHeight: 120,
-          floating: true,
-          flexibleSpace: FlexibleSpaceBar(
-            title: Text(AppLocalizations.of(context).taskGroups,
-                style: Theme.of(context).textTheme.headline1),
-          ),
-        ),
-        Consumer<TaskGroupProvider>(
-          builder: (ctx, provider, child) {
-            final groups = provider.taskGroups
-              ..retainWhere((g) => !g.isDeleted);
-            if (groups.isEmpty)
-              return child;
-            else
-              return SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (ctx, index) => TaskGroupWidget(
-                    taskGroup: groups[index],
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(24, 0, 24, 28),
+          child: Column(children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  style: TextButton.styleFrom(
+                      padding: EdgeInsets.fromLTRB(0, 10, 30, 10)),
+                  child: Icon(Icons.account_circle_outlined,
+                      color: isDarkMode ? Colors.white : Constants.appNavyBlue,
+                      size: 24),
+                  onPressed: () {},
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                      padding: EdgeInsets.fromLTRB(30, 10, 0, 10)),
+                  onPressed: () =>
+                      Navigator.of(context).pushNamed(SettingsScreen.routeName),
+                  child: SvgPicture.asset('assets/icons/settings.svg',
+                      width: 29,
+                      height: 29,
+                      color: isDarkMode ? Colors.white : Constants.appNavyBlue),
+                )
+              ],
+            ),
+            Padding(
+                padding: const EdgeInsets.only(top: 18, bottom: 18),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Task Meter',
+                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.w500),
                   ),
-                  childCount: groups.length,
+                )),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                    child: Consumer<TaskGroupProvider>(
+                  builder: (ctx, mProvider, _) => DataContainer(
+                      label: 'Task completed',
+                      text: '${mProvider.tasksCompleted}',
+                      isDarkMode: isDarkMode),
+                )),
+                SizedBox(
+                  width: 16,
                 ),
-              );
-          },
-          child: SliverToBoxAdapter(
-              child: Center(
+                Expanded(
+                    child: Consumer<TaskGroupProvider>(
+                  builder: (ctx, mProvider, _) => DataContainer(
+                      label: 'Tracked Hours',
+                      text: mProvider.trackedHours.toStringAsFixed(1),
+                      isDarkMode: isDarkMode),
+                ))
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 25.0),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Active Tasks',
+                    style: TextStyle(fontSize: 18),
+                  )),
+            ),
+            Expanded(
+              child: Consumer<TaskGroupProvider>(
+                builder: (ctx, provider, child) {
+                  final groups = provider.taskGroups
+                    ..retainWhere((g) => !g.isDeleted);
+                  if (groups.isEmpty)
+                    return child;
+                  else
+                    return ListView.builder(
+                      itemBuilder: (ctx, index) => TaskGroupWidget(
+                        taskGroup: groups[index],
+                        isDarkMode: isDarkMode,
+                      ),
+                      itemCount: groups.length,
+                    );
+                },
+                child: SingleChildScrollView(
                   child: Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(top: 100, bottom: 30),
-                width: 400,
-                clipBehavior: Clip.antiAlias,
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(100)),
-                child: SvgPicture.asset(
-                  'assets/icons/empty.svg',
-                  width: 400,
+                    children: [
+                      Image.asset(
+                        'assets/images/empty.png',
+                        height: 240,
+                      ),
+                      Padding(
+                          padding: const EdgeInsets.only(top: 18),
+                          child: Text('It\'s empty here,')),
+                      Text('Create task to continue')
+                    ],
+                  ),
                 ),
               ),
-              Text(appLocale.emptyTaskGroupText),
-              Flex(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  direction: Axis.horizontal,
-                  children: [
-                    Text(appLocale.clickOn),
-                    Icon(Icons.add),
-                    Text(appLocale.toAddNewTaskGroup)
-                  ]),
-            ],
-          ))),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: ActionButton(
+                  padding: const EdgeInsets.fromLTRB(67, 14, 67, 14),
+                  onPressed: () => Navigator.of(context)
+                      .pushNamed(CreateTaskGroupScreen.routeName),
+                  fillColor: Constants.appBlue,
+                  text: appLocale.createTask),
+            )
+          ]),
         ),
-      ]),
+      ),
     );
   }
 }

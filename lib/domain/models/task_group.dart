@@ -1,8 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
-
-import '../../core/utils/color_utils.dart';
 import 'task.dart';
 
 class TaskGroup extends Equatable {
@@ -20,9 +17,6 @@ class TaskGroup extends Equatable {
 
   /// total time user plans to finish the task
   Duration totalTime;
-
-  /// color assigned in TaskGroup
-  MaterialColor taskGroupColor;
 
   /// list of tasks to complete
   List<Task> tasks;
@@ -51,7 +45,6 @@ class TaskGroup extends Equatable {
     this.timeOfUpload,
     String taskGroupId,
     List<Task> tasks,
-    MaterialColor taskGroupColor,
     this.taskGroupSubtitle = '',
     this.isRepetitive = false,
     this.longBreakTime,
@@ -62,8 +55,7 @@ class TaskGroup extends Equatable {
     this.bonusTime = Duration.zero,
   })  : this.taskGroupId = taskGroupId ?? Uuid().v1(),
         this.isDeleted = isDeleted ?? false,
-        this.tasks = tasks ?? <Task>[],
-        this.taskGroupColor = taskGroupColor ?? ColorUtils.randomColor();
+        this.tasks = tasks ?? <Task>[];
 
   factory TaskGroup.fromJson(Map<String, dynamic> json) =>
       TaskGroup(json['task_group_name'],
@@ -72,8 +64,6 @@ class TaskGroup extends Equatable {
           tasks: json['tasks']
               .map<Task>((taskJson) => Task.fromJson(taskJson))
               .toList(),
-          taskGroupColor:
-              ColorUtils.getMaterialColorInPos(json['task_group_color']),
           taskGroupSubtitle: json['task_group_subtitle'],
           isRepetitive: json['is_repetitive'],
           longBreakTime: json['long_break_time'] == null
@@ -107,7 +97,6 @@ class TaskGroup extends Equatable {
       'long_break_intervals': longBreakIntervals,
       'total_time': totalTime?.inSeconds,
       'bonus_time': bonusTime?.inSeconds,
-      'task_group_color': ColorUtils.getPositionOfMaterialColor(taskGroupColor)
     };
   }
 
@@ -126,6 +115,15 @@ class TaskGroup extends Equatable {
   double get taskGroupProgress =>
       completedCount / (tasks.isEmpty ? 1 : tasks.length);
 
+  /// returns true if none of the task has been started and false
+  /// otherwise
+  bool get isEditable => tasks.fold<bool>(
+      true, (previousValue, element) => previousValue && !element.hasStarted);
+
+  /// total time elapsed in minutes for this taskgroup
+  double get timeElapsed => tasks
+      .map((task) => (task.totalTime - task.timeRemaining).inMinutes)
+      .fold(0.0, (p, e) => p + e);
   @override
   List<Object> get props => [taskGroupId];
 }
