@@ -178,19 +178,29 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        ActionButton(
-                          onPressed: () => addTask(),
-                          fillColor: Constants.appBlue,
-                          text: _isEditMode ? appLocale.edit : appLocale.add,
-                          icon: Icon(Icons.add, color: Colors.white, size: 24),
+                        Expanded(
+                          child: ActionButton(
+                            resizable: true,
+                            onPressed: () => addTask(),
+                            fillColor: Constants.appBlue,
+                            text: _isEditMode ? appLocale.edit : appLocale.add,
+                            icon:
+                                Icon(Icons.add, color: Colors.white, size: 24),
+                          ),
                         ),
-                        ActionButton(
-                            onPressed: () {
-                              widget.createTaskGroup(context);
-                              Navigator.of(context).pop();
-                            },
-                            fillColor: Constants.appGreen,
-                            text: appLocale.complete)
+                        SizedBox(
+                          width: 36,
+                        ),
+                        Expanded(
+                          child: ActionButton(
+                              resizable: true,
+                              onPressed: () {
+                                widget.createTaskGroup(context);
+                                Navigator.of(context).pop();
+                              },
+                              fillColor: Constants.appGreen,
+                              text: appLocale.complete),
+                        )
                       ],
                     ),
                   )

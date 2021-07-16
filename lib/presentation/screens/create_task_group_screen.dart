@@ -401,13 +401,14 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                             ),
                           if (!modalIsActive)
                             Padding(
-                              padding: const EdgeInsets.only(top: 20),
+                              padding: const EdgeInsets.only(top: 80),
                               child: Align(
                                 alignment: Alignment.center,
                                 child: Builder(
                                   builder: (ctx) => Container(
                                     width: 229,
                                     child: ActionButton(
+                                      resizable: true,
                                       onPressed: () {
                                         setState(() {
                                           modalIsActive = true;

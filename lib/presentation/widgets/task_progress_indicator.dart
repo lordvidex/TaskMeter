@@ -22,16 +22,20 @@ class TaskProgressIndicator extends StatelessWidget {
                       fontSize: 12,
                       color:
                           isDarkMode ? Colors.white : Constants.appNavyBlue))),
-        LinearProgressIndicator(
-          backgroundColor:
-              isDarkMode ? Colors.white.withOpacity(0.4) : Color(0xffEEf4FD),
-          value: progress < 0
-              ? 0
-              : progress > 1
-                  ? 1
-                  : progress,
-          valueColor: AlwaysStoppedAnimation<Color>(
-              isDarkMode ? Constants.appLightBlue : Constants.appNavyBlue),
+        Container(
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(5)),
+          child: LinearProgressIndicator(
+            backgroundColor:
+                isDarkMode ? Colors.white.withOpacity(0.4) : Color(0xffEEf4FD),
+            value: progress < 0
+                ? 0
+                : progress > 1
+                    ? 1
+                    : progress,
+            valueColor: AlwaysStoppedAnimation<Color>(
+                isDarkMode ? Constants.appLightBlue : Constants.appNavyBlue),
+          ),
         ),
       ],
     );

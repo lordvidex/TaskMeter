@@ -66,7 +66,7 @@ class TaskGroupWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 PopupMenuButton<String>(
-                  child: Icon(Icons.more_horiz, size: 24),
+                  child: Icon(Icons.more_horiz, size: 16),
                   onSelected: (value) {
                     switch (value) {
                       case 'delete':

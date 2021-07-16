@@ -35,10 +35,19 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
     Wakelock.enable();
 
     _isPaused = false;
+
     _isFinished = false;
+    
     controller = MosquitoWidgetController();
+    
+    // since this screen was restarted with a task, it shouldn't
+    // be a break time
+    if (context.read<TaskGroupProvider>().isBreak)
+      context.read<TaskGroupProvider>().toggleBreak();
+    
     if (task != null)
       context.read<TimerBloc>().add(TimerStartEvent(task.timeRemaining));
+    
     super.initState();
   }
 

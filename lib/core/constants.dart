@@ -52,6 +52,14 @@ class Constants {
   static ThemeData kThemeData = ThemeData(
       scaffoldBackgroundColor: appLightBlue,
       iconTheme: _lightIconTheme,
+      popupMenuTheme: PopupMenuThemeData(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          textStyle: TextStyle(
+              fontFamily: 'Circular-Std',
+              fontSize: 14,
+              color: appNavyBlue,
+              fontWeight: FontWeight.w500)),
       cardTheme: CardTheme(
           color: Colors.white,
           shape: RoundedRectangleBorder(
@@ -68,13 +76,26 @@ class Constants {
           fontFamily: 'Circular-Std', bodyColor: appNavyBlue));
   static ThemeData kDarkThemeData = ThemeData(
       scaffoldBackgroundColor: Colors.black,
+      splashColor: appLightBlue,
+      brightness: Brightness.dark,
       cardTheme: CardTheme(
           color: appDarkBlue,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           )),
-      brightness: Brightness.dark,
-      iconTheme: IconThemeData(color: Colors.white, size: 40, opacity: 1.0),
+      iconTheme: IconThemeData(
+        color: Colors.white,
+        size: 40,
+        opacity: 1.0,
+      ),
+      popupMenuTheme: PopupMenuThemeData(
+          color: Colors.black,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          textStyle: TextStyle(
+              fontFamily: 'Circular-Std',
+              fontSize: 14,
+              fontWeight: FontWeight.w500)),
       textTheme: TextTheme(
               subtitle1: TextStyle(color: Colors.white),
               bodyText1: TextStyle(

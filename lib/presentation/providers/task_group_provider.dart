@@ -9,12 +9,21 @@ class TaskGroupProvider extends ChangeNotifier {
   TaskGroupProvider({this.taskGroupRepo}) {
     _isBreak = false;
   }
+
+  /// total of all groups that was created
   List<TaskGroup> _groups;
-
-  List<TaskGroup> get taskGroups => _groups..removeWhere((t) => t.isDeleted);
-
   /// the current taskgroup the user has clicked or selected
   TaskGroup _current;
+
+  /// tasks groups that have not been deleted
+  List<TaskGroup> get taskGroups =>
+      List.from(_groups)..removeWhere((t) => t.isDeleted);
+
+  /// task groups that have not been completed
+  List<TaskGroup> get activeTasks => List.from(taskGroups)
+    ..retainWhere((t) => t.completedCount < t.tasks.length);
+
+  
 
   TaskGroup get currentTaskGroup => _current;
 

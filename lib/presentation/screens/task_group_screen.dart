@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../../locale/locales.dart';
 import '../bloc/size_bloc.dart';
 import '../providers/authentication_provider.dart';
-import '../widgets/task_group/task_group_analytics.dart';
 import '../widgets/task_group/task_group_list.dart';
 import 'authentication_screen.dart';
 import 'create_task_group_screen.dart';
@@ -73,7 +72,7 @@ class LandScapeView extends StatelessWidget {
                 height: double.infinity,
                 child: authProvider.user == null
                     ? AuthenticationScreen()
-                    : TaskGroupAnalytics(),
+                    : Container(),
               ),
             ),
             Expanded(

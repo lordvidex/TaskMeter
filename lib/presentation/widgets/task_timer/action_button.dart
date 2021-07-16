@@ -10,6 +10,7 @@ class ActionButton extends StatelessWidget {
   final Color textColor;
   final Color borderColor;
   final bool wide;
+  final bool resizable;
 
   const ActionButton(
       {@required this.onPressed,
@@ -18,6 +19,7 @@ class ActionButton extends StatelessWidget {
       this.textColor,
       this.padding,
       this.borderColor,
+      this.resizable = false,
       @required this.fillColor,
       @required this.text,
       this.icon});
@@ -44,7 +46,14 @@ class ActionButton extends StatelessWidget {
           ],
         ),
         padding: padding ??
-            EdgeInsets.symmetric(horizontal: wide ? 64 : 32, vertical: 14),
+            EdgeInsets.symmetric(
+              horizontal: resizable
+                  ? 0.0
+                  : wide
+                      ? 64
+                      : 32,
+              vertical: 14,
+            ),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(60),
             color: filled ? fillColor : Colors.transparent,
