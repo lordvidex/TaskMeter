@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:task_meter/core/constants.dart';
-import 'package:task_meter/presentation/screens/create_task_group_screen.dart';
-import 'package:task_meter/presentation/screens/settings_screen.dart';
-import 'package:task_meter/presentation/widgets/task_timer/action_button.dart';
 
+import '../../../core/constants.dart';
 import '../../../locale/locales.dart';
 import '../../providers/authentication_provider.dart';
 import '../../providers/task_group_provider.dart';
+import '../../screens/create_task_group_screen.dart';
+import '../../screens/settings_screen.dart';
+import '../task_timer/action_button.dart';
 import 'data_container.dart';
 import 'task_group_widget.dart';
 
@@ -33,11 +33,14 @@ class TaskGroupListWidget extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
           child: Stack(
             children: [
-              Column(children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton(
+              CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    elevation: 0,
+                    backgroundColor:
+                        isDarkMode ? Colors.black : Constants.appLightBlue,
+                    floating: true,
+                    leading: TextButton(
                       style: TextButton.styleFrom(
                           padding: EdgeInsets.fromLTRB(0, 10, 30, 10)),
                       child: Icon(Icons.account_circle_outlined,
@@ -46,77 +49,86 @@ class TaskGroupListWidget extends StatelessWidget {
                           size: 24),
                       onPressed: () {},
                     ),
-                    TextButton(
-                      style: TextButton.styleFrom(
-                          padding: EdgeInsets.fromLTRB(30, 10, 0, 10)),
-                      onPressed: () => Navigator.of(context)
-                          .pushNamed(SettingsScreen.routeName),
-                      child: SvgPicture.asset('assets/icons/settings.svg',
-                          width: 29,
-                          height: 29,
-                          color: isDarkMode
-                              ? Colors.white
-                              : Constants.appNavyBlue),
-                    )
-                  ],
-                ),
-                Padding(
-                    padding: const EdgeInsets.only(top: 18, bottom: 18),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Task Meter',
-                        style: TextStyle(
-                            fontSize: 32, fontWeight: FontWeight.w500),
-                      ),
-                    )),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                        child: Consumer<TaskGroupProvider>(
-                      builder: (ctx, mProvider, _) => DataContainer(
-                          label: 'Task completed',
-                          text: '${mProvider.tasksCompleted}',
-                          isDarkMode: isDarkMode),
-                    )),
-                    SizedBox(
-                      width: 16,
-                    ),
-                    Expanded(
-                        child: Consumer<TaskGroupProvider>(
-                      builder: (ctx, mProvider, _) => DataContainer(
-                          label: 'Tracked Hours',
-                          text: mProvider.trackedHours.toStringAsFixed(1),
-                          isDarkMode: isDarkMode),
-                    ))
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 25.0),
-                  child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Active Tasks',
-                        style: TextStyle(fontSize: 18),
+                    actions: [
+                      TextButton(
+                        style: TextButton.styleFrom(
+                            padding: EdgeInsets.fromLTRB(30, 10, 0, 10)),
+                        onPressed: () => Navigator.of(context)
+                            .pushNamed(SettingsScreen.routeName),
+                        child: SvgPicture.asset('assets/icons/settings.svg',
+                            width: 29,
+                            height: 29,
+                            color: isDarkMode
+                                ? Colors.white
+                                : Constants.appNavyBlue),
+                      )
+                    ],
+                  ),
+                  SliverPadding(
+                      padding: const EdgeInsets.only(top: 8, bottom: 18),
+                      sliver: SliverToBoxAdapter(
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Task Meter',
+                            style: TextStyle(
+                                fontSize: 32, fontWeight: FontWeight.w500),
+                          ),
+                        ),
                       )),
-                ),
-                Expanded(
-                  child: Consumer<TaskGroupProvider>(
+                  SliverToBoxAdapter(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                            child: Consumer<TaskGroupProvider>(
+                          builder: (ctx, mProvider, _) => DataContainer(
+                              label: 'Task completed',
+                              text: '${mProvider.tasksCompleted}',
+                              isDarkMode: isDarkMode),
+                        )),
+                        SizedBox(
+                          width: 16,
+                        ),
+                        Expanded(
+                            child: Consumer<TaskGroupProvider>(
+                          builder: (ctx, mProvider, _) => DataContainer(
+                              label: 'Tracked Hours',
+                              text: mProvider.trackedHours.toStringAsFixed(1),
+                              isDarkMode: isDarkMode),
+                        ))
+                      ],
+                    ),
+                  ),
+                  SliverPadding(
+                      padding: const EdgeInsets.symmetric(vertical: 25.0),
+                      sliver: SliverToBoxAdapter(
+                        child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Active Tasks',
+                              style: TextStyle(fontSize: 18),
+                            )),
+                      )),
+                  Consumer<TaskGroupProvider>(
                     builder: (ctx, provider, child) {
                       final groups = provider.activeTasks;
                       if (groups.isEmpty)
                         return child;
                       else
-                        return ListView.builder(
-                          itemBuilder: (ctx, index) => TaskGroupWidget(
-                            taskGroup: groups[index],
-                            isDarkMode: isDarkMode,
-                          ),
-                          itemCount: groups.length,
-                        );
+                        return SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                                (ctx, index) => index != groups.length
+                                    ? TaskGroupWidget(
+                                        taskGroup: groups[index],
+                                        isDarkMode: isDarkMode,
+                                      )
+                                    : Container(
+                                        height: 30,
+                                      ),
+                                childCount: groups.length + 1));
                     },
-                    child: SingleChildScrollView(
+                    child: SliverToBoxAdapter(
                       child: Column(
                         children: [
                           Image.asset(
@@ -130,9 +142,9 @@ class TaskGroupListWidget extends StatelessWidget {
                         ],
                       ),
                     ),
-                  ),
-                ),
-              ]),
+                  )
+                ],
+              ),
               Positioned(
                   bottom: 0,
                   left: 0,

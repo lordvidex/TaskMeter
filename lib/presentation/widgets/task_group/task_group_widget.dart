@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:task_meter/core/constants.dart';
-import 'package:task_meter/presentation/widgets/task_group/gradient_icon.dart';
 
-import '../../../locale/locales.dart';
+import '../../../core/constants.dart';
 import '../../../domain/models/task_group.dart';
+import '../../../locale/locales.dart';
 import '../../providers/task_group_provider.dart';
 import '../../screens/task_group_description_screen.dart';
 import '../task_progress_indicator.dart';
+import 'gradient_icon.dart';
 
 class TaskGroupWidget extends StatelessWidget {
   final TaskGroup taskGroup;
@@ -19,7 +19,7 @@ class TaskGroupWidget extends StatelessWidget {
     final taskGroupProvider = context.read<TaskGroupProvider>();
     return Container(
         padding: const EdgeInsets.all(14),
-        margin: const EdgeInsets.only(bottom: 16),
+        margin: const EdgeInsets.only(bottom: 18),
         decoration: BoxDecoration(
           color: isDarkMode ? Constants.appDarkBlue : Constants.appSkyBlue,
           borderRadius: BorderRadius.circular(8),
