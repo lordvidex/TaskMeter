@@ -14,6 +14,7 @@ import '../../domain/models/task.dart';
 import '../../locale/locales.dart';
 import '../bloc/timer_bloc.dart';
 import '../providers/task_group_provider.dart';
+import '../widgets/app_back_button.dart';
 import '../widgets/task_timer/action_button.dart';
 import '../widgets/task_timer/mosquito_widget.dart';
 
@@ -37,17 +38,17 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
     _isPaused = false;
 
     _isFinished = false;
-    
+
     controller = MosquitoWidgetController();
-    
+
     // since this screen was restarted with a task, it shouldn't
     // be a break time
     if (context.read<TaskGroupProvider>().isBreak)
       context.read<TaskGroupProvider>().toggleBreak();
-    
+
     if (task != null)
       context.read<TimerBloc>().add(TimerStartEvent(task.timeRemaining));
-    
+
     super.initState();
   }
 
@@ -88,261 +89,267 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
         return Future.value(true);
       },
       child: Scaffold(
+          backgroundColor: isDarkMode ? Colors.black : Colors.white,
           body: Stack(
-        fit: StackFit.expand,
-        children: [
-          Positioned(
-              top: 22,
-              right: 10,
-              child: MosquitoWidget(
-                controller: controller,
-                lowerBoundX: size.width - 10 - 250,
-                lowerBoundY: 22,
-                upperBoundX: 10,
-                upperBoundY: size.height - 22 - 250,
-                child: Container(
-                  width: 250,
-                  height: 250,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color.fromRGBO(203, 224, 255, 0.71),
+            fit: StackFit.expand,
+            children: [
+              Positioned(
+                  top: 22,
+                  right: 10,
+                  child: MosquitoWidget(
+                    controller: controller,
+                    lowerBoundX: size.width - 10 - 250,
+                    lowerBoundY: 22,
+                    upperBoundX: 10,
+                    upperBoundY: size.height - 22 - 250,
+                    child: Container(
+                      width: 250,
+                      height: 250,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color.fromRGBO(203, 224, 255, 0.71),
+                      ),
+                    ),
+                  )),
+              Positioned(
+                  bottom: 251,
+                  left: -29,
+                  child: MosquitoWidget(
+                    fasterX: false,
+                    controller: controller,
+                    upperBoundX: size.width,
+                    lowerBoundX: 0,
+                    upperBoundY: 251,
+                    lowerBoundY: 501 - size.height,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Color.fromRGBO(203, 255, 208, 0.71),
+                          shape: BoxShape.circle),
+                      width: 250,
+                      height: 250,
+                    ),
+                  )),
+              Positioned(
+                  bottom: 0,
+                  right: -29,
+                  child: MosquitoWidget(
+                    upperBoundX: -29,
+                    upperBoundY: 0,
+                    lowerBoundX: -size.width - 29,
+                    lowerBoundY: -size.height,
+                    controller: controller,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Color.fromRGBO(255, 203, 203, 0.71),
+                          shape: BoxShape.circle),
+                      width: 250,
+                      height: 250,
+                    ),
+                  )),
+              Container(
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(
+                    sigmaX: backDropFilter,
+                    sigmaY: backDropFilter,
                   ),
-                ),
-              )),
-          Positioned(
-              bottom: 251,
-              left: -29,
-              child: MosquitoWidget(
-                fasterX: false,
-                controller: controller,
-                upperBoundX: size.width,
-                lowerBoundX: 0,
-                upperBoundY: 251,
-                lowerBoundY: 501 - size.height,
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Color.fromRGBO(203, 255, 208, 0.71),
-                      shape: BoxShape.circle),
-                  width: 250,
-                  height: 250,
-                ),
-              )),
-          Positioned(
-              bottom: 0,
-              right: -29,
-              child: MosquitoWidget(
-                upperBoundX: -29,
-                upperBoundY: 0,
-                lowerBoundX: -size.width - 29,
-                lowerBoundY: -size.height,
-                controller: controller,
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Color.fromRGBO(255, 203, 203, 0.71),
-                      shape: BoxShape.circle),
-                  width: 250,
-                  height: 250,
-                ),
-              )),
-          Container(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(
-                sigmaX: backDropFilter,
-                sigmaY: backDropFilter,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 88.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    BlocConsumer<TimerBloc, TimerState>(
-                      listenWhen: (fromState, toState) =>
-                          fromState is! TimerRunning ||
-                          toState is! TimerRunning,
-                      listener: (ctx, state) {
-                        final taskGroup = taskGroupProvider.currentTaskGroup;
-                        if (!taskGroupProvider.isBreak)
-                          taskGroupProvider.updateTaskTime(
-                              task, state.duration);
-                        if (state is TimerFinished) {
-                          controller.pause();
-                          setState(() {
-                            _isFinished = true;
-                          });
-                          // add residual time to bonus time for the group task and mark task as done
-                          if (state.duration != Duration.zero) {
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 88.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        BlocConsumer<TimerBloc, TimerState>(
+                          listenWhen: (fromState, toState) =>
+                              fromState is! TimerRunning ||
+                              toState is! TimerRunning,
+                          listener: (ctx, state) {
+                            final taskGroup =
+                                taskGroupProvider.currentTaskGroup;
                             if (!taskGroupProvider.isBreak)
                               taskGroupProvider.updateTaskTime(
-                                  task, Duration.zero);
-                            taskGroupProvider.updateBonusTime(
-                                duration: state.duration);
-                          }
-                          if (taskGroup.taskGroupProgress == 1) {
-                            // all tasks are finished
-                            Navigator.of(context).pop();
-                          }
-                        } else if (state is TimerPaused ||
-                            state is TimerReady) {
-                          controller.pause();
-                        } else {
-                          controller.resume();
-                        }
-                      },
-                      builder: (ctx, state) => state is TimerFinished
-                          ? CircularPercentIndicator(
-                              lineWidth: 3,
-                              radius: 234,
-                              percent: 1,
-                              animation: false,
-                              progressColor: Constants.appGreen,
-                              center: SvgPicture.asset(
-                                'assets/icons/check.svg',
-                                width: 117,
-                                height: 76.5,
-                              ))
-                          : CircularPercentIndicator(
-                              radius: 300,
-                              reverse: true,
-                              percent: state.duration.inMilliseconds /
-                                  task.totalTime.inMilliseconds,
-                              lineWidth: 3,
-                              backgroundColor: Colors.transparent,
-                              linearGradient: LinearGradient(
-                                  colors: isDarkMode
-                                      ? [
-                                          Colors.white,
-                                          Color.fromRGBO(229, 229, 229, 0.49)
-                                        ]
-                                      : [
-                                          Color(0xff425094),
-                                          Color.fromRGBO(29, 37, 84, 0.5),
-                                        ]),
-                              center: Text(
-                                DurationUtils.durationToClockString(
-                                    state.duration),
-                                style: TextStyle(
-                                    color: isDarkMode
-                                        ? Color(0xffFDFEFE)
-                                        : Color.fromRGBO(29, 37, 84, 1),
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 70,
-                                    fontFamily: 'Circular-Std'),
-                              ),
-                            ),
-                    ),
-                    Text(
-                        !_isFinished
-                            ? task.taskName
-                            : taskGroupProvider.isBreak
-                                ? appLocale.breakComplete
-                                : appLocale.taskComplete,
-                        style: TextStyle(
-                            fontFamily: 'Circular-Std',
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold)),
-                    !_isFinished
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              ActionButton(
-                                onPressed: () {
-                                  _isPaused = !_isPaused;
-                                  context.read<TimerBloc>().add(_isPaused
-                                      ? TimerPauseEvent()
-                                      : TimerResumeEvent());
-                                  setState(() {});
-                                },
-                                filled: !_isPaused,
-                                fillColor: Color.fromRGBO(195, 98, 98, 1),
-                                text: _isPaused
-                                    ? appLocale.resume
-                                    : appLocale.pause,
-                                icon: SvgPicture.asset(
-                                  'assets/icons/${_isPaused ? 'play' : 'pause'}.svg',
-                                  height: _isPaused ? 18 : 14,
-                                  width: _isPaused ? 18 : 10,
+                                  task, state.duration);
+                            if (state is TimerFinished) {
+                              controller.pause();
+                              setState(() {
+                                _isFinished = true;
+                              });
+                              // add residual time to bonus time for the group task and mark task as done
+                              if (state.duration != Duration.zero) {
+                                if (!taskGroupProvider.isBreak)
+                                  taskGroupProvider.updateTaskTime(
+                                      task, Duration.zero);
+                                taskGroupProvider.updateBonusTime(
+                                    duration: state.duration);
+                              }
+                              if (taskGroup.taskGroupProgress == 1) {
+                                // all tasks are finished
+                                Navigator.of(context).pop();
+                              }
+                            } else if (state is TimerPaused ||
+                                state is TimerReady) {
+                              controller.pause();
+                            } else {
+                              controller.resume();
+                            }
+                          },
+                          builder: (ctx, state) => state is TimerFinished
+                              ? CircularPercentIndicator(
+                                  lineWidth: 3,
+                                  radius: 234,
+                                  percent: 1,
+                                  animation: false,
+                                  progressColor: Constants.appGreen,
+                                  center: SvgPicture.asset(
+                                    'assets/icons/check.svg',
+                                    width: 117,
+                                    height: 76.5,
+                                  ))
+                              : CircularPercentIndicator(
+                                  radius: 300,
+                                  reverse: true,
+                                  percent: state.duration.inMilliseconds /
+                                      task.totalTime.inMilliseconds,
+                                  lineWidth: 3,
+                                  backgroundColor: Colors.transparent,
+                                  linearGradient: LinearGradient(
+                                      colors: isDarkMode
+                                          ? [
+                                              Colors.white,
+                                              Color.fromRGBO(
+                                                  229, 229, 229, 0.49)
+                                            ]
+                                          : [
+                                              Color(0xff425094),
+                                              Color.fromRGBO(29, 37, 84, 0.5),
+                                            ]),
+                                  center: Text(
+                                    DurationUtils.durationToClockString(
+                                        state.duration),
+                                    style: TextStyle(
+                                        color: isDarkMode
+                                            ? Color(0xffFDFEFE)
+                                            : Color.fromRGBO(29, 37, 84, 1),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 70,
+                                        fontFamily: 'Circular-Std'),
+                                  ),
                                 ),
-                              ),
-                              ActionButton(
-                                onPressed: () {
-                                  context
-                                      .read<TimerBloc>()
-                                      .add(TimerFinishEvent());
-                                },
-                                fillColor: Constants.appGreen,
-                                text: appLocale.complete,
+                        ),
+                        Text(
+                            !_isFinished
+                                ? task.taskName
+                                : taskGroupProvider.isBreak
+                                    ? appLocale.breakComplete
+                                    : appLocale.taskComplete,
+                            style: TextStyle(
+                                fontFamily: 'Circular-Std',
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold)),
+                        !_isFinished
+                            ? Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  ActionButton(
+                                    onPressed: () {
+                                      _isPaused = !_isPaused;
+                                      context.read<TimerBloc>().add(_isPaused
+                                          ? TimerPauseEvent()
+                                          : TimerResumeEvent());
+                                      setState(() {});
+                                    },
+                                    filled: !_isPaused,
+                                    fillColor: Color.fromRGBO(195, 98, 98, 1),
+                                    text: _isPaused
+                                        ? appLocale.resume
+                                        : appLocale.pause,
+                                    icon: SvgPicture.asset(
+                                      'assets/icons/${_isPaused ? 'play' : 'pause'}.svg',
+                                      height: _isPaused ? 18 : 14,
+                                      width: _isPaused ? 18 : 10,
+                                    ),
+                                  ),
+                                  ActionButton(
+                                    onPressed: () {
+                                      context
+                                          .read<TimerBloc>()
+                                          .add(TimerFinishEvent());
+                                    },
+                                    fillColor: Constants.appGreen,
+                                    text: appLocale.complete,
+                                  )
+                                ],
                               )
-                            ],
-                          )
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              if (!taskGroupProvider.isBreak)
-                                ActionButton(
-                                  onPressed: () {
-                                    if (!taskGroupProvider.isBreak)
-                                      taskGroupProvider.toggleBreak();
-                                    task = Task(
-                                        taskName: taskGroupProvider.isLongBreak
-                                            ? appLocale.longBreak
-                                            : appLocale.shortBreak)
-                                      ..setTotalTime(
-                                          taskGroupProvider.isLongBreak
-                                              ? taskGroupProvider
-                                                  .currentTaskGroup
-                                                  .longBreakTime
-                                              : taskGroupProvider
-                                                  .currentTaskGroup
-                                                  .shortBreakTime);
-                                    setState(() {
-                                      _isFinished = false;
+                            : Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  if (!taskGroupProvider.isBreak)
+                                    ActionButton(
+                                      onPressed: () {
+                                        if (!taskGroupProvider.isBreak)
+                                          taskGroupProvider.toggleBreak();
+                                        task = Task(
+                                            taskName: taskGroupProvider
+                                                    .isLongBreak
+                                                ? appLocale.longBreak
+                                                : appLocale.shortBreak)
+                                          ..setTotalTime(
+                                              taskGroupProvider.isLongBreak
+                                                  ? taskGroupProvider
+                                                      .currentTaskGroup
+                                                      .longBreakTime
+                                                  : taskGroupProvider
+                                                      .currentTaskGroup
+                                                      .shortBreakTime);
+                                        setState(() {
+                                          _isFinished = false;
+                                          context.read<TimerBloc>().add(
+                                              TimerStartEvent(
+                                                  task.timeRemaining));
+                                        });
+                                      },
+                                      fillColor: Color.fromRGBO(195, 98, 98, 1),
+                                      text: appLocale.takeBreak,
+                                    ),
+                                  ActionButton(
+                                    wide: taskGroupProvider.isBreak,
+                                    onPressed: () {
+                                      if (taskGroupProvider.isBreak)
+                                        taskGroupProvider.toggleBreak();
+                                      setState(() {
+                                        task = taskGroupProvider
+                                            .currentTaskGroup.sortedTasks[0];
+                                        _isFinished = false;
+                                      });
                                       context.read<TimerBloc>().add(
                                           TimerStartEvent(task.timeRemaining));
-                                    });
-                                  },
-                                  fillColor: Color.fromRGBO(195, 98, 98, 1),
-                                  text: appLocale.takeBreak,
-                                ),
-                              ActionButton(
-                                wide: taskGroupProvider.isBreak,
-                                onPressed: () {
-                                  if (taskGroupProvider.isBreak)
-                                    taskGroupProvider.toggleBreak();
-                                  setState(() {
-                                    task = taskGroupProvider
-                                        .currentTaskGroup.sortedTasks[0];
-                                    _isFinished = false;
-                                  });
-                                  context
-                                      .read<TimerBloc>()
-                                      .add(TimerStartEvent(task.timeRemaining));
-                                },
-                                fillColor: Constants.appGreen,
-                                text: appLocale.nextTask,
+                                    },
+                                    fillColor: Constants.appGreen,
+                                    text: appLocale.nextTask,
+                                  )
+                                ],
                               )
-                            ],
-                          )
-                  ],
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          Positioned(
-              top: 56,
-              left: 0,
-              child: TextButton(
-                  onPressed: () {
-                    saveTaskStatus(context);
-                    Navigator.of(context).pop();
-                  },
-                  child: SvgPicture.asset(
-                    'assets/icons/back.svg',
-                    width: 29,
-                    height: 24,
-                    color: isDarkMode ? Colors.white : null,
-                  ))),
-        ],
-      )),
+              Positioned(
+                  top: 56,
+                  left: 0,
+                  child: TextButton(
+                      onPressed: () {
+                        saveTaskStatus(context);
+                        Navigator.of(context).pop();
+                      },
+                      child: SvgPicture.asset(
+                        'assets/icons/back.svg',
+                        width: 29,
+                        height: 24,
+                        color: isDarkMode ? Colors.white : null,
+                      ))),
+            ],
+          )),
     );
   }
 }

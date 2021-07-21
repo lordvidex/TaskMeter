@@ -8,7 +8,7 @@ abstract class Failure extends Equatable {
 
 class ServerFailure extends Failure {
   @override
-  String toString() {
+  String tToString() {
     return "Server error! Please try again later";
   }
 }
@@ -19,42 +19,42 @@ class CredentialFailure extends Failure {
   @override
   List<Object> get props => [this.socialPlatform];
   @override
-  String toString() {
+  String tToString() {
     return 'Failed to get credential from ${socialPlatform.toString()}';
   }
 }
 
 class NetworkFailure extends Failure {
   @override
-  String toString() {
+  String tToString() {
     return 'Failed to connect to the internet. Check your internet connection and try again later';
   }
 }
 
 class CacheFailure extends Failure {
   @override
-  String toString() {
+  String tToString() {
     return 'Failed to save data to device. Please grant permission request and try again later!';
   }
 }
 
 class UserExistsFailure extends Failure {
   @override
-  String toString() {
+  String tToString() {
     return 'The User with this credential already exist in the database. Please login instead';
   }
 }
 
 class UserDoesNotExistFailure extends Failure {
   @override
-  String toString() {
+  String tToString() {
     return 'The User with this detail does not exist. Please sign up to create a new account';
   }
 }
 
 class WrongCredentialsFailure extends Failure {
   @override
-  String toString() {
+  String tToString() {
     return 'You entered wrong credentials! Please try again.';
   }
 }

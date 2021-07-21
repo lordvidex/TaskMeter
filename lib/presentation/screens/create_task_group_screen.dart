@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:task_meter/presentation/widgets/app_back_button.dart';
 
 import '../../core/algorithms/time_divider.dart';
 import '../../core/constants.dart';
@@ -241,7 +242,6 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                   fontFamily: 'Circular-Std', fontWeight: FontWeight.w500),
               bodyText2: getDefaultTextStyle(theme, isDarkMode, context))),
       child: Scaffold(
-        backgroundColor: isDarkMode ? Colors.black : Color(0xffE8F1FC),
         body: SafeArea(
           child: SingleChildScrollView(
             controller: _scrollController,

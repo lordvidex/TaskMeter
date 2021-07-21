@@ -35,7 +35,6 @@ dependencies:
   get_it: ^5.0.6
   provider: ^5.0.0
   intl: ^0.17.0 
-  settings_ui: ^0.6.0
   shared_preferences: ^2.0.4
   internet_connection_checker: ^0.0.1
   firebase_core: ^1.0.0

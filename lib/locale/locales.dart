@@ -57,7 +57,9 @@ class AppLocalizations {
         name: 'longBreakAfter',
         desc: 'text for long break after or long break intervals',
       );
-
+  String get longBreakIntervals => Intl.message('Long break intervals',
+  name: 'longBreakIntervals',
+  desc: '');
   String get language => Intl.message(
         'Language',
         name: 'language',

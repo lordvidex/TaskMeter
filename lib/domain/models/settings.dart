@@ -17,6 +17,7 @@ class Settings extends Equatable {
   Duration shortBreak;
   Duration longBreak;
   Duration totalTime;
+  // en && ru
   String language;
   AppTheme appTheme;
 
@@ -29,7 +30,6 @@ class Settings extends Equatable {
     @required this.longBreakIntervals,
     @required this.shortBreak,
     @required this.longBreak,
-    //TODO: add localization
     this.language,
     this.appTheme,
     this.timeOfUpload,
@@ -64,6 +64,24 @@ class Settings extends Equatable {
   void setUpdateTime(DateTime dateTime) {
     timeOfUpload = DateTime.now();
   }
+
+  Settings copyWith({
+    Duration totalTime,
+    int longBreakIntervals,
+    Duration shortBreak,
+    Duration longBreak,
+    String language,
+    AppTheme appTheme,
+    DateTime timeOfUpload,
+  }) =>
+      Settings(
+          longBreak: longBreak ?? this.longBreak,
+          shortBreak: shortBreak ?? this.shortBreak,
+          longBreakIntervals: longBreakIntervals ?? this.longBreakIntervals,
+          totalTime: totalTime ?? this.totalTime,
+          appTheme: appTheme ?? this.appTheme,
+          language: language ?? this.language,
+          timeOfUpload: timeOfUpload ?? this.timeOfUpload);
 
   @override
   List<Object> get props =>

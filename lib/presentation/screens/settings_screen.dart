@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:settings_ui/settings_ui.dart';
 
+import '../../core/constants.dart';
+import '../../domain/models/app_theme.dart';
 import '../../locale/locales.dart';
-import '../../domain/models/settings.dart';
 import '../providers/settings_provider.dart';
-import 'select_theme_screen.dart';
+import '../widgets/settings/settings_option_screen.dart';
+import '../widgets/settings/settings_tile.dart';
 
 class SettingsScreen extends StatefulWidget {
   static const routeName = '/settings';
@@ -17,202 +19,169 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   SettingsProvider _provider;
-  Settings _settings;
   AppLocalizations appLocale;
+
   @override
   void initState() {
     super.initState();
     _provider = context.read<SettingsProvider>();
-    _settings = Settings.fromJson(_provider.settings.toJson());
+  }
+
+  // helper functions
+  void _showSettingsOptionScreen<T>({
+    @required String title,
+    @required Iterable<T> options,
+    @required T current,
+    @required Function(T) update,
+    bool hasCustomButton = false,
+    Set<T> fullRowButtons,
+    String Function(T) transform,
+  }) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (ctx) => SettingsOptionScreen<T>(
+              hasCustomButton: hasCustomButton,
+              update: update,
+              fullRowButtons: fullRowButtons ?? {},
+              current: current,
+              options: options,
+              valueToString: transform,
+              title: title,
+            )));
   }
 
   @override
   Widget build(BuildContext context) {
-    // AppLocalizations singleton
     appLocale = AppLocalizations.of(context);
-    // changes all leadingIcons to the same size
-    Icon resizedIcon(IconData icon) => Icon(icon, size: 30);
-
-    final shortBreakWidget = DropdownButton<Duration>(
-        value: _settings.shortBreak,
-        onChanged: (x) {
-          _settings.shortBreak = x;
-          setState(() {});
-        },
-        items: List.generate(
-            16,
-            (x) => DropdownMenuItem<Duration>(
-                value: Duration(minutes: x),
-                child: Text(appLocale.minutes(x)))));
-
-    final longBreakWidget = DropdownButton<Duration>(
-        value: _settings.longBreak,
-        onChanged: (x) {
-          _settings.longBreak = x;
-          setState(() {});
-        },
-        items: List.generate(
-            7,
-            (x) => DropdownMenuItem<Duration>(
-                value: Duration(minutes: x * 5),
-                child: Text(appLocale.minutes(x * 5)))));
-    final longBreakIntervalWidget = DropdownButton<int>(
-        value: _settings.longBreakIntervals,
-        onChanged: (x) {
-          _settings.longBreakIntervals = x;
-          setState(() {});
-        },
-        items: List.generate(
-            9,
-            (x) => DropdownMenuItem<int>(
-                value: x + 2, child: Text(appLocale.intervals(x + 2)))));
-    final languageWidget = DropdownButton<String>(
-        value: _settings.language,
-        onChanged: (str) {
-          _provider.updateLanguage(str);
-          setState(() {
-            _settings.language = str;
-          });
-        },
-        items: [
-          DropdownMenuItem(
-            child: Text('English'),
-            value: 'en',
-          ),
-          DropdownMenuItem(
-            child: Text('Русский'),
-            value: 'ru',
-          )
-        ]);
-    final themeWidget = Text(
-        '${appLocale.themeType(_provider.settings.appTheme)} ${appLocale.theme}');
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return WillPopScope(
-      onWillPop: () => _back(context),
+      onWillPop: () {
+        Navigator.of(context).pop();
+        return Future.value(true);
+      },
       child: ListTileTheme(
-        iconColor: Colors.blue[300],
+        tileColor: isDarkMode ? Constants.appNavyBlue : Constants.appSkyBlue,
+        selectedTileColor: Constants.appBlue,
+        iconColor: Constants.appBlue,
         child: Scaffold(
-          appBar: AppBar(title: Text(appLocale.generalSettings), actions: [
-            IconButton(
-                icon: Icon(Icons.check),
-                onPressed: () async {
-                  if(_provider.settings!= _settings) _provider.updateSettings(_settings);
-                  if (await _back(context)) {
-                    Navigator.of(context).pop();
-                  }
-                })
-          ]),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: SettingsList(sections: [
-              SettingsSection(
-                title: appLocale.taskGroups,
-                tiles: [
-                  SettingsTile(
-                    iosChevron: null,
-                    titleMaxLines: 2,
-                    title: appLocale.shortBreakDuration,
-                    trailing: shortBreakWidget,
-                    leading: resizedIcon(Icons.timer_3),
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: SingleChildScrollView(
+                  child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextButton(
+                    style: TextButton.styleFrom(
+                        padding: const EdgeInsets.fromLTRB(0, 14, 30, 14)),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: SvgPicture.asset('assets/icons/back.svg',
+                        color:
+                            isDarkMode ? Colors.white : Constants.appNavyBlue),
                   ),
-                  SettingsTile(
-                      titleMaxLines: 2,
-                      iosChevron: null,
-                      title: appLocale.longBreakDuration,
-                      trailing: longBreakWidget,
-                      leading: resizedIcon(Icons.timer_10)),
-                  SettingsTile(
-                    titleMaxLines: 2,
-                    title: appLocale.longBreakAfter,
-                    iosChevron: null,
-                    leading: Container(width: 30),
-                    trailing: longBreakIntervalWidget,
-                  )
-                ],
-              ),
-              SettingsSection(
-                  maxLines: 2,
-                  title:
-                      '${appLocale.language} ${appLocale.and} ${appLocale.theme.toLowerCase()}',
-                  tiles: [
+                  Padding(
+                      child: Text(
+                        appLocale.settings,
+                        style: TextStyle(fontSize: 24),
+                      ),
+                      padding: const EdgeInsets.only(top: 27, bottom: 30)),
+                  SettingsSection(title: 'Tasks', tiles: [
                     SettingsTile(
-                      title: appLocale.language,
-                      leading: resizedIcon(Icons.translate_outlined),
-                      trailing: languageWidget,
-                      iosChevron: null,
-                    ),
+                        title: appLocale.shortBreakDuration,
+                        onPressed: () => _showSettingsOptionScreen<int>(
+                              hasCustomButton: true,
+                              update: (newValue) => _provider.updateSettings(
+                                  _provider.settings.copyWith(
+                                      shortBreak: Duration(minutes: newValue))),
+                              current: _provider.settings.shortBreak.inMinutes,
+                              title: appLocale.shortBreakDuration,
+                              transform: appLocale.minutes,
+                              options: Set.from([1, 2, 3, 4, 5, 8, 10])
+                                ..add(_provider.settings.shortBreak.inMinutes),
+                            ),
+                        subtitle: appLocale
+                            .minutes(_provider.settings.shortBreak.inMinutes)),
                     SettingsTile(
-                      title: appLocale.appTheme,
-                      leading: resizedIcon(Icons.brightness_6_outlined),
-                      trailing: themeWidget,
-                      onPressed: (_) => Navigator.of(context)
-                          .pushNamed(SelectThemeScreen.routeName),
-                    )
+                        title: appLocale.longBreakDuration,
+                        onPressed: () => _showSettingsOptionScreen<int>(
+                              hasCustomButton: true,
+                              update: (newValue) => _provider.updateSettings(
+                                  _provider.settings.copyWith(
+                                      longBreak: Duration(minutes: newValue))),
+                              current: _provider.settings.longBreak.inMinutes,
+                              title: appLocale.longBreakDuration,
+                              transform: appLocale.minutes,
+                              options: Set.from([5, 10, 15, 20, 25, 30, 45])
+                                ..add(_provider.settings.longBreak.inMinutes),
+                            ),
+                        subtitle: appLocale
+                            .minutes(_provider.settings.longBreak.inMinutes)),
+                    SettingsTile(
+                        title: appLocale.longBreakAfter,
+                        onPressed: () => _showSettingsOptionScreen<int>(
+                              hasCustomButton: true,
+                              update: (newValue) => _provider.updateSettings(
+                                  _provider.settings
+                                      .copyWith(longBreakIntervals: newValue)),
+                              title: appLocale.longBreakIntervals,
+                              transform: appLocale.intervals,
+                              current: _provider.settings.longBreakIntervals,
+                              options: Set.from([1, 2, 3])
+                                ..add(_provider.settings.longBreakIntervals),
+                            ),
+                        subtitle: appLocale
+                            .intervals(_provider.settings.longBreakIntervals)),
                   ]),
-              SettingsSection(tiles: [
-                SettingsTile(
-                    title: appLocale.about,
-                    onPressed: (_) => showAboutDialog(
-                        context: context,
-                        applicationIcon: Image.asset(
-                          'assets/images/task_icon.png',
-                          height: 30,
-                        ),),
-                    leading: resizedIcon(Icons.info_outline)),
-                SettingsTile(
-                    title: appLocale.feedback,
-                    leading: resizedIcon(Icons.feedback)),
-                SettingsTile(
-                    title: appLocale.rate,
-                    leading: resizedIcon(Icons.star_rate))
-              ])
-            ]),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 29.0),
+                    child: SettingsSection(
+                        title: 'Language and Appearance',
+                        tiles: [
+                          SettingsTile(
+                              title: appLocale.language,
+                              onPressed: () =>
+                                  _showSettingsOptionScreen<String>(
+                                      update: (newValue) => _provider
+                                          .updateSettings(_provider.settings
+                                              .copyWith(language: newValue)),
+                                      title: appLocale.language,
+                                      current: _provider.settings.language,
+                                      options: ['en', 'ru'],
+                                      transform: (string) {
+                                        if (string == 'ru') {
+                                          return 'Русский';
+                                        }
+                                        return 'English';
+                                      }),
+                              subtitle: _provider.settings.language == 'ru'
+                                  ? 'Русский'
+                                  : 'English'),
+                          SettingsTile(
+                              title: appLocale.appTheme,
+                              onPressed: () =>
+                                  _showSettingsOptionScreen<AppTheme>(
+                                      update: (newValue) => _provider
+                                          .updateSettings(_provider.settings
+                                              .copyWith(appTheme: newValue)),
+                                      fullRowButtons: {AppTheme.System},
+                                      title: appLocale.appTheme,
+                                      current: _provider.settings.appTheme,
+                                      options: AppTheme.values,
+                                      transform: appLocale.themeType),
+                              subtitle:
+                                  '${appLocale.themeType(_provider.settings.appTheme)} ${appLocale.theme}'),
+                          SettingsTile(title: appLocale.feedback),
+                          SettingsTile(title: appLocale.rate)
+                        ]),
+                  ),
+                ],
+              )),
+            ),
           ),
         ),
       ),
     );
-  }
-  
-  Future<bool> _back(BuildContext context) async {
-    if (_provider.settings == _settings) {
-      return true;
-    } else {
-      return showDialog<bool>(
-          context: context,
-          builder: (ctx) => CupertinoAlertDialog(
-                title: Text(appLocale.dataNotSaved),
-                content: RichText(
-                  text: TextSpan(
-                    text: appLocale.dataNotSavedDesc1,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1
-                        .copyWith(fontSize: 14),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: String.fromCharCode(0xe64c), //<-- charCode
-                        style: TextStyle(
-                          fontFamily: 'MaterialIcons', //<-- fontFamily
-                          fontSize: 24.0,
-                        ),
-                      ),
-                      TextSpan(text: appLocale.dataNotSavedDesc2)
-                    ],
-                  ),
-                ),
-                actions: [
-                  CupertinoDialogAction(
-                    child: Text(appLocale.discard),
-                    isDestructiveAction: true,
-                    onPressed: () => Navigator.of(ctx).pop<bool>(true),
-                  ),
-                  CupertinoDialogAction(
-                    child: Text(appLocale.cancel),
-                    isDefaultAction: true,
-                    onPressed: () => Navigator.of(ctx).pop<bool>(false),
-                  ),
-                ],
-              ));
-    }
   }
 }
