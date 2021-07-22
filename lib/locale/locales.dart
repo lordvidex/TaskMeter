@@ -22,22 +22,42 @@ class AppLocalizations {
   //! Strings
 
   //! Task Group Screen
-  String get taskGroups => Intl.message('Task groups',
-      name: 'taskGroups', desc: 'The text Task Groups on the taskGroupScreen');
-
+  String get taskCompleted =>
+      Intl.message('Task completed', name: 'taskCompleted', desc: '');
+  String get trackedHours =>
+      Intl.message('Tracked Hours', name: 'trackedHours', desc: '');
+  String get activeTasks =>
+      Intl.message('Active Tasks', name: 'activeTasks', desc: '');
+  String taskRatioDesc(int done, int total) => Intl.plural(
+        total,
+        name: 'taskRatioDesc',
+        desc: 'caption text for taskgroup tiles',
+        one: '$done of $total task completed',
+        few: '$done of $total tasks completed',
+        other: '$done of $total tasks completed',
+        args: [done, total],
+      );
   String get progress => Intl.message('progress',
       name: 'progress',
       desc: 'text "progress" used to label'
           ' the linear progress indicator on this screen');
 
-  String get emptyTaskGroupText => Intl.message('Task group list is empty',
-      name: 'emptyTaskGroupText',
-      desc: 'Text displayed to user when taskgroup list is empty');
   String get delete =>
       Intl.message('Delete', name: 'delete', desc: 'Text with the word delete');
+  String get emptyHere => Intl.message('It\'s empty here,',
+      name: 'emptyHere',
+      desc: 'Place holder text when there is no active task group');
+
+  String get createTaskToContinue => Intl.message('Create task to continue',
+      name: 'createTaskToContinue',
+      desc:
+          'second part of place holder text when there is no active task group');
 
   //! Settings Screen
   String get and => Intl.message('and', name: 'and', desc: 'the word "and"');
+  String get tasks => Intl.message('Tasks', name: 'tasks', desc: '');
+  String get languageAndAppearance => Intl.message('Language and Appearance',
+      name: 'languageAndAppearance', desc: '');
   String get settings =>
       Intl.message('Settings', name: 'settings', desc: 'The word settings');
   String get generalSettings => Intl.message('General Settings',
@@ -58,8 +78,7 @@ class AppLocalizations {
         desc: 'text for long break after or long break intervals',
       );
   String get longBreakIntervals => Intl.message('Long break intervals',
-  name: 'longBreakIntervals',
-  desc: '');
+      name: 'longBreakIntervals', desc: '');
   String get language => Intl.message(
         'Language',
         name: 'language',
@@ -140,7 +159,9 @@ class AppLocalizations {
       Intl.message('Feedback', name: 'feedback', desc: 'Feedback');
 
   //! Task Group Description screen
-
+  String get editTask => Intl.message('Edit task',
+  name: 'editTask',
+  desc: 'Button text to edit newly created task in description screen');
   String taskCount(int x) => Intl.plural(x,
       zero: '$x tasks',
       one: '$x task',
@@ -209,9 +230,9 @@ class AppLocalizations {
   String hours(int hours) => Intl.plural(
         hours,
         zero: '',
-        one: '$hours Hour ',
-        few: '$hours Hours ',
-        other: '$hours Hours ',
+        one: '$hours Hour',
+        few: '$hours Hours',
+        other: '$hours Hours',
         args: [hours],
         examples: const {'1': '1 Hour', '2': '2 Hours'},
         desc: 'string for displaying how many hours are in the duration object',
@@ -220,11 +241,11 @@ class AppLocalizations {
   String minutes(int minutes) => Intl.plural(
         minutes,
         zero: '',
-        one: '$minutes minute ',
-        few: '$minutes minutes ',
-        other: '$minutes minutes ',
+        one: '$minutes minute',
+        few: '$minutes minutes',
+        other: '$minutes minutes',
         args: [minutes],
-        examples: const {'1': '1 minute ', '2': '2 minutes '},
+        examples: const {'1': '1 minute', '2': '2 minutes'},
         desc:
             'string for displaying how many minutes are in the duration object',
         name: 'minutes',

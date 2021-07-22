@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/constants.dart';
+import '../../locale/locales.dart';
 import '../providers/task_group_provider.dart';
 import '../widgets/app_back_button.dart';
 import '../widgets/task_group_description/task_card.dart';
@@ -17,6 +17,7 @@ class TaskGroupDescriptionScreen extends StatelessWidget {
     final taskGroup = context.watch<TaskGroupProvider>().currentTaskGroup;
     final mediaQuery = MediaQuery.of(context);
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final appLocale = AppLocalizations.of(context);
     return Scaffold(
         backgroundColor:
             isDarkMode ? Constants.appDarkBlue : Constants.appLightBlue,
@@ -33,16 +34,7 @@ class TaskGroupDescriptionScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          TextButton(
-                            style: TextButton.styleFrom(
-                                padding:
-                                    const EdgeInsets.fromLTRB(0, 14, 30, 14)),
-                            onPressed: () => Navigator.of(context).pop(),
-                            child: SvgPicture.asset('assets/icons/back.svg',
-                                color: isDarkMode
-                                    ? Colors.white
-                                    : Constants.appNavyBlue),
-                          ),
+                          AppBackButton(),
                           Padding(
                             padding:
                                 const EdgeInsets.only(top: 27.0, bottom: 12),
@@ -53,7 +45,8 @@ class TaskGroupDescriptionScreen extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            '${taskGroup.completedCount} of ${taskGroup.tasks.length} tasks completed',
+                            appLocale.taskRatioDesc(taskGroup.completedCount,
+                                taskGroup.tasks.length),
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
@@ -105,7 +98,7 @@ class TaskGroupDescriptionScreen extends StatelessWidget {
                             onPressed: () => Navigator.of(context)
                                 .pushNamed(CreateTaskGroupScreen.routeName),
                             fillColor: Constants.appBlue,
-                            text: 'Edit task')
+                            text: appLocale.editTask)
                     ],
                   ),
                 ),

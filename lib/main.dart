@@ -4,19 +4,18 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:task_meter/presentation/bloc/size_bloc.dart';
-import 'package:task_meter/presentation/providers/authentication_provider.dart';
 
 import 'core/constants.dart';
 import 'domain/models/app_theme.dart';
 import 'injection_container.dart' as di;
 import 'locale/locales.dart';
+import 'presentation/bloc/size_bloc.dart';
 import 'presentation/bloc/timer_bloc.dart';
+import 'presentation/providers/authentication_provider.dart';
 import 'presentation/providers/settings_provider.dart';
 import 'presentation/providers/task_group_provider.dart';
 import 'presentation/screens/create_task_group_screen.dart';
 import 'presentation/screens/error_screen.dart';
-import 'presentation/screens/select_theme_screen.dart';
 import 'presentation/screens/settings_screen.dart';
 import 'presentation/screens/task_group_description_screen.dart';
 import 'presentation/screens/task_group_screen.dart';
@@ -95,7 +94,6 @@ class NewWidget extends StatelessWidget {
               SettingsScreen.routeName: (_) => SettingsScreen(),
               ErrorScreen.routeName: (_) => ErrorScreen(),
               CreateTaskGroupScreen.routeName: (_) => CreateTaskGroupScreen(),
-              SelectThemeScreen.routeName: (_) => SelectThemeScreen(),
             }),
       );
     });

@@ -83,7 +83,7 @@ class TaskGroupListWidget extends StatelessWidget {
                         Expanded(
                             child: Consumer<TaskGroupProvider>(
                           builder: (ctx, mProvider, _) => DataContainer(
-                              label: 'Task completed',
+                              label: appLocale.taskCompleted,
                               text: '${mProvider.tasksCompleted}',
                               isDarkMode: isDarkMode),
                         )),
@@ -93,7 +93,7 @@ class TaskGroupListWidget extends StatelessWidget {
                         Expanded(
                             child: Consumer<TaskGroupProvider>(
                           builder: (ctx, mProvider, _) => DataContainer(
-                              label: 'Tracked Hours',
+                              label: appLocale.trackedHours,
                               text: mProvider.trackedHours.toStringAsFixed(1),
                               isDarkMode: isDarkMode),
                         ))
@@ -106,7 +106,7 @@ class TaskGroupListWidget extends StatelessWidget {
                         child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              'Active Tasks',
+                              appLocale.activeTasks,
                               style: TextStyle(fontSize: 18),
                             )),
                       )),
@@ -137,8 +137,8 @@ class TaskGroupListWidget extends StatelessWidget {
                           ),
                           Padding(
                               padding: const EdgeInsets.only(top: 18),
-                              child: Text('It\'s empty here,')),
-                          Text('Create task to continue')
+                              child: Text(appLocale.emptyHere)),
+                          Text(appLocale.createTaskToContinue)
                         ],
                       ),
                     ),

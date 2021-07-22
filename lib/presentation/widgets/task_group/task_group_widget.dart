@@ -17,6 +17,7 @@ class TaskGroupWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final taskGroupProvider = context.read<TaskGroupProvider>();
+    final appLocale = AppLocalizations.of(context);
     return Container(
         padding: const EdgeInsets.all(14),
         margin: const EdgeInsets.only(bottom: 18),
@@ -44,7 +45,8 @@ class TaskGroupWidget extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0, bottom: 6.0),
                     child: Text(
-                      '${taskGroup.completedCount} of ${taskGroup.tasks.length} tasks completed',
+                      appLocale.taskRatioDesc(
+                          taskGroup.completedCount, taskGroup.tasks.length),
                       style: TextStyle(
                           color: isDarkMode
                               ? Constants.appLightGrey
@@ -80,7 +82,7 @@ class TaskGroupWidget extends StatelessWidget {
                       child: Row(mainAxisSize: MainAxisSize.min, children: [
                         Icon(Icons.delete_forever, color: Colors.red, size: 24),
                         SizedBox(width: 10),
-                        Text(AppLocalizations.of(context).delete),
+                        Text(appLocale.delete),
                       ]),
                     )
                   ],

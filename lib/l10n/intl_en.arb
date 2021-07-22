@@ -1,345 +1,404 @@
 {
-	"@@last_modified": "2021-07-08T06:53:18.752937",
-	"taskGroups": "Task groups",
-	"@taskGroups": {
-		"description": "The text Task Groups on the taskGroupScreen",
-		"type": "text",
-		"placeholders": {}
-	},
-	"progress": "progress",
-	"@progress": {
-		"description": "text \"progress\" used to label the linear progress indicator on this screen",
-		"type": "text",
-		"placeholders": {}
-	},
-	"emptyTaskGroupText": "Task group list is empty",
-	"@emptyTaskGroupText": {
-		"description": "Text displayed to user when taskgroup list is empty",
-		"type": "text",
-		"placeholders": {}
-	},
-	"clickOn": "Click on ",
-	"@clickOn": {
-		"description": "Partial word displayed in the taskGroup screen telling the userhow to add a new task Group",
-		"type": "text",
-		"placeholders": {}
-	},
-	"toAddNewTaskGroup": "to add new Task group",
-	"@toAddNewTaskGroup": {
-		"description": "Partial word displayed in the taskGroup screentelling the user how to add a new task Group",
-		"type": "text",
-		"placeholders": {}
-	},
-	"delete": "Delete",
-	"@delete": {
-		"description": "Text with the word delete",
-		"type": "text",
-		"placeholders": {}
-	},
-	"and": "and",
-	"@and": {
-		"description": "the word \"and\"",
-		"type": "text",
-		"placeholders": {}
-	},
-	"settings": "Settings",
-	"@settings": {
-		"description": "The word settings",
-		"type": "text",
-		"placeholders": {}
-	},
-	"generalSettings": "General Settings",
-	"@generalSettings": {
-		"description": "App bar text for setting screen",
-		"type": "text",
-		"placeholders": {}
-	},
-	"shortBreakDuration": "Short break duration",
-	"@shortBreakDuration": {
-		"description": "label for short break duration",
-		"type": "text",
-		"placeholders": {}
-	},
-	"longBreakDuration": "Long break duration",
-	"@longBreakDuration": {
-		"description": "label for long break duration",
-		"type": "text",
-		"placeholders": {}
-	},
-	"longBreakAfter": "Long break after",
-	"@longBreakAfter": {
-		"description": "text for long break after or long break intervals",
-		"type": "text",
-		"placeholders": {}
-	},
-	"language": "Language",
-	"@language": {
-		"description": "label for language",
-		"type": "text",
-		"placeholders": {}
-	},
-	"appTheme": "App Theme",
-	"@appTheme": {
-		"description": "label for appTheme",
-		"type": "text",
-		"placeholders": {}
-	},
-	"system": "System",
-	"@system": {
-		"description": "label text for system theme in settings",
-		"type": "text",
-		"placeholders": {}
-	},
-	"theme": "Theme",
-	"@theme": {
-		"description": "label text for the word \"theme\"",
-		"type": "text",
-		"placeholders": {}
-	},
-	"selectTheme": "Select Theme",
-	"@selectTheme": {
-		"description": "Appbar text for the selectThemeScreen",
-		"type": "text",
-		"placeholders": {}
-	},
-	"dataNotSaved": "Data not saved!",
-	"@dataNotSaved": {
-		"description": "title text displayed in CupertinoAlertDialog when user clicks back button without saving settings data",
-		"type": "text",
-		"placeholders": {}
-	},
-	"dataNotSavedDesc1": "You have some unsaved data, go back and click ",
-	"@dataNotSavedDesc1": {
-		"description": "First part of description text shown in cupertinoAlertDialog when user clicks back button without saving settings data",
-		"type": "text",
-		"placeholders": {}
-	},
-	"dataNotSavedDesc2": " at the top-right to save!",
-	"@dataNotSavedDesc2": {
-		"description": "Second part of description text shown in cupertinoAlertDialog when user clicks back button without saving settings data",
-		"type": "text",
-		"placeholders": {}
-	},
-	"discard": "Discard",
-	"@discard": {
-		"description": "cupertino action button text to discard data in settings screen",
-		"type": "text",
-		"placeholders": {}
-	},
-	"cancel": "Cancel",
-	"@cancel": {
-		"description": "cupertino action button to go back and save changes in settings screen",
-		"type": "text",
-		"placeholders": {}
-	},
-	"intervals": "{x,plural, =1{{x} interval}few{{x} intervals}other{{x} intervals}}",
-	"@intervals": {
-		"description": "long break after x shortbreaks",
-		"type": "text",
-		"placeholders": {
-			"x": {}
-		}
-	},
-	"themeType": "{theme,select, Dark{Dark}Light{Light}System{System}}",
-	"@themeType": {
-		"description": "returns the text based on themetypes [System,Dark,Light]",
-		"type": "text",
-		"placeholders": {
-			"theme": {}
-		}
-	},
-	"about": "About",
-	"@about": {
-		"description": "label for the text about, leading to the about page of the app",
-		"type": "text",
-		"placeholders": {}
-	},
-	"rate": "Rate in the app store",
-	"@rate": {
-		"description": "rate in the app store",
-		"type": "text",
-		"placeholders": {}
-	},
-	"feedback": "Feedback",
-	"@feedback": {
-		"description": "Feedback",
-		"type": "text",
-		"placeholders": {}
-	},
-	"taskCount": "{x,plural, =0{{x} tasks}=1{{x} task}few{{x} tasks}other{{x} tasks}}",
-	"@taskCount": {
-		"description": "label text displaying number of tasks in the taskgroup",
-		"type": "text",
-		"placeholders": {
-			"x": {
-				"example": 3
-			}
-		}
-	},
-	"shortBreak": "Short break",
-	"@shortBreak": {
-		"description": "label for short break",
-		"type": "text",
-		"placeholders": {}
-	},
-	"longBreak": "Long break",
-	"@longBreak": {
-		"description": "label for long break",
-		"type": "text",
-		"placeholders": {}
-	},
-	"taskGroupNameErrorText": "Enter a valid task group name",
-	"@taskGroupNameErrorText": {
-		"description": "error text shown when task group name is empty",
-		"type": "text",
-		"placeholders": {}
-	},
-	"complete": "Complete",
-	"@complete": {
-		"description": "The word complete",
-		"type": "text",
-		"placeholders": {}
-	},
-	"breakComplete": "Break Complete",
-	"@breakComplete": {
-		"description": "",
-		"type": "text",
-		"placeholders": {}
-	},
-	"taskComplete": "Task Complete",
-	"@taskComplete": {
-		"description": "",
-		"type": "text",
-		"placeholders": {}
-	},
-	"resume": "Resume",
-	"@resume": {
-		"description": "",
-		"type": "text",
-		"placeholders": {}
-	},
-	"pause": "Pause",
-	"@pause": {
-		"description": "",
-		"type": "text",
-		"placeholders": {}
-	},
-	"takeBreak": "Take Break",
-	"@takeBreak": {
-		"description": "Button option for when user should take break when a task just finished",
-		"type": "text",
-		"placeholders": {}
-	},
-	"nextTask": "Next Task",
-	"@nextTask": {
-		"description": "Button option for when user should jump to next task when a task just finished",
-		"type": "text",
-		"placeholders": {}
-	},
-	"signup": "Sign up",
-	"@signup": {
-		"description": "The text sign up",
-		"type": "text",
-		"placeholders": {}
-	},
-	"signIn": "Sign in",
-	"@signIn": {
-		"description": "the text sign in",
-		"type": "text",
-		"placeholders": {}
-	},
-	"withLabel": "with",
-	"@withLabel": {
-		"description": "the word with",
-		"type": "text",
-		"placeholders": {}
-	},
-	"enterEmail": "Enter email address",
-	"@enterEmail": {
-		"description": "Hint text for authentication screen telling user to enter email address",
-		"type": "text",
-		"placeholders": {}
-	},
-	"enterPassword": "Password",
-	"@enterPassword": {
-		"description": "Password textField hint text",
-		"type": "text",
-		"placeholders": {}
-	},
-	"next": "Next",
-	"@next": {
-		"description": "Button text for the next button toggling between email and password mode in auth screen",
-		"type": "text",
-		"placeholders": {}
-	},
-	"hours": "{hours,plural, =0{}=1{{hours} Hour }few{{hours} Hours }other{{hours} Hours }}",
-	"@hours": {
-		"description": "string for displaying how many hours are in the duration object",
-		"type": "text",
-		"placeholders": {
-			"hours": {}
-		}
-	},
-	"minutes": "{minutes,plural, =0{}=1{{minutes} minute }few{{minutes} minutes }other{{minutes} minutes }}",
-	"@minutes": {
-		"description": "string for displaying how many minutes are in the duration object",
-		"type": "text",
-		"placeholders": {
-			"minutes": {}
-		}
-	},
-	"seconds": "{seconds,plural, =0{}=1{{seconds} second}few{{seconds} seconds}other{{seconds} seconds}}",
-	"@seconds": {
-		"description": "string for displaying how many seconds are in the duration object",
-		"type": "text",
-		"placeholders": {
-			"seconds": {}
-		}
-	},
-	"taskName": "Task name",
-	"@taskName": {
-		"description": "AlertDialog textField title for inputting taskName",
-		"type": "text",
-		"placeholders": {}
-	},
-	"difficulty": "Difficulty",
-	"@difficulty": {
-		"description": "difficulty header for picking difficulty when creating/editing task",
-		"type": "text",
-		"placeholders": {}
-	},
-	"typeTaskName": "Type task name...",
-	"@typeTaskName": {
-		"description": "label text for inputting task name",
-		"type": "text",
-		"placeholders": {}
-	},
-	"add": "Add",
-	"@add": {
-		"description": "button text label to add task",
-		"type": "text",
-		"placeholders": {}
-	},
-	"edit": "Edit",
-	"@edit": {
-		"description": "label text for finishing task edit",
-		"type": "text",
-		"placeholders": {}
-	},
-	"enterTaskName": "Enter task name",
-	"@enterTaskName": {
-		"description": "error text if task name has errors",
-		"type": "text",
-		"placeholders": {}
-	},
-	"min": "min.",
-	"@min": {
-		"description": "Short text for min in duration picker",
-		"type": "text",
-		"placeholders": {}
-	},
-	"createTask": "Create Task",
-	"durationInMinutes": "Duration (in minutes)",
-	"emptyErrorMessage": "Please enter some text",
-	"subTask": "Sub-Task"
+  "@@last_modified": "2021-07-22T14:45:10.239852",
+  "taskCompleted": "Task completed",
+  "@taskCompleted": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "trackedHours": "Tracked Hours",
+  "@trackedHours": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "activeTasks": "Active Tasks",
+  "@activeTasks": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "taskRatioDesc": "{total,plural, =1{{done} of {total} task completed}few{{done} of {total} tasks completed}other{{done} of {total} tasks completed}}",
+  "@taskRatioDesc": {
+    "description": "caption text for taskgroup tiles",
+    "type": "text",
+    "placeholders": {
+      "done": {},
+      "total": {}
+    }
+  },
+  "progress": "progress",
+  "@progress": {
+    "description": "text \"progress\" used to label the linear progress indicator on this screen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "delete": "Delete",
+  "@delete": {
+    "description": "Text with the word delete",
+    "type": "text",
+    "placeholders": {}
+  },
+  "emptyHere": "It's empty here,",
+  "@emptyHere": {
+    "description": "Place holder text when there is no active task group",
+    "type": "text",
+    "placeholders": {}
+  },
+  "createTaskToContinue": "Create task to continue",
+  "@createTaskToContinue": {
+    "description": "second part of place holder text when there is no active task group",
+    "type": "text",
+    "placeholders": {}
+  },
+  "and": "and",
+  "@and": {
+    "description": "the word \"and\"",
+    "type": "text",
+    "placeholders": {}
+  },
+  "tasks": "Tasks",
+  "@tasks": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "languageAndAppearance": "Language and Appearance",
+  "@languageAndAppearance": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "The word settings",
+    "type": "text",
+    "placeholders": {}
+  },
+  "generalSettings": "General Settings",
+  "@generalSettings": {
+    "description": "App bar text for setting screen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "shortBreakDuration": "Short break duration",
+  "@shortBreakDuration": {
+    "description": "label for short break duration",
+    "type": "text",
+    "placeholders": {}
+  },
+  "longBreakDuration": "Long break duration",
+  "@longBreakDuration": {
+    "description": "label for long break duration",
+    "type": "text",
+    "placeholders": {}
+  },
+  "longBreakAfter": "Long break after",
+  "@longBreakAfter": {
+    "description": "text for long break after or long break intervals",
+    "type": "text",
+    "placeholders": {}
+  },
+  "longBreakIntervals": "Long break intervals",
+  "@longBreakIntervals": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "language": "Language",
+  "@language": {
+    "description": "label for language",
+    "type": "text",
+    "placeholders": {}
+  },
+  "appTheme": "App Theme",
+  "@appTheme": {
+    "description": "label for appTheme",
+    "type": "text",
+    "placeholders": {}
+  },
+  "system": "System",
+  "@system": {
+    "description": "label text for system theme in settings",
+    "type": "text",
+    "placeholders": {}
+  },
+  "theme": "Theme",
+  "@theme": {
+    "description": "label text for the word \"theme\"",
+    "type": "text",
+    "placeholders": {}
+  },
+  "selectTheme": "Select Theme",
+  "@selectTheme": {
+    "description": "Appbar text for the selectThemeScreen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "dataNotSaved": "Data not saved!",
+  "@dataNotSaved": {
+    "description": "title text displayed in CupertinoAlertDialog when user clicks back button without saving settings data",
+    "type": "text",
+    "placeholders": {}
+  },
+  "dataNotSavedDesc1": "You have some unsaved data, go back and click ",
+  "@dataNotSavedDesc1": {
+    "description": "First part of description text shown in cupertinoAlertDialog when user clicks back button without saving settings data",
+    "type": "text",
+    "placeholders": {}
+  },
+  "dataNotSavedDesc2": " at the top-right to save!",
+  "@dataNotSavedDesc2": {
+    "description": "Second part of description text shown in cupertinoAlertDialog when user clicks back button without saving settings data",
+    "type": "text",
+    "placeholders": {}
+  },
+  "discard": "Discard",
+  "@discard": {
+    "description": "cupertino action button text to discard data in settings screen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "cupertino action button to go back and save changes in settings screen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "intervals": "{x,plural, =1{{x} interval}few{{x} intervals}other{{x} intervals}}",
+  "@intervals": {
+    "description": "long break after x shortbreaks",
+    "type": "text",
+    "placeholders": {
+      "x": {}
+    }
+  },
+  "themeType": "{theme,select, Dark{Dark}Light{Light}System{System}}",
+  "@themeType": {
+    "description": "returns the text based on themetypes [System,Dark,Light]",
+    "type": "text",
+    "placeholders": {
+      "theme": {}
+    }
+  },
+  "about": "About",
+  "@about": {
+    "description": "label for the text about, leading to the about page of the app",
+    "type": "text",
+    "placeholders": {}
+  },
+  "rate": "Rate in the app store",
+  "@rate": {
+    "description": "rate in the app store",
+    "type": "text",
+    "placeholders": {}
+  },
+  "feedback": "Feedback",
+  "@feedback": {
+    "description": "Feedback",
+    "type": "text",
+    "placeholders": {}
+  },
+  "editTask": "Edit task",
+  "@editTask": {
+    "description": "Button text to edit newly created task in description screen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "taskCount": "{x,plural, =0{{x} tasks}=1{{x} task}few{{x} tasks}other{{x} tasks}}",
+  "@taskCount": {
+    "description": "label text displaying number of tasks in the taskgroup",
+    "type": "text",
+    "placeholders": {
+      "x": {
+        "example": 3
+      }
+    }
+  },
+  "createTask": "Create Task",
+  "@createTask": {
+    "description": "Header text in create task group screen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "shortBreak": "Short break",
+  "@shortBreak": {
+    "description": "label for short break",
+    "type": "text",
+    "placeholders": {}
+  },
+  "longBreak": "Long break",
+  "@longBreak": {
+    "description": "label for long break",
+    "type": "text",
+    "placeholders": {}
+  },
+  "durationInMinutes": "Duration (in minutes)",
+  "@durationInMinutes": {
+    "description": "Label for total duration picker in create task group screen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "subTask": "Sub-Task",
+  "@subTask": {
+    "description": "label text for subtasks",
+    "type": "text",
+    "placeholders": {}
+  },
+  "emptyErrorMessage": "Please enter some text",
+  "@emptyErrorMessage": {
+    "description": "error text shown when user leaves textfield empty",
+    "type": "text",
+    "placeholders": {}
+  },
+  "taskGroupNameErrorText": "Enter a valid task group name",
+  "@taskGroupNameErrorText": {
+    "description": "error text shown when task group name is empty",
+    "type": "text",
+    "placeholders": {}
+  },
+  "complete": "Complete",
+  "@complete": {
+    "description": "The word complete",
+    "type": "text",
+    "placeholders": {}
+  },
+  "breakComplete": "Break Complete",
+  "@breakComplete": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "taskComplete": "Task Complete",
+  "@taskComplete": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "resume": "Resume",
+  "@resume": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "pause": "Pause",
+  "@pause": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "takeBreak": "Take Break",
+  "@takeBreak": {
+    "description": "Button option for when user should take break when a task just finished",
+    "type": "text",
+    "placeholders": {}
+  },
+  "nextTask": "Next Task",
+  "@nextTask": {
+    "description": "Button option for when user should jump to next task when a task just finished",
+    "type": "text",
+    "placeholders": {}
+  },
+  "signup": "Sign up",
+  "@signup": {
+    "description": "The text sign up",
+    "type": "text",
+    "placeholders": {}
+  },
+  "signIn": "Sign in",
+  "@signIn": {
+    "description": "the text sign in",
+    "type": "text",
+    "placeholders": {}
+  },
+  "withLabel": "with",
+  "@withLabel": {
+    "description": "the word with",
+    "type": "text",
+    "placeholders": {}
+  },
+  "enterEmail": "Enter email address",
+  "@enterEmail": {
+    "description": "Hint text for authentication screen telling user to enter email address",
+    "type": "text",
+    "placeholders": {}
+  },
+  "enterPassword": "Password",
+  "@enterPassword": {
+    "description": "Password textField hint text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "next": "Next",
+  "@next": {
+    "description": "Button text for the next button toggling between email and password mode in auth screen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "hours": "{hours,plural, =0{}=1{{hours} Hour}few{{hours} Hours}other{{hours} Hours}}",
+  "@hours": {
+    "description": "string for displaying how many hours are in the duration object",
+    "type": "text",
+    "placeholders": {
+      "hours": {}
+    }
+  },
+  "minutes": "{minutes,plural, =0{}=1{{minutes} minute}few{{minutes} minutes}other{{minutes} minutes}}",
+  "@minutes": {
+    "description": "string for displaying how many minutes are in the duration object",
+    "type": "text",
+    "placeholders": {
+      "minutes": {}
+    }
+  },
+  "seconds": "{seconds,plural, =0{}=1{{seconds} second}few{{seconds} seconds}other{{seconds} seconds}}",
+  "@seconds": {
+    "description": "string for displaying how many seconds are in the duration object",
+    "type": "text",
+    "placeholders": {
+      "seconds": {}
+    }
+  },
+  "taskName": "Task name",
+  "@taskName": {
+    "description": "AlertDialog textField title for inputting taskName",
+    "type": "text",
+    "placeholders": {}
+  },
+  "difficulty": "Difficulty",
+  "@difficulty": {
+    "description": "difficulty header for picking difficulty when creating/editing task",
+    "type": "text",
+    "placeholders": {}
+  },
+  "typeTaskName": "Type task name...",
+  "@typeTaskName": {
+    "description": "label text for inputting task name",
+    "type": "text",
+    "placeholders": {}
+  },
+  "add": "Add",
+  "@add": {
+    "description": "button text label to add task",
+    "type": "text",
+    "placeholders": {}
+  },
+  "edit": "Edit",
+  "@edit": {
+    "description": "label text for finishing task edit",
+    "type": "text",
+    "placeholders": {}
+  },
+  "enterTaskName": "Enter task name",
+  "@enterTaskName": {
+    "description": "error text if task name has errors",
+    "type": "text",
+    "placeholders": {}
+  },
+  "min": "min.",
+  "@min": {
+    "description": "Short text for min in duration picker",
+    "type": "text",
+    "placeholders": {}
+  }
 }

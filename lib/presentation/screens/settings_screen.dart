@@ -87,7 +87,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         style: TextStyle(fontSize: 24),
                       ),
                       padding: const EdgeInsets.only(top: 27, bottom: 30)),
-                  SettingsSection(title: 'Tasks', tiles: [
+                  SettingsSection(title: appLocale.tasks, tiles: [
                     SettingsTile(
                         title: appLocale.shortBreakDuration,
                         onPressed: () => _showSettingsOptionScreen<int>(
@@ -137,7 +137,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 29.0),
                     child: SettingsSection(
-                        title: 'Language and Appearance',
+                        title: appLocale.languageAndAppearance,
                         tiles: [
                           SettingsTile(
                               title: appLocale.language,

@@ -11,12 +11,12 @@ class AppBackButton extends StatelessWidget {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return TextButton(
       style: TextButton.styleFrom(
-        alignment: Alignment.centerLeft,
-        // padding: const EdgeInsets.fromLTRB(0, 14, 30, 14)
-      ),
+          alignment: Alignment.centerLeft,
+          padding: const EdgeInsets.fromLTRB(0, 14, 30, 14)),
       onPressed: onPressed ?? () => Navigator.of(context).pop(),
       child: SvgPicture.asset('assets/icons/back.svg',
-      width: 29, height: 24,
+          width: 29,
+          height: 24,
           color: isDarkMode ? Colors.white : Constants.appNavyBlue),
     );
   }

@@ -19,29 +19,32 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ru';
 
-  static m0(hours) => "${Intl.plural(hours, zero: '', one: '${hours} Час ', few: '${hours} Часа ', other: '${hours} Часов ')}";
+  static m0(hours) => "${Intl.plural(hours, zero: '${hours} Часов ', one: '${hours} Час ', few: '${hours} Часа ', many: '${hours} Часов ', other: '${hours} Часов ')}";
 
-  static m1(x) => "${Intl.plural(x, one: '${x} интервал', few: '${x} интервала', other: '${x} интервалов')}";
+  static m1(x) => "${Intl.plural(x, zero: '${x} интервалов', one: '${x} интервал', few: '${x} интервала', many: '${x} интервалов', other: '${x} интервалов')}";
 
-  static m2(minutes) => "${Intl.plural(minutes, zero: '', one: '${minutes} минута ', few: '${minutes} минуты ', other: '${minutes} минут ')}";
+  static m2(minutes) => "${Intl.plural(minutes, zero: '${minutes} минут', one: '${minutes} минута ', few: '${minutes} минуты ', many: '${minutes} минут', other: '${minutes} минут ')}";
 
-  static m3(seconds) => "${Intl.plural(seconds, zero: '', one: '${seconds} Секунда', few: '${seconds} Секунды', other: '${seconds} Секунд')}";
+  static m3(seconds) => "${Intl.plural(seconds, zero: '', one: '${seconds} Секунда', few: '${seconds} Секунды', many: '${seconds} Секунд', other: '${seconds} Секунд')}";
 
-  static m4(x) => "${Intl.plural(x, zero: '${x} задач', one: '${x} задача', few: '${x} задачи', other: '${x} задачи')}";
+  static m4(x) => "${Intl.plural(x, zero: '${x} задач', one: '${x} задача', few: '${x} задачи', many: '${x} задачи', other: '${x} задачи')}";
 
-  static m5(theme) => "${Intl.select(theme, {'Dark': 'Тёмная', 'Light': 'Светлая', 'System': 'Системная', })}";
+  static m5(done, total) => "${Intl.plural(total, zero: '${done} из ${total} заданий выполнено', one: '${done} из ${total} задания выполнено', few: '${done} из ${total} заданий выполнено', many: '${done} из ${total} заданий выполнено', other: '${done} из ${total} заданий выполнено')}";
+
+  static m6(theme) => "${Intl.select(theme, {'Dark': 'Тёмная', 'Light': 'Светлая', 'System': 'Системная', })}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "about" : MessageLookupByLibrary.simpleMessage("О нас"),
+    "activeTasks" : MessageLookupByLibrary.simpleMessage("Активные задачи"),
     "add" : MessageLookupByLibrary.simpleMessage("Добавьте"),
     "and" : MessageLookupByLibrary.simpleMessage("и"),
     "appTheme" : MessageLookupByLibrary.simpleMessage("Тема приложения"),
     "breakComplete" : MessageLookupByLibrary.simpleMessage("Перерыв завершен"),
     "cancel" : MessageLookupByLibrary.simpleMessage("Отменить"),
-    "clickOn" : MessageLookupByLibrary.simpleMessage("Нажми на "),
     "complete" : MessageLookupByLibrary.simpleMessage("завершите"),
     "createTask" : MessageLookupByLibrary.simpleMessage("Создать задачу"),
+    "createTaskToContinue" : MessageLookupByLibrary.simpleMessage("Создайте задачу"),
     "dataNotSaved" : MessageLookupByLibrary.simpleMessage("Данные не сохранены!"),
     "dataNotSavedDesc1" : MessageLookupByLibrary.simpleMessage("У вас есть некоторые несохраненные данные, вернитесь назад и нажмите "),
     "dataNotSavedDesc2" : MessageLookupByLibrary.simpleMessage(" в правом верхнем углу сохранить!"),
@@ -50,8 +53,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "discard" : MessageLookupByLibrary.simpleMessage("Отбросить"),
     "durationInMinutes" : MessageLookupByLibrary.simpleMessage("Время (в минутах)"),
     "edit" : MessageLookupByLibrary.simpleMessage("Изменить"),
+    "editTask" : MessageLookupByLibrary.simpleMessage("Редактировать"),
     "emptyErrorMessage" : MessageLookupByLibrary.simpleMessage("Пожалуйста, введите текст"),
-    "emptyTaskGroupText" : MessageLookupByLibrary.simpleMessage("список групп задач пуст"),
+    "emptyHere" : MessageLookupByLibrary.simpleMessage("Здесь пусто"),
     "enterEmail" : MessageLookupByLibrary.simpleMessage("Введите адрес электронной почты"),
     "enterPassword" : MessageLookupByLibrary.simpleMessage("Пароль"),
     "enterTaskName" : MessageLookupByLibrary.simpleMessage("Введите название задачи"),
@@ -60,9 +64,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "hours" : m0,
     "intervals" : m1,
     "language" : MessageLookupByLibrary.simpleMessage("Язык"),
+    "languageAndAppearance" : MessageLookupByLibrary.simpleMessage("Язык и внешность"),
     "longBreak" : MessageLookupByLibrary.simpleMessage("Большой перерыв"),
     "longBreakAfter" : MessageLookupByLibrary.simpleMessage("Длинный перерыв после"),
     "longBreakDuration" : MessageLookupByLibrary.simpleMessage("Время длинного перерыва"),
+    "longBreakIntervals" : MessageLookupByLibrary.simpleMessage("Интервал большого перерыва"),
     "min" : MessageLookupByLibrary.simpleMessage("мин."),
     "minutes" : m2,
     "next" : MessageLookupByLibrary.simpleMessage("Дальше"),
@@ -82,13 +88,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "system" : MessageLookupByLibrary.simpleMessage("Системы"),
     "takeBreak" : MessageLookupByLibrary.simpleMessage("отдохнуть"),
     "taskComplete" : MessageLookupByLibrary.simpleMessage("Задача завершена"),
+    "taskCompleted" : MessageLookupByLibrary.simpleMessage("Задача выполнена"),
     "taskCount" : m4,
     "taskGroupNameErrorText" : MessageLookupByLibrary.simpleMessage("Введите правильное название задачи"),
-    "taskGroups" : MessageLookupByLibrary.simpleMessage("Группы задач"),
     "taskName" : MessageLookupByLibrary.simpleMessage("Название задачи"),
+    "taskRatioDesc" : m5,
+    "tasks" : MessageLookupByLibrary.simpleMessage("Задачи"),
     "theme" : MessageLookupByLibrary.simpleMessage("Тема"),
-    "themeType" : m5,
-    "toAddNewTaskGroup" : MessageLookupByLibrary.simpleMessage("чтобы добавить новую группу задач"),
+    "themeType" : m6,
+    "trackedHours" : MessageLookupByLibrary.simpleMessage("Отслеживаемые часы"),
     "typeTaskName" : MessageLookupByLibrary.simpleMessage("Введите задачу..."),
     "withLabel" : MessageLookupByLibrary.simpleMessage("с")
   };

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:task_meter/core/utils/duration_utils.dart';
-import 'package:task_meter/presentation/widgets/create_task_group/custom_text_form_field.dart';
+import 'package:flutter/services.dart';
 
 import '../app_back_button.dart';
+import '../create_task_group/custom_text_form_field.dart';
 import 'settings_button.dart';
 
 class SettingsOptionScreen<T> extends StatefulWidget {
@@ -52,7 +52,14 @@ class _SettingsOptionScreenState<T> extends State<SettingsOptionScreen<T>> {
   }
 
   @override
+  void dispose() {
+    _customController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     _switchingWidget = Expanded(
         child: customButtonIsInactive
             ? SettingsButton<int>(
@@ -81,28 +88,32 @@ class _SettingsOptionScreenState<T> extends State<SettingsOptionScreen<T>> {
                 },
                 isDarkMode: Theme.of(context).brightness == Brightness.dark,
               ));
-    return Scaffold(
-        body: SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 24.0, right: 48),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AppBackButton(),
-              Padding(
-                padding: const EdgeInsets.only(top: 27.0, bottom: 35),
-                child: Text(
-                  widget.title,
-                  style: TextStyle(fontSize: 24),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value:
+          isDarkMode ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
+      child: Scaffold(
+          body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 24.0, right: 48),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AppBackButton(),
+                Padding(
+                  padding: const EdgeInsets.only(top: 27.0, bottom: 35),
+                  child: Text(
+                    widget.title,
+                    style: TextStyle(fontSize: 24),
+                  ),
                 ),
-              ),
-              _generateGrid()
-            ],
+                _generateGrid()
+              ],
+            ),
           ),
         ),
-      ),
-    ));
+      )),
+    );
   }
 
   Widget _generateGrid() {

@@ -5,11 +5,13 @@ class DurationUtils {
   /// x `hours` y `minutes` z `seconds`
   static String durationToReadableString(
       Duration duration, AppLocalizations appLocale) {
+    String ans = '';
     final twoDigitMinutes = duration.inMinutes.remainder(60);
     final twoDigitSeconds = duration.inSeconds.remainder(60);
-    return (appLocale.hours(duration.inHours) +
-        (appLocale.minutes(twoDigitMinutes)) +
-        (appLocale.seconds(twoDigitSeconds)));
+    if (duration.inHours != 0) ans += appLocale.hours(duration.inHours) + ' ';
+    if (twoDigitMinutes != 0) ans += appLocale.minutes(twoDigitMinutes) + ' ';
+    if (twoDigitSeconds != 0) ans += appLocale.seconds(twoDigitSeconds);
+    return ans;
   }
 
   ///converts Duration to String in clock format e.g

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Constants {
   static Color get appGreen => Color(0xff62C370);
@@ -27,6 +28,8 @@ class Constants {
 
   static IconThemeData _lightIconTheme =
       IconThemeData(color: Colors.black, size: 40, opacity: 1.0);
+  static IconThemeData _darkIconTheme =
+      IconThemeData(color: Colors.white, size: 40, opacity: 1.0);
 
   ///[bodyText1] - black text with size 12
   ///[bodyText2] - white text with size 12
@@ -67,6 +70,7 @@ class Constants {
           )),
       appBarTheme: AppBarTheme(
         color: Colors.white,
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
         brightness: Brightness.light,
         iconTheme: _lightIconTheme,
       ),
@@ -78,16 +82,18 @@ class Constants {
       scaffoldBackgroundColor: Colors.black,
       splashColor: appLightBlue,
       brightness: Brightness.dark,
+      appBarTheme: AppBarTheme(
+        color: Colors.black,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
+        brightness: Brightness.dark,
+        iconTheme: _darkIconTheme,
+      ),
       cardTheme: CardTheme(
           color: appDarkBlue,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           )),
-      iconTheme: IconThemeData(
-        color: Colors.white,
-        size: 40,
-        opacity: 1.0,
-      ),
+      iconTheme: _darkIconTheme,
       popupMenuTheme: PopupMenuThemeData(
           color: Colors.black,
           shape:

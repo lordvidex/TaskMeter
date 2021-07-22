@@ -19,29 +19,32 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'messages';
 
-  static m0(hours) => "${Intl.plural(hours, zero: '', one: '${hours} Hour ', few: '${hours} Hours ', other: '${hours} Hours ')}";
+  static m0(hours) => "${Intl.plural(hours, zero: '', one: '${hours} Hour', few: '${hours} Hours', other: '${hours} Hours')}";
 
   static m1(x) => "${Intl.plural(x, one: '${x} interval', few: '${x} intervals', other: '${x} intervals')}";
 
-  static m2(minutes) => "${Intl.plural(minutes, zero: '', one: '${minutes} minute ', few: '${minutes} minutes ', other: '${minutes} minutes ')}";
+  static m2(minutes) => "${Intl.plural(minutes, zero: '', one: '${minutes} minute', few: '${minutes} minutes', other: '${minutes} minutes')}";
 
   static m3(seconds) => "${Intl.plural(seconds, zero: '', one: '${seconds} second', few: '${seconds} seconds', other: '${seconds} seconds')}";
 
   static m4(x) => "${Intl.plural(x, zero: '${x} tasks', one: '${x} task', few: '${x} tasks', other: '${x} tasks')}";
 
-  static m5(theme) => "${Intl.select(theme, {'Dark': 'Dark', 'Light': 'Light', 'System': 'System', })}";
+  static m5(done, total) => "${Intl.plural(total, one: '${done} of ${total} task completed', few: '${done} of ${total} tasks completed', other: '${done} of ${total} tasks completed')}";
+
+  static m6(theme) => "${Intl.select(theme, {'Dark': 'Dark', 'Light': 'Light', 'System': 'System', })}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "about" : MessageLookupByLibrary.simpleMessage("About"),
+    "activeTasks" : MessageLookupByLibrary.simpleMessage("Active Tasks"),
     "add" : MessageLookupByLibrary.simpleMessage("Add"),
     "and" : MessageLookupByLibrary.simpleMessage("and"),
     "appTheme" : MessageLookupByLibrary.simpleMessage("App Theme"),
     "breakComplete" : MessageLookupByLibrary.simpleMessage("Break Complete"),
     "cancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
-    "clickOn" : MessageLookupByLibrary.simpleMessage("Click on "),
     "complete" : MessageLookupByLibrary.simpleMessage("Complete"),
     "createTask" : MessageLookupByLibrary.simpleMessage("Create Task"),
+    "createTaskToContinue" : MessageLookupByLibrary.simpleMessage("Create task to continue"),
     "dataNotSaved" : MessageLookupByLibrary.simpleMessage("Data not saved!"),
     "dataNotSavedDesc1" : MessageLookupByLibrary.simpleMessage("You have some unsaved data, go back and click "),
     "dataNotSavedDesc2" : MessageLookupByLibrary.simpleMessage(" at the top-right to save!"),
@@ -50,8 +53,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "discard" : MessageLookupByLibrary.simpleMessage("Discard"),
     "durationInMinutes" : MessageLookupByLibrary.simpleMessage("Duration (in minutes)"),
     "edit" : MessageLookupByLibrary.simpleMessage("Edit"),
+    "editTask" : MessageLookupByLibrary.simpleMessage("Edit task"),
     "emptyErrorMessage" : MessageLookupByLibrary.simpleMessage("Please enter some text"),
-    "emptyTaskGroupText" : MessageLookupByLibrary.simpleMessage("Task group list is empty"),
+    "emptyHere" : MessageLookupByLibrary.simpleMessage("It\'s empty here,"),
     "enterEmail" : MessageLookupByLibrary.simpleMessage("Enter email address"),
     "enterPassword" : MessageLookupByLibrary.simpleMessage("Password"),
     "enterTaskName" : MessageLookupByLibrary.simpleMessage("Enter task name"),
@@ -60,9 +64,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "hours" : m0,
     "intervals" : m1,
     "language" : MessageLookupByLibrary.simpleMessage("Language"),
+    "languageAndAppearance" : MessageLookupByLibrary.simpleMessage("Language and Appearance"),
     "longBreak" : MessageLookupByLibrary.simpleMessage("Long break"),
     "longBreakAfter" : MessageLookupByLibrary.simpleMessage("Long break after"),
     "longBreakDuration" : MessageLookupByLibrary.simpleMessage("Long break duration"),
+    "longBreakIntervals" : MessageLookupByLibrary.simpleMessage("Long break intervals"),
     "min" : MessageLookupByLibrary.simpleMessage("min."),
     "minutes" : m2,
     "next" : MessageLookupByLibrary.simpleMessage("Next"),
@@ -82,13 +88,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "system" : MessageLookupByLibrary.simpleMessage("System"),
     "takeBreak" : MessageLookupByLibrary.simpleMessage("Take Break"),
     "taskComplete" : MessageLookupByLibrary.simpleMessage("Task Complete"),
+    "taskCompleted" : MessageLookupByLibrary.simpleMessage("Task completed"),
     "taskCount" : m4,
     "taskGroupNameErrorText" : MessageLookupByLibrary.simpleMessage("Enter a valid task group name"),
-    "taskGroups" : MessageLookupByLibrary.simpleMessage("Task groups"),
     "taskName" : MessageLookupByLibrary.simpleMessage("Task name"),
+    "taskRatioDesc" : m5,
+    "tasks" : MessageLookupByLibrary.simpleMessage("Tasks"),
     "theme" : MessageLookupByLibrary.simpleMessage("Theme"),
-    "themeType" : m5,
-    "toAddNewTaskGroup" : MessageLookupByLibrary.simpleMessage("to add new Task group"),
+    "themeType" : m6,
+    "trackedHours" : MessageLookupByLibrary.simpleMessage("Tracked Hours"),
     "typeTaskName" : MessageLookupByLibrary.simpleMessage("Type task name..."),
     "withLabel" : MessageLookupByLibrary.simpleMessage("with")
   };
