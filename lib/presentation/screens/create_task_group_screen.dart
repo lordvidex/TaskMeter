@@ -175,15 +175,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
     });
   }
 
-  TextStyle getDefaultTextStyle(
-      ThemeData theme, bool isDarkMode, BuildContext context) {
-    theme.textTheme.apply(fontFamily: 'Circular-Std');
-    return theme.textTheme.bodyText2.copyWith(
-        color: isDarkMode ? Colors.white : Constants.appNavyBlue,
-        fontFamily: 'Circular-Std',
-        fontWeight: FontWeight.w500);
-  }
-
+  /// Scroll container for the sub tasks added within the task group
   List<Widget> subTaskViews(ScrollController _taskScrollController) {
     return [
       Padding(
@@ -231,213 +223,213 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
   @override
   Widget build(BuildContext context) {
     final appLocale = AppLocalizations.of(context);
-    final theme = Theme.of(context);
-    final isDarkMode = theme.brightness == Brightness.dark;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
-    //* widget helpers
-    return Theme(
-      data: theme.copyWith(
-          textTheme: theme.textTheme.copyWith(
-              subtitle1: theme.textTheme.subtitle1.copyWith(
-                  fontFamily: 'Circular-Std', fontWeight: FontWeight.w500),
-              bodyText2: getDefaultTextStyle(theme, isDarkMode, context))),
-      child: Scaffold(
-        body: SafeArea(
-          child: SingleChildScrollView(
-            controller: _scrollController,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: SvgPicture.asset(
-                      'assets/icons/back.svg',
-                      width: 29,
-                      height: 24,
-                      color: isDarkMode ? Colors.white : null,
-                    )),
-                Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: Text(
-                    appLocale.createTask,
-                    style: TextStyle(fontSize: 24),
-                  ),
+    // action buttons at the bottom of the create task group screen for
+    // adding subtasks and creating the taskgroup
+    final _actionButtons = [
+      Padding(
+        padding: const EdgeInsets.only(top: 80, bottom: 10),
+        child: Align(
+          alignment: Alignment.center,
+          child: Builder(
+            builder: (ctx) => Container(
+              width: 229,
+              child: ActionButton(
+                resizable: true,
+                onPressed: () {
+                  setState(() {
+                    modalIsActive = true;
+                  });
+                  Timer(
+                      Duration(milliseconds: 100),
+                      () => _scrollController.jumpTo(
+                            _scrollController.position.maxScrollExtent,
+                          ));
+                  showAddNewTaskBottomSheet(ctx, isDarkMode);
+                },
+                fillColor: Constants.appBlue,
+                text: 'Add Sub Task',
+                // padding: EdgeInsets.symmetric(
+                //     horizontal: , vertical: 14),
+              ),
+            ),
+          ),
+        ),
+      ),
+      Align(
+        alignment: Alignment.center,
+        child: Builder(
+          builder: (ctx) => Container(
+            width: 229,
+            child: ActionButton(
+              resizable: true,
+              onPressed: () => createTaskGroup(context),
+              fillColor: Constants.appGreen,
+              text: appLocale.createTask,
+            ),
+          ),
+        ),
+      )
+    ];
+
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          controller: _scrollController,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: SvgPicture.asset(
+                    'assets/icons/back.svg',
+                    width: 29,
+                    height: 24,
+                    color: isDarkMode ? Colors.white : null,
+                  )),
+              Padding(
+                padding: const EdgeInsets.all(24),
+                child: Text(
+                  appLocale.createTask,
+                  style: TextStyle(fontSize: 24),
                 ),
-                SingleChildScrollView(
-                  child: Form(
-                    key: _formKey,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CustomTextFormField(
-                              labelText: appLocale.enterTaskName,
-                              isDarkMode: isDarkMode,
-                              controller: _tgTitleController,
-                              onSubmitted: (_) {
-                                _durationController.clear();
-                                _durationFocusNode.requestFocus();
-                              },
-                              validator: (value) {
-                                if (value == null || value.trim().isEmpty) {
-                                  return appLocale.taskGroupNameErrorText;
-                                }
-                                return null;
-                              }),
-                          Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 20, bottom: 12),
-                              child: Text(appLocale.durationInMinutes,
-                                  style: TextStyle(fontSize: 18))),
-                          CustomTextFormField.numbersOnly(
-                            context: context,
-                            focusNode: _durationFocusNode,
-                            onChanged: (x) => _durationInMinutes =
-                                int.tryParse(x.trim()) ?? _durationInMinutes,
-                            onSubmitted: (_) {
-                              _durationController.text =
-                                  DurationUtils.durationToReadableString(
-                                      Duration(minutes: _durationInMinutes),
-                                      appLocale);
-                              _shortBreakController.clear();
-                              _shortBreakFocusNode.requestFocus();
-                            },
-                            controller: _durationController,
-                            hintText: appLocale.minutes(30),
+              ),
+              SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomTextFormField(
+                            labelText: appLocale.enterTaskName,
                             isDarkMode: isDarkMode,
-                          ),
-                          Padding(
-                              padding: const EdgeInsets.only(top: 20),
-                              child: Row(
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      ConstrainedBox(
-                                        constraints:
-                                            BoxConstraints(maxWidth: 125),
-                                        child: Text(appLocale.shortBreak,
-                                            style: TextStyle(fontSize: 18)),
-                                      ),
-                                      Container(
-                                          margin:
-                                              const EdgeInsets.only(top: 10),
-                                          width: 125,
-                                          child:
-                                              CustomTextFormField.numbersOnly(
-                                            focusNode: _shortBreakFocusNode,
-                                            onChanged: (x) =>
-                                                _shortBreakInMinutes =
-                                                    int.tryParse(x.trim()) ??
-                                                        _shortBreakInMinutes,
-                                            onSubmitted: (_) {
-                                              _shortBreakController.text =
-                                                  DurationUtils
-                                                      .durationToReadableString(
-                                                          Duration(
-                                                              minutes:
-                                                                  _shortBreakInMinutes),
-                                                          appLocale);
-                                              _longBreakController.clear();
-                                              _longBreakFocusNode
-                                                  .requestFocus();
-                                            },
-                                            context: context,
-                                            controller: _shortBreakController,
-                                            hintText: appLocale.minutes(5),
-                                            isDarkMode: isDarkMode,
-                                          )),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    width: 14,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      ConstrainedBox(
-                                        constraints:
-                                            BoxConstraints(maxWidth: 125),
-                                        child: Text(appLocale.longBreak,
-                                            style: TextStyle(fontSize: 18)),
-                                      ),
-                                      Container(
-                                          margin:
-                                              const EdgeInsets.only(top: 10),
-                                          width: 125,
-                                          child:
-                                              CustomTextFormField.numbersOnly(
-                                            focusNode: _longBreakFocusNode,
-                                            context: context,
-                                            onChanged: (x) =>
-                                                _longBreakInMinutes =
-                                                    int.tryParse(x.trim()) ??
-                                                        _longBreakInMinutes,
-                                            onSubmitted: (_) {
-                                              _longBreakController.text =
-                                                  DurationUtils
-                                                      .durationToReadableString(
-                                                          Duration(
-                                                              minutes:
-                                                                  _longBreakInMinutes),
-                                                          appLocale);
-                                            },
-                                            hintText: appLocale.minutes(10),
-                                            controller: _longBreakController,
-                                            isDarkMode: isDarkMode,
-                                          )),
-                                    ],
-                                  )
-                                ],
-                              )),
-                          if (newTaskGroup.tasks.isNotEmpty)
-                            ...subTaskViews(_taskScrollController),
-                          if (modalIsActive)
-                            SizedBox(
-                              height: 80,
-                            ),
-                          if (!modalIsActive)
-                            Padding(
-                              padding: const EdgeInsets.only(top: 80),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Builder(
-                                  builder: (ctx) => Container(
-                                    width: 229,
-                                    child: ActionButton(
-                                      resizable: true,
-                                      onPressed: () {
-                                        setState(() {
-                                          modalIsActive = true;
-                                        });
-                                        Timer(
-                                            Duration(milliseconds: 100),
-                                            () => _scrollController.jumpTo(
-                                                  _scrollController
-                                                      .position.maxScrollExtent,
-                                                ));
-                                        showAddNewTaskBottomSheet(
-                                            ctx, isDarkMode);
-                                      },
-                                      fillColor: Constants.appBlue,
-                                      text: appLocale.createTask,
-                                      // padding: EdgeInsets.symmetric(
-                                      //     horizontal: , vertical: 14),
+                            controller: _tgTitleController,
+                            onSubmitted: (_) {
+                              _durationController.clear();
+                              _durationFocusNode.requestFocus();
+                            },
+                            validator: (value) {
+                              if (value == null || value.trim().isEmpty) {
+                                return appLocale.taskGroupNameErrorText;
+                              }
+                              return null;
+                            }),
+                        Padding(
+                            padding: const EdgeInsets.only(top: 20, bottom: 12),
+                            child: Text(appLocale.durationInMinutes,
+                                style: TextStyle(fontSize: 18))),
+                        CustomTextFormField.numbersOnly(
+                          context: context,
+                          focusNode: _durationFocusNode,
+                          onChanged: (x) => _durationInMinutes =
+                              int.tryParse(x.trim()) ?? _durationInMinutes,
+                          onSubmitted: (_) {
+                            _durationController.text =
+                                DurationUtils.durationToReadableString(
+                                    Duration(minutes: _durationInMinutes),
+                                    appLocale);
+                            _shortBreakController.clear();
+                            _shortBreakFocusNode.requestFocus();
+                          },
+                          controller: _durationController,
+                          hintText: appLocale.minutes(30),
+                          isDarkMode: isDarkMode,
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: Row(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ConstrainedBox(
+                                      constraints:
+                                          BoxConstraints(maxWidth: 125),
+                                      child: Text(appLocale.shortBreak,
+                                          style: TextStyle(fontSize: 18)),
                                     ),
-                                  ),
+                                    Container(
+                                        margin: const EdgeInsets.only(top: 10),
+                                        width: 125,
+                                        child: CustomTextFormField.numbersOnly(
+                                          focusNode: _shortBreakFocusNode,
+                                          onChanged: (x) =>
+                                              _shortBreakInMinutes =
+                                                  int.tryParse(x.trim()) ??
+                                                      _shortBreakInMinutes,
+                                          onSubmitted: (_) {
+                                            _shortBreakController.text =
+                                                DurationUtils
+                                                    .durationToReadableString(
+                                                        Duration(
+                                                            minutes:
+                                                                _shortBreakInMinutes),
+                                                        appLocale);
+                                            _longBreakController.clear();
+                                            _longBreakFocusNode.requestFocus();
+                                          },
+                                          context: context,
+                                          controller: _shortBreakController,
+                                          hintText: appLocale.minutes(5),
+                                          isDarkMode: isDarkMode,
+                                        )),
+                                  ],
                                 ),
-                              ),
-                            )
-                        ],
-                      ),
+                                SizedBox(
+                                  width: 14,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ConstrainedBox(
+                                      constraints:
+                                          BoxConstraints(maxWidth: 125),
+                                      child: Text(appLocale.longBreak,
+                                          style: TextStyle(fontSize: 18)),
+                                    ),
+                                    Container(
+                                        margin: const EdgeInsets.only(top: 10),
+                                        width: 125,
+                                        child: CustomTextFormField.numbersOnly(
+                                          focusNode: _longBreakFocusNode,
+                                          context: context,
+                                          onChanged: (x) =>
+                                              _longBreakInMinutes =
+                                                  int.tryParse(x.trim()) ??
+                                                      _longBreakInMinutes,
+                                          onSubmitted: (_) {
+                                            _longBreakController.text =
+                                                DurationUtils
+                                                    .durationToReadableString(
+                                                        Duration(
+                                                            minutes:
+                                                                _longBreakInMinutes),
+                                                        appLocale);
+                                          },
+                                          hintText: appLocale.minutes(10),
+                                          controller: _longBreakController,
+                                          isDarkMode: isDarkMode,
+                                        )),
+                                  ],
+                                )
+                              ],
+                            )),
+                        if (newTaskGroup.tasks.isNotEmpty)
+                          ...subTaskViews(_taskScrollController),
+                        if (modalIsActive)
+                          SizedBox(
+                            height: 80,
+                          ),
+                        if (!modalIsActive) ..._actionButtons
+                      ],
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
