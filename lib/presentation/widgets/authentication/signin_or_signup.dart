@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 
 import '../../../core/utils/string_utils.dart';
 import '../../../locale/locales.dart';
-import '../../bloc/size_bloc.dart';
 import '../../providers/authentication_provider.dart';
 import '../../providers/task_group_provider.dart';
 import 'social_button.dart';
@@ -60,7 +59,6 @@ class _SignInOrSignUpState extends State<SignInOrSignUp>
   @override
   Widget build(BuildContext context) {
     final appLocale = AppLocalizations.of(context);
-    final sizeBloc = context.read<SizeBloc>();
     return Column(children: [
       TabBar(
         tabs: [
@@ -118,7 +116,6 @@ class _SignInOrSignUpState extends State<SignInOrSignUp>
         onPressed: () => _isEmailMode
             ? _toggleEmailPasswordMode()
             : _emailCallBack(
-                sizeBloc: sizeBloc,
                 signIn: _index == 0,
                 email: _emailController.text,
                 password: _passwordController.text,
@@ -133,8 +130,7 @@ class _SignInOrSignUpState extends State<SignInOrSignUp>
       SocialButton(
           buttonLabel: (_index == 0 ? appLocale.signIn : appLocale.signup) +
               ' ${appLocale.withLabel} Google',
-          onPressed: () =>
-              _googleCallBack(signIn: _index == 0, sizeBloc: sizeBloc),
+          onPressed: () => _googleCallBack(signIn: _index == 0),
           buttonColor: Colors.white,
           textColor: Colors.black,
           icon: kIsWeb
@@ -163,13 +159,12 @@ class _SignInOrSignUpState extends State<SignInOrSignUp>
         height: 10,
         thickness: 2,
       ),
-      if (sizeBloc.isMobileScreen)
-        SocialButton(
-          buttonLabel: 'Close',
-          onPressed: () => Navigator.of(context).pop(),
-          buttonColor: Colors.red,
-          icon: Container(),
-        )
+      SocialButton(
+        buttonLabel: 'Close',
+        onPressed: () => Navigator.of(context).pop(),
+        buttonColor: Colors.red,
+        icon: Container(),
+      )
     ]);
   }
 
@@ -200,8 +195,7 @@ class _SignInOrSignUpState extends State<SignInOrSignUp>
             ));
   }
 
-  void _emailCallBack(
-      {SizeBloc sizeBloc, bool signIn, String email, String password}) async {
+  void _emailCallBack({bool signIn, String email, String password}) async {
     widget.authFunction(true);
     var result;
     if (signIn) {
@@ -211,7 +205,7 @@ class _SignInOrSignUpState extends State<SignInOrSignUp>
       result = await _provider.emailSignUp(email, password);
     }
     if (result == null) {
-      if (sizeBloc.isMobileScreen) Navigator.of(context).pop();
+      Navigator.of(context).pop();
     } else {
       _showError(result);
     }
@@ -221,15 +215,13 @@ class _SignInOrSignUpState extends State<SignInOrSignUp>
     widget.authFunction(false);
   }
 
-  Future<void> _googleCallBack(
-      {bool signIn, @required SizeBloc sizeBloc}) async {
+  Future<void> _googleCallBack({bool signIn = false}) async {
     widget.authFunction(true);
     String result = signIn
         ? await _provider.googleSignIn()
         : await _provider.googleSignUp();
     if (result == null) {
-      if (sizeBloc.isMobileScreen) Navigator.of(context).pop();
-      print('successfully signed ${signIn ? 'in' : 'up'} with google');
+      Navigator.of(context).pop();
     } else {
       _showError(result);
     }

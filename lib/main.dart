@@ -9,7 +9,6 @@ import 'core/constants.dart';
 import 'domain/models/app_theme.dart';
 import 'injection_container.dart' as di;
 import 'locale/locales.dart';
-import 'presentation/bloc/size_bloc.dart';
 import 'presentation/bloc/timer_bloc.dart';
 import 'presentation/providers/authentication_provider.dart';
 import 'presentation/providers/settings_provider.dart';
@@ -38,7 +37,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        BlocProvider(create: (_) => di.sl<SizeBloc>()),
         ChangeNotifierProvider<AuthenticationProvider>(
           lazy: true,
           create: (_) => di.sl<AuthenticationProvider>(),
@@ -59,9 +57,7 @@ class MyApp extends StatelessWidget {
 class NewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (ctx, constraints) {
-      ctx.read<SizeBloc>().add(WidthEvent(constraints.maxWidth));
-      return Consumer<SettingsProvider>(
+    return Consumer<SettingsProvider>(
         builder: (ctx, provider, _) => MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: Constants.kThemeData,
@@ -96,6 +92,5 @@ class NewWidget extends StatelessWidget {
               CreateTaskGroupScreen.routeName: (_) => CreateTaskGroupScreen(),
             }),
       );
-    });
-  }
+    }
 }

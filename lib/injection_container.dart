@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:task_meter/presentation/bloc/size_bloc.dart';
 
 import 'core/network/network_info.dart';
 import 'data/datasources/local_storage.dart';
@@ -35,7 +34,7 @@ Future<void> init() async {
 Future<void> _registerComponents() async {
   //! Blocs
   sl.registerFactory(() => TimerBloc(timerRepo: sl()));
-  sl.registerFactory(() => SizeBloc());
+
   //! Providers
   sl.registerLazySingleton(() => SettingsProvider(settingsRepo: sl()));
   sl.registerLazySingleton(() => TaskGroupProvider(taskGroupRepo: sl()));
