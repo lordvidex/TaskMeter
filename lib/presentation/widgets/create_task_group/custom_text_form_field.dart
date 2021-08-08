@@ -9,6 +9,7 @@ class CustomTextFormField extends TextFormField {
   final bool isDarkMode;
   final FormFieldValidator<String> validator;
   final FocusNode focusNode;
+  final bool obscureText;
   final TextInputType keyboardType;
   final TextEditingController controller;
   final List<TextInputFormatter> inputFormatters;
@@ -26,9 +27,11 @@ class CustomTextFormField extends TextFormField {
     this.inputFormatters,
     this.keyboardType,
     this.onChanged,
+    this.obscureText,
     this.onSubmitted,
     this.isDarkMode = false,
   }) : super(
+            obscureText: obscureText ?? false,
             onFieldSubmitted: onSubmitted,
             onChanged: onChanged,
             onTap: onTap,

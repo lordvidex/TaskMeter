@@ -30,4 +30,8 @@ class SettingsProvider extends ChangeNotifier {
     _settings.language = languageCode;
     updateSettings(_settings);
   }
+
+  bool get isFirstTimeUser => _settingsRepository.isFirstTimeUser;
+  set isFirstTimeUser(bool value) =>
+      _settingsRepository.isFirstTimeUser = value;
 }

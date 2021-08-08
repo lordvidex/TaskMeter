@@ -9,6 +9,7 @@ import '../../domain/models/task_group.dart';
 const String SETTINGS = 'settings';
 const String TASKGROUPS = 'task_groups';
 const String LAST_TASKGROUP_UPDATE_TIME = 'time';
+const String IS_NEW_USER = 'is_new_user';
 
 abstract class LocalStorage {
   //! Authentication section
@@ -34,6 +35,12 @@ abstract class LocalStorage {
   /// updates taskGroups in the database with the time they were added
   Future<void> updateTaskGroups(
       List<TaskGroup> taskGroups, DateTime timeOfUpdate);
+
+  /// returns true if user is new
+  bool get isFirstTimeUser;
+
+  /// sets false to is first time user
+  set isFirstTimeUser(bool value);
 }
 
 class LocalStorageImpl extends LocalStorage {
@@ -45,6 +52,17 @@ class LocalStorageImpl extends LocalStorage {
   Future<void> logoutUser() async {
     await firebaseAuth.signOut();
   }
+
+  bool get isFirstTimeUser {
+    try {
+      return sharedPreferences.getBool(IS_NEW_USER) ?? true;
+    } catch (_) {
+      return true;
+    }
+  }
+
+  set isFirstTimeUser(bool value) =>
+      sharedPreferences.setBool(IS_NEW_USER, false);
 
   @override
   Future<Settings> fetchSettings() async {

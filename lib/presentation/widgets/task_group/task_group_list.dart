@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:task_meter/presentation/screens/authentication_screen.dart';
 
 import '../../../core/constants.dart';
 import '../../../locale/locales.dart';
@@ -47,7 +48,10 @@ class TaskGroupListWidget extends StatelessWidget {
                           color:
                               isDarkMode ? Colors.white : Constants.appNavyBlue,
                           size: 24),
-                      onPressed: () {},
+                      onPressed: () => provider.user == null
+                          ? Navigator.of(context)
+                              .pushNamed(AuthenticationScreen.routeName)
+                          : {},
                     ),
                     actions: [
                       TextButton(

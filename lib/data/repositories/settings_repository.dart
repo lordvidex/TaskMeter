@@ -10,6 +10,13 @@ abstract class SettingsRepository {
 
   /// update setting in the database
   Future<void> updateSettings(Settings newSetting, {DateTime time});
+
+  /// returns true if user is logged in for the first time
+  /// returns false otherwise
+  bool get isFirstTimeUser;
+
+  /// sets
+  set isFirstTimeUser(bool value);
 }
 
 class SettingsRepositoryImpl extends SettingsRepository {
@@ -45,4 +52,10 @@ class SettingsRepositoryImpl extends SettingsRepository {
     }
     await _localStorage.updateSettings(newSetting);
   }
+
+  @override
+  bool get isFirstTimeUser => _localStorage.isFirstTimeUser;
+
+  @override
+  set isFirstTimeUser(bool value) => _localStorage.isFirstTimeUser = value;
 }

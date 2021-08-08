@@ -13,12 +13,14 @@ import 'presentation/bloc/timer_bloc.dart';
 import 'presentation/providers/authentication_provider.dart';
 import 'presentation/providers/settings_provider.dart';
 import 'presentation/providers/task_group_provider.dart';
+import 'presentation/screens/authentication_screen.dart';
 import 'presentation/screens/create_task_group_screen.dart';
 import 'presentation/screens/error_screen.dart';
 import 'presentation/screens/settings_screen.dart';
 import 'presentation/screens/task_group_description_screen.dart';
 import 'presentation/screens/task_group_screen.dart';
 import 'presentation/screens/task_timer_screen.dart';
+import 'presentation/screens/welcome_screen.dart';
 
 void main() async {
   //TODO: loading splash screen HERE - (a brief loading animation to be precise)
@@ -49,12 +51,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(create: (_) => di.sl<TimerBloc>())
       ],
-      child: NewWidget(),
+      child: RootWidget(),
     );
   }
 }
 
-class NewWidget extends StatelessWidget {
+class RootWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<SettingsProvider>(
@@ -81,9 +83,10 @@ class NewWidget extends StatelessWidget {
               const Locale('en', ''), // English, no country code
               const Locale('ru', ''), // Russian, no country code
             ],
-            home: TaskGroupScreen(),
+            home: provider.isFirstTimeUser ? WelcomeScreen() : TaskGroupScreen(),
             routes: {
               TaskGroupScreen.routeName: (_) => TaskGroupScreen(),
+              AuthenticationScreen.routeName: (_) => AuthenticationScreen(),
               TaskTimerScreen.routeName: (_) => TaskTimerScreen(),
               TaskGroupDescriptionScreen.routeName: (_) =>
                   TaskGroupDescriptionScreen(),

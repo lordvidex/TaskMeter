@@ -115,7 +115,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
         final _user = await _remoteStorage.signinUserWithEmail(email, password);
         return Right(_user);
       } on UserDoesNotExistException {
-        return Left(UserDoesNotExistFailure());
+        return await signupUserWithEmail(email, password);
       } on WrongCredentialsException {
         return Left(WrongCredentialsFailure());
       } catch (e) {
