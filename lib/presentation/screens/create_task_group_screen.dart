@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:provider/provider.dart';
-import 'package:task_meter/presentation/widgets/app_back_button.dart';
 
 import '../../core/algorithms/time_divider.dart';
 import '../../core/constants.dart';
@@ -22,6 +22,8 @@ import '../widgets/create_task_group/custom_text_form_field.dart';
 import '../widgets/task_group_description/task_card.dart';
 import '../widgets/task_timer/action_button.dart';
 
+/// Screen contains onboarding_overlay to guide the user into
+/// creating his first task
 class CreateTaskGroupScreen extends StatefulWidget {
   static const routeName = '/new-task-group';
   @override
@@ -56,6 +58,9 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
   // true when user is adding new task
   bool modalIsActive;
 
+  // List of focus nodes for onboarding
+  List<FocusNode> focusNodes;
+
   @override
   void initState() {
     super.initState();
@@ -79,6 +84,14 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
         totalTime: settings.totalTime);
 
     _tgTitleController = TextEditingController();
+
+    focusNodes = context.read<SettingsProvider>().onboardingFocusNodes;
+
+    WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
+      final OnboardingState onboarding = Onboarding.of(context);
+      if (!context.read<SettingsProvider>().hasPassedTutorial)
+        onboarding.showWithSteps(0, [0, 1, 2]);
+    });
   }
 
   @override
@@ -167,7 +180,9 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
         builder: (ctx2) => AddTaskWidget(
               createTaskGroup: createTaskGroup,
               addNewTask: addNewTask,
+              onboarding: Onboarding.of(context),
               isEditMode: isEditMode,
+              focusNodes: focusNodes,
               taskGroup: newTaskGroup,
               taskToBeEdited: taskToBeEdited,
             )).then((_) {
@@ -230,6 +245,38 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
     final _actionButtons = [
       Padding(
         padding: const EdgeInsets.only(top: 80, bottom: 10),
+        child: Focus(
+          focusNode: focusNodes[2],
+          child: Align(
+            alignment: Alignment.center,
+            child: Builder(
+              builder: (ctx) => Container(
+                width: 229,
+                child: ActionButton(
+                  resizable: true,
+                  onPressed: () {
+                    setState(() {
+                      modalIsActive = true;
+                    });
+                    Timer(
+                        Duration(milliseconds: 100),
+                        () => _scrollController.jumpTo(
+                              _scrollController.position.maxScrollExtent,
+                            ));
+                    showAddNewTaskBottomSheet(ctx, isDarkMode);
+                  },
+                  fillColor: Constants.appBlue,
+                  text: 'Add Sub Task',
+                  // padding: EdgeInsets.symmetric(
+                  //     horizontal: , vertical: 14),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+      Focus(
+        focusNode: focusNodes[6],
         child: Align(
           alignment: Alignment.center,
           child: Builder(
@@ -237,42 +284,15 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
               width: 229,
               child: ActionButton(
                 resizable: true,
-                onPressed: () {
-                  setState(() {
-                    modalIsActive = true;
-                  });
-                  Timer(
-                      Duration(milliseconds: 100),
-                      () => _scrollController.jumpTo(
-                            _scrollController.position.maxScrollExtent,
-                          ));
-                  showAddNewTaskBottomSheet(ctx, isDarkMode);
-                },
-                fillColor: Constants.appBlue,
-                text: 'Add Sub Task',
-                // padding: EdgeInsets.symmetric(
-                //     horizontal: , vertical: 14),
+                onPressed: () => createTaskGroup(context),
+                fillColor: Constants.appGreen,
+                text: appLocale.createTask,
               ),
-            ),
-          ),
-        ),
-      ),
-      Align(
-        alignment: Alignment.center,
-        child: Builder(
-          builder: (ctx) => Container(
-            width: 229,
-            child: ActionButton(
-              resizable: true,
-              onPressed: () => createTaskGroup(context),
-              fillColor: Constants.appGreen,
-              text: appLocale.createTask,
             ),
           ),
         ),
       )
     ];
-
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -303,40 +323,46 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomTextFormField(
-                            labelText: appLocale.enterTaskName,
-                            isDarkMode: isDarkMode,
-                            controller: _tgTitleController,
-                            onSubmitted: (_) {
-                              _durationController.clear();
-                              _durationFocusNode.requestFocus();
-                            },
-                            validator: (value) {
-                              if (value == null || value.trim().isEmpty) {
-                                return appLocale.taskGroupNameErrorText;
-                              }
-                              return null;
-                            }),
+                        Focus(
+                          focusNode: focusNodes[0],
+                          child: CustomTextFormField(
+                              labelText: appLocale.enterTaskName,
+                              isDarkMode: isDarkMode,
+                              controller: _tgTitleController,
+                              onSubmitted: (_) {
+                                _durationController.clear();
+                                _durationFocusNode.requestFocus();
+                              },
+                              validator: (value) {
+                                if (value == null || value.trim().isEmpty) {
+                                  return appLocale.taskGroupNameErrorText;
+                                }
+                                return null;
+                              }),
+                        ),
                         Padding(
                             padding: const EdgeInsets.only(top: 20, bottom: 12),
                             child: Text(appLocale.durationInMinutes,
                                 style: TextStyle(fontSize: 18))),
-                        CustomTextFormField.numbersOnly(
-                          context: context,
-                          focusNode: _durationFocusNode,
-                          onChanged: (x) => _durationInMinutes =
-                              int.tryParse(x.trim()) ?? _durationInMinutes,
-                          onSubmitted: (_) {
-                            _durationController.text =
-                                DurationUtils.durationToReadableString(
-                                    Duration(minutes: _durationInMinutes),
-                                    appLocale);
-                            _shortBreakController.clear();
-                            _shortBreakFocusNode.requestFocus();
-                          },
-                          controller: _durationController,
-                          hintText: appLocale.minutes(30),
-                          isDarkMode: isDarkMode,
+                        Focus(
+                          focusNode: focusNodes[1],
+                          child: CustomTextFormField.numbersOnly(
+                            context: context,
+                            focusNode: _durationFocusNode,
+                            onChanged: (x) => _durationInMinutes =
+                                int.tryParse(x.trim()) ?? _durationInMinutes,
+                            onSubmitted: (_) {
+                              _durationController.text =
+                                  DurationUtils.durationToReadableString(
+                                      Duration(minutes: _durationInMinutes),
+                                      appLocale);
+                              _shortBreakController.clear();
+                              _shortBreakFocusNode.requestFocus();
+                            },
+                            controller: _durationController,
+                            hintText: appLocale.minutes(30),
+                            isDarkMode: isDarkMode,
+                          ),
                         ),
                         Padding(
                             padding: const EdgeInsets.only(top: 20),

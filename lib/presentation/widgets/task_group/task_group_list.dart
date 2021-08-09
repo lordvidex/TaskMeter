@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:task_meter/presentation/screens/authentication_screen.dart';
+import 'package:task_meter/presentation/widgets/create_task_group/onboarder.dart';
 
 import '../../../core/constants.dart';
 import '../../../locale/locales.dart';
@@ -161,7 +162,7 @@ class TaskGroupListWidget extends StatelessWidget {
                       child: ActionButton(
                           padding: const EdgeInsets.symmetric(vertical: 12),
                           onPressed: () => Navigator.of(context)
-                              .pushNamed(CreateTaskGroupScreen.routeName),
+                              .pushNamed(Onboarder.routeName),
                           fillColor: Constants.appBlue,
                           text: appLocale.createTask),
                     ),

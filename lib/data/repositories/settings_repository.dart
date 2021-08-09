@@ -17,6 +17,12 @@ abstract class SettingsRepository {
 
   /// sets
   set isFirstTimeUser(bool value);
+
+  /// Indicates whether user has gone through the create task tutorial
+  bool get hasPassedTutorial;
+
+  /// sets
+  set hasPassedTutorial(bool value);
 }
 
 class SettingsRepositoryImpl extends SettingsRepository {
@@ -58,4 +64,10 @@ class SettingsRepositoryImpl extends SettingsRepository {
 
   @override
   set isFirstTimeUser(bool value) => _localStorage.isFirstTimeUser = value;
+
+  @override
+  bool get hasPassedTutorial => _localStorage.hasPassedTutorial;
+
+  @override
+  set hasPassedTutorial(bool value) => _localStorage.hasPassedTutorial = value;
 }

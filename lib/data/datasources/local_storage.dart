@@ -10,6 +10,7 @@ const String SETTINGS = 'settings';
 const String TASKGROUPS = 'task_groups';
 const String LAST_TASKGROUP_UPDATE_TIME = 'time';
 const String IS_NEW_USER = 'is_new_user';
+const String HAS_COMPLETED_TUTORIAL = 'has_completed_tutorial';
 
 abstract class LocalStorage {
   //! Authentication section
@@ -41,6 +42,12 @@ abstract class LocalStorage {
 
   /// sets false to is first time user
   set isFirstTimeUser(bool value);
+
+  /// returns true if user has passed tutorial
+  bool get hasPassedTutorial;
+
+  /// sets true if user has passed tutorial
+  set hasPassedTutorial(bool value);
 }
 
 class LocalStorageImpl extends LocalStorage {
@@ -63,6 +70,16 @@ class LocalStorageImpl extends LocalStorage {
 
   set isFirstTimeUser(bool value) =>
       sharedPreferences.setBool(IS_NEW_USER, false);
+
+  @override
+  bool get hasPassedTutorial {
+    return sharedPreferences.getBool(HAS_COMPLETED_TUTORIAL) ?? false;
+  }
+
+  @override
+  set hasPassedTutorial(bool value) {
+    sharedPreferences.setBool(HAS_COMPLETED_TUTORIAL, value ?? true);
+  }
 
   @override
   Future<Settings> fetchSettings() async {
