@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:task_meter/domain/usecases/recover_password_usecase.dart';
 
 import 'core/network/network_info.dart';
 import 'data/datasources/local_storage.dart';
@@ -45,6 +46,7 @@ Future<void> _registerComponents() async {
         logoutUseCase: sl(),
         googleSignInUseCase: sl(),
         googleSignUpUseCase: sl(),
+        recoverPasswordUseCase: sl(),
       ));
 
   //! Usecases
@@ -54,6 +56,7 @@ Future<void> _registerComponents() async {
   sl.registerLazySingleton(() => AutoLoginUseCase(authRepo: sl()));
   sl.registerLazySingleton(() => GoogleSignInUseCase(authRepo: sl()));
   sl.registerLazySingleton(() => GoogleSignUpUseCase(authRepo: sl()));
+  sl.registerLazySingleton(() => RecoverPasswordUseCase(authRepo: sl()));
 
   //! repositories
   sl.registerLazySingleton(() => TimerRepository());

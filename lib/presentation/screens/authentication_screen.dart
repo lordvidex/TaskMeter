@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:task_meter/core/constants.dart';
+import 'package:task_meter/core/failures.dart';
 import 'package:task_meter/locale/locales.dart';
 import 'package:task_meter/presentation/providers/authentication_provider.dart';
 import 'package:task_meter/presentation/providers/settings_provider.dart';
@@ -70,12 +71,11 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                       fit: BoxFit.fitWidth,
                     ),
                     SocialButton(
-                        buttonLabel: 'Sign in with Email',
+                        buttonLabel: 'Continue with Email',
                         onPressed: () => _showEmailPopup(context),
                         icon: Icon(Icons.email, size: 24)),
                     SocialButton(
-                        buttonLabel:
-                            appLocale.signIn + ' ${appLocale.withLabel} Google',
+                        buttonLabel: 'Continue with Google',
                         onPressed: () => _googleCallBack(signIn: true),
                         icon: SvgPicture.asset(
                           'assets/icons/google.svg',
@@ -83,8 +83,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                           width: 24,
                         )),
                     SocialButton(
-                      buttonLabel:
-                          appLocale.signIn + ' ${appLocale.withLabel} Apple',
+                      buttonLabel: 'Continue with Apple',
                       onPressed: null,
                       icon: SvgPicture.asset(
                         'assets/icons/apple.svg',
@@ -144,30 +143,74 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
 
   void _emailCallBack(String email, String password) async {
     toggleAuthentication(true);
+
     final _provider = context.read<AuthenticationProvider>();
     final result = await _provider.emailSignIn(email, password);
 
-    if (result == null) {
-      Navigator.of(context).pop();
-    } else {
-      _showError(result);
-    }
-
-    // make sure the list is updated
-    await context.read<TaskGroupProvider>().loadTaskGroups();
     toggleAuthentication(false);
+
+    if (result == null) {
+      // make sure the list is updated
+      await context.read<TaskGroupProvider>().loadTaskGroups();
+      // move to task screen
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(TaskGroupScreen.routeName, (_) => false);
+    } else {
+      if (result is UserDoesNotExistFailure) {
+        await showDialog(
+            context: context,
+            builder: (ctx) => AlertDialog(
+                  title: Text('New Account'),
+                  content: Text(
+                    'By Clicking continue, you agree to create a new account with the following credentials.',
+                  ),
+                  actions: [
+                    TextButton(
+                      child: Text('Continue'),
+                      onPressed: () async {
+                        final result =
+                            await _provider.emailSignUp(email, password);
+                        if (result == null) {
+                          // make sure the list is updated
+                          await context
+                              .read<TaskGroupProvider>()
+                              .loadTaskGroups();
+                          // move to task screen
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              TaskGroupScreen.routeName, (_) => false);
+                        } else
+                          _showError(result.toString());
+                      },
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+                        },
+                        child: Text('Cancel'))
+                  ],
+                ));
+      } else {
+        _showError(result.toString());
+      }
+    }
   }
 
   Future<void> _googleCallBack({bool signIn = false}) async {
     toggleAuthentication(true);
+
     final _provider = context.read<AuthenticationProvider>();
-    String result = await _provider.googleSignIn();
-    if (result == null) {
-      Navigator.of(context).pop();
-    } else {
-      _showError(result);
-    }
-    await context.read<TaskGroupProvider>().loadTaskGroups();
+    final result = await _provider.googleSignIn();
+
     toggleAuthentication(false);
+
+    if (result == null) {
+      // make sure the list is updated
+      await context.read<TaskGroupProvider>().loadTaskGroups();
+      // move to task screen
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(TaskGroupScreen.routeName, (_) => false);
+    } else {
+      _showError(result.toString());
+    }
   }
 }

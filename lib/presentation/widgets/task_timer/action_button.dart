@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class ActionButton extends StatelessWidget {
   final Function onPressed;
   final String text;
+  final Widget child;
   final Widget icon;
   final EdgeInsets padding;
   final Color fillColor;
@@ -17,12 +18,14 @@ class ActionButton extends StatelessWidget {
       this.filled = true,
       this.wide = false,
       this.textColor,
+      this.child,
       this.padding,
       this.borderColor,
       this.resizable = false,
       @required this.fillColor,
       @required this.text,
-      this.icon});
+      this.icon})
+      : assert(child == null || text == null);
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +39,14 @@ class ActionButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(text,
-                style: TextStyle(
-                    fontFamily: 'Circular-Std',
-                    color: textColor ?? (filled ? Colors.white : fillColor),
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500)),
+            child != null
+                ? child
+                : Text(text,
+                    style: TextStyle(
+                        fontFamily: 'Circular-Std',
+                        color: textColor ?? (filled ? Colors.white : fillColor),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500)),
             if (icon != null) ...[SizedBox(width: 8), icon]
           ],
         ),

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../core/constants.dart';
 import '../../domain/models/app_theme.dart';
 import '../../locale/locales.dart';
+import '../providers/authentication_provider.dart';
 import '../providers/settings_provider.dart';
 import '../widgets/settings/settings_option_screen.dart';
 import '../widgets/settings/settings_tile.dart';
@@ -19,12 +20,14 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   SettingsProvider _provider;
+  AuthenticationProvider _authProvider;
   AppLocalizations appLocale;
 
   @override
   void initState() {
     super.initState();
     _provider = context.read<SettingsProvider>();
+    _authProvider = context.read<AuthenticationProvider>();
   }
 
   // helper functions
@@ -47,6 +50,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               valueToString: transform,
               title: title,
             )));
+  }
+
+  void _showSnackBarWithMessage(BuildContext context, String message) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override
@@ -176,6 +184,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           SettingsTile(title: appLocale.rate)
                         ]),
                   ),
+                  if (_authProvider.user != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 29.0),
+                      child: SettingsSection(title: 'Cloud', tiles: [
+                        SettingsTile(
+                            title: 'Logout',
+                            onPressed: () {
+                              final userEmail = _authProvider.user?.email;
+                              if (userEmail != null) {
+                                _authProvider.logOut().then((_) {
+                                  _showSnackBarWithMessage(
+                                    context,
+                                    'Successfully logged out user $userEmail',
+                                  );
+                                  return;
+                                }).catchError((_) {
+                                  _showSnackBarWithMessage(
+                                      context, 'Error logging out');
+                                });
+                              } else {
+                                _showSnackBarWithMessage(
+                                    context, 'Error logging out');
+                              }
+                            }),
+                      ]),
+                    ),
                 ],
               )),
             ),

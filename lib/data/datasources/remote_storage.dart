@@ -13,6 +13,7 @@ abstract class RemoteStorage {
   Future<User> signinUserWithEmail(String email, String password);
   Future<User> signupUserWithEmail(String email, String password);
   Future<User> signinUserWithGoogle();
+  Future<bool> recoverPassword(String email);
 
   //! Settings section
   /// Fetches the saved settings from Firebase
@@ -231,5 +232,15 @@ class RemoteStorageImpl implements RemoteStorage {
     }
     await _taskGroupDocument.doc(tg.taskGroupId).set(tg.toJson());
     await setLastTaskGroupUpdateTime(timeOfUpdate);
+  }
+
+  @override
+  Future<bool> recoverPassword(String email) async {
+    try{
+    await _firebaseAuth.sendPasswordResetEmail(email: email);
+    return true;
+    }catch(e) {
+      return false;
+    }
   }
 }

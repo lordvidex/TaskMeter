@@ -34,6 +34,9 @@ abstract class AuthenticationRepository {
   Future<Either<Failure, User>> signupUserWithEmail(
       String email, String password);
 
+  // password recovery
+  Future<Either<Failure, void>> recoverPassword(String email);
+
   // logs out user
   Future<void> logoutUser();
 }
@@ -115,7 +118,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
         final _user = await _remoteStorage.signinUserWithEmail(email, password);
         return Right(_user);
       } on UserDoesNotExistException {
-        return await signupUserWithEmail(email, password);
+        return Left(UserDoesNotExistFailure());
       } on WrongCredentialsException {
         return Left(WrongCredentialsFailure());
       } catch (e) {
@@ -138,6 +141,20 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
         return Right(signInResult);
       } on UserExistsException {
         return Left(UserExistsFailure());
+      } catch (e) {
+        return Left(ServerFailure());
+      }
+    } else {
+      return Left(NetworkFailure());
+    }
+  }
+
+  Future<Either<Failure, void>> recoverPassword(String email) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        return Right(await _remoteStorage.recoverPassword(email));
+      } on UserDoesNotExistException {
+        return Left(UserDoesNotExistFailure());
       } catch (e) {
         return Left(ServerFailure());
       }

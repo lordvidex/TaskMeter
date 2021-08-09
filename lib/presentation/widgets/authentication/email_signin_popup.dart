@@ -1,4 +1,6 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:task_meter/presentation/providers/authentication_provider.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/utils/string_utils.dart';
@@ -18,12 +20,23 @@ class _EmailSigninPopupState extends State<EmailSigninPopup>
   TextEditingController _emailController;
   TextEditingController _passwordController;
 
+  // number of times the continue button has been clicked
+  int _tries;
+
+  bool _loading;
+
+  // whether to show just the email textfield or both
+  bool _recoveryMode;
+
   GlobalKey<FormState> _formKey;
 
   @override
   void initState() {
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+    _tries = 0;
+    _loading = false;
+    _recoveryMode = false;
     _formKey = GlobalKey();
 
     super.initState();
@@ -49,6 +62,13 @@ class _EmailSigninPopupState extends State<EmailSigninPopup>
               ),
               child: Image.asset('assets/images/task_app.png',
                   fit: BoxFit.fitWidth)),
+          if (_recoveryMode)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('Enter recovery email address')),
+            ),
           CustomTextFormField(
             controller: _emailController,
             validator: (string) => StringUtils.formatMail(string.trim()),
@@ -57,25 +77,61 @@ class _EmailSigninPopupState extends State<EmailSigninPopup>
           SizedBox(
             height: 10,
           ),
-          CustomTextFormField(
-              controller: _passwordController,
-              obscureText: true,
-              validator: (string) => StringUtils.formatPassword(string),
-              hintText: appLocale.enterPassword),
+          if (!_recoveryMode)
+            CustomTextFormField(
+                controller: _passwordController,
+                obscureText: true,
+                validator: (string) => StringUtils.formatPassword(string),
+                hintText: appLocale.enterPassword),
+          if (_tries > 0 && !_recoveryMode)
+            Align(
+                alignment: Alignment.centerLeft,
+                child: TextButton(
+                    child: Text('Forgot Password?'),
+                    onPressed: () {
+                      setState(() {
+                        _recoveryMode = true;
+                      });
+                    })),
           Padding(
             padding: const EdgeInsets.only(top: 32, bottom: 8.0),
             child: ActionButton(
               fillColor: Constants.appBlue,
-              text: 'Continue',
-              onPressed: () {
-                if (!_formKey.currentState.validate()) {
-                  return;
-                }
-                widget.emailCallBack(
-                  _emailController.text.trim(),
-                  _passwordController.text.trim(),
-                );
-              },
+              child: _loading ? CircularProgressIndicator() : null,
+              text: !_loading
+                  ? _recoveryMode
+                      ? 'Send Recovery Mail'
+                      : 'Continue'
+                  : null,
+              onPressed: _recoveryMode
+                  ? () {
+                      if (!_formKey.currentState.validate()) {
+                        setState(() => _loading = false);
+                        return;
+                      }
+                      context
+                          .read<AuthenticationProvider>()
+                          .recoverPassword(_emailController.text.trim());
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                              'Check your inbox to set new password for this email')));
+                      Navigator.of(context).pop();
+                    }
+                  : () async {
+                      setState(() {
+                        _tries++;
+                        _loading = true;
+                      });
+                      if (!_formKey.currentState.validate()) {
+                        setState(() => _loading = false);
+                        return;
+                      }
+                      await widget.emailCallBack(
+                        _emailController.text.trim(),
+                        _passwordController.text.trim(),
+                      );
+                      setState(() => _loading = false);
+                    },
             ),
           ),
           ActionButton(
