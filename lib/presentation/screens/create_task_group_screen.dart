@@ -90,7 +90,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
       final OnboardingState onboarding = Onboarding.of(context);
       if (!context.read<SettingsProvider>().hasPassedTutorial)
-        onboarding.showWithSteps(0, [0, 1, 2]);
+        onboarding.showWithSteps(0, [0, 1, 2, 6]);
     });
   }
 

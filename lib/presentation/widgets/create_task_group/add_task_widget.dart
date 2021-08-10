@@ -79,11 +79,6 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
           taskName: _taskNameController.text.trim(), difficulty: _difficulty));
     }
     resetInputElements();
-    final hasPassedTutorial =
-        context.read<SettingsProvider>().hasPassedTutorial;
-    Future.delayed(Duration(milliseconds: 500), () {
-      if (!hasPassedTutorial) widget.onboarding.showFromIndex(6);
-    });
     Navigator.of(context).pop();
   }
 
