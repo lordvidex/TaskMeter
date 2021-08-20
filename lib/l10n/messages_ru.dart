@@ -19,30 +19,37 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ru';
 
-  static m0(hours) => "${Intl.plural(hours, zero: '${hours} Часов ', one: '${hours} Час ', few: '${hours} Часа ', many: '${hours} Часов ', other: '${hours} Часов ')}";
+  static m0(socialPlatform) => "Продолжайте с ${socialPlatform}";
 
-  static m1(x) => "${Intl.plural(x, zero: '${x} интервалов', one: '${x} интервал', few: '${x} интервала', many: '${x} интервалов', other: '${x} интервалов')}";
+  static m1(hours) => "${Intl.plural(hours, zero: '${hours} Часов ', one: '${hours} Час ', few: '${hours} Часа ', many: '${hours} Часов ', other: '${hours} Часов ')}";
 
-  static m2(minutes) => "${Intl.plural(minutes, zero: '${minutes} минут', one: '${minutes} минута ', few: '${minutes} минуты ', many: '${minutes} минут', other: '${minutes} минут ')}";
+  static m2(x) => "${Intl.plural(x, zero: '${x} интервалов', one: '${x} интервал', few: '${x} интервала', many: '${x} интервалов', other: '${x} интервалов')}";
 
-  static m3(seconds) => "${Intl.plural(seconds, zero: '', one: '${seconds} Секунда', few: '${seconds} Секунды', many: '${seconds} Секунд', other: '${seconds} Секунд')}";
+  static m3(minutes) => "${Intl.plural(minutes, zero: '${minutes} минут', one: '${minutes} минута ', few: '${minutes} минуты ', many: '${minutes} минут', other: '${minutes} минут ')}";
 
-  static m4(x) => "${Intl.plural(x, zero: '${x} задач', one: '${x} задача', few: '${x} задачи', many: '${x} задачи', other: '${x} задачи')}";
+  static m4(seconds) => "${Intl.plural(seconds, zero: '', one: '${seconds} Секунда', few: '${seconds} Секунды', many: '${seconds} Секунд', other: '${seconds} Секунд')}";
 
-  static m5(done, total) => "${Intl.plural(total, zero: '${done} из ${total} заданий выполнено', one: '${done} из ${total} задания выполнено', few: '${done} из ${total} заданий выполнено', many: '${done} из ${total} заданий выполнено', other: '${done} из ${total} заданий выполнено')}";
+  static m5(x) => "${Intl.plural(x, zero: '${x} задач', one: '${x} задача', few: '${x} задачи', many: '${x} задачи', other: '${x} задачи')}";
 
-  static m6(theme) => "${Intl.select(theme, {'Dark': 'Тёмная', 'Light': 'Светлая', 'System': 'Системная', })}";
+  static m6(done, total) => "${Intl.plural(total, zero: '${done} из ${total} заданий выполнено', one: '${done} из ${total} задания выполнено', few: '${done} из ${total} заданий выполнено', many: '${done} из ${total} заданий выполнено', other: '${done} из ${total} заданий выполнено')}";
+
+  static m7(theme) => "${Intl.select(theme, {'Dark': 'Тёмная', 'Light': 'Светлая', 'System': 'Системная', })}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "about" : MessageLookupByLibrary.simpleMessage("О нас"),
     "activeTasks" : MessageLookupByLibrary.simpleMessage("Активные задачи"),
     "add" : MessageLookupByLibrary.simpleMessage("Добавьте"),
+    "addSubTask" : MessageLookupByLibrary.simpleMessage("Добавить подзадачу"),
     "and" : MessageLookupByLibrary.simpleMessage("и"),
     "appTheme" : MessageLookupByLibrary.simpleMessage("Тема приложения"),
     "breakComplete" : MessageLookupByLibrary.simpleMessage("Перерыв завершен"),
     "cancel" : MessageLookupByLibrary.simpleMessage("Отменить"),
+    "checkInbox" : MessageLookupByLibrary.simpleMessage("Проверьте свой почтовый ящик, чтобы установить новый пароль для этого аккаунта"),
     "complete" : MessageLookupByLibrary.simpleMessage("завершите"),
+    "continueAsGuest" : MessageLookupByLibrary.simpleMessage("Продолжить без аутентификации"),
+    "continueLabel" : MessageLookupByLibrary.simpleMessage("Продолжать"),
+    "continueWith" : m0,
     "createTask" : MessageLookupByLibrary.simpleMessage("Создать задачу"),
     "createTaskToContinue" : MessageLookupByLibrary.simpleMessage("Создайте задачу"),
     "dataNotSaved" : MessageLookupByLibrary.simpleMessage("Данные не сохранены!"),
@@ -58,11 +65,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "emptyHere" : MessageLookupByLibrary.simpleMessage("Здесь пусто"),
     "enterEmail" : MessageLookupByLibrary.simpleMessage("Введите адрес электронной почты"),
     "enterPassword" : MessageLookupByLibrary.simpleMessage("Пароль"),
+    "enterRecoveryMail" : MessageLookupByLibrary.simpleMessage("Введите адрес электронной почты для восстановления"),
     "enterTaskName" : MessageLookupByLibrary.simpleMessage("Введите название задачи"),
+    "errorOccured" : MessageLookupByLibrary.simpleMessage("Произошла ошибка!"),
     "feedback" : MessageLookupByLibrary.simpleMessage("Отзыв"),
+    "forgotPassword" : MessageLookupByLibrary.simpleMessage("Забыли пароль?"),
     "generalSettings" : MessageLookupByLibrary.simpleMessage("Общие Настройки"),
-    "hours" : m0,
-    "intervals" : m1,
+    "getStarted" : MessageLookupByLibrary.simpleMessage("Давайте начнем"),
+    "hours" : m1,
+    "intervals" : m2,
     "language" : MessageLookupByLibrary.simpleMessage("Язык"),
     "languageAndAppearance" : MessageLookupByLibrary.simpleMessage("Язык и внешность"),
     "longBreak" : MessageLookupByLibrary.simpleMessage("Большой перерыв"),
@@ -70,15 +81,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "longBreakDuration" : MessageLookupByLibrary.simpleMessage("Время длинного перерыва"),
     "longBreakIntervals" : MessageLookupByLibrary.simpleMessage("Интервал большого перерыва"),
     "min" : MessageLookupByLibrary.simpleMessage("мин."),
-    "minutes" : m2,
+    "minutes" : m3,
+    "newAccount" : MessageLookupByLibrary.simpleMessage("Новый аккаунт"),
+    "newAccountAgreement" : MessageLookupByLibrary.simpleMessage("Нажав кнопку Продолжить, вы соглашаетесь создать новый аккаунт со следующими учетными данными."),
     "next" : MessageLookupByLibrary.simpleMessage("Дальше"),
     "nextTask" : MessageLookupByLibrary.simpleMessage("К след. задаче"),
     "pause" : MessageLookupByLibrary.simpleMessage("Пауза"),
     "progress" : MessageLookupByLibrary.simpleMessage("прогресс"),
     "rate" : MessageLookupByLibrary.simpleMessage("Оценить в app store"),
     "resume" : MessageLookupByLibrary.simpleMessage("Продолжайте"),
-    "seconds" : m3,
+    "seconds" : m4,
     "selectTheme" : MessageLookupByLibrary.simpleMessage("Выбрайте Тема"),
+    "sendRecoveryMail" : MessageLookupByLibrary.simpleMessage("Отправить письмо для восстановления"),
     "settings" : MessageLookupByLibrary.simpleMessage("Настройки"),
     "shortBreak" : MessageLookupByLibrary.simpleMessage("Маленький перерыв"),
     "shortBreakDuration" : MessageLookupByLibrary.simpleMessage("Время короткого перерыва"),
@@ -89,13 +103,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "takeBreak" : MessageLookupByLibrary.simpleMessage("отдохнуть"),
     "taskComplete" : MessageLookupByLibrary.simpleMessage("Задача завершена"),
     "taskCompleted" : MessageLookupByLibrary.simpleMessage("Задача выполнена"),
-    "taskCount" : m4,
+    "taskCount" : m5,
     "taskGroupNameErrorText" : MessageLookupByLibrary.simpleMessage("Введите правильное название задачи"),
     "taskName" : MessageLookupByLibrary.simpleMessage("Название задачи"),
-    "taskRatioDesc" : m5,
+    "taskRatioDesc" : m6,
     "tasks" : MessageLookupByLibrary.simpleMessage("Задачи"),
+    "termsAndServices" : MessageLookupByLibrary.simpleMessage("Продолжая, вы подтверждаете свое согласие с нашими Условиями предоставления услуг и политикой конфиденциальности"),
     "theme" : MessageLookupByLibrary.simpleMessage("Тема"),
-    "themeType" : m6,
+    "themeType" : m7,
     "trackedHours" : MessageLookupByLibrary.simpleMessage("Отслеживаемые часы"),
     "typeTaskName" : MessageLookupByLibrary.simpleMessage("Введите задачу..."),
     "withLabel" : MessageLookupByLibrary.simpleMessage("с")

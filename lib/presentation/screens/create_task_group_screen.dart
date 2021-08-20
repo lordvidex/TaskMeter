@@ -61,6 +61,8 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
   // List of focus nodes for onboarding
   List<FocusNode> focusNodes;
 
+  AppLocalizations appLocale;
+
   @override
   void initState() {
     super.initState();
@@ -71,6 +73,8 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
     _longBreakFocusNode = FocusNode();
     _durationFocusNode = FocusNode();
     modalIsActive = false;
+
+    appLocale = AppLocalizations.of(context);
 
     settings = context.read<SettingsProvider>().settings;
     _durationInMinutes = settings.totalTime.inMinutes;
@@ -196,7 +200,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
       Padding(
         padding: const EdgeInsets.only(top: 12.0, bottom: 20),
         child: Text(
-          'Sub-Task',
+          appLocale.subTask,
           style: TextStyle(fontSize: 18),
         ),
       ),
@@ -266,7 +270,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                     showAddNewTaskBottomSheet(ctx, isDarkMode);
                   },
                   fillColor: Constants.appBlue,
-                  text: 'Add Sub Task',
+                  text: appLocale.addSubTask,
                   // padding: EdgeInsets.symmetric(
                   //     horizontal: , vertical: 14),
                 ),

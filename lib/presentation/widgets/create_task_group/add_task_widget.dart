@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
-import 'package:task_meter/presentation/providers/settings_provider.dart';
 
 import '../../../core/constants.dart';
 import '../../../domain/models/task.dart';
 import '../../../domain/models/task_group.dart';
 import '../../../locale/locales.dart';
+import '../../providers/settings_provider.dart';
 import '../task_timer/action_button.dart';
 import 'custom_text_form_field.dart';
 
@@ -72,6 +72,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
       task
         ..difficulty = _difficulty
         ..taskName = _taskNameController.text.trim();
+        
       //! we need to call this to reset the state
       widget.addNewTask(null, isEditMode: true);
     } else {

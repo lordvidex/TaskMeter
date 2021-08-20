@@ -14,6 +14,11 @@
     "type": "text",
     "description": "button text label to add task"
   },
+  "addSubTask": "Добавить подзадачу",
+  "@addSubTask": {
+    "type": "text",
+    "description": "Button label text for adding sub task"
+  },
   "and": "и",
   "@and": {
     "type": "text",
@@ -30,13 +35,33 @@
   },
   "cancel": "Отменить",
   "@cancel": {
+    "type": "text"
+  },
+  "checkInbox": "Проверьте свой почтовый ящик, чтобы установить новый пароль для этого аккаунта",
+  "@checkInbox": {
     "type": "text",
-    "description": "cupertino action button to go back and save changes in settings screen"
+    "description": "instruction text guiding user when trying to recover password"
   },
   "complete": "завершите",
   "@complete": {
     "type": "text",
     "description": "The word complete"
+  },
+  "continueAsGuest": "Продолжить без аутентификации",
+  "@continueAsGuest": {
+    "type": "text"
+  },
+  "continueLabel": "Продолжать",
+  "@continueLabel": {
+    "type": "text",
+    "description": "The word \"continue\""
+  },
+  "continueWith": "Продолжайте с {socialPlatform}",
+  "@continueWith": {
+    "type": "text",
+    "placeholders": {
+      "socialPlatform": {}
+    }
   },
   "createTask": "Создать задачу",
   "@createTask": {
@@ -113,20 +138,39 @@
     "type": "text",
     "description": "Password textField hint text"
   },
+  "enterRecoveryMail": "Введите адрес электронной почты для восстановления",
+  "@enterRecoveryMail": {
+    "type": "text",
+    "description": "label for recovery email address"
+  },
   "enterTaskName": "Введите название задачи",
   "@enterTaskName": {
     "type": "text",
     "description": "error text if task name has errors"
+  },
+  "errorOccured": "Произошла ошибка!",
+  "@errorOccured": {
+    "type": "text",
+    "description": "error dialog label"
   },
   "feedback": "Отзыв",
   "@feedback": {
     "type": "text",
     "description": "Feedback"
   },
+  "forgotPassword": "Забыли пароль?",
+  "@forgotPassword": {
+    "type": "text"
+  },
   "generalSettings": "Общие Настройки",
   "@generalSettings": {
     "type": "text",
     "description": "App bar text for setting screen"
+  },
+  "getStarted": "Давайте начнем",
+  "@getStarted": {
+    "type": "text",
+    "description": "Intro text"
   },
   "hours": "{hours, plural, zero{{hours} Часов } one{{hours} Час } few{{hours} Часа } many{{hours} Часов } other{{hours} Часов }}",
   "@hours": {
@@ -185,6 +229,14 @@
       "minutes": {}
     }
   },
+  "newAccount": "Новый аккаунт",
+  "@newAccount": {
+    "type": "text"
+  },
+  "newAccountAgreement": "Нажав кнопку Продолжить, вы соглашаетесь создать новый аккаунт со следующими учетными данными.",
+  "@newAccountAgreement": {
+    "type": "text"
+  },
   "next": "Дальше",
   "@next": {
     "type": "text",
@@ -225,6 +277,10 @@
   "@selectTheme": {
     "type": "text",
     "description": "Appbar text for the selectThemeScreen"
+  },
+  "sendRecoveryMail": "Отправить письмо для восстановления",
+  "@sendRecoveryMail": {
+    "type": "text"
   },
   "settings": "Настройки",
   "@settings": {
@@ -305,6 +361,10 @@
   },
   "tasks": "Задачи",
   "@tasks": {
+    "type": "text"
+  },
+  "termsAndServices": "Продолжая, вы подтверждаете свое согласие с нашими Условиями предоставления услуг и политикой конфиденциальности",
+  "@termsAndServices": {
     "type": "text"
   },
   "theme": "Тема",

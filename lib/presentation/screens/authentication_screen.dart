@@ -1,18 +1,20 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:task_meter/core/constants.dart';
-import 'package:task_meter/core/failures.dart';
-import 'package:task_meter/locale/locales.dart';
-import 'package:task_meter/presentation/providers/authentication_provider.dart';
-import 'package:task_meter/presentation/providers/settings_provider.dart';
-import 'package:task_meter/presentation/providers/task_group_provider.dart';
-import 'package:task_meter/presentation/screens/task_group_screen.dart';
-import '../widgets/app_back_button.dart';
-import '../widgets/authentication/social_button.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../core/constants.dart';
+import '../../core/failures.dart';
+import '../../locale/locales.dart';
+import '../providers/authentication_provider.dart';
+import '../providers/settings_provider.dart';
+import '../providers/task_group_provider.dart';
+import '../widgets/app_back_button.dart';
 import '../widgets/authentication/email_signin_popup.dart';
+import '../widgets/authentication/social_button.dart';
+import 'task_group_screen.dart';
 
 class AuthenticationScreen extends StatefulWidget {
   static const routeName = '/auth';
@@ -23,6 +25,8 @@ class AuthenticationScreen extends StatefulWidget {
 
 class _AuthenticationScreenState extends State<AuthenticationScreen> {
   bool _authenticating = false;
+  AppLocalizations appLocale;
+
   void toggleAuthentication(bool value) {
     if (_authenticating != null) {
       setState(() {
@@ -48,7 +52,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final appLocale = AppLocalizations.of(context);
+    appLocale = AppLocalizations.of(context);
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return ModalProgressHUD(
       inAsyncCall: _authenticating,
@@ -63,7 +67,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                     AppBackButton(),
                     Padding(
                         padding: const EdgeInsets.only(top: 37, bottom: 50),
-                        child: Text('Let\'s get started',
+                        child: Text(appLocale.getStarted,
                             style: TextStyle(fontSize: 32))),
                     Image.asset(
                       'assets/images/auth_bg.png',
@@ -71,39 +75,39 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                       fit: BoxFit.fitWidth,
                     ),
                     SocialButton(
-                        buttonLabel: 'Continue with Email',
+                        buttonLabel: appLocale.continueWith('Email'),
                         onPressed: () => _showEmailPopup(context),
                         icon: Icon(Icons.email, size: 24)),
                     SocialButton(
-                        buttonLabel: 'Continue with Google',
+                        buttonLabel: appLocale.continueWith('Google'),
                         onPressed: () => _googleCallBack(signIn: true),
                         icon: SvgPicture.asset(
                           'assets/icons/google.svg',
                           height: 24,
                           width: 24,
                         )),
-                    SocialButton(
-                      buttonLabel: 'Continue with Apple',
-                      onPressed: null,
-                      icon: SvgPicture.asset(
-                        'assets/icons/apple.svg',
-                        height: 24,
-                        width: 24,
-                        color: Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white
-                            : Colors.black,
+                    if (Platform.isIOS)
+                      SocialButton(
+                        buttonLabel: appLocale.continueWith('Apple'),
+                        onPressed: null,
+                        icon: SvgPicture.asset(
+                          'assets/icons/apple.svg',
+                          height: 24,
+                          width: 24,
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? Colors.white
+                              : Colors.black,
+                        ),
                       ),
-                    ),
                     SocialButton(
-                        buttonLabel: 'Continue as Guest',
+                        buttonLabel: appLocale.continueAsGuest,
                         onPressed: () => Navigator.of(context)
                             .pushNamedAndRemoveUntil(
                                 TaskGroupScreen.routeName, (_) => false),
                         icon: Icon(Icons.account_circle_outlined, size: 24)),
                     Padding(
                         padding: const EdgeInsets.only(top: 60),
-                        child: Text(
-                            'By continuing, you confirm your agreement to our Terms of Service and privacy policy',
+                        child: Text(appLocale.termsAndServices,
                             style: TextStyle(
                                 fontWeight: FontWeight.w200, fontSize: 14))),
                   ]),
@@ -118,11 +122,11 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
     showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
-              title: Text('An Error occured!'),
+              title: Text(appLocale.errorOccured),
               content: Text(result),
               actions: [
                 TextButton(
-                    child: Text('Cancel'),
+                    child: Text(appLocale.cancel),
                     onPressed: () => Navigator.of(ctx).pop())
               ],
             ));
@@ -160,13 +164,13 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         await showDialog(
             context: context,
             builder: (ctx) => AlertDialog(
-                  title: Text('New Account'),
+                  title: Text(appLocale.newAccount),
                   content: Text(
-                    'By Clicking continue, you agree to create a new account with the following credentials.',
+                    appLocale.newAccountAgreement,
                   ),
                   actions: [
                     TextButton(
-                      child: Text('Continue'),
+                      child: Text(appLocale.continueLabel),
                       onPressed: () async {
                         final result =
                             await _provider.emailSignUp(email, password);
@@ -186,7 +190,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                         onPressed: () {
                           Navigator.of(ctx).pop();
                         },
-                        child: Text('Cancel'))
+                        child: Text(appLocale.cancel))
                   ],
                 ));
       } else {

@@ -1,10 +1,10 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:task_meter/presentation/providers/authentication_provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/utils/string_utils.dart';
 import '../../../locale/locales.dart';
+import '../../providers/authentication_provider.dart';
 import '../create_task_group/custom_text_form_field.dart';
 import '../task_timer/action_button.dart';
 
@@ -67,7 +67,7 @@ class _EmailSigninPopupState extends State<EmailSigninPopup>
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('Enter recovery email address')),
+                  child: Text(appLocale.enterRecoveryMail)),
             ),
           CustomTextFormField(
             controller: _emailController,
@@ -87,7 +87,7 @@ class _EmailSigninPopupState extends State<EmailSigninPopup>
             Align(
                 alignment: Alignment.centerLeft,
                 child: TextButton(
-                    child: Text('Forgot Password?'),
+                    child: Text(appLocale.forgotPassword),
                     onPressed: () {
                       setState(() {
                         _recoveryMode = true;
@@ -100,8 +100,8 @@ class _EmailSigninPopupState extends State<EmailSigninPopup>
               child: _loading ? CircularProgressIndicator() : null,
               text: !_loading
                   ? _recoveryMode
-                      ? 'Send Recovery Mail'
-                      : 'Continue'
+                      ? appLocale.sendRecoveryMail
+                      : appLocale.continueLabel
                   : null,
               onPressed: _recoveryMode
                   ? () {
@@ -114,7 +114,7 @@ class _EmailSigninPopupState extends State<EmailSigninPopup>
                           .recoverPassword(_emailController.text.trim());
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(
-                              'Check your inbox to set new password for this email')));
+                              appLocale.checkInbox)));
                       Navigator.of(context).pop();
                     }
                   : () async {

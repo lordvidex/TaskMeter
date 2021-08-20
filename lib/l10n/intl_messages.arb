@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2021-07-22T14:45:10.239852",
+  "@@last_modified": "2021-08-20T07:57:00.630791",
   "taskCompleted": "Task completed",
   "@taskCompleted": {
     "description": "",
@@ -161,7 +161,7 @@
   },
   "cancel": "Cancel",
   "@cancel": {
-    "description": "cupertino action button to go back and save changes in settings screen",
+    "description": "",
     "type": "text",
     "placeholders": {}
   },
@@ -257,6 +257,12 @@
     "type": "text",
     "placeholders": {}
   },
+  "addSubTask": "Add Sub Task",
+  "@addSubTask": {
+    "description": "Button label text for adding sub task",
+    "type": "text",
+    "placeholders": {}
+  },
   "complete": "Complete",
   "@complete": {
     "description": "The word complete",
@@ -332,6 +338,79 @@
   "next": "Next",
   "@next": {
     "description": "Button text for the next button toggling between email and password mode in auth screen",
+    "type": "text",
+    "placeholders": {}
+  },
+  "enterRecoveryMail": "Enter recovery email address",
+  "@enterRecoveryMail": {
+    "description": "label for recovery email address",
+    "type": "text",
+    "placeholders": {}
+  },
+  "forgotPassword": "Forgot Password?",
+  "@forgotPassword": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "sendRecoveryMail": "Send Recovery Mail",
+  "@sendRecoveryMail": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "continueLabel": "Continue",
+  "@continueLabel": {
+    "description": "The word \"continue\"",
+    "type": "text",
+    "placeholders": {}
+  },
+  "checkInbox": "Check your inbox to set new password for this email",
+  "@checkInbox": {
+    "description": "instruction text guiding user when trying to recover password",
+    "type": "text",
+    "placeholders": {}
+  },
+  "getStarted": "Let's get started",
+  "@getStarted": {
+    "description": "Intro text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "continueWith": "Continue with {socialPlatform}",
+  "@continueWith": {
+    "type": "text",
+    "placeholders": {
+      "socialPlatform": {}
+    }
+  },
+  "continueAsGuest": "Continue as Guest",
+  "@continueAsGuest": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "termsAndServices": "By continuing, you confirm your agreement to our Terms of Service and privacy policy",
+  "@termsAndServices": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "errorOccured": "An error occured!",
+  "@errorOccured": {
+    "description": "error dialog label",
+    "type": "text",
+    "placeholders": {}
+  },
+  "newAccount": "New Account",
+  "@newAccount": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "newAccountAgreement": "By Clicking continue, you agree to create a new account with the following credentials.",
+  "@newAccountAgreement": {
+    "description": "",
     "type": "text",
     "placeholders": {}
   },

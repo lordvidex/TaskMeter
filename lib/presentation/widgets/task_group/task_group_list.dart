@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:task_meter/presentation/screens/authentication_screen.dart';
-import 'package:task_meter/presentation/widgets/create_task_group/onboarder.dart';
 
 import '../../../core/constants.dart';
 import '../../../locale/locales.dart';
 import '../../providers/authentication_provider.dart';
 import '../../providers/task_group_provider.dart';
-import '../../screens/create_task_group_screen.dart';
+import '../../screens/authentication_screen.dart';
 import '../../screens/settings_screen.dart';
+import '../create_task_group/onboarder.dart';
 import '../task_timer/action_button.dart';
 import 'data_container.dart';
 import 'task_group_widget.dart';
@@ -42,18 +41,19 @@ class TaskGroupListWidget extends StatelessWidget {
                     backgroundColor:
                         isDarkMode ? Colors.black : Constants.appLightBlue,
                     floating: true,
-                    leading: TextButton(
-                      style: TextButton.styleFrom(
-                          padding: EdgeInsets.fromLTRB(0, 10, 30, 10)),
-                      child: Icon(Icons.account_circle_outlined,
-                          color:
-                              isDarkMode ? Colors.white : Constants.appNavyBlue,
-                          size: 24),
-                      onPressed: () => provider.user == null
-                          ? Navigator.of(context)
-                              .pushNamed(AuthenticationScreen.routeName)
-                          : {},
-                    ),
+                    leading: provider.user == null
+                        ? TextButton(
+                            style: TextButton.styleFrom(
+                                padding: EdgeInsets.fromLTRB(0, 10, 30, 10)),
+                            child: Icon(Icons.account_circle_outlined,
+                                color: isDarkMode
+                                    ? Colors.white
+                                    : Constants.appNavyBlue,
+                                size: 24),
+                            onPressed: () => Navigator.of(context)
+                                .pushNamed(AuthenticationScreen.routeName),
+                          )
+                        : null,
                     actions: [
                       TextButton(
                         style: TextButton.styleFrom(

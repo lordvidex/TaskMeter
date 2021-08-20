@@ -19,30 +19,37 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static m0(hours) => "${Intl.plural(hours, zero: '', one: '${hours} Hour', few: '${hours} Hours', other: '${hours} Hours')}";
+  static m0(socialPlatform) => "Continue with ${socialPlatform}";
 
-  static m1(x) => "${Intl.plural(x, one: '${x} interval', few: '${x} intervals', other: '${x} intervals')}";
+  static m1(hours) => "${Intl.plural(hours, zero: '', one: '${hours} Hour', few: '${hours} Hours', other: '${hours} Hours')}";
 
-  static m2(minutes) => "${Intl.plural(minutes, zero: '', one: '${minutes} minute', few: '${minutes} minutes', other: '${minutes} minutes')}";
+  static m2(x) => "${Intl.plural(x, one: '${x} interval', few: '${x} intervals', other: '${x} intervals')}";
 
-  static m3(seconds) => "${Intl.plural(seconds, zero: '', one: '${seconds} second', few: '${seconds} seconds', other: '${seconds} seconds')}";
+  static m3(minutes) => "${Intl.plural(minutes, zero: '', one: '${minutes} minute', few: '${minutes} minutes', other: '${minutes} minutes')}";
 
-  static m4(x) => "${Intl.plural(x, zero: '${x} tasks', one: '${x} task', few: '${x} tasks', other: '${x} tasks')}";
+  static m4(seconds) => "${Intl.plural(seconds, zero: '', one: '${seconds} second', few: '${seconds} seconds', other: '${seconds} seconds')}";
 
-  static m5(done, total) => "${Intl.plural(total, one: '${done} of ${total} task completed', few: '${done} of ${total} tasks completed', other: '${done} of ${total} tasks completed')}";
+  static m5(x) => "${Intl.plural(x, zero: '${x} tasks', one: '${x} task', few: '${x} tasks', other: '${x} tasks')}";
 
-  static m6(theme) => "${Intl.select(theme, {'Dark': 'Dark', 'Light': 'Light', 'System': 'System', })}";
+  static m6(done, total) => "${Intl.plural(total, one: '${done} of ${total} task completed', few: '${done} of ${total} tasks completed', other: '${done} of ${total} tasks completed')}";
+
+  static m7(theme) => "${Intl.select(theme, {'Dark': 'Dark', 'Light': 'Light', 'System': 'System', })}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "about" : MessageLookupByLibrary.simpleMessage("About"),
     "activeTasks" : MessageLookupByLibrary.simpleMessage("Active Tasks"),
     "add" : MessageLookupByLibrary.simpleMessage("Add"),
+    "addSubTask" : MessageLookupByLibrary.simpleMessage("Add Sub Task"),
     "and" : MessageLookupByLibrary.simpleMessage("and"),
     "appTheme" : MessageLookupByLibrary.simpleMessage("App Theme"),
     "breakComplete" : MessageLookupByLibrary.simpleMessage("Break Complete"),
     "cancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
+    "checkInbox" : MessageLookupByLibrary.simpleMessage("Check your inbox to set new password for this email"),
     "complete" : MessageLookupByLibrary.simpleMessage("Complete"),
+    "continueAsGuest" : MessageLookupByLibrary.simpleMessage("Continue as Guest"),
+    "continueLabel" : MessageLookupByLibrary.simpleMessage("Continue"),
+    "continueWith" : m0,
     "createTask" : MessageLookupByLibrary.simpleMessage("Create Task"),
     "createTaskToContinue" : MessageLookupByLibrary.simpleMessage("Create task to continue"),
     "dataNotSaved" : MessageLookupByLibrary.simpleMessage("Data not saved!"),
@@ -58,11 +65,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "emptyHere" : MessageLookupByLibrary.simpleMessage("It\'s empty here,"),
     "enterEmail" : MessageLookupByLibrary.simpleMessage("Enter email address"),
     "enterPassword" : MessageLookupByLibrary.simpleMessage("Password"),
+    "enterRecoveryMail" : MessageLookupByLibrary.simpleMessage("Enter recovery email address"),
     "enterTaskName" : MessageLookupByLibrary.simpleMessage("Enter task name"),
+    "errorOccured" : MessageLookupByLibrary.simpleMessage("An error occured!"),
     "feedback" : MessageLookupByLibrary.simpleMessage("Feedback"),
+    "forgotPassword" : MessageLookupByLibrary.simpleMessage("Forgot Password?"),
     "generalSettings" : MessageLookupByLibrary.simpleMessage("General Settings"),
-    "hours" : m0,
-    "intervals" : m1,
+    "getStarted" : MessageLookupByLibrary.simpleMessage("Let\'s get started"),
+    "hours" : m1,
+    "intervals" : m2,
     "language" : MessageLookupByLibrary.simpleMessage("Language"),
     "languageAndAppearance" : MessageLookupByLibrary.simpleMessage("Language and Appearance"),
     "longBreak" : MessageLookupByLibrary.simpleMessage("Long break"),
@@ -70,15 +81,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "longBreakDuration" : MessageLookupByLibrary.simpleMessage("Long break duration"),
     "longBreakIntervals" : MessageLookupByLibrary.simpleMessage("Long break intervals"),
     "min" : MessageLookupByLibrary.simpleMessage("min."),
-    "minutes" : m2,
+    "minutes" : m3,
+    "newAccount" : MessageLookupByLibrary.simpleMessage("New Account"),
+    "newAccountAgreement" : MessageLookupByLibrary.simpleMessage("By Clicking continue, you agree to create a new account with the following credentials."),
     "next" : MessageLookupByLibrary.simpleMessage("Next"),
     "nextTask" : MessageLookupByLibrary.simpleMessage("Next Task"),
     "pause" : MessageLookupByLibrary.simpleMessage("Pause"),
     "progress" : MessageLookupByLibrary.simpleMessage("progress"),
     "rate" : MessageLookupByLibrary.simpleMessage("Rate in the app store"),
     "resume" : MessageLookupByLibrary.simpleMessage("Resume"),
-    "seconds" : m3,
+    "seconds" : m4,
     "selectTheme" : MessageLookupByLibrary.simpleMessage("Select Theme"),
+    "sendRecoveryMail" : MessageLookupByLibrary.simpleMessage("Send Recovery Mail"),
     "settings" : MessageLookupByLibrary.simpleMessage("Settings"),
     "shortBreak" : MessageLookupByLibrary.simpleMessage("Short break"),
     "shortBreakDuration" : MessageLookupByLibrary.simpleMessage("Short break duration"),
@@ -89,13 +103,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "takeBreak" : MessageLookupByLibrary.simpleMessage("Take Break"),
     "taskComplete" : MessageLookupByLibrary.simpleMessage("Task Complete"),
     "taskCompleted" : MessageLookupByLibrary.simpleMessage("Task completed"),
-    "taskCount" : m4,
+    "taskCount" : m5,
     "taskGroupNameErrorText" : MessageLookupByLibrary.simpleMessage("Enter a valid task group name"),
     "taskName" : MessageLookupByLibrary.simpleMessage("Task name"),
-    "taskRatioDesc" : m5,
+    "taskRatioDesc" : m6,
     "tasks" : MessageLookupByLibrary.simpleMessage("Tasks"),
+    "termsAndServices" : MessageLookupByLibrary.simpleMessage("By continuing, you confirm your agreement to our Terms of Service and privacy policy"),
     "theme" : MessageLookupByLibrary.simpleMessage("Theme"),
-    "themeType" : m6,
+    "themeType" : m7,
     "trackedHours" : MessageLookupByLibrary.simpleMessage("Tracked Hours"),
     "typeTaskName" : MessageLookupByLibrary.simpleMessage("Type task name..."),
     "withLabel" : MessageLookupByLibrary.simpleMessage("with")

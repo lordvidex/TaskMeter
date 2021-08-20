@@ -37,13 +37,18 @@ class AppLocalizations {
         other: '$done of $total tasks completed',
         args: [done, total],
       );
-  String get progress => Intl.message('progress',
-      name: 'progress',
-      desc: 'text "progress" used to label'
-          ' the linear progress indicator on this screen');
+  String get progress => Intl.message(
+        'progress',
+        name: 'progress',
+        desc: 'text "progress" used to label'
+            ' the linear progress indicator on this screen',
+      );
 
-  String get delete =>
-      Intl.message('Delete', name: 'delete', desc: 'Text with the word delete');
+  String get delete => Intl.message(
+        'Delete',
+        name: 'delete',
+        desc: 'Text with the word delete',
+      );
   String get emptyHere => Intl.message('It\'s empty here,',
       name: 'emptyHere',
       desc: 'Place holder text when there is no active task group');
@@ -126,10 +131,7 @@ class AppLocalizations {
       name: 'discard',
       desc: 'cupertino action button text to discard data in settings screen');
 
-  String get cancel => Intl.message('Cancel',
-      name: 'cancel',
-      desc: 'cupertino action button to go '
-          'back and save changes in settings screen');
+  String get cancel => Intl.message('Cancel', name: 'cancel', desc: '');
 
   String intervals(int x) => Intl.plural(x,
       one: '$x interval',
@@ -160,8 +162,8 @@ class AppLocalizations {
 
   //! Task Group Description screen
   String get editTask => Intl.message('Edit task',
-  name: 'editTask',
-  desc: 'Button text to edit newly created task in description screen');
+      name: 'editTask',
+      desc: 'Button text to edit newly created task in description screen');
   String taskCount(int x) => Intl.plural(x,
       zero: '$x tasks',
       one: '$x task',
@@ -191,6 +193,8 @@ class AppLocalizations {
       Intl.message('Enter a valid task group name',
           name: 'taskGroupNameErrorText',
           desc: 'error text shown when task group name is empty');
+  String get addSubTask => Intl.message('Add Sub Task',
+      name: 'addSubTask', desc: 'Button label text for adding sub task');
 
 //! Task Timer Screen
   String get complete =>
@@ -226,6 +230,41 @@ class AppLocalizations {
       name: 'next',
       desc:
           'Button text for the next button toggling between email and password mode in auth screen');
+
+  String get enterRecoveryMail => Intl.message('Enter recovery email address',
+      name: 'enterRecoveryMail', desc: 'label for recovery email address');
+  String get forgotPassword =>
+      Intl.message('Forgot Password?', name: 'forgotPassword', desc: '');
+  String get sendRecoveryMail =>
+      Intl.message('Send Recovery Mail', name: 'sendRecoveryMail', desc: '');
+  String get continueLabel => Intl.message('Continue',
+      name: 'continueLabel', desc: 'The word "continue"');
+  String get checkInbox => Intl.message(
+      'Check your inbox to set new password for this email',
+      name: 'checkInbox',
+      desc: 'instruction text guiding user when trying to recover password');
+  String get getStarted => Intl.message('Let\'s get started',
+      name: 'getStarted', desc: 'Intro text');
+  String continueWith(String socialPlatform) => Intl.message(
+        'Continue with $socialPlatform',
+        args: [socialPlatform],
+        name: 'continueWith',
+      );
+  String get continueAsGuest =>
+      Intl.message('Continue as Guest', name: 'continueAsGuest', desc: '');
+  String get termsAndServices => Intl.message(
+      'By continuing, you confirm your agreement to our Terms of Service and privacy policy',
+      name: 'termsAndServices',
+      desc: '');
+  String get errorOccured => Intl.message('An error occured!',
+      name: 'errorOccured', desc: 'error dialog label');
+  String get newAccount =>
+      Intl.message('New Account', name: 'newAccount', desc: '');
+  String get newAccountAgreement => Intl.message(
+      'By Clicking continue, you agree to create a new account with the following credentials.',
+      name: 'newAccountAgreement',
+      desc: '');
+
 //! Duration Utils
   String hours(int hours) => Intl.plural(
         hours,
