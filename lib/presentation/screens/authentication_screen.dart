@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import '../../core/constants.dart';
 import '../../core/failures.dart';
@@ -13,6 +12,7 @@ import '../providers/settings_provider.dart';
 import '../providers/task_group_provider.dart';
 import '../widgets/app_back_button.dart';
 import '../widgets/authentication/email_signin_popup.dart';
+import '../widgets/authentication/progress_overlay.dart';
 import '../widgets/authentication/social_button.dart';
 import 'task_group_screen.dart';
 
@@ -53,9 +53,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   @override
   Widget build(BuildContext context) {
     appLocale = AppLocalizations.of(context);
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    return ModalProgressHUD(
-      inAsyncCall: _authenticating,
+    return ProgressOverlay(
+      loading: _authenticating,
       child: Scaffold(
         body: SafeArea(
           child: Padding(
