@@ -3,7 +3,7 @@ import 'package:task_meter/data/repositories/timer_repository.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  TimerRepository timerRepo;
+  late TimerRepository timerRepo;
   setUp(() {
     timerRepo = TimerRepository();
   });

@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 
 class MosquitoWidgetController {
-  final List<AnimationController> _controllers;
+  final List<AnimationController?> _controllers;
   MosquitoWidgetController() : _controllers = [];
 
-  void addController(AnimationController controller) {
+  void addController(AnimationController? controller) {
     _controllers.add(controller);
   }
 
   void pause() {
-    _controllers.forEach((element) => element.stop());
+    _controllers.forEach((element) => element!.stop());
   }
 
   void resume() {
-    _controllers.forEach((controller) => controller.forward());
+    _controllers.forEach((controller) => controller!.forward());
   }
 
   void dispose() {
     for (final controller in _controllers) {
-      controller.dispose();
+      controller!.dispose();
     }
     _controllers.clear();
   }
@@ -29,18 +29,18 @@ class MosquitoWidget extends StatefulWidget {
   final double upperBoundX;
   final double lowerBoundY;
   final double upperBoundY;
-  final MosquitoWidgetController controller;
+  final MosquitoWidgetController? controller;
   final Widget child;
   final bool fasterX;
   const MosquitoWidget({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.fasterX = true,
-    @required this.controller,
-    @required this.lowerBoundX,
-    @required this.upperBoundX,
-    @required this.lowerBoundY,
-    @required this.upperBoundY,
+    required this.controller,
+    required this.lowerBoundX,
+    required this.upperBoundX,
+    required this.lowerBoundY,
+    required this.upperBoundY,
   }) : super(key: key);
 
   @override
@@ -49,45 +49,45 @@ class MosquitoWidget extends StatefulWidget {
 
 class _MosquitoWidgetState extends State<MosquitoWidget>
     with TickerProviderStateMixin {
-  AnimationController xController;
-  AnimationController yController;
-  Animation<double> xAnimation;
-  Animation<double> yAnimation;
+  AnimationController? xController;
+  AnimationController? yController;
+  late Animation<double> xAnimation;
+  late Animation<double> yAnimation;
   @override
   void initState() {
     xController = AnimationController(
         vsync: this, duration: Duration(seconds: widget.fasterX ? 5 : 8));
     yController = AnimationController(
         vsync: this, duration: Duration(seconds: widget.fasterX ? 8 : 5));
-    widget.controller.addController(xController);
-    widget.controller.addController(yController);
+    widget.controller!.addController(xController);
+    widget.controller!.addController(yController);
     xAnimation = Tween(begin: widget.lowerBoundX, end: widget.upperBoundX)
-        .animate(xController)
+        .animate(xController!)
           ..addStatusListener((status) {
             if (status == AnimationStatus.completed) {
-              xController.reverse();
+              xController!.reverse();
             } else if (status == AnimationStatus.dismissed) {
-              xController.forward();
+              xController!.forward();
             }
           });
     yAnimation = Tween(begin: widget.lowerBoundY, end: widget.upperBoundY)
-        .animate(yController)
+        .animate(yController!)
           ..addStatusListener((status) {
             if (status == AnimationStatus.completed) {
-              yController.reverse();
+              yController!.reverse();
             } else if (status == AnimationStatus.dismissed) {
-              yController.forward();
+              yController!.forward();
             }
           });
-    xController.forward();
-    yController.forward();
+    xController!.forward();
+    yController!.forward();
     super.initState();
   }
 
   @override
   void dispose() {
-    xController.dispose();
-    yController.dispose();
+    xController!.dispose();
+    yController!.dispose();
     super.dispose();
   }
 

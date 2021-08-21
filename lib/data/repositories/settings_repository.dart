@@ -9,7 +9,7 @@ abstract class SettingsRepository {
   Future<Settings> fetchSettings();
 
   /// update setting in the database
-  Future<void> updateSettings(Settings newSetting, {DateTime time});
+  Future<void> updateSettings(Settings? newSetting, {DateTime? time});
 
   /// returns true if user is logged in for the first time
   /// returns false otherwise
@@ -29,7 +29,7 @@ class SettingsRepositoryImpl extends SettingsRepository {
   final LocalStorage _localStorage;
   final RemoteStorage _remoteStorage;
   SettingsRepositoryImpl(
-      {LocalStorage localStorage, RemoteStorage remoteStorage})
+      {required LocalStorage localStorage, required RemoteStorage remoteStorage})
       : assert(localStorage != null),
         assert(remoteStorage != null),
         _localStorage = localStorage,
@@ -49,8 +49,8 @@ class SettingsRepositoryImpl extends SettingsRepository {
   }
 
   @override
-  Future<void> updateSettings(Settings newSetting, {DateTime time}) async {
-    newSetting.setUpdateTime(time ?? DateTime.now());
+  Future<void> updateSettings(Settings? newSetting, {DateTime? time}) async {
+    newSetting!.setUpdateTime(time ?? DateTime.now());
     try {
       await _remoteStorage.updateSettings(newSetting);
     } catch (e) {

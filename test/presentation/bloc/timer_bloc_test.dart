@@ -1,14 +1,17 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:bloc_test/bloc_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:task_meter/presentation/bloc/timer_bloc.dart';
 import 'package:task_meter/data/repositories/timer_repository.dart';
 
-class TimerRepositoryMock extends Mock implements TimerRepository {}
+import 'timer_bloc_test.mocks.dart';
 
+@GenerateMocks([],
+    customMocks: [MockSpec<TimerRepository>(as: #TimerRepositoryMock)])
 void main() {
-  TimerRepositoryMock timerMock;
-  TimerBloc timerBloc;
+  late TimerRepositoryMock timerMock;
+  late TimerBloc timerBloc;
   setUp(() {
     timerMock = TimerRepositoryMock();
     timerBloc = TimerBloc(timerRepo: timerMock);
@@ -33,7 +36,7 @@ void main() {
         build: () {
           return timerBloc;
         },
-        act: (bloc) {
+        act: (dynamic bloc) {
           when(timerMock.timerTicker(any)).thenAnswer((_) =>
               Stream.fromIterable([
                 Duration(seconds: 2),
@@ -59,7 +62,7 @@ void main() {
               ]));
           return timerBloc;
         },
-        act: (bloc) {
+        act: (dynamic bloc) {
           bloc.add(TimerPauseEvent());
         },
         expect: () => []);
@@ -75,7 +78,7 @@ void main() {
               ]));
           return timerBloc;
         },
-        act: (bloc) {
+        act: (dynamic bloc) {
           bloc.add(TimerResumeEvent());
         },
         expect: () => []);

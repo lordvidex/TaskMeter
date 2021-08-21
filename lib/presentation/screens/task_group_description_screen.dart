@@ -14,7 +14,7 @@ class TaskGroupDescriptionScreen extends StatelessWidget {
   static const routeName = '/task-group-description';
   @override
   Widget build(BuildContext context) {
-    final taskGroup = context.watch<TaskGroupProvider>().currentTaskGroup;
+    final taskGroup = context.watch<TaskGroupProvider>().currentTaskGroup!;
     final mediaQuery = MediaQuery.of(context);
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final appLocale = AppLocalizations.of(context);
@@ -39,7 +39,7 @@ class TaskGroupDescriptionScreen extends StatelessWidget {
                             padding:
                                 const EdgeInsets.only(top: 27.0, bottom: 12),
                             child: Text(
-                              taskGroup.taskGroupName,
+                              taskGroup.taskGroupName!,
                               style: TextStyle(
                                   fontSize: 24, fontWeight: FontWeight.w500),
                             ),

@@ -15,9 +15,9 @@ import 'task_group_widget.dart';
 
 class TaskGroupListWidget extends StatelessWidget {
   const TaskGroupListWidget({
-    Key key,
-    @required this.provider,
-    @required this.appLocale,
+    Key? key,
+    required this.provider,
+    required this.appLocale,
   }) : super(key: key);
 
   final AuthenticationProvider provider;
@@ -119,7 +119,7 @@ class TaskGroupListWidget extends StatelessWidget {
                     builder: (ctx, provider, child) {
                       final groups = provider.activeTasks;
                       if (groups.isEmpty)
-                        return child;
+                        return child!;
                       else
                         return SliverList(
                             delegate: SliverChildBuilderDelegate(

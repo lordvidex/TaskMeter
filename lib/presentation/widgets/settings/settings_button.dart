@@ -7,10 +7,10 @@ class SettingsButton<T> extends StatelessWidget {
   final T value;
   final Function() onPressed;
   const SettingsButton({
-    @required this.child,
-    @required this.value,
-    @required this.isSelected,
-    @required this.onPressed,
+    required this.child,
+    required this.value,
+    required this.isSelected,
+    required this.onPressed,
   });
 
   @override

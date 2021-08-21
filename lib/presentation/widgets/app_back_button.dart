@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../core/constants.dart';
 
 class AppBackButton extends StatelessWidget {
-  final Function() onPressed;
+  final Function()? onPressed;
   AppBackButton({this.onPressed});
   @override
   Widget build(BuildContext context) {

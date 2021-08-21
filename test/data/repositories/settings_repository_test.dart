@@ -1,18 +1,15 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:task_meter/data/datasources/local_storage.dart';
-import 'package:task_meter/data/datasources/remote_storage.dart';
 import 'package:task_meter/domain/models/settings.dart';
 import 'package:task_meter/data/repositories/settings_repository.dart';
 
-class LocalStorageMock extends Mock implements LocalStorage {}
+import 'task_group_repository_test.mocks.dart';
 
-class RemoteStorageMock extends Mock implements RemoteStorage {}
 
 void main() {
-  SettingsRepositoryImpl settingsRepo;
-  LocalStorageMock localStorageMock;
-  RemoteStorageMock remoteStorageMock;
+  late SettingsRepositoryImpl settingsRepo;
+  late LocalStorageMock localStorageMock;
+  late RemoteStorageMock remoteStorageMock;
   setUp(() {
     localStorageMock = LocalStorageMock();
     remoteStorageMock = RemoteStorageMock();
@@ -40,14 +37,29 @@ void main() {
       // arrange
       final now = DateTime.now();
       final lateTime = DateTime.now().subtract(Duration(hours: 1));
-      when(remoteStorageMock.fetchSettings())
-          .thenAnswer((_) async => Settings(timeOfUpload: now));
-      when(localStorageMock.fetchSettings())
-          .thenAnswer((_) async => Settings(timeOfUpload: lateTime));
+      when(remoteStorageMock.fetchSettings()).thenAnswer((_) async => Settings(
+          timeOfUpload: now,
+          longBreak: Duration.zero,
+          totalTime: Duration.zero,
+          longBreakIntervals: 1,
+          shortBreak: Duration.zero));
+      when(localStorageMock.fetchSettings()).thenAnswer((_) async => Settings(
+          timeOfUpload: lateTime,
+          longBreak: Duration.zero,
+          totalTime: Duration.zero,
+          longBreakIntervals: 1,
+          shortBreak: Duration.zero));
       // act
       final settings = await settingsRepo.fetchSettings();
       // assert
-      expect(settings, Settings(timeOfUpload: now));
+      expect(
+          settings,
+          Settings(
+              timeOfUpload: now,
+              longBreak: Duration.zero,
+              totalTime: Duration.zero,
+              longBreakIntervals: 1,
+              shortBreak: Duration.zero));
     });
   });
 }

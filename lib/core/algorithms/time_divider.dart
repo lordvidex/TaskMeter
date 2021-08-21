@@ -38,18 +38,18 @@ class TimeDivider {
 
       //calculate longBreaks in this group depending on the longBreakIntervals between tasks
       int longBreakCount = 0;
-      if (taskGroup.longBreakIntervals < taskGroup.tasks.length) {
+      if (taskGroup.longBreakIntervals! < taskGroup.tasks.length) {
         longBreakCount =
-            (taskGroup.tasks.length ~/ taskGroup.longBreakIntervals);
+            (taskGroup.tasks.length ~/ taskGroup.longBreakIntervals!);
       }
 
       //calculate how much shortBreaks in this taskGroup
       int shortBreakCount = taskGroup.tasks.length - longBreakCount - 1;
 
       //the minimum time unit for task's time
-      double unitTimeInMinutes = ((taskGroup.totalTime.inMinutes) -
-              ((taskGroup.longBreakTime.inMinutes * longBreakCount) +
-                  (taskGroup.shortBreakTime.inMinutes * shortBreakCount))) /
+      double unitTimeInMinutes = ((taskGroup.totalTime!.inMinutes) -
+              ((taskGroup.longBreakTime!.inMinutes * longBreakCount) +
+                  (taskGroup.shortBreakTime!.inMinutes * shortBreakCount))) /
           difficultyCount;
       //! must be caught to display error **VALIDATING PART OF THE FUNCTION**
       print('check1');

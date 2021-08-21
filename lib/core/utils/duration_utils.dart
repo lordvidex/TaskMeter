@@ -6,11 +6,12 @@ class DurationUtils {
   static String durationToReadableString(
       Duration duration, AppLocalizations appLocale) {
     String ans = '';
-    final twoDigitMinutes = duration.inMinutes.remainder(60);
-    final twoDigitSeconds = duration.inSeconds.remainder(60);
+    final num twoDigitMinutes = duration.inMinutes.remainder(60);
+    final num twoDigitSeconds = duration.inSeconds.remainder(60);
     if (duration.inHours != 0) ans += appLocale.hours(duration.inHours) + ' ';
-    if (twoDigitMinutes != 0) ans += appLocale.minutes(twoDigitMinutes) + ' ';
-    if (twoDigitSeconds != 0) ans += appLocale.seconds(twoDigitSeconds);
+    if (twoDigitMinutes != 0)
+      ans += appLocale.minutes(twoDigitMinutes as int) + ' ';
+    if (twoDigitSeconds != 0) ans += appLocale.seconds(twoDigitSeconds as int);
     return ans;
   }
 

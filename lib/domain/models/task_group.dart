@@ -6,36 +6,36 @@ class TaskGroup extends Equatable {
   String taskGroupId;
 
   ///name of the group of tasks
-  String taskGroupName;
+  String? taskGroupName;
 
   /// description of the taskGroup
-  final String taskGroupSubtitle;
+  final String? taskGroupSubtitle;
 
   /// Time of upload to both database and server which is used
   /// to distinguish a current data from an old data.
-  final DateTime timeOfUpload;
+  final DateTime? timeOfUpload;
 
   /// total time user plans to finish the task
-  Duration totalTime;
+  Duration? totalTime;
 
   /// list of tasks to complete
   List<Task> tasks;
 
   /// number of tasks before a long break
-  int longBreakIntervals;
+  int? longBreakIntervals;
 
   /// [Duration] short break time
-  Duration longBreakTime;
+  Duration? longBreakTime;
 
   /// [Duration] long break time
-  Duration shortBreakTime;
+  Duration? shortBreakTime;
 
   ///Bonus time - residual time for tasks finished on time
-  Duration bonusTime;
+  Duration? bonusTime;
 
   /// is `true` if user wants to repeat the task periodically\
   /// is `false` if it is a one-time group of tasks
-  final bool isRepetitive;
+  final bool? isRepetitive;
 
   /// determines if task group has been deleted
   bool isDeleted;
@@ -43,15 +43,15 @@ class TaskGroup extends Equatable {
   TaskGroup(
     this.taskGroupName, {
     this.timeOfUpload,
-    String taskGroupId,
-    List<Task> tasks,
+    String? taskGroupId,
+    List<Task>? tasks,
     this.taskGroupSubtitle = '',
     this.isRepetitive = false,
     this.longBreakTime,
     this.shortBreakTime,
     this.longBreakIntervals,
     this.totalTime,
-    bool isDeleted,
+    bool? isDeleted,
     this.bonusTime = Duration.zero,
   })  : this.taskGroupId = taskGroupId ?? Uuid().v1(),
         this.isDeleted = isDeleted ?? false,
@@ -122,7 +122,7 @@ class TaskGroup extends Equatable {
 
   /// total time elapsed in minutes for this taskgroup
   double get timeElapsed => tasks
-      .map((task) => (task.totalTime - task.timeRemaining).inMinutes)
+      .map((task) => (task.totalTime! - task.timeRemaining!).inMinutes)
       .fold(0.0, (p, e) => p + e);
   @override
   List<Object> get props => [taskGroupId];

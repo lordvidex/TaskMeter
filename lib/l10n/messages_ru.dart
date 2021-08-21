@@ -35,7 +35,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m7(theme) => "${Intl.select(theme, {'Dark': 'Тёмная', 'Light': 'Светлая', 'System': 'Системная', })}";
 
-  final messages = _notInlinedMessages(_notInlinedMessages);
+  final Map<String, dynamic> messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "about" : MessageLookupByLibrary.simpleMessage("О нас"),
     "activeTasks" : MessageLookupByLibrary.simpleMessage("Активные задачи"),

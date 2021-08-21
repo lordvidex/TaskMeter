@@ -4,18 +4,18 @@ import 'package:flutter/services.dart';
 import '../../../core/constants.dart';
 
 class CustomTextFormField extends TextFormField {
-  final String hintText;
-  final String labelText;
+  final String? hintText;
+  final String? labelText;
   final bool isDarkMode;
-  final FormFieldValidator<String> validator;
-  final FocusNode focusNode;
-  final bool obscureText;
-  final TextInputType keyboardType;
-  final TextEditingController controller;
-  final List<TextInputFormatter> inputFormatters;
-  final Function() onTap;
-  final Function(String) onChanged;
-  final Function(String) onSubmitted;
+  final FormFieldValidator<String>? validator;
+  final FocusNode? focusNode;
+  final bool? obscureText;
+  final TextInputType? keyboardType;
+  final TextEditingController? controller;
+  final List<TextInputFormatter>? inputFormatters;
+  final Function()? onTap;
+  final Function(String)? onChanged;
+  final Function(String)? onSubmitted;
 
   CustomTextFormField({
     this.hintText,
@@ -51,17 +51,17 @@ class CustomTextFormField extends TextFormField {
 
   /// TextFormFields for numbers
   factory CustomTextFormField.numbersOnly(
-          {String hintText,
-          @required BuildContext context,
-          Function(String) onChanged,
-          Function(String) onSubmitted,
-          FocusNode focusNode,
+          {String? hintText,
+          required BuildContext context,
+          Function(String)? onChanged,
+          Function(String)? onSubmitted,
+          FocusNode? focusNode,
           bool isDarkMode = false,
-          String Function(String) validator,
-          TextEditingController controller}) =>
+          String Function(String?)? validator,
+          TextEditingController? controller}) =>
       CustomTextFormField(
         hintText: hintText,
-        onTap: () => controller.clear(),
+        onTap: () => controller!.clear(),
         isDarkMode: isDarkMode,
         focusNode: focusNode,
         controller: controller,

@@ -5,8 +5,8 @@ import 'package:task_meter/core/constants.dart';
 /// Holds the title of the settings section and
 /// the list of tiles present in this section
 class SettingsSection extends StatelessWidget {
-  final String title;
-  final List<Widget> tiles;
+  final String? title;
+  final List<Widget>? tiles;
 
   const SettingsSection({this.title, this.tiles});
   @override
@@ -23,12 +23,12 @@ class SettingsSection extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 12.5),
           child: Text(
-            title,
+            title!,
             style: TextStyle(fontSize: 14),
           ),
         ),
         divider,
-        for (var item in tiles) Column(children: [item, divider])
+        for (var item in tiles!) Column(children: [item, divider])
       ],
     );
   }
@@ -36,9 +36,9 @@ class SettingsSection extends StatelessWidget {
 
 /// List tile customized to fit the tile design in settings screen
 class SettingsTile extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final Function() onPressed;
+  final String? title;
+  final String? subtitle;
+  final Function()? onPressed;
 
   const SettingsTile({this.title, this.subtitle, this.onPressed});
 
@@ -50,7 +50,7 @@ class SettingsTile extends StatelessWidget {
       isThreeLine: false,
       tileColor: Colors.transparent,
       title: Text(
-        title,
+        title!,
         style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
       ),
       onTap: onPressed,
@@ -61,7 +61,7 @@ class SettingsTile extends StatelessWidget {
       ),
       subtitle: subtitle != null
           ? Text(
-              subtitle,
+              subtitle!,
               style: TextStyle(fontSize: 13, fontWeight: FontWeight.w200),
             )
           : null,

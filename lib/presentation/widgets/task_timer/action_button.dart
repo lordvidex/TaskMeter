@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 
 class ActionButton extends StatelessWidget {
   final Function onPressed;
-  final String text;
-  final Widget child;
-  final Widget icon;
-  final EdgeInsets padding;
+  final String? text;
+  final Widget? child;
+  final Widget? icon;
+  final EdgeInsets? padding;
   final Color fillColor;
   final bool filled;
-  final Color textColor;
-  final Color borderColor;
-  final bool wide;
+  final Color? textColor;
+  final Color? borderColor;
+  final bool? wide;
   final bool resizable;
 
   const ActionButton(
-      {@required this.onPressed,
+      {required this.onPressed,
       this.filled = true,
       this.wide = false,
       this.textColor,
@@ -22,8 +22,8 @@ class ActionButton extends StatelessWidget {
       this.padding,
       this.borderColor,
       this.resizable = false,
-      @required this.fillColor,
-      @required this.text,
+      required this.fillColor,
+      required this.text,
       this.icon})
       : assert(child == null || text == null);
 
@@ -32,7 +32,7 @@ class ActionButton extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(60),
       splashColor: fillColor,
-      onTap: onPressed,
+      onTap: onPressed as void Function()?,
       child: AnimatedContainer(
         curve: Curves.fastOutSlowIn,
         duration: Duration(milliseconds: 200),
@@ -40,21 +40,21 @@ class ActionButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             child != null
-                ? child
-                : Text(text,
+                ? child!
+                : Text(text!,
                     style: TextStyle(
                         fontFamily: 'Circular-Std',
                         color: textColor ?? (filled ? Colors.white : fillColor),
                         fontSize: 18,
                         fontWeight: FontWeight.w500)),
-            if (icon != null) ...[SizedBox(width: 8), icon]
+            if (icon != null) ...[SizedBox(width: 8), icon!]
           ],
         ),
         padding: padding ??
             EdgeInsets.symmetric(
               horizontal: resizable
                   ? 0.0
-                  : wide
+                  : wide!
                       ? 64
                       : 32,
               vertical: 14,

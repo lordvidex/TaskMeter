@@ -16,7 +16,7 @@ abstract class LocalStorage {
   //! Authentication section
   // returns the user if it exists
   // or null otherwise
-  Future<User> autoSigninUser();
+  Future<User?> autoSigninUser();
   Future<void> logoutUser();
 
   //! Settings section
@@ -25,17 +25,17 @@ abstract class LocalStorage {
   Future<Settings> fetchSettings();
 
   /// Update settings in the local database
-  Future<void> updateSettings(Settings newSettings);
+  Future<void> updateSettings(Settings? newSettings);
 
   /// fetches the List of taskGroups from the database
   Future<List<TaskGroup>> fetchTaskGroups();
 
   /// fetches the time to the last update to the local database
-  Future<DateTime> getLastTaskGroupUpdateTime();
+  Future<DateTime?> getLastTaskGroupUpdateTime();
 
   /// updates taskGroups in the database with the time they were added
   Future<void> updateTaskGroups(
-      List<TaskGroup> taskGroups, DateTime timeOfUpdate);
+      List<TaskGroup>? taskGroups, DateTime timeOfUpdate);
 
   /// returns true if user is new
   bool get isFirstTimeUser;
@@ -52,12 +52,12 @@ abstract class LocalStorage {
 
 class LocalStorageImpl extends LocalStorage {
   final SharedPreferences sharedPreferences;
-  final FirebaseAuth firebaseAuth;
-  LocalStorageImpl({this.sharedPreferences, this.firebaseAuth});
+  final FirebaseAuth? firebaseAuth;
+  LocalStorageImpl({required this.sharedPreferences, this.firebaseAuth});
 
   @override
   Future<void> logoutUser() async {
-    await firebaseAuth.signOut();
+    await firebaseAuth?.signOut();
   }
 
   bool get isFirstTimeUser {
@@ -78,7 +78,7 @@ class LocalStorageImpl extends LocalStorage {
 
   @override
   set hasPassedTutorial(bool value) {
-    sharedPreferences.setBool(HAS_COMPLETED_TUTORIAL, value ?? true);
+    sharedPreferences.setBool(HAS_COMPLETED_TUTORIAL, value);
   }
 
   @override
@@ -86,7 +86,7 @@ class LocalStorageImpl extends LocalStorage {
     if (sharedPreferences.containsKey(SETTINGS)) {
       //return the settings
       return Settings.fromJson(
-          json.decode(sharedPreferences.getString(SETTINGS)));
+          json.decode(sharedPreferences.getString(SETTINGS)!));
     } else {
       // return the default settings and save it to the database
       await sharedPreferences.setString(
@@ -96,18 +96,18 @@ class LocalStorageImpl extends LocalStorage {
   }
 
   @override
-  Future<void> updateSettings(Settings newSettings) async {
+  Future<void> updateSettings(Settings? newSettings) async {
     await sharedPreferences.setString(
-        SETTINGS, json.encode(newSettings.toJson()));
+        SETTINGS, json.encode(newSettings!.toJson()));
   }
 
   @override
   Future<List<TaskGroup>> fetchTaskGroups() async {
     if (sharedPreferences.containsKey(TASKGROUPS)) {
       return sharedPreferences
-          .getStringList(TASKGROUPS)
+          .getStringList(TASKGROUPS)!
           .map((tg) => TaskGroup.fromJson(json.decode(tg)))
-          .skipWhile((tg) => tg.isDeleted ?? false)
+          .skipWhile((tg) => tg.isDeleted)
           .toList();
     } else {
       //! the local storage is either empty or there was an error
@@ -117,9 +117,9 @@ class LocalStorageImpl extends LocalStorage {
 
   @override
   Future<void> updateTaskGroups(
-      List<TaskGroup> taskGroups, DateTime timeOfUpdate) async {
+      List<TaskGroup>? taskGroups, DateTime timeOfUpdate) async {
     bool updated = await sharedPreferences.setStringList(
-        TASKGROUPS, taskGroups.map((tg) => json.encode(tg.toJson())).toList());
+        TASKGROUPS, taskGroups!.map((tg) => json.encode(tg.toJson())).toList());
     if (updated) {
       await sharedPreferences.setString(
           LAST_TASKGROUP_UPDATE_TIME, timeOfUpdate.toIso8601String());
@@ -127,11 +127,11 @@ class LocalStorageImpl extends LocalStorage {
   }
 
   @override
-  Future<User> autoSigninUser() async {
-    return firebaseAuth.currentUser;
+  Future<User?> autoSigninUser() async {
+    return firebaseAuth?.currentUser;
   }
 
   @override
-  Future<DateTime> getLastTaskGroupUpdateTime() async => DateTime.tryParse(
-      sharedPreferences.getString(LAST_TASKGROUP_UPDATE_TIME));
+  Future<DateTime?> getLastTaskGroupUpdateTime() async => DateTime.tryParse(
+      sharedPreferences.getString(LAST_TASKGROUP_UPDATE_TIME)!);
 }

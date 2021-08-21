@@ -10,66 +10,66 @@ import 'local_storage.dart';
 
 abstract class RemoteStorage {
   //! Authentication section
-  Future<User> signinUserWithEmail(String email, String password);
-  Future<User> signupUserWithEmail(String email, String password);
-  Future<User> signinUserWithGoogle();
+  Future<User?> signinUserWithEmail(String email, String password);
+  Future<User?> signupUserWithEmail(String email, String password);
+  Future<User?> signinUserWithGoogle();
   Future<bool> recoverPassword(String email);
 
   //! Settings section
   /// Fetches the saved settings from Firebase
   /// Returns `null` if user does not have saved data
-  Future<Settings> fetchSettings();
+  Future<Settings?> fetchSettings();
 
   /// Update settings in the remote database
-  Future<void> updateSettings(Settings newSettings);
+  Future<void> updateSettings(Settings? newSettings);
 
   //! Task Groups section
   /// fetches the List of taskGroups from firebase and returns `null` if user
   /// either not logged in or does not have any data saved
-  Future<List<TaskGroup>> fetchTaskGroups();
+  Future<List<TaskGroup>?> fetchTaskGroups();
 
   /// fetches the time to the last update to the local database
-  Future<DateTime> getLastTaskGroupUpdateTime();
+  Future<DateTime?> getLastTaskGroupUpdateTime();
 
   /// deletes a taskGroup from the remoteStorage
-  Future<void> deleteTaskGroup(String id, DateTime timeOfUpdate);
+  Future<void> deleteTaskGroup(String? id, DateTime timeOfUpdate);
 
   /// updates taskGroups in the database
   Future<void> updateTaskGroups(
-      List<TaskGroup> taskGroups, DateTime timeOfUpdate);
+      List<TaskGroup>? taskGroups, DateTime? timeOfUpdate);
   Future<void> addTaskGroup(TaskGroup tg, DateTime timeOfUpdate);
 }
 
 class RemoteStorageImpl implements RemoteStorage {
-  final FirebaseAuth _firebaseAuth;
-  final FirebaseFirestore _firestore;
-  final GoogleSignIn _googleSignIn;
+  final FirebaseAuth? _firebaseAuth;
+  final FirebaseFirestore? _firestore;
+  final GoogleSignIn? _googleSignIn;
 
   const RemoteStorageImpl(
-      {FirebaseAuth firebaseAuth,
-      FirebaseFirestore firestore,
-      GoogleSignIn googleSignIn})
+      {FirebaseAuth? firebaseAuth,
+      FirebaseFirestore? firestore,
+      GoogleSignIn? googleSignIn})
       : _firebaseAuth = firebaseAuth,
         _firestore = firestore,
         _googleSignIn = googleSignIn;
 
-  DocumentReference get _userDocument =>
-      _firestore?.collection('users')?.doc(_firebaseAuth.currentUser?.uid);
+  DocumentReference? get _userDocument =>
+      _firestore?.collection('users').doc(_firebaseAuth!.currentUser?.uid);
   DocumentReference get _settingsDocument =>
-      _userDocument.collection('Settings').doc(SETTINGS);
+      _userDocument!.collection('Settings').doc(SETTINGS);
   CollectionReference get _taskGroupDocument =>
-      _userDocument.collection(TASKGROUPS);
+      _userDocument!.collection(TASKGROUPS);
   DocumentReference get _taskGroupTimeDocument =>
-      _userDocument.collection('last_update_time').doc(TIME_OF_UPLOAD);
+      _userDocument!.collection('last_update_time').doc(TIME_OF_UPLOAD);
 
   @override
-  Future<Settings> fetchSettings() async {
-    if (_firebaseAuth.currentUser == null || _userDocument == null) {
+  Future<Settings?> fetchSettings() async {
+    if (_firebaseAuth!.currentUser == null || _userDocument == null) {
       return null;
     }
     try {
       final data = await _settingsDocument.get();
-      return Settings.fromJson(data.data());
+      return Settings.fromJson(data.data() as Map<String, dynamic>);
     } catch (e) {
       print(e);
       return null;
@@ -77,40 +77,40 @@ class RemoteStorageImpl implements RemoteStorage {
   }
 
   @override
-  Future<List<TaskGroup>> fetchTaskGroups() async {
-    if (_firebaseAuth.currentUser == null || _userDocument == null) {
+  Future<List<TaskGroup>?> fetchTaskGroups() async {
+    if (_firebaseAuth!.currentUser == null || _userDocument == null) {
       return null;
     }
     final snapshot = await _taskGroupDocument.get();
     return snapshot.docs
-        .map((data) => TaskGroup.fromJson(data.data()))
-        .skipWhile((tg) => tg.isDeleted ?? false)
+        .map((data) => TaskGroup.fromJson(data.data() as Map<String, dynamic>))
+        .skipWhile((tg) => tg.isDeleted)
         .toList();
   }
 
   @override
-  Future<void> updateSettings(Settings newSettings) async {
-    if (_firebaseAuth.currentUser == null || _userDocument == null) {
+  Future<void> updateSettings(Settings? newSettings) async {
+    if (_firebaseAuth!.currentUser == null || _userDocument == null) {
       return null;
     }
-    await _settingsDocument.set(newSettings.toJson());
+    await _settingsDocument.set(newSettings!.toJson());
   }
 
   @override
   Future<void> updateTaskGroups(
-      List<TaskGroup> taskGroups, DateTime timeOfUpdate) async {
-    if (_firebaseAuth.currentUser == null || _userDocument == null) {
+      List<TaskGroup>? taskGroups, DateTime? timeOfUpdate) async {
+    if (_firebaseAuth!.currentUser == null || _userDocument == null) {
       return;
     }
-    taskGroups.forEach(
+    taskGroups!.forEach(
         (tg) => _taskGroupDocument.doc(tg.taskGroupId).set(tg.toJson()));
     await setLastTaskGroupUpdateTime(timeOfUpdate);
   }
 
   @override
-  Future<User> signinUserWithEmail(String email, String password) async {
+  Future<User?> signinUserWithEmail(String email, String password) async {
     try {
-      final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
+      final userCredential = await _firebaseAuth!.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -129,9 +129,9 @@ class RemoteStorageImpl implements RemoteStorage {
   }
 
   @override
-  Future<User> signupUserWithEmail(String email, String password) async {
+  Future<User?> signupUserWithEmail(String email, String password) async {
     try {
-      final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
+      final userCredential = await _firebaseAuth!.createUserWithEmailAndPassword(
           email: email, password: password);
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
@@ -145,8 +145,8 @@ class RemoteStorageImpl implements RemoteStorage {
   }
 
   @override
-  Future<DateTime> getLastTaskGroupUpdateTime() async {
-    if (_firebaseAuth.currentUser == null || _userDocument == null) {
+  Future<DateTime?> getLastTaskGroupUpdateTime() async {
+    if (_firebaseAuth!.currentUser == null || _userDocument == null) {
       return null;
     }
     final doc = await _taskGroupTimeDocument.get();
@@ -156,17 +156,17 @@ class RemoteStorageImpl implements RemoteStorage {
     return null;
   }
 
-  Future<void> setLastTaskGroupUpdateTime(DateTime timeOfUpdate) async {
-    if (_firebaseAuth.currentUser == null || _userDocument == null) {
+  Future<void> setLastTaskGroupUpdateTime(DateTime? timeOfUpdate) async {
+    if (_firebaseAuth!.currentUser == null || _userDocument == null) {
       return;
     }
     await _taskGroupTimeDocument
-        .set({TIME_OF_UPLOAD: timeOfUpdate.toIso8601String()});
+        .set({TIME_OF_UPLOAD: timeOfUpdate!.toIso8601String()});
   }
 
   @override
-  Future<void> deleteTaskGroup(String id, DateTime timeOfUpdate) async {
-    if (_firebaseAuth.currentUser == null || _userDocument == null) {
+  Future<void> deleteTaskGroup(String? id, DateTime timeOfUpdate) async {
+    if (_firebaseAuth!.currentUser == null || _userDocument == null) {
       return;
     }
     await _taskGroupDocument.doc(id).set({'is_deleted': true});
@@ -174,7 +174,7 @@ class RemoteStorageImpl implements RemoteStorage {
   }
 
   @override
-  Future<User> signinUserWithGoogle() async {
+  Future<User?> signinUserWithGoogle() async {
     UserCredential credential;
     try {
       if (kIsWeb) {
@@ -184,7 +184,7 @@ class RemoteStorageImpl implements RemoteStorage {
           ..addScope('https://www.googleapis.com/auth/contacts.readonly')
           ..setCustomParameters({'login_hint': 'user@example.com'});
 
-        credential = await _firebaseAuth.signInWithPopup(googleProvider);
+        credential = await _firebaseAuth!.signInWithPopup(googleProvider);
       } else {
         //* NATIVE IMPLEMENTATION
         //
@@ -195,9 +195,9 @@ class RemoteStorageImpl implements RemoteStorage {
           throw CredentialException(Social.Google);
         }
 
-        credential = await _firebaseAuth.signInWithCredential(socialCredential);
+        credential = await _firebaseAuth!.signInWithCredential(socialCredential);
       }
-      return credential?.user;
+      return credential.user;
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'invalid-credential':
@@ -211,7 +211,7 @@ class RemoteStorageImpl implements RemoteStorage {
     }
   }
 
-  Future<OAuthCredential> _getGoogleCredentials() async {
+  Future<OAuthCredential?> _getGoogleCredentials() async {
     // Trigger the authentication flow
     final googleUser = await _googleSignIn?.signIn();
 
@@ -227,7 +227,7 @@ class RemoteStorageImpl implements RemoteStorage {
 
   @override
   Future<void> addTaskGroup(TaskGroup tg, DateTime timeOfUpdate) async {
-    if (_firebaseAuth.currentUser == null || _userDocument == null) {
+    if (_firebaseAuth!.currentUser == null || _userDocument == null) {
       return;
     }
     await _taskGroupDocument.doc(tg.taskGroupId).set(tg.toJson());
@@ -237,7 +237,7 @@ class RemoteStorageImpl implements RemoteStorage {
   @override
   Future<bool> recoverPassword(String email) async {
     try{
-    await _firebaseAuth.sendPasswordResetEmail(email: email);
+    await _firebaseAuth!.sendPasswordResetEmail(email: email);
     return true;
     }catch(e) {
       return false;

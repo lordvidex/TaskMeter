@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:uuid/uuid.dart';
 
@@ -6,7 +5,7 @@ import '../../../lib/domain/models/task.dart';
 import '../../../lib/domain/models/task_group.dart';
 
 void main() {
-  TaskGroup taskGroup;
+  late TaskGroup taskGroup;
 
   //* values used in fromJson() and toJson() tests
   final taskGroupName = 'My Task Group';

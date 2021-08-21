@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:task_meter/core/constants.dart';
 
 class SocialButton extends StatelessWidget {
-  final Function() onPressed;
+  final Function()? onPressed;
   final String buttonLabel;
   final Widget icon;
 
   const SocialButton({
     this.icon = const Icon(Icons.favorite),
-    @required this.buttonLabel,
-    @required this.onPressed,
+    required this.buttonLabel,
+    required this.onPressed,
   });
   @override
   Widget build(BuildContext context) {

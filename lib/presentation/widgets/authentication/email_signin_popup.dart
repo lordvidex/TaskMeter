@@ -17,18 +17,18 @@ class EmailSigninPopup extends StatefulWidget {
 
 class _EmailSigninPopupState extends State<EmailSigninPopup>
     with SingleTickerProviderStateMixin {
-  TextEditingController _emailController;
-  TextEditingController _passwordController;
+  TextEditingController? _emailController;
+  TextEditingController? _passwordController;
 
   // number of times the continue button has been clicked
-  int _tries;
+  late int _tries;
 
-  bool _loading;
+  late bool _loading;
 
   // whether to show just the email textfield or both
-  bool _recoveryMode;
+  late bool _recoveryMode;
 
-  GlobalKey<FormState> _formKey;
+  GlobalKey<FormState>? _formKey;
 
   @override
   void initState() {
@@ -44,8 +44,8 @@ class _EmailSigninPopupState extends State<EmailSigninPopup>
 
   @override
   void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
+    _emailController!.dispose();
+    _passwordController!.dispose();
     super.dispose();
   }
 
@@ -71,7 +71,7 @@ class _EmailSigninPopupState extends State<EmailSigninPopup>
             ),
           CustomTextFormField(
             controller: _emailController,
-            validator: (string) => StringUtils.formatMail(string.trim()),
+            validator: (string) => StringUtils.formatMail(string!.trim()),
             hintText: appLocale.enterEmail,
           ),
           SizedBox(
@@ -81,7 +81,7 @@ class _EmailSigninPopupState extends State<EmailSigninPopup>
             CustomTextFormField(
                 controller: _passwordController,
                 obscureText: true,
-                validator: (string) => StringUtils.formatPassword(string),
+                validator: (string) => StringUtils.formatPassword(string!),
                 hintText: appLocale.enterPassword),
           if (_tries > 0 && !_recoveryMode)
             Align(
@@ -105,13 +105,13 @@ class _EmailSigninPopupState extends State<EmailSigninPopup>
                   : null,
               onPressed: _recoveryMode
                   ? () {
-                      if (!_formKey.currentState.validate()) {
+                      if (!_formKey!.currentState!.validate()) {
                         setState(() => _loading = false);
                         return;
                       }
                       context
                           .read<AuthenticationProvider>()
-                          .recoverPassword(_emailController.text.trim());
+                          .recoverPassword(_emailController!.text.trim());
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(
                               appLocale.checkInbox)));
@@ -122,13 +122,13 @@ class _EmailSigninPopupState extends State<EmailSigninPopup>
                         _tries++;
                         _loading = true;
                       });
-                      if (!_formKey.currentState.validate()) {
+                      if (!_formKey!.currentState!.validate()) {
                         setState(() => _loading = false);
                         return;
                       }
                       await widget.emailCallBack(
-                        _emailController.text.trim(),
-                        _passwordController.text.trim(),
+                        _emailController!.text.trim(),
+                        _passwordController!.text.trim(),
                       );
                       setState(() => _loading = false);
                     },

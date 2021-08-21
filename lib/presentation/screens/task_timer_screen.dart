@@ -14,7 +14,6 @@ import '../../domain/models/task.dart';
 import '../../locale/locales.dart';
 import '../bloc/timer_bloc.dart';
 import '../providers/task_group_provider.dart';
-import '../widgets/app_back_button.dart';
 import '../widgets/task_timer/action_button.dart';
 import '../widgets/task_timer/mosquito_widget.dart';
 
@@ -25,11 +24,11 @@ class TaskTimerScreen extends StatefulWidget {
 }
 
 class _TaskTimerScreenState extends State<TaskTimerScreen> {
-  Task task;
-  bool _isPaused;
-  bool _isFinished;
-  double backDropFilter;
-  MosquitoWidgetController controller;
+  Task? task;
+  late bool _isPaused;
+  late bool _isFinished;
+  late double backDropFilter;
+  MosquitoWidgetController? controller;
 
   @override
   void initState() {
@@ -43,11 +42,11 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
 
     // since this screen was restarted with a task, it shouldn't
     // be a break time
-    if (context.read<TaskGroupProvider>().isBreak)
+    if (context.read<TaskGroupProvider>().isBreak!)
       context.read<TaskGroupProvider>().toggleBreak();
 
     if (task != null)
-      context.read<TimerBloc>().add(TimerStartEvent(task.timeRemaining));
+      context.read<TimerBloc>().add(TimerStartEvent(task!.timeRemaining));
 
     super.initState();
   }
@@ -59,9 +58,9 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
   }
 
   void saveTaskStatus(BuildContext context) {
-    final state = context.read<TimerBloc>().state;
+    final TimerState state = context.read<TimerBloc>().state;
     context.read<TaskGroupProvider>().updateTaskTime(
-        task, state is TimerFinished ? Duration.zero : state.duration);
+        task!, state is TimerFinished ? Duration.zero : state.duration);
   }
 
   @override
@@ -70,8 +69,8 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
     final appLocale = AppLocalizations.of(context);
     final size = MediaQuery.of(context).size;
     if (task == null) {
-      task = ModalRoute.of(context).settings.arguments as Task;
-      context.read<TimerBloc>().add(TimerStartEvent(task.timeRemaining));
+      task = ModalRoute.of(context)!.settings.arguments as Task?;
+      context.read<TimerBloc>().add(TimerStartEvent(task!.timeRemaining));
     }
     //! Debug
     if (task == null) {
@@ -164,31 +163,31 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
                           listener: (ctx, state) {
                             final taskGroup =
                                 taskGroupProvider.currentTaskGroup;
-                            if (!taskGroupProvider.isBreak)
+                            if (!taskGroupProvider.isBreak!)
                               taskGroupProvider.updateTaskTime(
-                                  task, state.duration);
+                                  task!, state.duration);
                             if (state is TimerFinished) {
-                              controller.pause();
+                              controller!.pause();
                               setState(() {
                                 _isFinished = true;
                               });
                               // add residual time to bonus time for the group task and mark task as done
                               if (state.duration != Duration.zero) {
-                                if (!taskGroupProvider.isBreak)
+                                if (!taskGroupProvider.isBreak!)
                                   taskGroupProvider.updateTaskTime(
-                                      task, Duration.zero);
+                                      task!, Duration.zero);
                                 taskGroupProvider.updateBonusTime(
                                     duration: state.duration);
                               }
-                              if (taskGroup.taskGroupProgress == 1) {
+                              if (taskGroup!.taskGroupProgress == 1) {
                                 // all tasks are finished
                                 Navigator.of(context).pop();
                               }
                             } else if (state is TimerPaused ||
                                 state is TimerReady) {
-                              controller.pause();
+                              controller!.pause();
                             } else {
-                              controller.resume();
+                              controller!.resume();
                             }
                           },
                           builder: (ctx, state) => state is TimerFinished
@@ -206,8 +205,8 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
                               : CircularPercentIndicator(
                                   radius: 300,
                                   reverse: true,
-                                  percent: state.duration.inMilliseconds /
-                                      task.totalTime.inMilliseconds,
+                                  percent: state.duration!.inMilliseconds /
+                                      task!.totalTime!.inMilliseconds,
                                   lineWidth: 3,
                                   backgroundColor: Colors.transparent,
                                   linearGradient: LinearGradient(
@@ -223,7 +222,7 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
                                             ]),
                                   center: Text(
                                     DurationUtils.durationToClockString(
-                                        state.duration),
+                                        state.duration!),
                                     style: TextStyle(
                                         color: isDarkMode
                                             ? Color(0xffFDFEFE)
@@ -236,8 +235,8 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
                         ),
                         Text(
                             !_isFinished
-                                ? task.taskName
-                                : taskGroupProvider.isBreak
+                                ? task!.taskName!
+                                : taskGroupProvider.isBreak!
                                     ? appLocale.breakComplete
                                     : appLocale.taskComplete,
                             style: TextStyle(
@@ -283,10 +282,10 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
-                                  if (!taskGroupProvider.isBreak)
+                                  if (!taskGroupProvider.isBreak!)
                                     ActionButton(
                                       onPressed: () {
-                                        if (!taskGroupProvider.isBreak)
+                                        if (!taskGroupProvider.isBreak!)
                                           taskGroupProvider.toggleBreak();
                                         task = Task(
                                             taskName: taskGroupProvider
@@ -296,16 +295,16 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
                                           ..setTotalTime(
                                               taskGroupProvider.isLongBreak
                                                   ? taskGroupProvider
-                                                      .currentTaskGroup
+                                                      .currentTaskGroup!
                                                       .longBreakTime
                                                   : taskGroupProvider
-                                                      .currentTaskGroup
+                                                      .currentTaskGroup!
                                                       .shortBreakTime);
                                         setState(() {
                                           _isFinished = false;
                                           context.read<TimerBloc>().add(
                                               TimerStartEvent(
-                                                  task.timeRemaining));
+                                                  task!.timeRemaining));
                                         });
                                       },
                                       fillColor: Color.fromRGBO(195, 98, 98, 1),
@@ -314,15 +313,15 @@ class _TaskTimerScreenState extends State<TaskTimerScreen> {
                                   ActionButton(
                                     wide: taskGroupProvider.isBreak,
                                     onPressed: () {
-                                      if (taskGroupProvider.isBreak)
+                                      if (taskGroupProvider.isBreak!)
                                         taskGroupProvider.toggleBreak();
                                       setState(() {
                                         task = taskGroupProvider
-                                            .currentTaskGroup.sortedTasks[0];
+                                            .currentTaskGroup!.sortedTasks[0];
                                         _isFinished = false;
                                       });
                                       context.read<TimerBloc>().add(
-                                          TimerStartEvent(task.timeRemaining));
+                                          TimerStartEvent(task!.timeRemaining));
                                     },
                                     fillColor: Constants.appGreen,
                                     text: appLocale.nextTask,

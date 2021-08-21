@@ -13,23 +13,23 @@ const LONG_BREAK = 'long_break';
 const TIME_OF_UPLOAD = 'time_of_upload';
 
 class Settings extends Equatable {
-  int longBreakIntervals;
+  int? longBreakIntervals;
   Duration shortBreak;
   Duration longBreak;
   Duration totalTime;
   // en && ru
-  String language;
-  AppTheme appTheme;
+  String? language;
+  AppTheme? appTheme;
 
   /// Time of upload to both database and server which is used
   /// to distinguish a current data from an old data.
-  DateTime timeOfUpload;
+  DateTime? timeOfUpload;
 
   Settings({
-    @required this.totalTime,
-    @required this.longBreakIntervals,
-    @required this.shortBreak,
-    @required this.longBreak,
+    required this.totalTime,
+    required this.longBreakIntervals,
+    required this.shortBreak,
+    required this.longBreak,
     this.language,
     this.appTheme,
     this.timeOfUpload,
@@ -57,7 +57,7 @@ class Settings extends Equatable {
         LONG_BREAK_INTERVALS: longBreakIntervals,
         SHORT_BREAK: shortBreak.inSeconds,
         LONG_BREAK: longBreak.inSeconds,
-        APP_THEME: appTheme.index,
+        APP_THEME: appTheme!.index,
         LANGUAGE: language,
         TIME_OF_UPLOAD: timeOfUpload?.toIso8601String(),
       };
@@ -66,13 +66,13 @@ class Settings extends Equatable {
   }
 
   Settings copyWith({
-    Duration totalTime,
-    int longBreakIntervals,
-    Duration shortBreak,
-    Duration longBreak,
-    String language,
-    AppTheme appTheme,
-    DateTime timeOfUpload,
+    Duration? totalTime,
+    int? longBreakIntervals,
+    Duration? shortBreak,
+    Duration? longBreak,
+    String? language,
+    AppTheme? appTheme,
+    DateTime? timeOfUpload,
   }) =>
       Settings(
           longBreak: longBreak ?? this.longBreak,
@@ -84,6 +84,6 @@ class Settings extends Equatable {
           timeOfUpload: timeOfUpload ?? this.timeOfUpload);
 
   @override
-  List<Object> get props =>
+  List<Object?> get props =>
       [longBreakIntervals, shortBreak, longBreak, totalTime, language];
 }

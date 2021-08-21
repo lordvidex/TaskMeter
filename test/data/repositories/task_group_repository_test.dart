@@ -1,19 +1,20 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:task_meter/data/datasources/local_storage.dart';
 import 'package:task_meter/data/datasources/remote_storage.dart';
-import 'package:task_meter/data/repositories/settings_repository.dart';
 import 'package:task_meter/data/repositories/task_group_repository.dart';
 import 'package:task_meter/domain/models/task_group.dart';
+import 'task_group_repository_test.mocks.dart';
 
-class LocalStorageMock extends Mock implements LocalStorage {}
-
-class RemoteStorageMock extends Mock implements RemoteStorage {}
-
+@GenerateMocks([], customMocks: [
+  MockSpec<LocalStorage>(as: #LocalStorageMock),
+  MockSpec<RemoteStorage>(as: #RemoteStorageMock)
+])
 void main() {
-  TaskGroupRepositoryImpl taskGroupRepositoryImpl;
-  LocalStorageMock localStorageMock;
-  RemoteStorageMock remoteStorageMock;
+  late TaskGroupRepositoryImpl taskGroupRepositoryImpl;
+  late LocalStorageMock localStorageMock;
+  late RemoteStorageMock remoteStorageMock;
   setUp(() {
     localStorageMock = LocalStorageMock();
     remoteStorageMock = RemoteStorageMock();

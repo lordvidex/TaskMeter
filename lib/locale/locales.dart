@@ -7,7 +7,7 @@ import '../domain/models/app_theme.dart';
 class AppLocalizations {
   static Future<AppLocalizations> load(Locale locale) {
     final String name =
-        locale.countryCode.isEmpty ? locale.languageCode : locale.toString();
+        locale.countryCode!.isEmpty ? locale.languageCode : locale.toString();
     final String localeName = Intl.canonicalizedLocale(name);
 
     return initializeMessages(localeName).then((_) {
@@ -17,7 +17,7 @@ class AppLocalizations {
   }
 
   static AppLocalizations of(BuildContext context) =>
-      Localizations.of<AppLocalizations>(context, AppLocalizations);
+      Localizations.of<AppLocalizations>(context, AppLocalizations)!;
 
   //! Strings
 
@@ -133,7 +133,7 @@ class AppLocalizations {
 
   String get cancel => Intl.message('Cancel', name: 'cancel', desc: '');
 
-  String intervals(int x) => Intl.plural(x,
+  String intervals(int? x) => Intl.plural(x!,
       one: '$x interval',
       few: '$x intervals',
       other: '$x intervals',
@@ -141,8 +141,8 @@ class AppLocalizations {
       desc: 'long break after x shortbreaks',
       args: [x]);
 
-  String themeType(AppTheme theme) => Intl.select(
-      theme,
+  String themeType(AppTheme? theme) => Intl.select(
+      theme!,
       {
         AppTheme.Dark: 'Dark',
         AppTheme.Light: 'Light',

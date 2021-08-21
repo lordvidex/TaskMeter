@@ -1,20 +1,20 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:task_meter/core/errors.dart';
 import 'package:task_meter/core/failures.dart';
 import 'package:task_meter/core/network/network_info.dart';
-import 'package:task_meter/data/datasources/remote_storage.dart';
 import 'package:task_meter/data/repositories/auth_repository.dart';
 
-class NetworkInfoMock extends Mock implements NetworkInfo {}
+import 'auth_repository_test.mocks.dart';
+import 'task_group_repository_test.mocks.dart';
 
-class RemoteStorageMock extends Mock implements RemoteStorage {}
-
+@GenerateMocks([], customMocks: [MockSpec<NetworkInfo>(as: #NetworkInfoMock)])
 void main() {
-  AuthenticationRepositoryImpl authImpl;
-  NetworkInfoMock networkInfoMock;
-  RemoteStorageMock remoteMock;
+  late AuthenticationRepositoryImpl authImpl;
+  late NetworkInfoMock networkInfoMock;
+  late RemoteStorageMock remoteMock;
   setUp(() {
     networkInfoMock = NetworkInfoMock();
     remoteMock = RemoteStorageMock();

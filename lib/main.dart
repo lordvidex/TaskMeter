@@ -64,15 +64,15 @@ class RootWidget extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: Constants.kThemeData,
           darkTheme: Constants.kDarkThemeData,
-          themeMode: provider.settings.appTheme == AppTheme.System
+          themeMode: provider.settings!.appTheme == AppTheme.System
               ? ThemeMode.system
-              : provider.settings.appTheme == AppTheme.Light
+              : provider.settings!.appTheme == AppTheme.Light
                   ? ThemeMode.light
                   : ThemeMode.dark,
           title: 'Task Meter',
-          locale: provider.settings.language == null
+          locale: provider.settings!.language == null
               ? null
-              : Locale(provider.settings.language),
+              : Locale(provider.settings!.language!),
           localizationsDelegates: [
             AppLocalizationsDelegate(),
             GlobalMaterialLocalizations.delegate,

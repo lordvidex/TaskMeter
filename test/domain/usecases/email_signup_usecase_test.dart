@@ -2,14 +2,13 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:task_meter/core/failures.dart';
-import 'package:task_meter/data/repositories/auth_repository.dart';
 import 'package:task_meter/domain/usecases/email_signup_usecase.dart';
 
-class AuthenticationRepoMock extends Mock implements AuthenticationRepository {}
+import 'email_signin_usecase_test.mocks.dart';
 
 void main() {
-  AuthenticationRepoMock authRepoMock;
-  EmailSignUpUseCase emailSignUp;
+  late AuthenticationRepoMock authRepoMock;
+  late EmailSignUpUseCase emailSignUp;
   setUp(() {
     authRepoMock = AuthenticationRepoMock();
     emailSignUp = EmailSignUpUseCase(authRepo: authRepoMock);

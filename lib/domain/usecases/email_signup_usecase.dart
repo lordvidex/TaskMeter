@@ -5,10 +5,10 @@ import 'package:task_meter/core/failures.dart';
 import '../../data/repositories/auth_repository.dart';
 
 class EmailSignUpUseCase {
-  final AuthenticationRepository authRepo;
+  final AuthenticationRepository? authRepo;
   const EmailSignUpUseCase({this.authRepo});
 
-  Future<Either<Failure, User>> call(String email, String password) async {
-    return await authRepo.signupUserWithEmail(email,password);
+  Future<Either<Failure, User?>> call(String email, String password) async {
+    return await authRepo!.signupUserWithEmail(email,password);
   }
 }

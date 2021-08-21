@@ -10,28 +10,28 @@ import '../datasources/remote_storage.dart';
 abstract class AuthenticationRepository {
   //! SignIn
   // logs in user with email
-  Future<Either<Failure, User>> signinUserWithEmail(
+  Future<Either<Failure, User?>> signinUserWithEmail(
       String email, String password);
 
   // logs in user with google
-  Future<Either<Failure, User>> signinUserWithGoogle();
+  Future<Either<Failure, User?>> signinUserWithGoogle();
 
   // logs in user with apple
   Future<Either<Failure, User>> signinUserWithApple();
 
   // auto logs in user during startup
   // returns null if user is not authenticated
-  Future<User> autoLoginUser();
+  Future<User?> autoLoginUser();
 
   //! SignUp
   // Sign up user with google
-  Future<Either<Failure, User>> signUpUserWithGoogle();
+  Future<Either<Failure, User?>> signUpUserWithGoogle();
 
   // Sign up user with apple
   Future<Either<Failure, User>> signupUserWithApple();
 
   // signs up user freshly with mail
-  Future<Either<Failure, User>> signupUserWithEmail(
+  Future<Either<Failure, User?>> signupUserWithEmail(
       String email, String password);
 
   // password recovery
@@ -42,43 +42,43 @@ abstract class AuthenticationRepository {
 }
 
 class AuthenticationRepositoryImpl implements AuthenticationRepository {
-  final NetworkInfo _networkInfo;
-  final RemoteStorage _remoteStorage;
-  final LocalStorage _localStorage;
+  final NetworkInfo? _networkInfo;
+  final RemoteStorage? _remoteStorage;
+  final LocalStorage? _localStorage;
   const AuthenticationRepositoryImpl({
-    NetworkInfo networkInfo,
-    RemoteStorage remoteStorage,
-    LocalStorage localStorage,
+    NetworkInfo? networkInfo,
+    RemoteStorage? remoteStorage,
+    LocalStorage? localStorage,
   })  : _networkInfo = networkInfo,
         _remoteStorage = remoteStorage,
         _localStorage = localStorage;
 
   //! Auto login
   @override
-  Future<User> autoLoginUser() {
-    return _localStorage.autoSigninUser();
+  Future<User?> autoLoginUser() {
+    return _localStorage!.autoSigninUser();
   }
 
   //! logOut
   @override
   Future<void> logoutUser() async {
-    return _localStorage.logoutUser();
+    return _localStorage!.logoutUser();
   }
 
   //! Google
   @override
-  Future<Either<Failure, User>> signUpUserWithGoogle() async {
+  Future<Either<Failure, User?>> signUpUserWithGoogle() async {
     return await signinUserWithGoogle();
   }
 
   @override
-  Future<Either<Failure, User>> signinUserWithGoogle() async {
-    if (!await _networkInfo.isConnected) {
+  Future<Either<Failure, User?>> signinUserWithGoogle() async {
+    if (!await _networkInfo!.isConnected) {
       return Left(NetworkFailure());
     }
     // Network is good.. fetch the user and catch the errors
     try {
-      final _user = await _remoteStorage.signinUserWithGoogle();
+      final _user = await _remoteStorage!.signinUserWithGoogle();
       return Right(_user);
     } on CredentialException catch (c) {
       return Left(CredentialFailure(c.socialCredential));
@@ -104,7 +104,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
   //! E-Mail
   @override
-  Future<Either<Failure, User>> signinUserWithEmail(
+  Future<Either<Failure, User?>> signinUserWithEmail(
     String email,
     String password,
   ) async {
@@ -113,9 +113,9 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     // 3. check if the user supplied a wrong password
     // 4. catch anonymous errors
     // 5. return the user when successful
-    if (await _networkInfo.isConnected) {
+    if (await _networkInfo!.isConnected) {
       try {
-        final _user = await _remoteStorage.signinUserWithEmail(email, password);
+        final _user = await _remoteStorage!.signinUserWithEmail(email, password);
         return Right(_user);
       } on UserDoesNotExistException {
         return Left(UserDoesNotExistFailure());
@@ -131,13 +131,13 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   }
 
   @override
-  Future<Either<Failure, User>> signupUserWithEmail(
+  Future<Either<Failure, User?>> signupUserWithEmail(
       String email, String password) async {
     // check for internet connection
-    if (await _networkInfo.isConnected) {
+    if (await _networkInfo!.isConnected) {
       try {
         final signInResult =
-            await _remoteStorage.signupUserWithEmail(email, password);
+            await _remoteStorage!.signupUserWithEmail(email, password);
         return Right(signInResult);
       } on UserExistsException {
         return Left(UserExistsFailure());
@@ -150,9 +150,9 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   }
 
   Future<Either<Failure, void>> recoverPassword(String email) async {
-    if (await _networkInfo.isConnected) {
+    if (await _networkInfo!.isConnected) {
       try {
-        return Right(await _remoteStorage.recoverPassword(email));
+        return Right(await _remoteStorage!.recoverPassword(email));
       } on UserDoesNotExistException {
         return Left(UserDoesNotExistFailure());
       } catch (e) {

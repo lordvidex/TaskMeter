@@ -10,13 +10,13 @@ import '../../screens/task_timer_screen.dart';
 /// The function called to raise buttom sheet in editmode instead
 /// of create mode
 typedef EditTask(BuildContext sheetContext, bool isDarkMode,
-    {Task taskToBeEdited, bool isEditMode});
+    {Task? taskToBeEdited, bool isEditMode});
 
 class TaskCard extends StatelessWidget {
   const TaskCard({
     this.key,
-    @required this.taskGroup,
-    @required Task task,
+    required this.taskGroup,
+    required Task task,
     this.deleteTask,
     this.editTask,
     this.isEditMode = false,
@@ -24,11 +24,11 @@ class TaskCard extends StatelessWidget {
         assert((isEditMode && deleteTask != null && editTask != null) ||
             (!isEditMode && deleteTask == null && editTask == null)),
         super(key: key);
-  final ValueKey key;
-  final TaskGroup taskGroup;
-  final Function(Task) deleteTask;
+  final ValueKey? key;
+  final TaskGroup? taskGroup;
+  final Function(Task)? deleteTask;
   final Task _task;
-  final EditTask editTask;
+  final EditTask? editTask;
 
   /// isTrue when user is in the description screen and false
   /// when user is in the create taskgroup screen
@@ -46,7 +46,7 @@ class TaskCard extends StatelessWidget {
                     child: Icon(Icons.delete, color: Colors.white))),
             key: ValueKey(_task.taskId),
             direction: DismissDirection.endToStart,
-            onDismissed: (_) => deleteTask(_task),
+            onDismissed: (_) => deleteTask!(_task),
             child: MainTaskCard(
               editTask: editTask,
               task: _task,
@@ -65,18 +65,18 @@ class TaskCard extends StatelessWidget {
 
 class MainTaskCard extends StatelessWidget {
   const MainTaskCard({
-    Key key,
-    @required Task task,
-    @required this.taskGroup,
-    @required this.isEditMode,
-    @required this.editTask,
+    Key? key,
+    required Task task,
+    required this.taskGroup,
+    required this.isEditMode,
+    required this.editTask,
   })  : _task = task,
         super(key: key);
 
   final Task _task;
   final bool isEditMode;
-  final EditTask editTask;
-  final TaskGroup taskGroup;
+  final EditTask? editTask;
+  final TaskGroup? taskGroup;
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +108,7 @@ class MainTaskCard extends StatelessWidget {
       onTap: _task.isCompleted
           ? null
           : () => isEditMode
-              ? editTask(context, isDarkMode,
+              ? editTask!(context, isDarkMode,
                   taskToBeEdited: _task, isEditMode: true)
               : Navigator.of(context)
                   .pushNamed(TaskTimerScreen.routeName, arguments: _task),
@@ -132,7 +132,7 @@ class MainTaskCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      _task.taskName,
+                      _task.taskName!,
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                     ),
@@ -144,8 +144,8 @@ class MainTaskCard extends StatelessWidget {
                               fontSize: 12,
                               color: Theme.of(context)
                                   .textTheme
-                                  .bodyText2
-                                  .color
+                                  .bodyText2!
+                                  .color!
                                   .withOpacity(0.72))),
                     Text(_difficultyText(),
                         style:

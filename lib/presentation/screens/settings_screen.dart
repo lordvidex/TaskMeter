@@ -19,9 +19,9 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  SettingsProvider _provider;
-  AuthenticationProvider _authProvider;
-  AppLocalizations appLocale;
+  late SettingsProvider _provider;
+  late AuthenticationProvider _authProvider;
+  late AppLocalizations appLocale;
 
   @override
   void initState() {
@@ -32,13 +32,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   // helper functions
   void _showSettingsOptionScreen<T>({
-    @required String title,
-    @required Iterable<T> options,
-    @required T current,
-    @required Function(T) update,
+    required String title,
+    required Iterable<T> options,
+    required T current,
+    required Function(T) update,
     bool hasCustomButton = false,
-    Set<T> fullRowButtons,
-    String Function(T) transform,
+    Set<T>? fullRowButtons,
+    String Function(T)? transform,
   }) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (ctx) => SettingsOptionScreen<T>(
@@ -101,46 +101,46 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         onPressed: () => _showSettingsOptionScreen<int>(
                               hasCustomButton: true,
                               update: (newValue) => _provider.updateSettings(
-                                  _provider.settings.copyWith(
+                                  _provider.settings!.copyWith(
                                       shortBreak: Duration(minutes: newValue))),
-                              current: _provider.settings.shortBreak.inMinutes,
+                              current: _provider.settings!.shortBreak.inMinutes,
                               title: appLocale.shortBreakDuration,
                               transform: appLocale.minutes,
                               options: Set.from([1, 2, 3, 4, 5, 8, 10])
-                                ..add(_provider.settings.shortBreak.inMinutes),
+                                ..add(_provider.settings!.shortBreak.inMinutes),
                             ),
                         subtitle: appLocale
-                            .minutes(_provider.settings.shortBreak.inMinutes)),
+                            .minutes(_provider.settings!.shortBreak.inMinutes)),
                     SettingsTile(
                         title: appLocale.longBreakDuration,
                         onPressed: () => _showSettingsOptionScreen<int>(
                               hasCustomButton: true,
                               update: (newValue) => _provider.updateSettings(
-                                  _provider.settings.copyWith(
+                                  _provider.settings!.copyWith(
                                       longBreak: Duration(minutes: newValue))),
-                              current: _provider.settings.longBreak.inMinutes,
+                              current: _provider.settings!.longBreak.inMinutes,
                               title: appLocale.longBreakDuration,
                               transform: appLocale.minutes,
                               options: Set.from([5, 10, 15, 20, 25, 30, 45])
-                                ..add(_provider.settings.longBreak.inMinutes),
+                                ..add(_provider.settings!.longBreak.inMinutes),
                             ),
                         subtitle: appLocale
-                            .minutes(_provider.settings.longBreak.inMinutes)),
+                            .minutes(_provider.settings!.longBreak.inMinutes)),
                     SettingsTile(
                         title: appLocale.longBreakAfter,
-                        onPressed: () => _showSettingsOptionScreen<int>(
+                        onPressed: () => _showSettingsOptionScreen<int?>(
                               hasCustomButton: true,
                               update: (newValue) => _provider.updateSettings(
-                                  _provider.settings
+                                  _provider.settings!
                                       .copyWith(longBreakIntervals: newValue)),
                               title: appLocale.longBreakIntervals,
                               transform: appLocale.intervals,
-                              current: _provider.settings.longBreakIntervals,
+                              current: _provider.settings!.longBreakIntervals,
                               options: Set.from([1, 2, 3])
-                                ..add(_provider.settings.longBreakIntervals),
+                                ..add(_provider.settings!.longBreakIntervals),
                             ),
                         subtitle: appLocale
-                            .intervals(_provider.settings.longBreakIntervals)),
+                            .intervals(_provider.settings!.longBreakIntervals)),
                   ]),
                   Padding(
                     padding: const EdgeInsets.only(top: 29.0),
@@ -150,12 +150,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           SettingsTile(
                               title: appLocale.language,
                               onPressed: () =>
-                                  _showSettingsOptionScreen<String>(
+                                  _showSettingsOptionScreen<String?>(
                                       update: (newValue) => _provider
-                                          .updateSettings(_provider.settings
+                                          .updateSettings(_provider.settings!
                                               .copyWith(language: newValue)),
                                       title: appLocale.language,
-                                      current: _provider.settings.language,
+                                      current: _provider.settings!.language,
                                       options: ['en', 'ru'],
                                       transform: (string) {
                                         if (string == 'ru') {
@@ -163,23 +163,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                         }
                                         return 'English';
                                       }),
-                              subtitle: _provider.settings.language == 'ru'
+                              subtitle: _provider.settings!.language == 'ru'
                                   ? 'Русский'
                                   : 'English'),
                           SettingsTile(
                               title: appLocale.appTheme,
                               onPressed: () =>
-                                  _showSettingsOptionScreen<AppTheme>(
+                                  _showSettingsOptionScreen<AppTheme?>(
                                       update: (newValue) => _provider
-                                          .updateSettings(_provider.settings
+                                          .updateSettings(_provider.settings!
                                               .copyWith(appTheme: newValue)),
                                       fullRowButtons: {AppTheme.System},
                                       title: appLocale.appTheme,
-                                      current: _provider.settings.appTheme,
+                                      current: _provider.settings!.appTheme,
                                       options: AppTheme.values,
                                       transform: appLocale.themeType),
                               subtitle:
-                                  '${appLocale.themeType(_provider.settings.appTheme)} ${appLocale.theme}'),
+                                  '${appLocale.themeType(_provider.settings!.appTheme)} ${appLocale.theme}'),
                           SettingsTile(title: appLocale.feedback),
                           SettingsTile(title: appLocale.rate)
                         ]),

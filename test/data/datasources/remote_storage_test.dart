@@ -1,14 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:task_meter/core/errors.dart';
 import 'package:task_meter/data/datasources/remote_storage.dart';
+import 'remote_storage_test.mocks.dart';
 
-class FirebaseAuthMock extends Mock implements FirebaseAuth {}
-
+@GenerateMocks([], customMocks: [MockSpec<FirebaseAuth>(as: #FirebaseAuthMock)])
 void main() {
-  FirebaseAuthMock firebaseAuthMock;
-  RemoteStorageImpl remoteStorage;
+  late FirebaseAuthMock firebaseAuthMock;
+  late RemoteStorageImpl remoteStorage;
   setUp(() {
     firebaseAuthMock = FirebaseAuthMock();
     remoteStorage = RemoteStorageImpl(firebaseAuth: firebaseAuthMock);

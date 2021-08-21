@@ -4,8 +4,8 @@ import '../../core/failures.dart';
 import '../../data/repositories/auth_repository.dart';
 
 class RecoverPasswordUseCase {
-  final AuthenticationRepository authRepo;
+  final AuthenticationRepository? authRepo;
   RecoverPasswordUseCase({this.authRepo});
   Future<Either<Failure, void>> call(String email) =>
-      authRepo.recoverPassword(email);
+      authRepo!.recoverPassword(email);
 }

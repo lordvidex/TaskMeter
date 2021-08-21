@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 //TODO: remove unused class
 class SettingsItem extends StatelessWidget {
   final String settingsText;
-  final Widget leadingWidget;
+  final Widget? leadingWidget;
   final Widget trailingWidget;
-  final Function() onTap;
+  final Function()? onTap;
   const SettingsItem(this.settingsText, this.trailingWidget,
       {this.leadingWidget, this.onTap});
   @override

@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_meter/data/datasources/local_storage.dart';
@@ -8,11 +8,12 @@ import 'package:task_meter/domain/models/task.dart';
 import 'package:task_meter/domain/models/task_group.dart';
 import 'package:uuid/uuid.dart';
 
-class SharedPreferencesMock extends Mock implements SharedPreferences {}
+import 'local_storage_test.mocks.dart';
 
+@GenerateMocks([], customMocks: [MockSpec<SharedPreferences>(as: #SharedPreferencesMock)])
 void main() {
-  SharedPreferencesMock mock;
-  LocalStorageImpl localStorage;
+  late SharedPreferencesMock mock;
+  late LocalStorageImpl localStorage;
   setUp(() {
     mock = SharedPreferencesMock();
     localStorage = LocalStorageImpl(sharedPreferences: mock);

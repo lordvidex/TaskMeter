@@ -12,36 +12,36 @@ import '../task_timer/action_button.dart';
 import 'custom_text_form_field.dart';
 
 class AddTaskWidget extends StatefulWidget {
-  final Function(Task, {bool isEditMode}) addNewTask;
-  final TaskGroup taskGroup;
-  final Task taskToBeEdited;
+  final Function(Task?, {bool isEditMode}) addNewTask;
+  final TaskGroup? taskGroup;
+  final Task? taskToBeEdited;
   final bool isEditMode;
-  final OnboardingState onboarding;
-  final List<FocusNode> focusNodes;
+  final OnboardingState? onboarding;
+  final List<FocusNode>? focusNodes;
   final Function(BuildContext) createTaskGroup;
   AddTaskWidget({
-    @required this.taskGroup,
-    @required this.addNewTask,
-    @required this.isEditMode,
-    @required this.focusNodes,
-    @required this.onboarding,
-    @required this.createTaskGroup,
-    @required this.taskToBeEdited,
+    required this.taskGroup,
+    required this.addNewTask,
+    required this.isEditMode,
+    required this.focusNodes,
+    required this.onboarding,
+    required this.createTaskGroup,
+    required this.taskToBeEdited,
   });
   @override
   _AddTaskWidgetState createState() => _AddTaskWidgetState();
 }
 
 class _AddTaskWidgetState extends State<AddTaskWidget> {
-  Difficulty _difficulty;
-  bool _isEditMode;
+  Difficulty? _difficulty;
+  late bool _isEditMode;
 
-  TextEditingController _taskNameController;
-  GlobalKey<FormState> _formKey;
+  TextEditingController? _taskNameController;
+  GlobalKey<FormState>? _formKey;
 
   @override
   void dispose() {
-    _taskNameController.dispose();
+    _taskNameController!.dispose();
 
     super.dispose();
   }
@@ -51,40 +51,40 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
     _isEditMode = widget.isEditMode;
     _formKey = GlobalKey();
     _taskNameController = TextEditingController(
-        text: _isEditMode ? widget.taskToBeEdited.taskName : null);
+        text: _isEditMode ? widget.taskToBeEdited!.taskName : null);
 
     _difficulty =
-        _isEditMode ? widget.taskToBeEdited.difficulty : Difficulty.Medium;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        _isEditMode ? widget.taskToBeEdited!.difficulty : Difficulty.Medium;
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       if (!context.read<SettingsProvider>().hasPassedTutorial)
         Future.delayed(Duration(milliseconds: 500),
-            () => widget.onboarding.showWithSteps(3, [3, 4, 5]));
+            () => widget.onboarding!.showWithSteps(3, [3, 4, 5]));
     });
     super.initState();
   }
 
   void addTask() {
-    if (!_formKey.currentState.validate()) {
+    if (!_formKey!.currentState!.validate()) {
       return;
     }
     if (_isEditMode) {
-      Task task = widget.taskToBeEdited;
+      Task task = widget.taskToBeEdited!;
       task
         ..difficulty = _difficulty
-        ..taskName = _taskNameController.text.trim();
+        ..taskName = _taskNameController!.text.trim();
         
       //! we need to call this to reset the state
       widget.addNewTask(null, isEditMode: true);
     } else {
       widget.addNewTask(Task(
-          taskName: _taskNameController.text.trim(), difficulty: _difficulty));
+          taskName: _taskNameController!.text.trim(), difficulty: _difficulty));
     }
     resetInputElements();
     Navigator.of(context).pop();
   }
 
   void resetInputElements() {
-    _taskNameController.clear();
+    _taskNameController!.clear();
     FocusScope.of(context).unfocus();
     _difficulty = Difficulty.Medium;
     setState(() {
@@ -94,7 +94,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations appLocale = AppLocalizations.of(context);
+    final appLocale = AppLocalizations.of(context);
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return SingleChildScrollView(
@@ -132,7 +132,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                     ),
                   ),
                   Focus(
-                    focusNode: widget.focusNodes[3],
+                    focusNode: widget.focusNodes![3],
                     child: CustomTextFormField(
                       isDarkMode: isDarkMode,
                       controller: _taskNameController,
@@ -153,7 +153,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                     ),
                   ),
                   Focus(
-                    focusNode: widget.focusNodes[4],
+                    focusNode: widget.focusNodes![4],
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -198,7 +198,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                       children: [
                         Expanded(
                           child: Focus(
-                            focusNode: widget.focusNodes[5],
+                            focusNode: widget.focusNodes![5],
                             child: ActionButton(
                               resizable: true,
                               onPressed: () => addTask(),

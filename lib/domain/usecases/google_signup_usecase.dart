@@ -5,10 +5,10 @@ import '../../core/failures.dart';
 import '../../data/repositories/auth_repository.dart';
 
 class GoogleSignUpUseCase {
-  final AuthenticationRepository authRepo;
+  final AuthenticationRepository? authRepo;
   const GoogleSignUpUseCase({this.authRepo});
 
-  Future<Either<Failure, User>> call() async {
-    return await authRepo.signUpUserWithGoogle();
+  Future<Either<Failure, User?>> call() async {
+    return await authRepo!.signUpUserWithGoogle();
   }
 }

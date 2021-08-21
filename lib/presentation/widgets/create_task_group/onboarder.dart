@@ -8,14 +8,15 @@ class Onboarder extends StatefulWidget {
   static final routeName = '/onboarder';
   final Widget child;
 
-  const Onboarder({@required this.child});
+  const Onboarder({required this.child});
 
   @override
   _OnboarderState createState() => _OnboarderState();
 }
 
 class _OnboarderState extends State<Onboarder> {
-  GlobalKey<OnboardingState> _onboardingKey;
+  late GlobalKey<OnboardingState> _onboardingKey;
+  late List<FocusNode> _focusNodes;
 
   @override
   void initState() {
@@ -25,7 +26,7 @@ class _OnboarderState extends State<Onboarder> {
 
   @override
   Widget build(BuildContext context) {
-    final _focusNodes = context.read<SettingsProvider>().onboardingFocusNodes;
+    _focusNodes = context.read<SettingsProvider>().onboardingFocusNodes;
     final _titleTextStyle =
         TextStyle(fontWeight: FontWeight.bold, fontSize: 36);
     List<OnboardingStep> _steps = [
@@ -71,9 +72,6 @@ class _OnboarderState extends State<Onboarder> {
           title: 'Create the Task',
           titleTextStyle: _titleTextStyle)
     ];
-
-    context.read<SettingsProvider>().hasPassedTutorial =
-        false; // TODO: remove for prod
     return Onboarding(
       child: widget.child,
       steps: _steps,

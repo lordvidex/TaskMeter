@@ -7,7 +7,7 @@ class TaskProgressIndicator extends StatelessWidget {
   final bool showPercentage;
   final bool isDarkMode;
   const TaskProgressIndicator(this.progress,
-      {@required this.isDarkMode, this.showPercentage = false});
+      {required this.isDarkMode, this.showPercentage = false});
   @override
   Widget build(BuildContext context) {
     return Stack(

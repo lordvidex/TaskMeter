@@ -9,15 +9,15 @@ class SettingsOptionScreen<T> extends StatefulWidget {
   final String title;
   final Iterable<T> options;
   final T current;
-  final String Function(T) valueToString;
-  final Set<T> fullRowButtons;
+  final String Function(T)? valueToString;
+  final Set<T>? fullRowButtons;
   final Function(T) update;
   final bool hasCustomButton;
   const SettingsOptionScreen({
-    @required this.title,
-    @required this.options,
-    @required this.current,
-    @required this.update,
+    required this.title,
+    required this.options,
+    required this.current,
+    required this.update,
     this.fullRowButtons,
     this.hasCustomButton = false,
     this.valueToString,
@@ -30,24 +30,24 @@ class SettingsOptionScreen<T> extends StatefulWidget {
 
 class _SettingsOptionScreenState<T> extends State<SettingsOptionScreen<T>> {
   // the current selected option
-  T current;
+  late T current;
   // the list of all options
-  List<T> options;
+  late Set<T> options;
   // state for the activity of customButton
   bool customButtonIsInactive = true;
 
-  TextEditingController _customController;
+  late TextEditingController _customController;
 
-  int _customValue;
+  late int _customValue;
 
-  Widget _switchingWidget;
+  late Widget _switchingWidget;
 
   @override
   void initState() {
     _customController = TextEditingController();
     _customValue = -1;
     current = widget.current;
-    options = [...Set.of(widget.options)..add(current)];
+    options = Set<T>.from([...widget.options, widget.current]);
     super.initState();
   }
 
@@ -73,7 +73,7 @@ class _SettingsOptionScreenState<T> extends State<SettingsOptionScreen<T>> {
               )
             : CustomTextFormField.numbersOnly(
                 context: context,
-                hintText: widget.valueToString(100 as T),
+                hintText: widget.valueToString!(100 as T),
                 controller: _customController,
                 onChanged: (x) =>
                     _customValue = int.tryParse(x.trim()) ?? _customValue,
@@ -81,7 +81,7 @@ class _SettingsOptionScreenState<T> extends State<SettingsOptionScreen<T>> {
                   current = int.parse(_customController.text) as T;
                   _customController.clear();
                   widget.update(current);
-                  options = [...Set.of(widget.options)..add(current)];
+                  options = Set.of([...widget.options, current]);
                   setState(() {
                     customButtonIsInactive = !customButtonIsInactive;
                   });
@@ -125,7 +125,7 @@ class _SettingsOptionScreenState<T> extends State<SettingsOptionScreen<T>> {
       final mWidget = Expanded(
           child: SettingsButton<T>(
               isSelected: y == current,
-              child: widget.valueToString(y),
+              child: widget.valueToString!(y),
               onPressed: () {
                 setState(() => current = y);
                 widget.update(y);

@@ -9,9 +9,9 @@ part 'timer_event.dart';
 part 'timer_state.dart';
 
 class TimerBloc extends Bloc<TimerEvent, TimerState> {
-  StreamSubscription<Duration> _tickerSubscription;
-  TimerRepository timerRepository;
-  TimerBloc({TimerRepository timerRepo})
+  StreamSubscription<Duration>? _tickerSubscription;
+  TimerRepository? timerRepository;
+  TimerBloc({TimerRepository? timerRepo})
       : timerRepository = timerRepo,
         super(TimerReady(Duration.zero));
   @override
@@ -41,8 +41,8 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   Stream<TimerState> _mapTimerStartEventToState(TimerStartEvent event) async* {
     yield TimerReady(event.duration);
     _tickerSubscription?.cancel();
-    _tickerSubscription = timerRepository
-        .timerTicker(event.duration)
+    _tickerSubscription = timerRepository!
+        .timerTicker(event.duration!)
         .listen((newDuration) => add(TimerTickEvent(newDuration)));
   }
 

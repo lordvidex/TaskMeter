@@ -7,20 +7,20 @@ class Task extends Equatable {
   // auto generated taskId
   final String taskId;
   // name of task
-  String taskName;
+  String? taskName;
   // difficulty of task [Easy, Medium, Hard]
-  Difficulty difficulty;
+  Difficulty? difficulty;
   // calculated duration of task
   //! Must call `setTotalTime` to properly instantiate time
-  Duration _totalTime;
+  Duration? _totalTime;
 
-  Duration timeRemaining;
+  Duration? timeRemaining;
 
   Task({
-    String taskId,
+    String? taskId,
     this.taskName = 'Default TaskName',
     this.difficulty = Difficulty.Medium,
-    Duration totalTime,
+    Duration? totalTime,
     this.timeRemaining,
   })  : this._totalTime = totalTime,
         this.taskId = taskId ?? Uuid().v1();
@@ -40,14 +40,14 @@ class Task extends Equatable {
     return {
       'task_id': taskId,
       'task_name': taskName,
-      'difficulty': difficulty.index,
+      'difficulty': difficulty!.index,
       'total_time': _totalTime?.inSeconds,
       'time_remaining': timeRemaining?.inSeconds,
     };
   }
   
   /// sets [totalTime] and timeRemaining to given `totalTime`
-  void setTotalTime(Duration totalTime) {
+  void setTotalTime(Duration? totalTime) {
     this._totalTime = totalTime;
     this.timeRemaining = totalTime;
   }
@@ -58,7 +58,7 @@ class Task extends Equatable {
   }
 
   // returns the totalTime calculated by the algorithm
-  Duration get totalTime => _totalTime;
+  Duration? get totalTime => _totalTime;
 
   /// returns true if some time has been used in this task
   bool get hasStarted => _totalTime != timeRemaining;
@@ -70,8 +70,8 @@ class Task extends Equatable {
     if (_totalTime == null || timeRemaining == null) {
       return 0;
     }
-    return (_totalTime.inMilliseconds - timeRemaining.inMilliseconds) /
-        _totalTime.inMilliseconds;
+    return (_totalTime!.inMilliseconds - timeRemaining!.inMilliseconds) /
+        _totalTime!.inMilliseconds;
   }
 
   bool get isCompleted => timeRemaining == Duration.zero;

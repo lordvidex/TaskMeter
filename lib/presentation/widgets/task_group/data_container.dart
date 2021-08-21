@@ -7,7 +7,7 @@ class DataContainer extends StatelessWidget {
   final bool isDarkMode;
 
   const DataContainer(
-      {@required this.label, @required this.text, @required this.isDarkMode});
+      {required this.label, required this.text, required this.isDarkMode});
   @override
   Widget build(BuildContext context) {
     return Container(

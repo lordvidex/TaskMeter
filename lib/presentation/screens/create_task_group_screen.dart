@@ -31,37 +31,37 @@ class CreateTaskGroupScreen extends StatefulWidget {
 }
 
 class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
-  GlobalKey<FormState> _formKey;
-  TaskGroup newTaskGroup;
-  Settings settings;
+  late GlobalKey<FormState> _formKey;
+  late TaskGroup newTaskGroup;
+  late Settings settings;
 
-  int _durationInMinutes;
-  int _shortBreakInMinutes;
-  int _longBreakInMinutes;
+  int? _durationInMinutes;
+  int? _shortBreakInMinutes;
+  int? _longBreakInMinutes;
 
   // TextEditingController for the TaskGroupTitle
-  TextEditingController _tgTitleController;
+  late TextEditingController _tgTitleController;
   // TextEditingController for the duration
-  TextEditingController _durationController;
-  FocusNode _durationFocusNode;
+  late TextEditingController _durationController;
+  late FocusNode _durationFocusNode;
   // TextEditingController for the shortbreak
-  TextEditingController _shortBreakController;
-  FocusNode _shortBreakFocusNode;
+  late TextEditingController _shortBreakController;
+  late FocusNode _shortBreakFocusNode;
   // TextEditingController for the longBreak
-  TextEditingController _longBreakController;
-  FocusNode _longBreakFocusNode;
+  late TextEditingController _longBreakController;
+  late FocusNode _longBreakFocusNode;
   // Scroll controller for the screen
-  ScrollController _scrollController;
+  late ScrollController _scrollController;
   // ScrollController for the list of tasks in the taskgroup
-  ScrollController _taskScrollController;
+  late ScrollController _taskScrollController;
 
   // true when user is adding new task
-  bool modalIsActive;
+  late bool modalIsActive;
 
   // List of focus nodes for onboarding
-  List<FocusNode> focusNodes;
+  late List<FocusNode> focusNodes;
 
-  AppLocalizations appLocale;
+  late AppLocalizations appLocale;
 
   @override
   void initState() {
@@ -74,9 +74,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
     _durationFocusNode = FocusNode();
     modalIsActive = false;
 
-    appLocale = AppLocalizations.of(context);
-
-    settings = context.read<SettingsProvider>().settings;
+    settings = context.read<SettingsProvider>().settings!;
     _durationInMinutes = settings.totalTime.inMinutes;
     _shortBreakInMinutes = settings.shortBreak.inMinutes;
     _longBreakInMinutes = settings.longBreak.inMinutes;
@@ -91,25 +89,25 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
 
     focusNodes = context.read<SettingsProvider>().onboardingFocusNodes;
 
-    WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
-      final OnboardingState onboarding = Onboarding.of(context);
+    WidgetsBinding.instance!.addPostFrameCallback((Duration timeStamp) {
+      final OnboardingState? onboarding = Onboarding.of(context);
       if (!context.read<SettingsProvider>().hasPassedTutorial)
-        onboarding.showWithSteps(0, [0, 1, 2, 6]);
+        onboarding!.showWithSteps(0, [0, 1, 2, 6]);
     });
   }
 
   @override
   void didChangeDependencies() {
-    final appLocale = AppLocalizations.of(context);
-    _durationController ??= TextEditingController(
+    appLocale = AppLocalizations.of(context);
+    _durationController = TextEditingController(
         text: DurationUtils.durationToReadableString(
-            Duration(minutes: _durationInMinutes), appLocale));
-    _shortBreakController ??= TextEditingController(
+            Duration(minutes: _durationInMinutes!), appLocale));
+    _shortBreakController = TextEditingController(
         text: DurationUtils.durationToReadableString(
-            Duration(minutes: _shortBreakInMinutes), appLocale));
-    _longBreakController ??= TextEditingController(
+            Duration(minutes: _shortBreakInMinutes!), appLocale));
+    _longBreakController = TextEditingController(
         text: DurationUtils.durationToReadableString(
-            Duration(minutes: _longBreakInMinutes), appLocale));
+            Duration(minutes: _longBreakInMinutes!), appLocale));
     super.didChangeDependencies();
   }
 
@@ -129,13 +127,13 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
   }
 
   void createTaskGroup(BuildContext scaffoldContext) {
-    if (!_formKey.currentState.validate()) {
+    if (!_formKey.currentState!.validate()) {
       return;
     }
     newTaskGroup.taskGroupName = _tgTitleController.text;
-    newTaskGroup.shortBreakTime = Duration(minutes: _shortBreakInMinutes);
-    newTaskGroup.longBreakTime = Duration(minutes: _longBreakInMinutes);
-    // TODO: add widget for this
+    newTaskGroup.totalTime = Duration(minutes: _durationInMinutes!);
+    newTaskGroup.shortBreakTime = Duration(minutes: _shortBreakInMinutes!);
+    newTaskGroup.longBreakTime = Duration(minutes: _longBreakInMinutes!);
     newTaskGroup.longBreakIntervals = settings.longBreakIntervals;
 
     try {
@@ -152,9 +150,9 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
     Navigator.of(context).pop();
   }
 
-  void addNewTask(Task newTask, {bool isEditMode = false}) {
+  void addNewTask(Task? newTask, {bool isEditMode = false}) {
     setState(() {
-      if (!isEditMode) newTaskGroup.tasks.add(newTask);
+      if (!isEditMode) newTaskGroup.tasks.add(newTask!);
     });
     Timer(Duration(milliseconds: 100), () {
       _scrollController.jumpTo(
@@ -172,7 +170,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
   }
 
   void showAddNewTaskBottomSheet(BuildContext sheetContext, bool isDarkMode,
-      {bool isEditMode = false, Task taskToBeEdited}) {
+      {bool isEditMode = false, Task? taskToBeEdited}) {
     showModalBottomSheet(
         enableDrag: false,
         isDismissible: false,
@@ -195,7 +193,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
   }
 
   /// Scroll container for the sub tasks added within the task group
-  List<Widget> subTaskViews(ScrollController _taskScrollController) {
+  List<Widget> subTaskViews(ScrollController? _taskScrollController) {
     return [
       Padding(
         padding: const EdgeInsets.only(top: 12.0, bottom: 20),
@@ -358,7 +356,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                             onSubmitted: (_) {
                               _durationController.text =
                                   DurationUtils.durationToReadableString(
-                                      Duration(minutes: _durationInMinutes),
+                                      Duration(minutes: _durationInMinutes!),
                                       appLocale);
                               _shortBreakController.clear();
                               _shortBreakFocusNode.requestFocus();
@@ -396,7 +394,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                                                     .durationToReadableString(
                                                         Duration(
                                                             minutes:
-                                                                _shortBreakInMinutes),
+                                                                _shortBreakInMinutes!),
                                                         appLocale);
                                             _longBreakController.clear();
                                             _longBreakFocusNode.requestFocus();
@@ -436,7 +434,7 @@ class _CreateTaskGroupScreenState extends State<CreateTaskGroupScreen> {
                                                     .durationToReadableString(
                                                         Duration(
                                                             minutes:
-                                                                _longBreakInMinutes),
+                                                                _longBreakInMinutes!),
                                                         appLocale);
                                           },
                                           hintText: appLocale.minutes(10),

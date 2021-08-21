@@ -13,7 +13,7 @@ import 'gradient_icon.dart';
 class TaskGroupWidget extends StatelessWidget {
   final TaskGroup taskGroup;
   final bool isDarkMode;
-  const TaskGroupWidget({@required this.taskGroup, @required this.isDarkMode});
+  const TaskGroupWidget({required this.taskGroup, required this.isDarkMode});
   @override
   Widget build(BuildContext context) {
     final taskGroupProvider = context.read<TaskGroupProvider>();
@@ -39,7 +39,7 @@ class TaskGroupWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    taskGroup.taskGroupName,
+                    taskGroup.taskGroupName!,
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   Padding(
