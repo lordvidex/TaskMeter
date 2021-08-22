@@ -9,7 +9,7 @@ class SettingsOptionScreen<T> extends StatefulWidget {
   final String title;
   final Iterable<T> options;
   final T current;
-  final String Function(T)? valueToString;
+  final String Function(T) valueToString;
   final Set<T>? fullRowButtons;
   final Function(T) update;
   final bool hasCustomButton;
@@ -20,7 +20,7 @@ class SettingsOptionScreen<T> extends StatefulWidget {
     required this.update,
     this.fullRowButtons,
     this.hasCustomButton = false,
-    this.valueToString,
+    required this.valueToString,
   });
 
   @override
@@ -73,7 +73,7 @@ class _SettingsOptionScreenState<T> extends State<SettingsOptionScreen<T>> {
               )
             : CustomTextFormField.numbersOnly(
                 context: context,
-                hintText: widget.valueToString!(100 as T),
+                hintText: widget.valueToString(100 as T),
                 controller: _customController,
                 onChanged: (x) =>
                     _customValue = int.tryParse(x.trim()) ?? _customValue,
@@ -125,7 +125,7 @@ class _SettingsOptionScreenState<T> extends State<SettingsOptionScreen<T>> {
       final mWidget = Expanded(
           child: SettingsButton<T>(
               isSelected: y == current,
-              child: widget.valueToString!(y),
+              child: widget.valueToString(y),
               onPressed: () {
                 setState(() => current = y);
                 widget.update(y);

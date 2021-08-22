@@ -30,9 +30,7 @@ class SettingsRepositoryImpl extends SettingsRepository {
   final RemoteStorage _remoteStorage;
   SettingsRepositoryImpl(
       {required LocalStorage localStorage, required RemoteStorage remoteStorage})
-      : assert(localStorage != null),
-        assert(remoteStorage != null),
-        _localStorage = localStorage,
+      : _localStorage = localStorage,
         _remoteStorage = remoteStorage;
   @override
   Future<Settings> fetchSettings() async {

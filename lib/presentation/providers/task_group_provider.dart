@@ -65,10 +65,10 @@ class TaskGroupProvider extends ChangeNotifier {
     TaskGroup deletedTg = _groups!.firstWhere((taskGroup) {
       return taskGroup.taskGroupId == id;
     });
-    if (deletedTg != null) {
-      deletedTg.isDeleted = true;
-      await taskGroupRepo!.updateTaskGroups(_groups, delete: true, id: id);
-    }
+    
+    deletedTg.isDeleted = true;
+    await taskGroupRepo!.updateTaskGroups(_groups, delete: true, id: id);
+    
     notifyListeners();
   }
 

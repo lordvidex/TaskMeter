@@ -98,10 +98,23 @@
     "type": "text",
     "description": "difficulty header for picking difficulty when creating/editing task"
   },
+  "difficultyDesc": "Укажите сложность этой подзадачи, чтобы помочь в разделении времени между подзадачами.\n(По умолчанию используется средний)",
+  "@difficultyDesc": {
+    "type": "text",
+    "description": "Onboarding desc for difficulty"
+  },
   "discard": "Отбросить",
   "@discard": {
     "type": "text",
     "description": "cupertino action button text to discard data in settings screen"
+  },
+  "duration": "Время",
+  "@duration": {
+    "type": "text"
+  },
+  "durationDesc": "Укажите время выполнения этой задачи в минутах.",
+  "@durationDesc": {
+    "type": "text"
   },
   "durationInMinutes": "Время (в минутах)",
   "@durationInMinutes": {
@@ -147,6 +160,11 @@
   "@enterTaskName": {
     "type": "text",
     "description": "error text if task name has errors"
+  },
+  "enterTitle": "Введите название задачи",
+  "@enterTitle": {
+    "type": "text",
+    "description": "desc for first onboarding"
   },
   "errorOccured": "Произошла ошибка!",
   "@errorOccured": {
@@ -312,6 +330,19 @@
     "type": "text",
     "description": "label text for subtasks"
   },
+  "subTaskDesc": "Вы можете добавить подзадачи к этим задачам. Время каждой подзадачи рассчитывается автоматически.",
+  "@subTaskDesc": {
+    "type": "text",
+    "description": "Onboarding description"
+  },
+  "subTaskTitle": "Название подзадачи",
+  "@subTaskTitle": {
+    "type": "text"
+  },
+  "subTaskTitleDesc": "Введите название подзадачи",
+  "@subTaskTitleDesc": {
+    "type": "text"
+  },
   "system": "Системы",
   "@system": {
     "type": "text",
@@ -361,6 +392,10 @@
   },
   "tasks": "Задачи",
   "@tasks": {
+    "type": "text"
+  },
+  "taskTitle": "Название задачи",
+  "@taskTitle": {
     "type": "text"
   },
   "termsAndServices": "Продолжая, вы подтверждаете свое согласие с нашими Условиями предоставления услуг и политикой конфиденциальности",

@@ -15,8 +15,6 @@ void main() {
       'should return remote settings when localsettings is either default settings with no time of upload',
       () {
     // arrange
-    assert(localSettings != null);
-    assert(remoteSettings != null);
 
     // act
     final settings = MergeUtils.mergeSettings(remoteSettings, localSettings);

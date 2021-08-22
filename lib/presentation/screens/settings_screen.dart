@@ -38,7 +38,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     required Function(T) update,
     bool hasCustomButton = false,
     Set<T>? fullRowButtons,
-    String Function(T)? transform,
+    required String Function(T) transform,
   }) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (ctx) => SettingsOptionScreen<T>(
@@ -128,19 +128,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             .minutes(_provider.settings!.longBreak.inMinutes)),
                     SettingsTile(
                         title: appLocale.longBreakAfter,
-                        onPressed: () => _showSettingsOptionScreen<int?>(
+                        onPressed: () => _showSettingsOptionScreen<int>(
                               hasCustomButton: true,
                               update: (newValue) => _provider.updateSettings(
                                   _provider.settings!
                                       .copyWith(longBreakIntervals: newValue)),
                               title: appLocale.longBreakIntervals,
                               transform: appLocale.intervals,
-                              current: _provider.settings!.longBreakIntervals,
+                              current: _provider.settings!.longBreakIntervals!,
                               options: Set.from([1, 2, 3])
-                                ..add(_provider.settings!.longBreakIntervals),
+                                ..add(_provider.settings!.longBreakIntervals!),
                             ),
                         subtitle: appLocale
-                            .intervals(_provider.settings!.longBreakIntervals)),
+                            .intervals(_provider.settings!.longBreakIntervals!)),
                   ]),
                   Padding(
                     padding: const EdgeInsets.only(top: 29.0),
@@ -169,17 +169,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           SettingsTile(
                               title: appLocale.appTheme,
                               onPressed: () =>
-                                  _showSettingsOptionScreen<AppTheme?>(
+                                  _showSettingsOptionScreen<AppTheme>(
                                       update: (newValue) => _provider
                                           .updateSettings(_provider.settings!
                                               .copyWith(appTheme: newValue)),
                                       fullRowButtons: {AppTheme.System},
                                       title: appLocale.appTheme,
-                                      current: _provider.settings!.appTheme,
+                                      current: _provider.settings!.appTheme!,
                                       options: AppTheme.values,
                                       transform: appLocale.themeType),
                               subtitle:
-                                  '${appLocale.themeType(_provider.settings!.appTheme)} ${appLocale.theme}'),
+                                  '${appLocale.themeType(_provider.settings!.appTheme!)} ${appLocale.theme}'),
                           SettingsTile(title: appLocale.feedback),
                           SettingsTile(title: appLocale.rate)
                         ]),

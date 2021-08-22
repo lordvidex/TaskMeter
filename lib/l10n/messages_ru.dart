@@ -4,17 +4,17 @@
 // function name.
 
 // Ignore issues from commonly used lints in this file.
-// ignore_for_file:unnecessary_brace_in_string_interps, unnecessary_new
+// ignore_for_file:unnecessary_brace_in_string_interps
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
-// ignore_for_file:unused_import, file_names
+// ignore_for_file:unused_import, file_names, always_declare_return_types
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
 
-final messages = new MessageLookup();
+final messages = MessageLookup();
 
-typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
+typedef String MessageIfAbsent(String? messageStr, List<Object>? args);
 
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ru';
@@ -35,8 +35,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m7(theme) => "${Intl.select(theme, {'Dark': 'Тёмная', 'Light': 'Светлая', 'System': 'Системная', })}";
 
-  final Map<String, dynamic> messages = _notInlinedMessages(_notInlinedMessages);
-  static _notInlinedMessages(_) => <String, Function> {
+  final messages = _notInlinedMessages(_notInlinedMessages);
+  static Map<String, Function> _notInlinedMessages(_) => <String, Function> {
     "about" : MessageLookupByLibrary.simpleMessage("О нас"),
     "activeTasks" : MessageLookupByLibrary.simpleMessage("Активные задачи"),
     "add" : MessageLookupByLibrary.simpleMessage("Добавьте"),
@@ -57,7 +57,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "dataNotSavedDesc2" : MessageLookupByLibrary.simpleMessage(" в правом верхнем углу сохранить!"),
     "delete" : MessageLookupByLibrary.simpleMessage("Удалить"),
     "difficulty" : MessageLookupByLibrary.simpleMessage("Cложность"),
+    "difficultyDesc" : MessageLookupByLibrary.simpleMessage("Укажите сложность этой подзадачи, чтобы помочь в разделении времени между подзадачами.\n(По умолчанию используется средний)"),
     "discard" : MessageLookupByLibrary.simpleMessage("Отбросить"),
+    "duration" : MessageLookupByLibrary.simpleMessage("Время"),
+    "durationDesc" : MessageLookupByLibrary.simpleMessage("Укажите время выполнения этой задачи в минутах."),
     "durationInMinutes" : MessageLookupByLibrary.simpleMessage("Время (в минутах)"),
     "edit" : MessageLookupByLibrary.simpleMessage("Изменить"),
     "editTask" : MessageLookupByLibrary.simpleMessage("Редактировать"),
@@ -67,6 +70,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "enterPassword" : MessageLookupByLibrary.simpleMessage("Пароль"),
     "enterRecoveryMail" : MessageLookupByLibrary.simpleMessage("Введите адрес электронной почты для восстановления"),
     "enterTaskName" : MessageLookupByLibrary.simpleMessage("Введите название задачи"),
+    "enterTitle" : MessageLookupByLibrary.simpleMessage("Введите название задачи"),
     "errorOccured" : MessageLookupByLibrary.simpleMessage("Произошла ошибка!"),
     "feedback" : MessageLookupByLibrary.simpleMessage("Отзыв"),
     "forgotPassword" : MessageLookupByLibrary.simpleMessage("Забыли пароль?"),
@@ -99,6 +103,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "signIn" : MessageLookupByLibrary.simpleMessage("Войдите"),
     "signup" : MessageLookupByLibrary.simpleMessage("Зарегистрируйтесь"),
     "subTask" : MessageLookupByLibrary.simpleMessage("Подзадача"),
+    "subTaskDesc" : MessageLookupByLibrary.simpleMessage("Вы можете добавить подзадачи к этим задачам. Время каждой подзадачи рассчитывается автоматически."),
+    "subTaskTitle" : MessageLookupByLibrary.simpleMessage("Название подзадачи"),
+    "subTaskTitleDesc" : MessageLookupByLibrary.simpleMessage("Введите название подзадачи"),
     "system" : MessageLookupByLibrary.simpleMessage("Системы"),
     "takeBreak" : MessageLookupByLibrary.simpleMessage("отдохнуть"),
     "taskComplete" : MessageLookupByLibrary.simpleMessage("Задача завершена"),
@@ -107,6 +114,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "taskGroupNameErrorText" : MessageLookupByLibrary.simpleMessage("Введите правильное название задачи"),
     "taskName" : MessageLookupByLibrary.simpleMessage("Название задачи"),
     "taskRatioDesc" : m6,
+    "taskTitle" : MessageLookupByLibrary.simpleMessage("Название задачи"),
     "tasks" : MessageLookupByLibrary.simpleMessage("Задачи"),
     "termsAndServices" : MessageLookupByLibrary.simpleMessage("Продолжая, вы подтверждаете свое согласие с нашими Условиями предоставления услуг и политикой конфиденциальности"),
     "theme" : MessageLookupByLibrary.simpleMessage("Тема"),

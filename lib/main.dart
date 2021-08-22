@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:provider/provider.dart';
 
 import 'core/constants.dart';
@@ -25,7 +24,6 @@ import 'presentation/screens/welcome_screen.dart';
 import 'presentation/widgets/create_task_group/onboarder.dart';
 
 void main() async {
-  //TODO: loading splash screen HERE - (a brief loading animation to be precise)
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);

@@ -420,6 +420,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.17.0"
+  intl_generator:
+    dependency: "direct dev"
+    description:
+      name: intl_generator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.0+0"
   introduction_screen:
     dependency: "direct main"
     description:
@@ -580,7 +587,7 @@ packages:
       name: petitparser
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.1"
+    version: "4.1.0"
   platform:
     dependency: transitive
     description:

@@ -4,17 +4,17 @@
 // function name.
 
 // Ignore issues from commonly used lints in this file.
-// ignore_for_file:unnecessary_brace_in_string_interps, unnecessary_new
+// ignore_for_file:unnecessary_brace_in_string_interps
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
-// ignore_for_file:unused_import, file_names
+// ignore_for_file:unused_import, file_names, always_declare_return_types
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
 
-final messages = new MessageLookup();
+final messages = MessageLookup();
 
-typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
+typedef String MessageIfAbsent(String? messageStr, List<Object>? args);
 
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
@@ -35,8 +35,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m7(theme) => "${Intl.select(theme, {'Dark': 'Dark', 'Light': 'Light', 'System': 'System', })}";
 
-  final Map<String, dynamic> messages = _notInlinedMessages(_notInlinedMessages);
-  static _notInlinedMessages(_) => <String, Function> {
+  final messages = _notInlinedMessages(_notInlinedMessages);
+  static Map<String, Function> _notInlinedMessages(_) => <String, Function> {
     "about" : MessageLookupByLibrary.simpleMessage("About"),
     "activeTasks" : MessageLookupByLibrary.simpleMessage("Active Tasks"),
     "add" : MessageLookupByLibrary.simpleMessage("Add"),
@@ -57,7 +57,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "dataNotSavedDesc2" : MessageLookupByLibrary.simpleMessage(" at the top-right to save!"),
     "delete" : MessageLookupByLibrary.simpleMessage("Delete"),
     "difficulty" : MessageLookupByLibrary.simpleMessage("Difficulty"),
+    "difficultyDesc" : MessageLookupByLibrary.simpleMessage("Indicate the difficulty of this subtask to assist in time division among subtasks.\n(Medium is default)"),
     "discard" : MessageLookupByLibrary.simpleMessage("Discard"),
+    "duration" : MessageLookupByLibrary.simpleMessage("Duration"),
+    "durationDesc" : MessageLookupByLibrary.simpleMessage("Indicate the duration of this task in minutes."),
     "durationInMinutes" : MessageLookupByLibrary.simpleMessage("Duration (in minutes)"),
     "edit" : MessageLookupByLibrary.simpleMessage("Edit"),
     "editTask" : MessageLookupByLibrary.simpleMessage("Edit task"),
@@ -67,6 +70,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "enterPassword" : MessageLookupByLibrary.simpleMessage("Password"),
     "enterRecoveryMail" : MessageLookupByLibrary.simpleMessage("Enter recovery email address"),
     "enterTaskName" : MessageLookupByLibrary.simpleMessage("Enter task name"),
+    "enterTitle" : MessageLookupByLibrary.simpleMessage("Enter the title of the task"),
     "errorOccured" : MessageLookupByLibrary.simpleMessage("An error occured!"),
     "feedback" : MessageLookupByLibrary.simpleMessage("Feedback"),
     "forgotPassword" : MessageLookupByLibrary.simpleMessage("Forgot Password?"),
@@ -99,6 +103,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "signIn" : MessageLookupByLibrary.simpleMessage("Sign in"),
     "signup" : MessageLookupByLibrary.simpleMessage("Sign up"),
     "subTask" : MessageLookupByLibrary.simpleMessage("Sub-Task"),
+    "subTaskDesc" : MessageLookupByLibrary.simpleMessage("You can add subtasks to this tasks. The duration of each subtask is automatically calculated."),
+    "subTaskTitle" : MessageLookupByLibrary.simpleMessage("SubTask Title"),
+    "subTaskTitleDesc" : MessageLookupByLibrary.simpleMessage("Enter the title of the subtask"),
     "system" : MessageLookupByLibrary.simpleMessage("System"),
     "takeBreak" : MessageLookupByLibrary.simpleMessage("Take Break"),
     "taskComplete" : MessageLookupByLibrary.simpleMessage("Task Complete"),
@@ -107,6 +114,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "taskGroupNameErrorText" : MessageLookupByLibrary.simpleMessage("Enter a valid task group name"),
     "taskName" : MessageLookupByLibrary.simpleMessage("Task name"),
     "taskRatioDesc" : m6,
+    "taskTitle" : MessageLookupByLibrary.simpleMessage("Task Title"),
     "tasks" : MessageLookupByLibrary.simpleMessage("Tasks"),
     "termsAndServices" : MessageLookupByLibrary.simpleMessage("By continuing, you confirm your agreement to our Terms of Service and privacy policy"),
     "theme" : MessageLookupByLibrary.simpleMessage("Theme"),

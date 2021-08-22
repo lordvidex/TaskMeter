@@ -30,7 +30,14 @@ class SocialButton extends StatelessWidget {
             children: [
               Container(
                 width: double.infinity,
-                child: Center(child: Text(buttonLabel)),
+                margin: buttonLabel.characters.length >= 29
+                    ? const EdgeInsets.only(left: 38)
+                    : null,
+                child: Center(
+                    child: Text(
+                  buttonLabel,
+                  maxLines: 2,
+                )),
               ),
               Positioned(
                   left: 14,

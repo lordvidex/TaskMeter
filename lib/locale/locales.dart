@@ -133,7 +133,7 @@ class AppLocalizations {
 
   String get cancel => Intl.message('Cancel', name: 'cancel', desc: '');
 
-  String intervals(int? x) => Intl.plural(x!,
+  String intervals(int x) => Intl.plural(x,
       one: '$x interval',
       few: '$x intervals',
       other: '$x intervals',
@@ -141,8 +141,8 @@ class AppLocalizations {
       desc: 'long break after x shortbreaks',
       args: [x]);
 
-  String themeType(AppTheme? theme) => Intl.select(
-      theme!,
+  String themeType(AppTheme theme) => Intl.select(
+      theme,
       {
         AppTheme.Dark: 'Dark',
         AppTheme.Light: 'Light',
@@ -195,7 +195,31 @@ class AppLocalizations {
           desc: 'error text shown when task group name is empty');
   String get addSubTask => Intl.message('Add Sub Task',
       name: 'addSubTask', desc: 'Button label text for adding sub task');
-
+  String get taskTitle => Intl.message('Task Title',
+  name: 'taskTitle',
+  desc: '');
+  String get enterTitle => Intl.message('Enter the title of the task',
+  name: 'enterTitle',
+  desc: 'desc for first onboarding');
+  String get duration => Intl.message('Duration',
+  name: 'duration',
+  desc: '');
+  String get durationDesc => Intl.message('Indicate the duration of this task in minutes.',
+  name: 'durationDesc',
+  desc: '');
+  String get subTaskDesc => Intl.message('You can add subtasks to this tasks. The duration of each subtask is automatically calculated.',
+  name: 'subTaskDesc',
+  desc: 'Onboarding description');
+  String get subTaskTitle => Intl.message('SubTask Title',
+  name: 'subTaskTitle',
+  desc: '');
+  String get subTaskTitleDesc => Intl.message('Enter the title of the subtask',
+  name: 'subTaskTitleDesc',
+  desc: '');
+  String get difficultyDesc => Intl.message('Indicate the difficulty of this subtask to assist in time division among subtasks.\n(Medium is default)',
+  name: 'difficultyDesc',
+  desc: 'Onboarding desc for difficulty');
+  
 //! Task Timer Screen
   String get complete =>
       Intl.message('Complete', name: 'complete', desc: 'The word complete');

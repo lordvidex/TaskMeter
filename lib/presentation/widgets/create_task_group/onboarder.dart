@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
+import '../../../locale/locales.dart';
 
 import '../../providers/settings_provider.dart';
 
@@ -27,49 +28,48 @@ class _OnboarderState extends State<Onboarder> {
   @override
   Widget build(BuildContext context) {
     _focusNodes = context.read<SettingsProvider>().onboardingFocusNodes;
-    final _titleTextStyle =
-        TextStyle(fontWeight: FontWeight.bold, fontSize: 36);
+    final appLocale = AppLocalizations.of(context);
+    final _titleTextStyle = TextStyle(
+        fontWeight: FontWeight.bold, fontSize: 36, color: Colors.blue);
     List<OnboardingStep> _steps = [
       OnboardingStep(
         focusNode: _focusNodes[0],
-        title: 'Task Title',
+        title: appLocale.taskTitle,
         titleTextStyle: _titleTextStyle,
         delay: Duration(seconds: 5),
-        bodyText: 'Enter the title of the task',
+        bodyText: appLocale.enterTitle,
       ),
       OnboardingStep(
         focusNode: _focusNodes[1],
-        title: 'Duration',
+        title: appLocale.duration,
         titleTextStyle: _titleTextStyle,
-        bodyText: 'Indicate the duration of this task in minutes.',
+        bodyText: appLocale.durationDesc,
       ),
       OnboardingStep(
         focusNode: _focusNodes[2],
-        title: 'SubTasks',
+        title: appLocale.subTask,
         titleTextStyle: _titleTextStyle,
-        bodyText:
-            'You can add subtasks to this tasks. The duration of each subtask is automatically calculated.',
+        bodyText: appLocale.subTaskDesc,
       ),
       OnboardingStep(
         focusNode: _focusNodes[3],
-        title: 'SubTask Title',
+        title: appLocale.subTaskTitle,
         titleTextStyle: _titleTextStyle,
-        bodyText: 'Enter the title of the subtask',
+        bodyText: appLocale.subTaskTitleDesc,
       ),
       OnboardingStep(
         focusNode: _focusNodes[4],
-        title: 'Difficulty',
+        title: appLocale.difficulty,
         titleTextStyle: _titleTextStyle,
-        bodyText:
-            'Indicate the difficulty of this subtask to assist in time division among subtasks.\n(Medium is default)',
+        bodyText: appLocale.difficultyDesc,
       ),
       OnboardingStep(
           focusNode: _focusNodes[5],
-          title: 'Add the subtask',
+          title: appLocale.addSubTask,
           titleTextStyle: _titleTextStyle),
       OnboardingStep(
           focusNode: _focusNodes[6],
-          title: 'Create the Task',
+          title: appLocale.createTask,
           titleTextStyle: _titleTextStyle)
     ];
     return Onboarding(

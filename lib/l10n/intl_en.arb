@@ -1,27 +1,34 @@
 {
-  "@@last_modified": "2021-08-20T07:57:00.630791",
+  "@@last_modified": "2021-08-22T08:02:12.080177",
   "taskCompleted": "Task completed",
   "@taskCompleted": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "trackedHours": "Tracked Hours",
   "@trackedHours": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "activeTasks": "Active Tasks",
   "@activeTasks": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "taskRatioDesc": "{total,plural, =1{{done} of {total} task completed}few{{done} of {total} tasks completed}other{{done} of {total} tasks completed}}",
   "@taskRatioDesc": {
     "description": "caption text for taskgroup tiles",
     "type": "text",
+    "placeholders_order": [
+      "done",
+      "total"
+    ],
     "placeholders": {
       "done": {},
       "total": {}
@@ -31,144 +38,170 @@
   "@progress": {
     "description": "text \"progress\" used to label the linear progress indicator on this screen",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "delete": "Delete",
   "@delete": {
     "description": "Text with the word delete",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "emptyHere": "It's empty here,",
   "@emptyHere": {
     "description": "Place holder text when there is no active task group",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "createTaskToContinue": "Create task to continue",
   "@createTaskToContinue": {
     "description": "second part of place holder text when there is no active task group",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "and": "and",
   "@and": {
     "description": "the word \"and\"",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "tasks": "Tasks",
   "@tasks": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "languageAndAppearance": "Language and Appearance",
   "@languageAndAppearance": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "settings": "Settings",
   "@settings": {
     "description": "The word settings",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "generalSettings": "General Settings",
   "@generalSettings": {
     "description": "App bar text for setting screen",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "shortBreakDuration": "Short break duration",
   "@shortBreakDuration": {
     "description": "label for short break duration",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "longBreakDuration": "Long break duration",
   "@longBreakDuration": {
     "description": "label for long break duration",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "longBreakAfter": "Long break after",
   "@longBreakAfter": {
     "description": "text for long break after or long break intervals",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "longBreakIntervals": "Long break intervals",
   "@longBreakIntervals": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "language": "Language",
   "@language": {
     "description": "label for language",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "appTheme": "App Theme",
   "@appTheme": {
     "description": "label for appTheme",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "system": "System",
   "@system": {
     "description": "label text for system theme in settings",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "theme": "Theme",
   "@theme": {
     "description": "label text for the word \"theme\"",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "selectTheme": "Select Theme",
   "@selectTheme": {
     "description": "Appbar text for the selectThemeScreen",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "dataNotSaved": "Data not saved!",
   "@dataNotSaved": {
     "description": "title text displayed in CupertinoAlertDialog when user clicks back button without saving settings data",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "dataNotSavedDesc1": "You have some unsaved data, go back and click ",
   "@dataNotSavedDesc1": {
     "description": "First part of description text shown in cupertinoAlertDialog when user clicks back button without saving settings data",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "dataNotSavedDesc2": " at the top-right to save!",
   "@dataNotSavedDesc2": {
     "description": "Second part of description text shown in cupertinoAlertDialog when user clicks back button without saving settings data",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "discard": "Discard",
   "@discard": {
     "description": "cupertino action button text to discard data in settings screen",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "cancel": "Cancel",
   "@cancel": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "intervals": "{x,plural, =1{{x} interval}few{{x} intervals}other{{x} intervals}}",
   "@intervals": {
     "description": "long break after x shortbreaks",
     "type": "text",
+    "placeholders_order": [
+      "x"
+    ],
     "placeholders": {
       "x": {}
     }
@@ -177,6 +210,9 @@
   "@themeType": {
     "description": "returns the text based on themetypes [System,Dark,Light]",
     "type": "text",
+    "placeholders_order": [
+      "theme"
+    ],
     "placeholders": {
       "theme": {}
     }
@@ -185,30 +221,37 @@
   "@about": {
     "description": "label for the text about, leading to the about page of the app",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "rate": "Rate in the app store",
   "@rate": {
     "description": "rate in the app store",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "feedback": "Feedback",
   "@feedback": {
     "description": "Feedback",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "editTask": "Edit task",
   "@editTask": {
     "description": "Button text to edit newly created task in description screen",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "taskCount": "{x,plural, =0{{x} tasks}=1{{x} task}few{{x} tasks}other{{x} tasks}}",
   "@taskCount": {
     "description": "label text displaying number of tasks in the taskgroup",
     "type": "text",
+    "placeholders_order": [
+      "x"
+    ],
     "placeholders": {
       "x": {
         "example": 3
@@ -219,167 +262,253 @@
   "@createTask": {
     "description": "Header text in create task group screen",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "shortBreak": "Short break",
   "@shortBreak": {
     "description": "label for short break",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "longBreak": "Long break",
   "@longBreak": {
     "description": "label for long break",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "durationInMinutes": "Duration (in minutes)",
   "@durationInMinutes": {
     "description": "Label for total duration picker in create task group screen",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "subTask": "Sub-Task",
   "@subTask": {
     "description": "label text for subtasks",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "emptyErrorMessage": "Please enter some text",
   "@emptyErrorMessage": {
     "description": "error text shown when user leaves textfield empty",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "taskGroupNameErrorText": "Enter a valid task group name",
   "@taskGroupNameErrorText": {
     "description": "error text shown when task group name is empty",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "addSubTask": "Add Sub Task",
   "@addSubTask": {
     "description": "Button label text for adding sub task",
     "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "taskTitle": "Task Title",
+  "@taskTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "enterTitle": "Enter the title of the task",
+  "@enterTitle": {
+    "description": "desc for first onboarding",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "duration": "Duration",
+  "@duration": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "durationDesc": "Indicate the duration of this task in minutes.",
+  "@durationDesc": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "subTaskDesc": "You can add subtasks to this tasks. The duration of each subtask is automatically calculated.",
+  "@subTaskDesc": {
+    "description": "Onboarding description",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "subTaskTitle": "SubTask Title",
+  "@subTaskTitle": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "subTaskTitleDesc": "Enter the title of the subtask",
+  "@subTaskTitleDesc": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "difficultyDesc": "Indicate the difficulty of this subtask to assist in time division among subtasks.\n(Medium is default)",
+  "@difficultyDesc": {
+    "description": "Onboarding desc for difficulty",
+    "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "complete": "Complete",
   "@complete": {
     "description": "The word complete",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "breakComplete": "Break Complete",
   "@breakComplete": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "taskComplete": "Task Complete",
   "@taskComplete": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "resume": "Resume",
   "@resume": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "pause": "Pause",
   "@pause": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "takeBreak": "Take Break",
   "@takeBreak": {
     "description": "Button option for when user should take break when a task just finished",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "nextTask": "Next Task",
   "@nextTask": {
     "description": "Button option for when user should jump to next task when a task just finished",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "signup": "Sign up",
   "@signup": {
     "description": "The text sign up",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "signIn": "Sign in",
   "@signIn": {
     "description": "the text sign in",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "withLabel": "with",
   "@withLabel": {
     "description": "the word with",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "enterEmail": "Enter email address",
   "@enterEmail": {
     "description": "Hint text for authentication screen telling user to enter email address",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "enterPassword": "Password",
   "@enterPassword": {
     "description": "Password textField hint text",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "next": "Next",
   "@next": {
     "description": "Button text for the next button toggling between email and password mode in auth screen",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "enterRecoveryMail": "Enter recovery email address",
   "@enterRecoveryMail": {
     "description": "label for recovery email address",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "forgotPassword": "Forgot Password?",
   "@forgotPassword": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "sendRecoveryMail": "Send Recovery Mail",
   "@sendRecoveryMail": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "continueLabel": "Continue",
   "@continueLabel": {
     "description": "The word \"continue\"",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "checkInbox": "Check your inbox to set new password for this email",
   "@checkInbox": {
     "description": "instruction text guiding user when trying to recover password",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "getStarted": "Let's get started",
   "@getStarted": {
     "description": "Intro text",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "continueWith": "Continue with {socialPlatform}",
   "@continueWith": {
     "type": "text",
+    "placeholders_order": [
+      "socialPlatform"
+    ],
     "placeholders": {
       "socialPlatform": {}
     }
@@ -388,36 +517,44 @@
   "@continueAsGuest": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "termsAndServices": "By continuing, you confirm your agreement to our Terms of Service and privacy policy",
   "@termsAndServices": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "errorOccured": "An error occured!",
   "@errorOccured": {
     "description": "error dialog label",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "newAccount": "New Account",
   "@newAccount": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "newAccountAgreement": "By Clicking continue, you agree to create a new account with the following credentials.",
   "@newAccountAgreement": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "hours": "{hours,plural, =0{}=1{{hours} Hour}few{{hours} Hours}other{{hours} Hours}}",
   "@hours": {
     "description": "string for displaying how many hours are in the duration object",
     "type": "text",
+    "placeholders_order": [
+      "hours"
+    ],
     "placeholders": {
       "hours": {}
     }
@@ -426,6 +563,9 @@
   "@minutes": {
     "description": "string for displaying how many minutes are in the duration object",
     "type": "text",
+    "placeholders_order": [
+      "minutes"
+    ],
     "placeholders": {
       "minutes": {}
     }
@@ -434,6 +574,9 @@
   "@seconds": {
     "description": "string for displaying how many seconds are in the duration object",
     "type": "text",
+    "placeholders_order": [
+      "seconds"
+    ],
     "placeholders": {
       "seconds": {}
     }
@@ -442,42 +585,49 @@
   "@taskName": {
     "description": "AlertDialog textField title for inputting taskName",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "difficulty": "Difficulty",
   "@difficulty": {
     "description": "difficulty header for picking difficulty when creating/editing task",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "typeTaskName": "Type task name...",
   "@typeTaskName": {
     "description": "label text for inputting task name",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "add": "Add",
   "@add": {
     "description": "button text label to add task",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "edit": "Edit",
   "@edit": {
     "description": "label text for finishing task edit",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "enterTaskName": "Enter task name",
   "@enterTaskName": {
     "description": "error text if task name has errors",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "min": "min.",
   "@min": {
     "description": "Short text for min in duration picker",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   }
 }
