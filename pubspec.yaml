@@ -45,6 +45,7 @@ dependencies:
   dartz: ^0.10.0
   percent_indicator: ^3.0.1
   onboarding_overlay: ^2.1.0
+  url_launcher: ^6.0.9
 
 
 dev_dependencies:

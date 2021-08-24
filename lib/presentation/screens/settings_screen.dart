@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/constants.dart';
 import '../../domain/models/app_theme.dart';
@@ -30,7 +31,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _authProvider = context.read<AuthenticationProvider>();
   }
 
-  // helper functions
+  //* helper functions
   void _showSettingsOptionScreen<T>({
     required String title,
     required Iterable<T> options,
@@ -57,6 +58,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
         .showSnackBar(SnackBar(content: Text(message)));
   }
 
+  void _launchUrl(BuildContext context, String url) async {
+    if (await canLaunch(url)) {
+      launch(url);
+    } else {
+      _showSnackBarWithMessage(context, 'Failed to launch $url');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     appLocale = AppLocalizations.of(context);
@@ -73,145 +82,193 @@ class _SettingsScreenState extends State<SettingsScreen> {
         iconColor: Constants.appBlue,
         child: Scaffold(
           body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: SingleChildScrollView(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextButton(
-                    style: TextButton.styleFrom(
-                        padding: const EdgeInsets.fromLTRB(0, 14, 30, 14)),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: SvgPicture.asset('assets/icons/back.svg',
-                        color:
-                            isDarkMode ? Colors.white : Constants.appNavyBlue),
-                  ),
-                  Padding(
-                      child: Text(
-                        appLocale.settings,
-                        style: TextStyle(fontSize: 24),
-                      ),
-                      padding: const EdgeInsets.only(top: 27, bottom: 30)),
-                  SettingsSection(title: appLocale.tasks, tiles: [
-                    SettingsTile(
-                        title: appLocale.shortBreakDuration,
-                        onPressed: () => _showSettingsOptionScreen<int>(
-                              hasCustomButton: true,
-                              update: (newValue) => _provider.updateSettings(
-                                  _provider.settings!.copyWith(
-                                      shortBreak: Duration(minutes: newValue))),
-                              current: _provider.settings!.shortBreak.inMinutes,
-                              title: appLocale.shortBreakDuration,
-                              transform: appLocale.minutes,
-                              options: Set.from([1, 2, 3, 4, 5, 8, 10])
-                                ..add(_provider.settings!.shortBreak.inMinutes),
-                            ),
-                        subtitle: appLocale
-                            .minutes(_provider.settings!.shortBreak.inMinutes)),
-                    SettingsTile(
-                        title: appLocale.longBreakDuration,
-                        onPressed: () => _showSettingsOptionScreen<int>(
-                              hasCustomButton: true,
-                              update: (newValue) => _provider.updateSettings(
-                                  _provider.settings!.copyWith(
-                                      longBreak: Duration(minutes: newValue))),
-                              current: _provider.settings!.longBreak.inMinutes,
-                              title: appLocale.longBreakDuration,
-                              transform: appLocale.minutes,
-                              options: Set.from([5, 10, 15, 20, 25, 30, 45])
-                                ..add(_provider.settings!.longBreak.inMinutes),
-                            ),
-                        subtitle: appLocale
-                            .minutes(_provider.settings!.longBreak.inMinutes)),
-                    SettingsTile(
-                        title: appLocale.longBreakAfter,
-                        onPressed: () => _showSettingsOptionScreen<int>(
-                              hasCustomButton: true,
-                              update: (newValue) => _provider.updateSettings(
-                                  _provider.settings!
-                                      .copyWith(longBreakIntervals: newValue)),
-                              title: appLocale.longBreakIntervals,
-                              transform: appLocale.intervals,
-                              current: _provider.settings!.longBreakIntervals!,
-                              options: Set.from([1, 2, 3])
-                                ..add(_provider.settings!.longBreakIntervals!),
-                            ),
-                        subtitle: appLocale
-                            .intervals(_provider.settings!.longBreakIntervals!)),
-                  ]),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 29.0),
-                    child: SettingsSection(
-                        title: appLocale.languageAndAppearance,
-                        tiles: [
-                          SettingsTile(
-                              title: appLocale.language,
-                              onPressed: () =>
-                                  _showSettingsOptionScreen<String?>(
-                                      update: (newValue) => _provider
-                                          .updateSettings(_provider.settings!
-                                              .copyWith(language: newValue)),
-                                      title: appLocale.language,
-                                      current: _provider.settings!.language,
-                                      options: ['en', 'ru'],
-                                      transform: (string) {
-                                        if (string == 'ru') {
-                                          return 'Русский';
-                                        }
-                                        return 'English';
-                                      }),
-                              subtitle: _provider.settings!.language == 'ru'
-                                  ? 'Русский'
-                                  : 'English'),
-                          SettingsTile(
-                              title: appLocale.appTheme,
-                              onPressed: () =>
-                                  _showSettingsOptionScreen<AppTheme>(
-                                      update: (newValue) => _provider
-                                          .updateSettings(_provider.settings!
-                                              .copyWith(appTheme: newValue)),
-                                      fullRowButtons: {AppTheme.System},
-                                      title: appLocale.appTheme,
-                                      current: _provider.settings!.appTheme!,
-                                      options: AppTheme.values,
-                                      transform: appLocale.themeType),
-                              subtitle:
-                                  '${appLocale.themeType(_provider.settings!.appTheme!)} ${appLocale.theme}'),
-                          SettingsTile(title: appLocale.feedback),
-                          SettingsTile(title: appLocale.rate)
-                        ]),
-                  ),
-                  if (_authProvider.user != null)
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextButton(
+                      style: TextButton.styleFrom(
+                          padding: const EdgeInsets.fromLTRB(0, 14, 30, 14)),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: SvgPicture.asset('assets/icons/back.svg',
+                          color: isDarkMode
+                              ? Colors.white
+                              : Constants.appNavyBlue),
+                    ),
+                    Padding(
+                        child: Text(
+                          appLocale.settings,
+                          style: TextStyle(fontSize: 24),
+                        ),
+                        padding: const EdgeInsets.only(top: 27, bottom: 30)),
+                    SettingsSection(title: appLocale.tasks, tiles: [
+                      SettingsTile(
+                          title: appLocale.shortBreakDuration,
+                          onPressed: () => _showSettingsOptionScreen<int>(
+                                hasCustomButton: true,
+                                update: (newValue) => _provider.updateSettings(
+                                    _provider.settings!.copyWith(
+                                        shortBreak:
+                                            Duration(minutes: newValue))),
+                                current:
+                                    _provider.settings!.shortBreak.inMinutes,
+                                title: appLocale.shortBreakDuration,
+                                transform: appLocale.minutes,
+                                options: Set.from([1, 2, 3, 4, 5, 8, 10])
+                                  ..add(
+                                      _provider.settings!.shortBreak.inMinutes),
+                              ),
+                          subtitle: appLocale.minutes(
+                              _provider.settings!.shortBreak.inMinutes)),
+                      SettingsTile(
+                          title: appLocale.longBreakDuration,
+                          onPressed: () => _showSettingsOptionScreen<int>(
+                                hasCustomButton: true,
+                                update: (newValue) => _provider.updateSettings(
+                                    _provider.settings!.copyWith(
+                                        longBreak:
+                                            Duration(minutes: newValue))),
+                                current:
+                                    _provider.settings!.longBreak.inMinutes,
+                                title: appLocale.longBreakDuration,
+                                transform: appLocale.minutes,
+                                options: Set.from([5, 10, 15, 20, 25, 30, 45])
+                                  ..add(
+                                      _provider.settings!.longBreak.inMinutes),
+                              ),
+                          subtitle: appLocale.minutes(
+                              _provider.settings!.longBreak.inMinutes)),
+                      SettingsTile(
+                          title: appLocale.longBreakAfter,
+                          onPressed: () => _showSettingsOptionScreen<int>(
+                                hasCustomButton: true,
+                                update: (newValue) => _provider.updateSettings(
+                                    _provider.settings!.copyWith(
+                                        longBreakIntervals: newValue)),
+                                title: appLocale.longBreakIntervals,
+                                transform: appLocale.intervals,
+                                current:
+                                    _provider.settings!.longBreakIntervals!,
+                                options: Set.from([1, 2, 3])
+                                  ..add(
+                                      _provider.settings!.longBreakIntervals!),
+                              ),
+                          subtitle: appLocale.intervals(
+                              _provider.settings!.longBreakIntervals!)),
+                    ]),
                     Padding(
                       padding: const EdgeInsets.only(top: 29.0),
-                      child: SettingsSection(title: 'Cloud', tiles: [
-                        SettingsTile(
-                            title: 'Logout',
-                            onPressed: () {
-                              final userEmail = _authProvider.user?.email;
-                              if (userEmail != null) {
-                                _authProvider.logOut().then((_) {
-                                  _showSnackBarWithMessage(
-                                    context,
-                                    'Successfully logged out user $userEmail',
-                                  );
-                                  return;
-                                }).catchError((_) {
+                      child: SettingsSection(
+                          title: appLocale.languageAndAppearance,
+                          tiles: [
+                            SettingsTile(
+                                title: appLocale.language,
+                                onPressed: () =>
+                                    _showSettingsOptionScreen<String?>(
+                                        update: (newValue) => _provider
+                                            .updateSettings(_provider.settings!
+                                                .copyWith(language: newValue)),
+                                        title: appLocale.language,
+                                        current: _provider.settings!.language,
+                                        options: ['en', 'ru'],
+                                        transform: (string) {
+                                          if (string == 'ru') {
+                                            return 'Русский';
+                                          }
+                                          return 'English';
+                                        }),
+                                subtitle: _provider.settings!.language == 'ru'
+                                    ? 'Русский'
+                                    : 'English'),
+                            SettingsTile(
+                                title: appLocale.appTheme,
+                                onPressed: () =>
+                                    _showSettingsOptionScreen<AppTheme>(
+                                        update: (newValue) => _provider
+                                            .updateSettings(_provider.settings!
+                                                .copyWith(appTheme: newValue)),
+                                        fullRowButtons: {AppTheme.System},
+                                        title: appLocale.appTheme,
+                                        current: _provider.settings!.appTheme!,
+                                        options: AppTheme.values,
+                                        transform: appLocale.themeType),
+                                subtitle:
+                                    '${appLocale.themeType(_provider.settings!.appTheme!)} ${appLocale.theme}'),
+                          ]),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 29.0),
+                      child: SettingsSection(
+                        title: 'Others',
+                        tiles: [
+                          SettingsTile(
+                            title: appLocale.feedback,
+                            onPressed: () => _launchUrl(context,
+                                'mailto:evans.dev99@gmail.com?subject=Task%20Meter%201.0.0&body= '),
+                          ),
+                          SettingsTile(
+                            title: appLocale.about,
+                            onPressed: () => showAboutDialog(
+                                context: context,
+                                applicationVersion: '1.0.0',
+                                children: [
+                                  Text('Built by Evans Owamoyo'),
+                                  TextButton(
+                                    child: Text('Contact me on Twitter'),
+                                    onPressed: () => _launchUrl(context,
+                                        'https://twitter.com/lordvidex'),
+                                  ),
+                                  TextButton(
+                                    child: Text('E-mail me'),
+                                    onPressed: () => _launchUrl(context,
+                                        'mailto:evans.dev99@gmail.com?subject=Task%20Meter%201.0.0&body= '),
+                                  )
+                                ],
+                                applicationIcon: Image.asset(
+                                    'assets/images/task_icon.png',
+                                    width: 64)),
+                          ),
+                          SettingsTile(
+                            title: appLocale.rate,
+                            onPressed: () => _launchUrl(context,
+                                'https://play.google.com/store/apps/details?id=dev.lordvidex.task_meter'),
+                          )
+                        ],
+                      ),
+                    ),
+                    if (_authProvider.user != null)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 29.0),
+                        child: SettingsSection(title: 'Cloud', tiles: [
+                          SettingsTile(
+                              title: 'Logout',
+                              onPressed: () {
+                                final userEmail = _authProvider.user?.email;
+                                if (userEmail != null) {
+                                  _authProvider.logOut().then((_) {
+                                    _showSnackBarWithMessage(
+                                      context,
+                                      'Successfully logged out user $userEmail',
+                                    );
+                                    return;
+                                  }).catchError((_) {
+                                    _showSnackBarWithMessage(
+                                        context, 'Error logging out');
+                                  });
+                                } else {
                                   _showSnackBarWithMessage(
                                       context, 'Error logging out');
-                                });
-                              } else {
-                                _showSnackBarWithMessage(
-                                    context, 'Error logging out');
-                              }
-                            }),
-                      ]),
-                    ),
-                ],
-              )),
+                                }
+                              }),
+                        ]),
+                      ),
+                  ],
+                ),
+              ),
             ),
           ),
         ),
